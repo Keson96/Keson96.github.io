@@ -65,7 +65,7 @@
 <meta property="og:site_name" content="MayMoon">
 <meta property="og:description" content="在所有的排序算法实现中，只使用比较（Compare）和交换（exchange）两种函数操作。考虑算法的时间复杂度时，也只考虑这两种操作（如果没有交换操作，则考虑数组访问（array access）的代价）；考虑空间复杂度时，需考虑排序算法是在原处修改还是新建了一个数组来存储排序结果。
 有时候，我们在比较时，只需要比较每个元素的某个特征来对他们排序（以人为元素，我们可能只比较身高，而不比较他们的其他">
-<meta property="og:updated_time" content="2016-04-17T11:55:37.796Z">
+<meta property="og:updated_time" content="2016-04-17T12:07:56.271Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2-1 Elementary Sort">
 <meta name="twitter:description" content="在所有的排序算法实现中，只使用比较（Compare）和交换（exchange）两种函数操作。考虑算法的时间复杂度时，也只考虑这两种操作（如果没有交换操作，则考虑数组访问（array access）的代价）；考虑空间复杂度时，需考虑排序算法是在原处修改还是新建了一个数组来存储排序结果。
@@ -354,7 +354,620 @@
                 j -= h
         h = h//3  
 </code></pre><p>希尔排序的一个例子</p>
-<p>|<em>input</em>|s|h|e|l|l|s|o|r|t|e|x|a|m|p|l|e<br>|<br>|<em>13-sort</em>|<strong><font color="#FF0000">p</font></strong>|h|e|l|l|s|o|r|t|e|x|a|m|<strong><font color="#FF0000">s</font></strong>|l|e<br>|<em>13-sort</em>|p|h|e|l|l|s|o|r|t|e|x|a|m|s|<strong><font color="#FF0000">l</font></strong>|e<br>|<em>13-sort</em>|p|h|e|l|l|s|o|r|t|e|x|a|m|s|l|<strong><font color="#FF0000">e</font></strong><br>|<em>4-sort</em>|<strong><font color="#FF0000">l</font></strong>|h|e|l|<strong><font color="#FF0000">p</font></strong>|s|o|r|t|e|x|a|m|s|l|e<br>|<em>4-sort</em>|l|h|e|l|p|<strong><font color="#FF0000">s</font></strong>|o|r|t|e|x|a|m|s|l|e<br>|<em>4-sort</em>|l|h|e|l|p|s|<strong><font color="#FF0000">o</font></strong>|r|t|e|x|a|m|s|l|e<br>|<em>4-sort</em>|l|h|e|l|p|s|o|<strong><font color="#FF0000">r</font></strong>|t|e|x|a|m|s|l|e<br>|<em>4-sort</em>|l|h|e|l|p|s|o|r|<strong><font color="#FF0000">t</font></strong>|e|x|a|m|s|l|e<br>|<em>4-sort</em>|l|<strong><font color="#FF0000">e</font></strong>|e|l|p|<strong><font color="#FF0000">h</font></strong>|o|r|t|<strong><font color="#FF0000">s</font></strong>|x|a|m|s|l|e<br>|<em>4-sort</em>|l|e|e|l|p|h|o|r|t|s|<strong><font color="#FF0000">x</font></strong>|a|m|s|l|e<br>|<em>4-sort</em>|l|e|e|<strong><font color="#FF0000">a</font></strong>|p|h|o|<strong><font color="#FF0000">l</font></strong>|t|s|x|<strong><font color="#FF0000">r</font></strong>|m|s|l|e<br>|<em>4-sort</em>|l|e|e|a|<strong><font color="#FF0000">m</font></strong>|h|o|l|<strong><font color="#FF0000">p</font></strong>|s|x|r|<strong><font color="#FF0000">t</font></strong>|s|l|e<br>|<em>4-sort</em>|l|e|e|a|m|h|o|l|p|s|x|r|t|<strong><font color="#FF0000">s</font></strong>|l|e<br>|<em>4-sort</em>|l|e|e|a|m|h|<strong><font color="#FF0000">l</font></strong>|l|p|s|<strong><font color="#FF0000">o</font></strong>|r|t|s|<strong><font color="#FF0000">x</font></strong>|e<br>|<em>4-sort</em>|l|e|e|a|m|h|l|<strong><font color="#FF0000">e</font></strong>|p|s|o|<strong><font color="#FF0000">l</font></strong>|t|s|x|<strong><font color="#FF0000">r</font></strong><br>|<em>1-sort</em>|<strong><font color="#FF0000">e</font></strong>|<strong><font color="#FF0000">l</font></strong>|e|a|m|h|l|e|p|s|o|l|t|s|x|r<br>|<em>1-sort</em>|e|<strong><font color="#FF0000">e</font></strong>|<strong><font color="#FF0000">l</font></strong>|a|m|h|l|e|p|s|o|l|t|s|x|r<br>|<em>1-sort</em>|<strong><font color="#FF0000">a</font></strong>|<strong><font color="#FF0000">e</font></strong>|<strong><font color="#FF0000">e</font></strong>|<strong><font color="#FF0000">l</font></strong>|m|h|l|e|p|s|o|l|t|s|x|r<br>|<em>1-sort</em>|a|e|e|l|<strong><font color="#FF0000">m</font></strong>|h|l|e|p|s|o|l|t|s|x|r<br>|<em>1-sort</em>|a|e|e|<strong><font color="#FF0000">h</font></strong>|<strong><font color="#FF0000">l</font></strong>|<strong><font color="#FF0000">m</font></strong>|l|e|p|s|o|l|t|s|x|r<br>|<em>1-sort</em>|a|e|e|h|l|<strong><font color="#FF0000">l</font></strong>|<strong><font color="#FF0000">m</font></strong>|e|p|s|o|l|t|s|x|r<br>|<em>1-sort</em>|a|e|e|<strong><font color="#FF0000">e</font></strong>|<strong><font color="#FF0000">h</font></strong>|<strong><font color="#FF0000">l</font></strong>|<strong><font color="#FF0000">l</font></strong>|<strong><font color="#FF0000">m</font></strong>|p|s|o|l|t|s|x|r<br>|<em>1-sort</em>|a|e|e|e|h|l|l|m|<strong><font color="#FF0000">p</font></strong>|s|o|l|t|s|x|r<br>|<em>1-sort</em>|a|e|e|e|h|l|l|m|p|<strong><font color="#FF0000">s</font></strong>|o|l|t|s|x|r<br>|<em>1-sort</em>|a|e|e|e|h|l|l|m|<strong><font color="#FF0000">o</font></strong>|<strong><font color="#FF0000">p</font></strong>|<strong><font color="#FF0000">s</font></strong>|l|t|s|x|r<br>|<em>1-sort</em>|a|e|e|e|h|l|l|<strong><font color="#FF0000">l</font></strong>|<strong><font color="#FF0000">m</font></strong>|<strong><font color="#FF0000">o</font></strong>|<strong><font color="#FF0000">p</font></strong>|<strong><font color="#FF0000">s</font></strong>|t|s|x|r<br>|<em>1-sort</em>|a|e|e|e|h|l|l|l|m|o|p|s|<strong><font color="#FF0000">t</font></strong>|s|x|r<br>|<em>1-sort</em>|a|e|e|e|h|l|l|l|m|o|p|s|<strong><font color="#FF0000">s</font></strong>|<strong><font color="#FF0000">t</font></strong>|x|r<br>|<em>1-sort</em>|a|e|e|e|h|l|l|l|m|o|p|s|s|t|<strong><font color="#FF0000">x</font></strong>|r<br>|<em>1-sort</em>|a|e|e|e|h|l|l|l|m|o|p|<strong><font color="#FF0000">r</font></strong>|<strong><font color="#FF0000">s</font></strong>|<strong><font color="#FF0000">s</font></strong>|<strong><font color="#FF0000">t</font></strong>|x<br>|<b><em>result</em>|a|e|e|e|h|l|l|l|m|o|p|r|s|s|t|x</b></p>
+<table>
+<thead>
+<tr>
+<th><em>input</em></th>
+<th>s</th>
+<th>h</th>
+<th>e</th>
+<th>l</th>
+<th>l</th>
+<th>s</th>
+<th>o</th>
+<th>r</th>
+<th>t</th>
+<th>e</th>
+<th>x</th>
+<th>a</th>
+<th>m</th>
+<th>p</th>
+<th>l</th>
+<th>e</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>13-sort</em></td>
+<td><strong><font color="#FF0000">p</font></strong></td>
+<td>h</td>
+<td>e</td>
+<td>l</td>
+<td>l</td>
+<td>s</td>
+<td>o</td>
+<td>r</td>
+<td>t</td>
+<td>e</td>
+<td>x</td>
+<td>a</td>
+<td>m</td>
+<td><strong><font color="#FF0000">s</font></strong></td>
+<td>l</td>
+<td>e</td>
+</tr>
+<tr>
+<td><em>13-sort</em></td>
+<td>p</td>
+<td>h</td>
+<td>e</td>
+<td>l</td>
+<td>l</td>
+<td>s</td>
+<td>o</td>
+<td>r</td>
+<td>t</td>
+<td>e</td>
+<td>x</td>
+<td>a</td>
+<td>m</td>
+<td>s</td>
+<td><strong><font color="#FF0000">l</font></strong></td>
+<td>e</td>
+</tr>
+<tr>
+<td><em>13-sort</em></td>
+<td>p</td>
+<td>h</td>
+<td>e</td>
+<td>l</td>
+<td>l</td>
+<td>s</td>
+<td>o</td>
+<td>r</td>
+<td>t</td>
+<td>e</td>
+<td>x</td>
+<td>a</td>
+<td>m</td>
+<td>s</td>
+<td>l</td>
+<td><strong><font color="#FF0000">e</font></strong></td>
+</tr>
+<tr>
+<td><em>4-sort</em></td>
+<td><strong><font color="#FF0000">l</font></strong></td>
+<td>h</td>
+<td>e</td>
+<td>l</td>
+<td><strong><font color="#FF0000">p</font></strong></td>
+<td>s</td>
+<td>o</td>
+<td>r</td>
+<td>t</td>
+<td>e</td>
+<td>x</td>
+<td>a</td>
+<td>m</td>
+<td>s</td>
+<td>l</td>
+<td>e</td>
+</tr>
+<tr>
+<td><em>4-sort</em></td>
+<td>l</td>
+<td>h</td>
+<td>e</td>
+<td>l</td>
+<td>p</td>
+<td><strong><font color="#FF0000">s</font></strong></td>
+<td>o</td>
+<td>r</td>
+<td>t</td>
+<td>e</td>
+<td>x</td>
+<td>a</td>
+<td>m</td>
+<td>s</td>
+<td>l</td>
+<td>e</td>
+</tr>
+<tr>
+<td><em>4-sort</em></td>
+<td>l</td>
+<td>h</td>
+<td>e</td>
+<td>l</td>
+<td>p</td>
+<td>s</td>
+<td><strong><font color="#FF0000">o</font></strong></td>
+<td>r</td>
+<td>t</td>
+<td>e</td>
+<td>x</td>
+<td>a</td>
+<td>m</td>
+<td>s</td>
+<td>l</td>
+<td>e</td>
+</tr>
+<tr>
+<td><em>4-sort</em></td>
+<td>l</td>
+<td>h</td>
+<td>e</td>
+<td>l</td>
+<td>p</td>
+<td>s</td>
+<td>o</td>
+<td><strong><font color="#FF0000">r</font></strong></td>
+<td>t</td>
+<td>e</td>
+<td>x</td>
+<td>a</td>
+<td>m</td>
+<td>s</td>
+<td>l</td>
+<td>e</td>
+</tr>
+<tr>
+<td><em>4-sort</em></td>
+<td>l</td>
+<td>h</td>
+<td>e</td>
+<td>l</td>
+<td>p</td>
+<td>s</td>
+<td>o</td>
+<td>r</td>
+<td><strong><font color="#FF0000">t</font></strong></td>
+<td>e</td>
+<td>x</td>
+<td>a</td>
+<td>m</td>
+<td>s</td>
+<td>l</td>
+<td>e</td>
+</tr>
+<tr>
+<td><em>4-sort</em></td>
+<td>l</td>
+<td><strong><font color="#FF0000">e</font></strong></td>
+<td>e</td>
+<td>l</td>
+<td>p</td>
+<td><strong><font color="#FF0000">h</font></strong></td>
+<td>o</td>
+<td>r</td>
+<td>t</td>
+<td><strong><font color="#FF0000">s</font></strong></td>
+<td>x</td>
+<td>a</td>
+<td>m</td>
+<td>s</td>
+<td>l</td>
+<td>e</td>
+</tr>
+<tr>
+<td><em>4-sort</em></td>
+<td>l</td>
+<td>e</td>
+<td>e</td>
+<td>l</td>
+<td>p</td>
+<td>h</td>
+<td>o</td>
+<td>r</td>
+<td>t</td>
+<td>s</td>
+<td><strong><font color="#FF0000">x</font></strong></td>
+<td>a</td>
+<td>m</td>
+<td>s</td>
+<td>l</td>
+<td>e</td>
+</tr>
+<tr>
+<td><em>4-sort</em></td>
+<td>l</td>
+<td>e</td>
+<td>e</td>
+<td><strong><font color="#FF0000">a</font></strong></td>
+<td>p</td>
+<td>h</td>
+<td>o</td>
+<td><strong><font color="#FF0000">l</font></strong></td>
+<td>t</td>
+<td>s</td>
+<td>x</td>
+<td><strong><font color="#FF0000">r</font></strong></td>
+<td>m</td>
+<td>s</td>
+<td>l</td>
+<td>e</td>
+</tr>
+<tr>
+<td><em>4-sort</em></td>
+<td>l</td>
+<td>e</td>
+<td>e</td>
+<td>a</td>
+<td><strong><font color="#FF0000">m</font></strong></td>
+<td>h</td>
+<td>o</td>
+<td>l</td>
+<td><strong><font color="#FF0000">p</font></strong></td>
+<td>s</td>
+<td>x</td>
+<td>r</td>
+<td><strong><font color="#FF0000">t</font></strong></td>
+<td>s</td>
+<td>l</td>
+<td>e</td>
+</tr>
+<tr>
+<td><em>4-sort</em></td>
+<td>l</td>
+<td>e</td>
+<td>e</td>
+<td>a</td>
+<td>m</td>
+<td>h</td>
+<td>o</td>
+<td>l</td>
+<td>p</td>
+<td>s</td>
+<td>x</td>
+<td>r</td>
+<td>t</td>
+<td><strong><font color="#FF0000">s</font></strong></td>
+<td>l</td>
+<td>e</td>
+</tr>
+<tr>
+<td><em>4-sort</em></td>
+<td>l</td>
+<td>e</td>
+<td>e</td>
+<td>a</td>
+<td>m</td>
+<td>h</td>
+<td><strong><font color="#FF0000">l</font></strong></td>
+<td>l</td>
+<td>p</td>
+<td>s</td>
+<td><strong><font color="#FF0000">o</font></strong></td>
+<td>r</td>
+<td>t</td>
+<td>s</td>
+<td><strong><font color="#FF0000">x</font></strong></td>
+<td>e</td>
+</tr>
+<tr>
+<td><em>4-sort</em></td>
+<td>l</td>
+<td>e</td>
+<td>e</td>
+<td>a</td>
+<td>m</td>
+<td>h</td>
+<td>l</td>
+<td><strong><font color="#FF0000">e</font></strong></td>
+<td>p</td>
+<td>s</td>
+<td>o</td>
+<td><strong><font color="#FF0000">l</font></strong></td>
+<td>t</td>
+<td>s</td>
+<td>x</td>
+<td><strong><font color="#FF0000">r</font></strong></td>
+</tr>
+<tr>
+<td><em>1-sort</em></td>
+<td><strong><font color="#FF0000">e</font></strong></td>
+<td><strong><font color="#FF0000">l</font></strong></td>
+<td>e</td>
+<td>a</td>
+<td>m</td>
+<td>h</td>
+<td>l</td>
+<td>e</td>
+<td>p</td>
+<td>s</td>
+<td>o</td>
+<td>l</td>
+<td>t</td>
+<td>s</td>
+<td>x</td>
+<td>r</td>
+</tr>
+<tr>
+<td><em>1-sort</em></td>
+<td>e</td>
+<td><strong><font color="#FF0000">e</font></strong></td>
+<td><strong><font color="#FF0000">l</font></strong></td>
+<td>a</td>
+<td>m</td>
+<td>h</td>
+<td>l</td>
+<td>e</td>
+<td>p</td>
+<td>s</td>
+<td>o</td>
+<td>l</td>
+<td>t</td>
+<td>s</td>
+<td>x</td>
+<td>r</td>
+</tr>
+<tr>
+<td><em>1-sort</em></td>
+<td><strong><font color="#FF0000">a</font></strong></td>
+<td><strong><font color="#FF0000">e</font></strong></td>
+<td><strong><font color="#FF0000">e</font></strong></td>
+<td><strong><font color="#FF0000">l</font></strong></td>
+<td>m</td>
+<td>h</td>
+<td>l</td>
+<td>e</td>
+<td>p</td>
+<td>s</td>
+<td>o</td>
+<td>l</td>
+<td>t</td>
+<td>s</td>
+<td>x</td>
+<td>r</td>
+</tr>
+<tr>
+<td><em>1-sort</em></td>
+<td>a</td>
+<td>e</td>
+<td>e</td>
+<td>l</td>
+<td><strong><font color="#FF0000">m</font></strong></td>
+<td>h</td>
+<td>l</td>
+<td>e</td>
+<td>p</td>
+<td>s</td>
+<td>o</td>
+<td>l</td>
+<td>t</td>
+<td>s</td>
+<td>x</td>
+<td>r</td>
+</tr>
+<tr>
+<td><em>1-sort</em></td>
+<td>a</td>
+<td>e</td>
+<td>e</td>
+<td><strong><font color="#FF0000">h</font></strong></td>
+<td><strong><font color="#FF0000">l</font></strong></td>
+<td><strong><font color="#FF0000">m</font></strong></td>
+<td>l</td>
+<td>e</td>
+<td>p</td>
+<td>s</td>
+<td>o</td>
+<td>l</td>
+<td>t</td>
+<td>s</td>
+<td>x</td>
+<td>r</td>
+</tr>
+<tr>
+<td><em>1-sort</em></td>
+<td>a</td>
+<td>e</td>
+<td>e</td>
+<td>h</td>
+<td>l</td>
+<td><strong><font color="#FF0000">l</font></strong></td>
+<td><strong><font color="#FF0000">m</font></strong></td>
+<td>e</td>
+<td>p</td>
+<td>s</td>
+<td>o</td>
+<td>l</td>
+<td>t</td>
+<td>s</td>
+<td>x</td>
+<td>r</td>
+</tr>
+<tr>
+<td><em>1-sort</em></td>
+<td>a</td>
+<td>e</td>
+<td>e</td>
+<td><strong><font color="#FF0000">e</font></strong></td>
+<td><strong><font color="#FF0000">h</font></strong></td>
+<td><strong><font color="#FF0000">l</font></strong></td>
+<td><strong><font color="#FF0000">l</font></strong></td>
+<td><strong><font color="#FF0000">m</font></strong></td>
+<td>p</td>
+<td>s</td>
+<td>o</td>
+<td>l</td>
+<td>t</td>
+<td>s</td>
+<td>x</td>
+<td>r</td>
+</tr>
+<tr>
+<td><em>1-sort</em></td>
+<td>a</td>
+<td>e</td>
+<td>e</td>
+<td>e</td>
+<td>h</td>
+<td>l</td>
+<td>l</td>
+<td>m</td>
+<td><strong><font color="#FF0000">p</font></strong></td>
+<td>s</td>
+<td>o</td>
+<td>l</td>
+<td>t</td>
+<td>s</td>
+<td>x</td>
+<td>r</td>
+</tr>
+<tr>
+<td><em>1-sort</em></td>
+<td>a</td>
+<td>e</td>
+<td>e</td>
+<td>e</td>
+<td>h</td>
+<td>l</td>
+<td>l</td>
+<td>m</td>
+<td>p</td>
+<td><strong><font color="#FF0000">s</font></strong></td>
+<td>o</td>
+<td>l</td>
+<td>t</td>
+<td>s</td>
+<td>x</td>
+<td>r</td>
+</tr>
+<tr>
+<td><em>1-sort</em></td>
+<td>a</td>
+<td>e</td>
+<td>e</td>
+<td>e</td>
+<td>h</td>
+<td>l</td>
+<td>l</td>
+<td>m</td>
+<td><strong><font color="#FF0000">o</font></strong></td>
+<td><strong><font color="#FF0000">p</font></strong></td>
+<td><strong><font color="#FF0000">s</font></strong></td>
+<td>l</td>
+<td>t</td>
+<td>s</td>
+<td>x</td>
+<td>r</td>
+</tr>
+<tr>
+<td><em>1-sort</em></td>
+<td>a</td>
+<td>e</td>
+<td>e</td>
+<td>e</td>
+<td>h</td>
+<td>l</td>
+<td>l</td>
+<td><strong><font color="#FF0000">l</font></strong></td>
+<td><strong><font color="#FF0000">m</font></strong></td>
+<td><strong><font color="#FF0000">o</font></strong></td>
+<td><strong><font color="#FF0000">p</font></strong></td>
+<td><strong><font color="#FF0000">s</font></strong></td>
+<td>t</td>
+<td>s</td>
+<td>x</td>
+<td>r</td>
+</tr>
+<tr>
+<td><em>1-sort</em></td>
+<td>a</td>
+<td>e</td>
+<td>e</td>
+<td>e</td>
+<td>h</td>
+<td>l</td>
+<td>l</td>
+<td>l</td>
+<td>m</td>
+<td>o</td>
+<td>p</td>
+<td>s</td>
+<td><strong><font color="#FF0000">t</font></strong></td>
+<td>s</td>
+<td>x</td>
+<td>r</td>
+</tr>
+<tr>
+<td><em>1-sort</em></td>
+<td>a</td>
+<td>e</td>
+<td>e</td>
+<td>e</td>
+<td>h</td>
+<td>l</td>
+<td>l</td>
+<td>l</td>
+<td>m</td>
+<td>o</td>
+<td>p</td>
+<td>s</td>
+<td><strong><font color="#FF0000">s</font></strong></td>
+<td><strong><font color="#FF0000">t</font></strong></td>
+<td>x</td>
+<td>r</td>
+</tr>
+<tr>
+<td><em>1-sort</em></td>
+<td>a</td>
+<td>e</td>
+<td>e</td>
+<td>e</td>
+<td>h</td>
+<td>l</td>
+<td>l</td>
+<td>l</td>
+<td>m</td>
+<td>o</td>
+<td>p</td>
+<td>s</td>
+<td>s</td>
+<td>t</td>
+<td><strong><font color="#FF0000">x</font></strong></td>
+<td>r</td>
+</tr>
+<tr>
+<td><em>1-sort</em></td>
+<td>a</td>
+<td>e</td>
+<td>e</td>
+<td>e</td>
+<td>h</td>
+<td>l</td>
+<td>l</td>
+<td>l</td>
+<td>m</td>
+<td>o</td>
+<td>p</td>
+<td><strong><font color="#FF0000">r</font></strong></td>
+<td><strong><font color="#FF0000">s</font></strong></td>
+<td><strong><font color="#FF0000">s</font></strong></td>
+<td><strong><font color="#FF0000">t</font></strong></td>
+<td>x</td>
+</tr>
+<tr>
+<td><b><em>result</em></b></td>
+<td>a</td>
+<td>e</td>
+<td>e</td>
+<td>e</td>
+<td>h</td>
+<td>l</td>
+<td>l</td>
+<td>l</td>
+<td>m</td>
+<td>o</td>
+<td>p</td>
+<td>r</td>
+<td>s</td>
+<td>s</td>
+<td>t</td>
+<td>x</td>
+</tr>
+</tbody>
+</table>
 <p>希尔排序对处理大规模序列很有用，比插入排序有显著的性能提升，构造一个使希尔排序运行缓慢的序列是一个很大的挑战。然而，寻找一个优于其他的 h 递减函数依然是一个研究课题。在实际中，运用上面代码中或其他简单的递减函数往往已经可以得到一个不错的效率。</p>
 
       
