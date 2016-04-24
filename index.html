@@ -110,7 +110,7 @@
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-meta ">
+      <div class="header-inner"><div class="site-meta custom-logo">
   
 
   <div class="custom-logo-site-title">
@@ -204,6 +204,459 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/04/24/2016-04-24-Logistic-Regression-&-Regularization/" itemprop="url">
+                  Logistic Regression & Regularization
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-24T19:54:23+08:00" content="2016-04-24">
+              2016-04-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Machine-Learning-Course-notes/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning Course notes</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="1-Logistic-Regression"><a href="#1-Logistic-Regression" class="headerlink" title="1.Logistic Regression"></a>1.Logistic Regression</h2><p>预测函数</p>
+<p><img src="http://www.forkosh.com/mathtex.cgi?   h_\theta(X)=\frac{1}{1+e^{-\theta^TX} }"></p>
+<p><img src="http://www.forkosh.com/mathtex.cgi?   h_\theta(X)\mbox{ estimated probability that }y=1\mbox{ on input }X,\mbox{ predict }y=1\mbox{ if }h_\theta(x)\ge0.5,\mbox{ that is }\theta^T* x\ge0"></p>
+<blockquote>
+<p>用训练集确定theta，由theta确定决策边界</p>
+</blockquote>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/04/24/2016-04-24-Logistic-Regression-&-Regularization/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/04/24/2016-04-24-Support-Vector-Machine/" itemprop="url">
+                  Support Vector Machine
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-24T19:54:12+08:00" content="2016-04-24">
+              2016-04-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Machine-Learning-Course-notes/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning Course notes</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="Large-Margin-Classification"><a href="#Large-Margin-Classification" class="headerlink" title="Large Margin Classification"></a>Large Margin Classification</h2><h3 id="Optimization-Objective"><a href="#Optimization-Objective" class="headerlink" title="Optimization Objective"></a>Optimization Objective</h3><p>For Logistic Regression, from the sigmoid function</p>
+<p><img src="http://www.forkosh.com/mathtex.cgi?  \text{If $y = 1$, we want $h_\theta(x)\approx1$, $\theta^Tx\gg0$ }"> </p>
+<p><img src="http://www.forkosh.com/mathtex.cgi?  \text{If $y = 0$, we want $h_\theta(x)\approx0$, $\theta^Tx\ll0$ }"> </p>
+<p>Cost of example : </p>
+<p><img src="http://www.forkosh.com/mathtex.cgi?  -(y\log h_\theta(x)+(1-y)\log (1-h_\theta(x)))=-y\log \frac{1}{1+e^{-z} }-(1-y)\log (1-\frac{1}{1+e^{-z} }) \qquad \text{where $z = \theta^Tx$}"></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/04/24/2016-04-24-Support-Vector-Machine/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/04/24/2016-04-24-Applying-ML-&-ML-system-design/" itemprop="url">
+                  Applying ML & ML system design
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-24T19:54:00+08:00" content="2016-04-24">
+              2016-04-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Machine-Learning-Course-notes/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning Course notes</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="Applying-ML"><a href="#Applying-ML" class="headerlink" title="Applying ML"></a>Applying ML</h2><h3 id="Evaluate-hypothesis"><a href="#Evaluate-hypothesis" class="headerlink" title="Evaluate hypothesis"></a>Evaluate hypothesis</h3><p>Split the dataset into training set and test set (often 70% and 30% respectively)</p>
+<p>Learning the parameter θ using training set</p>
+<p>Compute the test error θ using training set</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/04/24/2016-04-24-Applying-ML-&-ML-system-design/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/04/24/2016-04-24-Neural-Network/" itemprop="url">
+                  Neural Network
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-24T19:34:01+08:00" content="2016-04-24">
+              2016-04-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Machine-Learning-Course-notes/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning Course notes</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="Step-1-Pick-a-neural-architecture"><a href="#Step-1-Pick-a-neural-architecture" class="headerlink" title="Step 1 Pick a neural architecture"></a>Step 1 Pick a neural architecture</h2><p>No. of input  units: Dimensions of features x<sup>(i)</sup></p>
+<p>No. of output units: Number of classes</p>
+<p>Reasonable default: 1 hidden layer, or if &gt;1 hidden layer, have same no. of hidden units in every hidden layer (usually the more the better)</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/04/24/2016-04-24-Neural-Network/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
       
 
@@ -708,7 +1161,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-count">8</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -725,7 +1178,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-count">17</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

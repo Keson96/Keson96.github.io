@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="linear regression,machine learning," />
+  <meta name="keywords" content="machine learning,logistic regression," />
 
 
 
@@ -57,62 +57,44 @@
 
 
 
-<meta name="description" content="1.Introduction
-
-
-监督学习
-无监督学习  
+<meta name="description" content="1.Logistic Regression预测函数
 
 
 
-
- 分类问题
-聚类问题         
-
-
- 回归问题">
+用训练集确定theta，由theta确定决策边界">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Introduction to ML & Linear Regression">
-<meta property="og:url" content="http://yoursite.com/2016/04/23/2016-04-23-Intro-to-ML-&-Linear-Regression/index.html">
+<meta property="og:title" content="Logistic Regression & Regularization">
+<meta property="og:url" content="http://yoursite.com/2016/04/24/2016-04-24-Logistic-Regression-&-Regularization/index.html">
 <meta property="og:site_name" content="MayMoon">
-<meta property="og:description" content="1.Introduction
-
-
-监督学习
-无监督学习  
+<meta property="og:description" content="1.Logistic Regression预测函数
 
 
 
-
- 分类问题
-聚类问题         
-
-
- 回归问题">
-<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?   h_\theta(X)=\theta^T*X =\theta_0*x_0+\theta_1*x_1+...+\theta_n*x_n \text{ }\text{ }\text{ }\text{ }\text{ }\text{ }\text{ }\text{ }\text{ } x_0^{(i)}=1">
-<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?   J(\theta)=\frac{1}{2m}\sum_{k=1}^n(h_\theta(x^{(i)}-y^{(i)})^2">
-<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?   \theta_j:=\theta_j-\alpha\frac{\partial}{\partial\theta_j}J(\theta)">
-<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?   \frac{\partial}{\partial\theta_j}J(\theta)=\frac{1}{m}\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})\cdot x_j^{(i)}">
-<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?   x_i:=\frac{x_i-\mu_i}{s_i}\mbox{ }\mbox{ }\mbox{ }\mbox{ }\mbox{ }\mbox{ }\mbox{ }\mbox{ }\mbox{ }s_i\mbox{ means the range of }x_i\mbox{ ,aka max-min}">
-<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?   \theta=(X^TX)^{-1}X^Ty">
-<meta property="og:updated_time" content="2016-04-24T01:05:08.969Z">
+用训练集确定theta，由theta确定决策边界">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?   h_\theta(X)=\frac{1}{1+e^{-\theta^TX} }">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?   h_\theta(X)\mbox{ estimated probability that }y=1\mbox{ on input }X,\mbox{ predict }y=1\mbox{ if }h_\theta(x)\ge0.5,\mbox{ that is }\theta^T* x\ge0">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?   J(\theta)=\frac{1}{m}\sum_{i=1}^mCost(h_\theta(x^{(i)},y)">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?   Cost(h_\theta(x^{(i)},y)=\left\{ {-\log(h_\theta(x))\qquad\qquad\text{ if $y=1$}\atop-\log(1-h_\theta(x^{(i)}))\qquad\text{if $y=0$}\right">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?   J(\theta)=-\frac{1}{m}\Big[\sum_{i=1}^my^{(i)}\log(h_\theta(x^{(i)}))+(1-y^{(i)})\log(1-h_\theta(x^{(i)}))\Big]">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?   \theta_j:=\theta_j-\alpha\frac{1}{m}\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})\cdot x_j^{(i)}">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?  \small h_\theta^{(i)}(x)">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?  \small h_\theta^{(i)}(x)">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?   J(\theta)=\frac{1}{2m}\Big[\sum_{k=1}^n(h_\theta(x^{(i)}-y^{(i)})^2+\lambda\sum_{j=1}^n\theta_j^2\Big]">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?   \theta_0:=\theta_0-\alpha\frac{1}{m}\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})\cdot x_0^{(i)}">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?   \theta_j:=\theta_j-\alpha\Big[\frac{1}{m}\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})\cdot x_0^{(i)}+\frac{\lambda}{m}\theta_j\Big]\qquad j=1,2,3,...,n">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?   \theta = \left(X^TX +\lambda \left[\begin{matrix} 0&0&\cdots&0\\0&1&\cdots&\vdots\\\vdots&\vdots&\ddots&\vdots\\0&0&\cdots&1 \end{matrix}\right]\right)^{-1}\cdot X^Ty">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?   J(\theta)=-\frac{1}{m}\Big[\sum_{i=1}^my^{(i)}\log(h_\theta(x^{(i)}))+(1-y^{(i)})\log(1-h_\theta(x^{(i)}))\Big] + \frac{\lambda}{2m}\sum_{j=1}^n\theta_j^2">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?   \theta_0:=\theta_0-\alpha\frac{1}{m}\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})\cdot x_0^{(i)}">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?   \theta_j:=\theta_j-\alpha\left[\frac{1}{m}\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})\cdot x_j^{(i)}+\frac{\lambda}{m}\theta_j\right]\qquad j=1,2,3,...,n">
+<meta property="og:updated_time" content="2016-04-24T12:10:26.576Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Introduction to ML & Linear Regression">
-<meta name="twitter:description" content="1.Introduction
-
-
-监督学习
-无监督学习  
+<meta name="twitter:title" content="Logistic Regression & Regularization">
+<meta name="twitter:description" content="1.Logistic Regression预测函数
 
 
 
-
- 分类问题
-聚类问题         
-
-
- 回归问题">
-<meta name="twitter:image" content="http://www.forkosh.com/mathtex.cgi?   h_\theta(X)=\theta^T*X =\theta_0*x_0+\theta_1*x_1+...+\theta_n*x_n \text{ }\text{ }\text{ }\text{ }\text{ }\text{ }\text{ }\text{ }\text{ } x_0^{(i)}=1">
+用训练集确定theta，由theta确定决策边界">
+<meta name="twitter:image" content="http://www.forkosh.com/mathtex.cgi?   h_\theta(X)=\frac{1}{1+e^{-\theta^TX} }">
 
 
 
@@ -130,7 +112,7 @@
   };
 </script>
 
-  <title> Introduction to ML & Linear Regression | MayMoon </title>
+  <title> Logistic Regression & Regularization | MayMoon </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -270,7 +252,7 @@
             
             
               
-                Introduction to ML & Linear Regression
+                Logistic Regression & Regularization
               
             
           </h1>
@@ -282,8 +264,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-23T19:54:01+08:00" content="2016-04-23">
-              2016-04-23
+            <time itemprop="dateCreated" datetime="2016-04-24T19:54:23+08:00" content="2016-04-24">
+              2016-04-24
             </time>
           </span>
 
@@ -328,85 +310,54 @@
       
 
       
-        <h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1.Introduction"></a>1.Introduction</h2><table>
-<thead>
-<tr>
-<th>监督学习</th>
-<th>无监督学习  </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td> 分类问题</td>
-<td>聚类问题         </td>
-</tr>
-<tr>
-<td> 回归问题</td>
-<td></td>
-</tr>
-</tbody>
-</table>
+        <h2 id="1-Logistic-Regression"><a href="#1-Logistic-Regression" class="headerlink" title="1.Logistic Regression"></a>1.Logistic Regression</h2><p>预测函数</p>
+<p><img src="http://www.forkosh.com/mathtex.cgi?   h_\theta(X)=\frac{1}{1+e^{-\theta^TX} }"></p>
+<p><img src="http://www.forkosh.com/mathtex.cgi?   h_\theta(X)\mbox{ estimated probability that }y=1\mbox{ on input }X,\mbox{ predict }y=1\mbox{ if }h_\theta(x)\ge0.5,\mbox{ that is }\theta^T* x\ge0"></p>
+<blockquote>
+<p>用训练集确定theta，由theta确定决策边界</p>
+</blockquote>
 <a id="more"></a>
-<h2 id="2-Linear-Regression"><a href="#2-Linear-Regression" class="headerlink" title="2.Linear Regression"></a>2.Linear Regression</h2><blockquote>
-<p>m = number of training examples</p>
-<p>x<sup>(i)</sup> = input of i<sup>th</sup> training example </p>
-<p>y<sup>(i)</sup> = output of i<sup>th</sup> training example</p>
-<p>x<sub>j</sub><sup>(i)</sup> = input of i<sup>th</sup> training example</p>
-</blockquote>
-<p>预测函数</p>
-<p><img src="http://www.forkosh.com/mathtex.cgi?   h_\theta(X)=\theta^T*X =\theta_0*x_0+\theta_1*x_1+...+\theta_n*x_n \text{ }\text{ }\text{ }\text{ }\text{ }\text{ }\text{ }\text{ }\text{ } x_0^{(i)}=1"> </p>
 <p>代价函数</p>
-<p><img src="http://www.forkosh.com/mathtex.cgi?   J(\theta)=\frac{1}{2m}\sum_{k=1}^n(h_\theta(x^{(i)}-y^{(i)})^2"></p>
-<p>梯度下降 (分别改变，一次更新；alpha为学习率）</p>
-<p><img src="http://www.forkosh.com/mathtex.cgi?   \theta_j:=\theta_j-\alpha\frac{\partial}{\partial\theta_j}J(\theta)"><br><img src="http://www.forkosh.com/mathtex.cgi?   \frac{\partial}{\partial\theta_j}J(\theta)=\frac{1}{m}\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})\cdot x_j^{(i)}">  </p>
-<h2 id="3-Feature-scaling"><a href="#3-Feature-scaling" class="headerlink" title="3.Feature scaling"></a>3.Feature scaling</h2><blockquote>
-<p>help gradient decents converge more quickly, get every feature into approximately a   -1 &lt;= x<sub>i</sub> &lt;= 1 range</p>
-</blockquote>
-<p><img src="http://www.forkosh.com/mathtex.cgi?   x_i:=\frac{x_i-\mu_i}{s_i}\mbox{ }\mbox{ }\mbox{ }\mbox{ }\mbox{ }\mbox{ }\mbox{ }\mbox{ }\mbox{ }s_i\mbox{ means the range of }x_i\mbox{ ,aka max-min}"></p>
-<h2 id="4-Choose-learning-rate-alpha"><a href="#4-Choose-learning-rate-alpha" class="headerlink" title="4.Choose learning rate alpha"></a>4.Choose learning rate alpha</h2><table>
+<p><img src="http://www.forkosh.com/mathtex.cgi?   J(\theta)=\frac{1}{m}\sum_{i=1}^mCost(h_\theta(x^{(i)},y)"></p>
+<p><img src="http://www.forkosh.com/mathtex.cgi?   Cost(h_\theta(x^{(i)},y)=\left\{ {-\log(h_\theta(x))\qquad\qquad\text{ if $y=1$}\atop-\log(1-h_\theta(x^{(i)}))\qquad\text{if $y=0$}\right"></p>
+<p>简化的代价函数</p>
+<p><img src="http://www.forkosh.com/mathtex.cgi?   J(\theta)=-\frac{1}{m}\Big[\sum_{i=1}^my^{(i)}\log(h_\theta(x^{(i)}))+(1-y^{(i)})\log(1-h_\theta(x^{(i)}))\Big]"></p>
+<p>梯度下降</p>
+<p><img src="http://www.forkosh.com/mathtex.cgi?   \theta_j:=\theta_j-\alpha\frac{1}{m}\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})\cdot x_j^{(i)}"></p>
+<p>Optimization algorithm</p>
+<ul>
+<li>Conjugate gradient</li>
+<li>BFGS</li>
+<li>L-BFGS</li>
+</ul>
+<table>
 <thead>
 <tr>
-<th>0.001</th>
-<th>0.003</th>
-<th>0.01</th>
-<th>0.03</th>
-<th>0.1</th>
-<th>0.3</th>
-<th>1</th>
+<th>Advantages</th>
+<th>Disadvantages</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td></td>
+<td>No need to mannualy pick alpha</td>
+<td>More complex</td>
+</tr>
+<tr>
+<td>Often faster than gradient descent</td>
 </tr>
 </tbody>
 </table>
-<h2 id="5-Normal-Equation"><a href="#5-Normal-Equation" class="headerlink" title="5.Normal Equation"></a>5.Normal Equation</h2><blockquote>
-<p>no need to do feature scaling</p>
-</blockquote>
-<p><img src="http://www.forkosh.com/mathtex.cgi?   \theta=(X^TX)^{-1}X^Ty"></p>
-<h2 id="6-Gradient-Descent-Vs-Normal-Equation"><a href="#6-Gradient-Descent-Vs-Normal-Equation" class="headerlink" title="6.Gradient Descent Vs Normal Equation"></a>6.Gradient Descent Vs Normal Equation</h2><table>
-<thead>
-<tr>
-<th>Gradient Descent</th>
-<th>Normal Equation</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Need to choose alpha</td>
-<td>No need to choose alpha</td>
-</tr>
-<tr>
-<td>Needs many iterations</td>
-<td>Do not need many iterations</td>
-</tr>
-<tr>
-<td>Works well when n is large</td>
-<td>Slow if n is large</td>
-</tr>
-</tbody>
-</table>
+<h2 id="2-Multiclass-classification"><a href="#2-Multiclass-classification" class="headerlink" title="2.Multiclass classification"></a>2.Multiclass classification</h2><p>one-vs-all: Train a logistic regression classifier <img src="http://www.forkosh.com/mathtex.cgi?  \small h_\theta^{(i)}(x)">  for each class i to predict the probability that y=i . On a new input x, to make a prediction, pick the class i that maximizes <img src="http://www.forkosh.com/mathtex.cgi?  \small h_\theta^{(i)}(x)"></p>
+<h2 id="3-Regularization-solve-the-overfitting-problems"><a href="#3-Regularization-solve-the-overfitting-problems" class="headerlink" title="3.Regularization : solve the overfitting problems"></a>3.Regularization : solve the overfitting problems</h2><h3 id="Linear-Regression"><a href="#Linear-Regression" class="headerlink" title="Linear Regression"></a>Linear Regression</h3><p>Cost function<br><img src="http://www.forkosh.com/mathtex.cgi?   J(\theta)=\frac{1}{2m}\Big[\sum_{k=1}^n(h_\theta(x^{(i)}-y^{(i)})^2+\lambda\sum_{j=1}^n\theta_j^2\Big]"></p>
+<p>Gradient decent</p>
+<p><img src="http://www.forkosh.com/mathtex.cgi?   \theta_0:=\theta_0-\alpha\frac{1}{m}\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})\cdot x_0^{(i)}"></p>
+<p><img src="http://www.forkosh.com/mathtex.cgi?   \theta_j:=\theta_j-\alpha\Big[\frac{1}{m}\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})\cdot x_0^{(i)}+\frac{\lambda}{m}\theta_j\Big]\qquad j=1,2,3,...,n"></p>
+<h6 id="Normal-equation"><a href="#Normal-equation" class="headerlink" title="Normal equation"></a>Normal equation</h6><p><img src="http://www.forkosh.com/mathtex.cgi?   \theta = \left(X^TX +\lambda \left[\begin{matrix} 0&0&\cdots&0\\0&1&\cdots&\vdots\\\vdots&\vdots&\ddots&\vdots\\0&0&\cdots&1 \end{matrix}\right]\right)^{-1}\cdot X^Ty"></p>
+<h3 id="Logistic-regression"><a href="#Logistic-regression" class="headerlink" title="Logistic regression"></a>Logistic regression</h3><p>Cost function</p>
+<p><img src="http://www.forkosh.com/mathtex.cgi?   J(\theta)=-\frac{1}{m}\Big[\sum_{i=1}^my^{(i)}\log(h_\theta(x^{(i)}))+(1-y^{(i)})\log(1-h_\theta(x^{(i)}))\Big] + \frac{\lambda}{2m}\sum_{j=1}^n\theta_j^2"></p>
+<p>Gradient decent</p>
+<p><img src="http://www.forkosh.com/mathtex.cgi?   \theta_0:=\theta_0-\alpha\frac{1}{m}\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})\cdot x_0^{(i)}"></p>
+<p><img src="http://www.forkosh.com/mathtex.cgi?   \theta_j:=\theta_j-\alpha\left[\frac{1}{m}\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})\cdot x_j^{(i)}+\frac{\lambda}{m}\theta_j\right]\qquad j=1,2,3,...,n"></p>
 
       
     </div>
@@ -421,9 +372,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/linear-regression/" rel="tag">#linear regression</a>
-          
             <a href="/tags/machine-learning/" rel="tag">#machine learning</a>
+          
+            <a href="/tags/logistic-regression/" rel="tag">#logistic regression</a>
           
         </div>
       
@@ -432,17 +383,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/04/17/2016-04-17-2.1-Elementary-Sort/" rel="next" title="2-1 Elementary Sort">
-                <i class="fa fa-chevron-left"></i> 2-1 Elementary Sort
+              <a href="/2016/04/24/2016-04-24-Support-Vector-Machine/" rel="next" title="Support Vector Machine">
+                <i class="fa fa-chevron-left"></i> Support Vector Machine
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/04/24/2016-04-24-Neural-Network/" rel="prev" title="Neural Network">
-                Neural Network <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -558,7 +505,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Introduction"><span class="nav-number">1.</span> <span class="nav-text">1.Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Linear-Regression"><span class="nav-number">2.</span> <span class="nav-text">2.Linear Regression</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Feature-scaling"><span class="nav-number">3.</span> <span class="nav-text">3.Feature scaling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Choose-learning-rate-alpha"><span class="nav-number">4.</span> <span class="nav-text">4.Choose learning rate alpha</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-Normal-Equation"><span class="nav-number">5.</span> <span class="nav-text">5.Normal Equation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-Gradient-Descent-Vs-Normal-Equation"><span class="nav-number">6.</span> <span class="nav-text">6.Gradient Descent Vs Normal Equation</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Logistic-Regression"><span class="nav-number">1.</span> <span class="nav-text">1.Logistic Regression</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Multiclass-classification"><span class="nav-number">2.</span> <span class="nav-text">2.Multiclass classification</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Regularization-solve-the-overfitting-problems"><span class="nav-number">3.</span> <span class="nav-text">3.Regularization : solve the overfitting problems</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Linear-Regression"><span class="nav-number">3.1.</span> <span class="nav-text">Linear Regression</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#Normal-equation"><span class="nav-number">3.1.0.0.1.</span> <span class="nav-text">Normal equation</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Logistic-regression"><span class="nav-number">3.2.</span> <span class="nav-text">Logistic regression</span></a></li></ol></li></ol></div>
             
           </div>
         </section>

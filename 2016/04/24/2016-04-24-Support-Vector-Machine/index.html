@@ -1,0 +1,759 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="machine learning,support vector machine," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="Large Margin ClassificationOptimization ObjectiveFor Logistic Regression, from the sigmoid function
+ 
+ 
+Cost of example :">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Support Vector Machine">
+<meta property="og:url" content="http://yoursite.com/2016/04/24/2016-04-24-Support-Vector-Machine/index.html">
+<meta property="og:site_name" content="MayMoon">
+<meta property="og:description" content="Large Margin ClassificationOptimization ObjectiveFor Logistic Regression, from the sigmoid function
+ 
+ 
+Cost of example :">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?  \text{If $y = 1$, we want $h_\theta(x)\approx1$, $\theta^Tx\gg0$ }">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?  \text{If $y = 0$, we want $h_\theta(x)\approx0$, $\theta^Tx\ll0$ }">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?  -(y\log h_\theta(x)+(1-y)\log (1-h_\theta(x)))=-y\log \frac{1}{1+e^{-z} }-(1-y)\log (1-\frac{1}{1+e^{-z} }) \qquad \text{where $z = \theta^Tx$}">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?  \text{cost$_1(z)$} \approx -\log \frac{1}{1+e^{-z} }">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?  \text{cost$_0(z)$} \approx -\log (1-\frac{1}{1+e^{-z} })">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?   
+\begin{array}{rcl}
+J(\theta) &=& -\frac{1}{m}\left[\sum_{i=1}^my^{(i)}\log h_\theta(x^{(i)})+(1-y^{(i)})\log(1-h_\theta(x^{(i)}))\right] + \frac{\lambda}{2m}\sum_{j=1}^n\theta_j^2\\ 
+\\
+&=& \frac{1}{m}\left[\sum_{i=1}^my^{(i)}\Big(-\log h_\theta(x^{(i)})\Big)+(1-y^{(i)})\Big(-\log(1-h_\theta(x^{(i)}))\Big)\right]+\frac{\lambda}{2m}\sum_{j=1}^n\theta_j^2
+\end{array}">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?   
+J(\theta) = C\sum_{i=1}^m\left[y^{(i)}\text{cost$_1(\theta^Tx^{(i)})$}+(1-y^{(i)})\text{cost$_0(\theta^Tx^{(i)})$}\right]+\frac{1}{2}\sum_{j=1}^n\theta_j^2">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?  h_\theta(x)=\left\{ {1 \qquad \text{if $\theta^Tx\geq0$}\atop
+0 \qquad \text{otherwise}">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?  \text{If $y = 1$, we want  $\theta^Tx\gg1$ (not just $\geq0$)  }">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?  \text{If $y = 0$, we want  $\theta^Tx\ll-1$ (not just $<0$)}">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?  \min_\theta \frac12\sum_{j=1}^n\theta_j^2">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?  \text{s.t.} \qquad \theta^Tx^{(i)} \geq1 \qquad \text{if $y^{(i)}=1$}
+\\
+\text{ } \hspace{30pt} \theta^Tx^{(i)} \leq-1 \hspace{12pt} \text{if $y^{(i)}=0$}">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?  \text{Simplication : $\theta_0=0$}">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?  \frac12\sum_{j=1}^n\theta_j^2 = \frac12\parallel\theta\parallel^2">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?  \text{denote $p^{(i)}$ as $x^{(i)}$'s projection onto $\theta$, so $\theta^Tx^{(i)} = p^{(i)}\cdot \parallel\theta\parallel$}">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi? \frac12\parallel\theta\parallel^2 \quad ">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?  p^{(i)}">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?  p^{(i)}">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?  \text{Predict $y=1$ if } \theta_0+\theta_1x_1^2+\theta_2x_2^2+\ldots \geq0">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?  \text{Predict $y=1$ if } \theta_0+\theta_1f_1+\theta_2f_2+\ldots \geq0">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?  \text{choose } f_1=x_1^2, f_2=x_2^2, \ldots">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?  \text{Given $x$, compute new feature depending on proximity to landmarks $l^{(1)},l^{(2)},l^{(3)},\ldots$} \\ \\
+\text{$l^{(1)},l^{(2)},l^{(3)},\ldots$  are examples just like $x^{(i)}$}
+\\
+f_1=\text{similarity}(x,l^{(1)})=\exp\left(-\frac{\parallel x-l^{(1)}\parallel^2}{2\sigma^2}\right)
+\\
+f_2=\text{similarity}(x,l^{(2)})=\exp\left(-\frac{\parallel x-l^{(2)}\parallel^2}{2\sigma^2}\right)
+\\
+\\
+\ldots
+">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?  l^{(i)}">
+<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?  \text{Given $(x^{(1)},y^{(1)}),(x^{(2)},y^{(2)}),\ldots,(x^{(m)},y^{(m)})$}
+\\
+\\
+\text{choose $l^{(1)}=x^{(1)},l^{(2)}=x^{(2)},\ldots,l^{(m)}=x^{(m)}$}
+\\
+\\
+\text{Given example $x$ :}
+\\
+\text{ } \qquad f_1=\text{similarity}(x,l^{(1)})
+\\
+\text{ } \qquad f_2=\text{similarity}(x,l^{(2)})
+\\
+\text{ } \qquad \ldots
+\\
+\\
+\text{For every example $x^{(i)}$}
+\\
+\text{ } \qquad f_1^{(i)}=\text{similarity}(x^{(i)},l^{(1)})
+\\
+\text{ } \qquad f_2^{(i)}=\text{similarity}(x^{(i)},l^{(2)})
+\\
+\text{ } \qquad \ldots
+\\
+\text{ } \qquad f_m^{(i)}=\text{similarity}(x^{(i)},l^{(m)})
+\\
+\\
+\text{So we get a vector} \qquad\left[\begin{matrix} f_1^{(i)}\\f_2^{(i)}\\\vdots\\f_m^{(i)} \end{matrix}\right] , \text{We can also add $f_0^{(i)}=1$, then we can train $\theta $ and make predictions}
+\\
+\\
+\text{When training, instead of minimizing $\frac{1}{2}\sum_{j=1}^n\theta_j^2$, we minimize $\theta^TM\theta$, where $M$ is a matrix. }
+\\\text{By doing so, we can make the  algorithm computationally cheaper}
+">
+<meta property="og:updated_time" content="2016-04-24T12:17:04.039Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Support Vector Machine">
+<meta name="twitter:description" content="Large Margin ClassificationOptimization ObjectiveFor Logistic Regression, from the sigmoid function
+ 
+ 
+Cost of example :">
+<meta name="twitter:image" content="http://www.forkosh.com/mathtex.cgi?  \text{If $y = 1$, we want $h_\theta(x)\approx1$, $\theta^Tx\gg0$ }">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Support Vector Machine | MayMoon </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">MayMoon</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">随便写写</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Support Vector Machine
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-24T19:54:12+08:00" content="2016-04-24">
+              2016-04-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Machine-Learning-Course-notes/" itemprop="url" rel="index">
+                    <span itemprop="name">Machine Learning Course notes</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Large-Margin-Classification"><a href="#Large-Margin-Classification" class="headerlink" title="Large Margin Classification"></a>Large Margin Classification</h2><h3 id="Optimization-Objective"><a href="#Optimization-Objective" class="headerlink" title="Optimization Objective"></a>Optimization Objective</h3><p>For Logistic Regression, from the sigmoid function</p>
+<p><img src="http://www.forkosh.com/mathtex.cgi?  \text{If $y = 1$, we want $h_\theta(x)\approx1$, $\theta^Tx\gg0$ }"> </p>
+<p><img src="http://www.forkosh.com/mathtex.cgi?  \text{If $y = 0$, we want $h_\theta(x)\approx0$, $\theta^Tx\ll0$ }"> </p>
+<p>Cost of example : </p>
+<p><img src="http://www.forkosh.com/mathtex.cgi?  -(y\log h_\theta(x)+(1-y)\log (1-h_\theta(x)))=-y\log \frac{1}{1+e^{-z} }-(1-y)\log (1-\frac{1}{1+e^{-z} }) \qquad \text{where $z = \theta^Tx$}"></p>
+<a id="more"></a>
+<p>We use a two-straight-lines to replace the curve of log*–z, which means that we use two functions (which are more easy for computer to deal with) to replace the original cost examples :</p>
+<p><img src="http://www.forkosh.com/mathtex.cgi?  \text{cost$_1(z)$} \approx -\log \frac{1}{1+e^{-z} }"></p>
+<p><img src="http://www.forkosh.com/mathtex.cgi?  \text{cost$_0(z)$} \approx -\log (1-\frac{1}{1+e^{-z} })"></p>
+<p>Cost function of Logistic regression :</p>
+<p><img src="http://www.forkosh.com/mathtex.cgi?   
+\begin{array}{rcl}
+J(\theta) &=& -\frac{1}{m}\left[\sum_{i=1}^my^{(i)}\log h_\theta(x^{(i)})+(1-y^{(i)})\log(1-h_\theta(x^{(i)}))\right] + \frac{\lambda}{2m}\sum_{j=1}^n\theta_j^2\\ 
+\\
+&=& \frac{1}{m}\left[\sum_{i=1}^my^{(i)}\Big(-\log h_\theta(x^{(i)})\Big)+(1-y^{(i)})\Big(-\log(1-h_\theta(x^{(i)}))\Big)\right]+\frac{\lambda}{2m}\sum_{j=1}^n\theta_j^2
+\end{array}"></p>
+<p>Cost function of SVM :</p>
+<p><img src="http://www.forkosh.com/mathtex.cgi?   
+J(\theta) = C\sum_{i=1}^m\left[y^{(i)}\text{cost$_1(\theta^Tx^{(i)})$}+(1-y^{(i)})\text{cost$_0(\theta^Tx^{(i)})$}\right]+\frac{1}{2}\sum_{j=1}^n\theta_j^2"></p>
+<blockquote>
+<p>Because m dosen’t affect the optimal θ</p>
+<p>if C = 1/λ , then the optimal θ will be the same</p>
+</blockquote>
+<p>Hypothesis function of SVM :</p>
+<p><img src="http://www.forkosh.com/mathtex.cgi?  h_\theta(x)=\left\{ {1 \qquad \text{if $\theta^Tx\geq0$}\atop
+0 \qquad \text{otherwise}"></p>
+<h3 id="Large-Margin-Intuition"><a href="#Large-Margin-Intuition" class="headerlink" title="Large Margin Intuition"></a>Large Margin Intuition</h3><p>For SVM, from the cost function</p>
+<p><img src="http://www.forkosh.com/mathtex.cgi?  \text{If $y = 1$, we want  $\theta^Tx\gg1$ (not just $\geq0$)  }"> </p>
+<p><img src="http://www.forkosh.com/mathtex.cgi?  \text{If $y = 0$, we want  $\theta^Tx\ll-1$ (not just $<0$)}"></p>
+<p>If C is large, SVM can draw a decision boudary with a large margin to make the classifier more robust. Meanwhile, if C is large, SVM tend to be sensitive to outliers (异常出现的样本)</p>
+<h3 id="Mathematics-Behind-Large-margin-classification"><a href="#Mathematics-Behind-Large-margin-classification" class="headerlink" title="Mathematics Behind Large margin classification"></a>Mathematics Behind Large margin classification</h3><p>If C is large, then the optimization objective is :</p>
+<p><img src="http://www.forkosh.com/mathtex.cgi?  \min_\theta \frac12\sum_{j=1}^n\theta_j^2"></p>
+<p><img src="http://www.forkosh.com/mathtex.cgi?  \text{s.t.} \qquad \theta^Tx^{(i)} \geq1 \qquad \text{if $y^{(i)}=1$}
+\\
+\text{ } \hspace{30pt} \theta^Tx^{(i)} \leq-1 \hspace{12pt} \text{if $y^{(i)}=0$}"></p>
+<p><img src="http://www.forkosh.com/mathtex.cgi?  \text{Simplication : $\theta_0=0$}"></p>
+<p>We have </p>
+<p><img src="http://www.forkosh.com/mathtex.cgi?  \frac12\sum_{j=1}^n\theta_j^2 = \frac12\parallel\theta\parallel^2"></p>
+<p><img src="http://www.forkosh.com/mathtex.cgi?  \text{denote $p^{(i)}$ as $x^{(i)}$'s projection onto $\theta$, so $\theta^Tx^{(i)} = p^{(i)}\cdot \parallel\theta\parallel$}"></p>
+<p>If we want to minimize<br><img src="http://www.forkosh.com/mathtex.cgi? \frac12\parallel\theta\parallel^2 \quad ">we have to maximize <img src="http://www.forkosh.com/mathtex.cgi?  p^{(i)}"></p>
+<p>In fact, the direction of θ is perpendicular to the direction of decision boundary. And θ<sub>0</sub>=0 means that the decision boundary must pass the original point(so does θ vector).</p>
+<p>So we can get a large margin by maxmizing <img src="http://www.forkosh.com/mathtex.cgi?  p^{(i)}"></p>
+<h2 id="Kernels"><a href="#Kernels" class="headerlink" title="Kernels"></a>Kernels</h2><h3 id="Non-linear-Decision-Boundary"><a href="#Non-linear-Decision-Boundary" class="headerlink" title="Non-linear Decision Boundary"></a>Non-linear Decision Boundary</h3><p>We previous do :</p>
+<p><img src="http://www.forkosh.com/mathtex.cgi?  \text{Predict $y=1$ if } \theta_0+\theta_1x_1^2+\theta_2x_2^2+\ldots \geq0"></p>
+<p>Now we do slightly different :</p>
+<p><img src="http://www.forkosh.com/mathtex.cgi?  \text{Predict $y=1$ if } \theta_0+\theta_1f_1+\theta_2f_2+\ldots \geq0"></p>
+<p>An equal way is to :</p>
+<p><img src="http://www.forkosh.com/mathtex.cgi?  \text{choose } f_1=x_1^2, f_2=x_2^2, \ldots"></p>
+<p>But there is better choices :</p>
+<p><img src="http://www.forkosh.com/mathtex.cgi?  \text{Given $x$, compute new feature depending on proximity to landmarks $l^{(1)},l^{(2)},l^{(3)},\ldots$} \\ \\
+\text{$l^{(1)},l^{(2)},l^{(3)},\ldots$  are examples just like $x^{(i)}$}
+\\
+f_1=\text{similarity}(x,l^{(1)})=\exp\left(-\frac{\parallel x-l^{(1)}\parallel^2}{2\sigma^2}\right)
+\\
+f_2=\text{similarity}(x,l^{(2)})=\exp\left(-\frac{\parallel x-l^{(2)}\parallel^2}{2\sigma^2}\right)
+\\
+\\
+\ldots
+"></p>
+<p>We call the similarity functions as kernels, in this particular situation, the kernel is Gaussian kernel.</p>
+<h3 id="How-to-choose-landmarks"><a href="#How-to-choose-landmarks" class="headerlink" title="How to choose landmarks "></a>How to choose landmarks <img src="http://www.forkosh.com/mathtex.cgi?  l^{(i)}"></h3><p><img src="http://www.forkosh.com/mathtex.cgi?  \text{Given $(x^{(1)},y^{(1)}),(x^{(2)},y^{(2)}),\ldots,(x^{(m)},y^{(m)})$}
+\\
+\\
+\text{choose $l^{(1)}=x^{(1)},l^{(2)}=x^{(2)},\ldots,l^{(m)}=x^{(m)}$}
+\\
+\\
+\text{Given example $x$ :}
+\\
+\text{ } \qquad f_1=\text{similarity}(x,l^{(1)})
+\\
+\text{ } \qquad f_2=\text{similarity}(x,l^{(2)})
+\\
+\text{ } \qquad \ldots
+\\
+\\
+\text{For every example $x^{(i)}$}
+\\
+\text{ } \qquad f_1^{(i)}=\text{similarity}(x^{(i)},l^{(1)})
+\\
+\text{ } \qquad f_2^{(i)}=\text{similarity}(x^{(i)},l^{(2)})
+\\
+\text{ } \qquad \ldots
+\\
+\text{ } \qquad f_m^{(i)}=\text{similarity}(x^{(i)},l^{(m)})
+\\
+\\
+\text{So we get a vector} \qquad\left[\begin{matrix} f_1^{(i)}\\f_2^{(i)}\\\vdots\\f_m^{(i)} \end{matrix}\right] , \text{We can also add $f_0^{(i)}=1$, then we can train $\theta $ and make predictions}
+\\
+\\
+\text{When training, instead of minimizing $\frac{1}{2}\sum_{j=1}^n\theta_j^2$, we minimize $\theta^TM\theta$, where $M$ is a matrix. }
+\\\text{By doing so, we can make the  algorithm computationally cheaper}
+"></p>
+<h3 id="Parameters-for-SVM"><a href="#Parameters-for-SVM" class="headerlink" title="Parameters for SVM"></a>Parameters for SVM</h3><p><strong>C</strong></p>
+<ul>
+<li><p>Large C : Lower bias, high variance</p>
+</li>
+<li><p>Large C : Higher bias, low variance</p>
+</li>
+</ul>
+<p><strong>σ<sup>2</sup></strong></p>
+<ul>
+<li><p>Large σ<sup>2</sup> : Higher bias, lower variance</p>
+</li>
+<li><p>Small σ<sup>2</sup> : Lower bias, higher variance</p>
+</li>
+</ul>
+<h2 id="Using-SVM"><a href="#Using-SVM" class="headerlink" title="Using SVM"></a>Using SVM</h2><p>Do perform feature scaling before using the Gaussian kernel</p>
+<p>Other kenels:</p>
+<ul>
+<li>No kernel (Linear kernel)</li>
+<li>Polynomial kernel</li>
+<li>String kernel</li>
+<li>chi-square kernel</li>
+<li>histogram intersection kernel</li>
+</ul>
+<h3 id="Multi-class-classification"><a href="#Multi-class-classification" class="headerlink" title="Multi-class classification"></a>Multi-class classification</h3><p>Many SVM packages have built-in multi-class classification functionality.</p>
+<p>Otherwise, use one-vs-all method.(Train K SVMs)</p>
+<h3 id="Logistic-regression-vs-SVM"><a href="#Logistic-regression-vs-SVM" class="headerlink" title="Logistic regression vs. SVM"></a>Logistic regression vs. SVM</h3><p>If n is large (relative to m):</p>
+<p>Use logistic regression or SVM with no kernel</p>
+<p>If n is small, m is intermediate</p>
+<p>Use SVM with Gaussian kernel</p>
+<p>If n is small, m is large</p>
+<p>Create/add more features, then use logistic regression or SVM without kernel</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/machine-learning/" rel="tag">#machine learning</a>
+          
+            <a href="/tags/support-vector-machine/" rel="tag">#support vector machine</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/04/24/2016-04-24-Applying-ML-&-ML-system-design/" rel="next" title="Applying ML & ML system design">
+                <i class="fa fa-chevron-left"></i> Applying ML & ML system design
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/04/24/2016-04-24-Logistic-Regression-&-Regularization/" rel="prev" title="Logistic Regression & Regularization">
+                Logistic Regression & Regularization <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/pic.PNG"
+               alt="Wang Kx" />
+          <p class="site-author-name" itemprop="name">Wang Kx</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Large-Margin-Classification"><span class="nav-number">1.</span> <span class="nav-text">Large Margin Classification</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Optimization-Objective"><span class="nav-number">1.1.</span> <span class="nav-text">Optimization Objective</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Large-Margin-Intuition"><span class="nav-number">1.2.</span> <span class="nav-text">Large Margin Intuition</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mathematics-Behind-Large-margin-classification"><span class="nav-number">1.3.</span> <span class="nav-text">Mathematics Behind Large margin classification</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kernels"><span class="nav-number">2.</span> <span class="nav-text">Kernels</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Non-linear-Decision-Boundary"><span class="nav-number">2.1.</span> <span class="nav-text">Non-linear Decision Boundary</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#How-to-choose-landmarks"><span class="nav-number">2.2.</span> <span class="nav-text">How to choose landmarks </span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Parameters-for-SVM"><span class="nav-number">2.3.</span> <span class="nav-text">Parameters for SVM</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Using-SVM"><span class="nav-number">3.</span> <span class="nav-text">Using SVM</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Multi-class-classification"><span class="nav-number">3.1.</span> <span class="nav-text">Multi-class classification</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Logistic-regression-vs-SVM"><span class="nav-number">3.2.</span> <span class="nav-text">Logistic regression vs. SVM</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wang Kx</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=0.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
