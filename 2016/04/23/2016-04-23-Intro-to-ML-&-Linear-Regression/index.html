@@ -70,16 +70,7 @@
 聚类问题         
 
 
- 回归问题
-
-
-
-
-2.Linear Regression
-m = number of training examples
-x(i) = input of ith training example 
-y(i) = output of ith training example
-xj(i)">
+ 回归问题">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Introduction to ML & Linear Regression">
 <meta property="og:url" content="http://yoursite.com/2016/04/23/2016-04-23-Intro-to-ML-&-Linear-Regression/index.html">
@@ -97,23 +88,14 @@ xj(i)">
 聚类问题         
 
 
- 回归问题
-
-
-
-
-2.Linear Regression
-m = number of training examples
-x(i) = input of ith training example 
-y(i) = output of ith training example
-xj(i)">
+ 回归问题">
 <meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?   h_\theta(X)=\theta^T*X =\theta_0*x_0+\theta_1*x_1+...+\theta_n*x_n \text{ }\text{ }\text{ }\text{ }\text{ }\text{ }\text{ }\text{ }\text{ } x_0^{(i)}=1">
 <meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?   J(\theta)=\frac{1}{2m}\sum_{k=1}^n(h_\theta(x^{(i)}-y^{(i)})^2">
 <meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?   \theta_j:=\theta_j-\alpha\frac{\partial}{\partial\theta_j}J(\theta)">
 <meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?   \frac{\partial}{\partial\theta_j}J(\theta)=\frac{1}{m}\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})\cdot x_j^{(i)}">
 <meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?   x_i:=\frac{x_i-\mu_i}{s_i}\mbox{ }\mbox{ }\mbox{ }\mbox{ }\mbox{ }\mbox{ }\mbox{ }\mbox{ }\mbox{ }s_i\mbox{ means the range of }x_i\mbox{ ,aka max-min}">
 <meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?   \theta=(X^TX)^{-1}X^Ty">
-<meta property="og:updated_time" content="2016-04-23T13:17:15.732Z">
+<meta property="og:updated_time" content="2016-04-24T01:05:08.969Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Introduction to ML & Linear Regression">
 <meta name="twitter:description" content="1.Introduction
@@ -129,16 +111,7 @@ xj(i)">
 聚类问题         
 
 
- 回归问题
-
-
-
-
-2.Linear Regression
-m = number of training examples
-x(i) = input of ith training example 
-y(i) = output of ith training example
-xj(i)">
+ 回归问题">
 <meta name="twitter:image" content="http://www.forkosh.com/mathtex.cgi?   h_\theta(X)=\theta^T*X =\theta_0*x_0+\theta_1*x_1+...+\theta_n*x_n \text{ }\text{ }\text{ }\text{ }\text{ }\text{ }\text{ }\text{ }\text{ } x_0^{(i)}=1">
 
 
@@ -373,6 +346,7 @@ xj(i)">
 </tr>
 </tbody>
 </table>
+<a id="more"></a>
 <h2 id="2-Linear-Regression"><a href="#2-Linear-Regression" class="headerlink" title="2.Linear Regression"></a>2.Linear Regression</h2><blockquote>
 <p>m = number of training examples</p>
 <p>x<sup>(i)</sup> = input of i<sup>th</sup> training example </p>
@@ -389,12 +363,50 @@ xj(i)">
 <p>help gradient decents converge more quickly, get every feature into approximately a   -1 &lt;= x<sub>i</sub> &lt;= 1 range</p>
 </blockquote>
 <p><img src="http://www.forkosh.com/mathtex.cgi?   x_i:=\frac{x_i-\mu_i}{s_i}\mbox{ }\mbox{ }\mbox{ }\mbox{ }\mbox{ }\mbox{ }\mbox{ }\mbox{ }\mbox{ }s_i\mbox{ means the range of }x_i\mbox{ ,aka max-min}"></p>
-<h2 id="4-Choose-learning-rate-alpha"><a href="#4-Choose-learning-rate-alpha" class="headerlink" title="4.Choose learning rate alpha"></a>4.Choose learning rate alpha</h2><p>|0.001|0.003|0.01|0.03|0.1|0.3|1|<br>|</p>
+<h2 id="4-Choose-learning-rate-alpha"><a href="#4-Choose-learning-rate-alpha" class="headerlink" title="4.Choose learning rate alpha"></a>4.Choose learning rate alpha</h2><table>
+<thead>
+<tr>
+<th>0.001</th>
+<th>0.003</th>
+<th>0.01</th>
+<th>0.03</th>
+<th>0.1</th>
+<th>0.3</th>
+<th>1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+</tbody>
+</table>
 <h2 id="5-Normal-Equation"><a href="#5-Normal-Equation" class="headerlink" title="5.Normal Equation"></a>5.Normal Equation</h2><blockquote>
 <p>no need to do feature scaling</p>
 </blockquote>
 <p><img src="http://www.forkosh.com/mathtex.cgi?   \theta=(X^TX)^{-1}X^Ty"></p>
-<h2 id="6-Gradient-Descent-Vs-Normal-Equation"><a href="#6-Gradient-Descent-Vs-Normal-Equation" class="headerlink" title="6.Gradient Descent Vs Normal Equation"></a>6.Gradient Descent Vs Normal Equation</h2><p>|Gradient Descent|Normal Equation<br>|<br>|Need to choose alpha|No need to choose alpha<br>|Needs many iterations|Do not need many iterations<br>|Works well when n is large|Slow if n is large</p>
+<h2 id="6-Gradient-Descent-Vs-Normal-Equation"><a href="#6-Gradient-Descent-Vs-Normal-Equation" class="headerlink" title="6.Gradient Descent Vs Normal Equation"></a>6.Gradient Descent Vs Normal Equation</h2><table>
+<thead>
+<tr>
+<th>Gradient Descent</th>
+<th>Normal Equation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Need to choose alpha</td>
+<td>No need to choose alpha</td>
+</tr>
+<tr>
+<td>Needs many iterations</td>
+<td>Do not need many iterations</td>
+</tr>
+<tr>
+<td>Works well when n is large</td>
+<td>Slow if n is large</td>
+</tr>
+</tbody>
+</table>
 
       
     </div>

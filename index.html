@@ -287,8 +287,7 @@
 
       
         
-          
-            <h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1.Introduction"></a>1.Introduction</h2><table>
+          <h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1.Introduction"></a>1.Introduction</h2><table>
 <thead>
 <tr>
 <th>监督学习</th>
@@ -306,30 +305,11 @@
 </tr>
 </tbody>
 </table>
-<h2 id="2-Linear-Regression"><a href="#2-Linear-Regression" class="headerlink" title="2.Linear Regression"></a>2.Linear Regression</h2><blockquote>
-<p>m = number of training examples</p>
-<p>x<sup>(i)</sup> = input of i<sup>th</sup> training example </p>
-<p>y<sup>(i)</sup> = output of i<sup>th</sup> training example</p>
-<p>x<sub>j</sub><sup>(i)</sup> = input of i<sup>th</sup> training example</p>
-</blockquote>
-<p>预测函数</p>
-<p><img src="http://www.forkosh.com/mathtex.cgi?   h_\theta(X)=\theta^T*X =\theta_0*x_0+\theta_1*x_1+...+\theta_n*x_n \text{ }\text{ }\text{ }\text{ }\text{ }\text{ }\text{ }\text{ }\text{ } x_0^{(i)}=1"> </p>
-<p>代价函数</p>
-<p><img src="http://www.forkosh.com/mathtex.cgi?   J(\theta)=\frac{1}{2m}\sum_{k=1}^n(h_\theta(x^{(i)}-y^{(i)})^2"></p>
-<p>梯度下降 (分别改变，一次更新；alpha为学习率）</p>
-<p><img src="http://www.forkosh.com/mathtex.cgi?   \theta_j:=\theta_j-\alpha\frac{\partial}{\partial\theta_j}J(\theta)"><br><img src="http://www.forkosh.com/mathtex.cgi?   \frac{\partial}{\partial\theta_j}J(\theta)=\frac{1}{m}\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})\cdot x_j^{(i)}">  </p>
-<h2 id="3-Feature-scaling"><a href="#3-Feature-scaling" class="headerlink" title="3.Feature scaling"></a>3.Feature scaling</h2><blockquote>
-<p>help gradient decents converge more quickly, get every feature into approximately a   -1 &lt;= x<sub>i</sub> &lt;= 1 range</p>
-</blockquote>
-<p><img src="http://www.forkosh.com/mathtex.cgi?   x_i:=\frac{x_i-\mu_i}{s_i}\mbox{ }\mbox{ }\mbox{ }\mbox{ }\mbox{ }\mbox{ }\mbox{ }\mbox{ }\mbox{ }s_i\mbox{ means the range of }x_i\mbox{ ,aka max-min}"></p>
-<h2 id="4-Choose-learning-rate-alpha"><a href="#4-Choose-learning-rate-alpha" class="headerlink" title="4.Choose learning rate alpha"></a>4.Choose learning rate alpha</h2><p>|0.001|0.003|0.01|0.03|0.1|0.3|1|<br>|</p>
-<h2 id="5-Normal-Equation"><a href="#5-Normal-Equation" class="headerlink" title="5.Normal Equation"></a>5.Normal Equation</h2><blockquote>
-<p>no need to do feature scaling</p>
-</blockquote>
-<p><img src="http://www.forkosh.com/mathtex.cgi?   \theta=(X^TX)^{-1}X^Ty"></p>
-<h2 id="6-Gradient-Descent-Vs-Normal-Equation"><a href="#6-Gradient-Descent-Vs-Normal-Equation" class="headerlink" title="6.Gradient Descent Vs Normal Equation"></a>6.Gradient Descent Vs Normal Equation</h2><p>|Gradient Descent|Normal Equation<br>|<br>|Need to choose alpha|No need to choose alpha<br>|Needs many iterations|Do not need many iterations<br>|Works well when n is large|Slow if n is large</p>
-
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/04/23/2016-04-23-Intro-to-ML-&-Linear-Regression/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
