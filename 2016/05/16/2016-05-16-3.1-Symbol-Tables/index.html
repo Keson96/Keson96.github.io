@@ -1,0 +1,739 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="algorithm,symbol table,binary search," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="为了方便查找，人们设计出符号表（symbol table）这样一个抽象数据类型：在其中存储信息（value），之后可以通过指明一个键（key）来访问这个信息。符号表有时候也可以称为字典，有时也可以称为索引。
+符号表的主要目标是把一个值（value）与一个键（key）联系起来。用户可以插入 “键-值” 对（insert/put），也可以通过一个键来找到一个值（search/get）。除此之外，为方便">
+<meta property="og:type" content="article">
+<meta property="og:title" content="3-1 Symbol Tables">
+<meta property="og:url" content="http://yoursite.com/2016/05/16/2016-05-16-3.1-Symbol-Tables/index.html">
+<meta property="og:site_name" content="MayMoon">
+<meta property="og:description" content="为了方便查找，人们设计出符号表（symbol table）这样一个抽象数据类型：在其中存储信息（value），之后可以通过指明一个键（key）来访问这个信息。符号表有时候也可以称为字典，有时也可以称为索引。
+符号表的主要目标是把一个值（value）与一个键（key）联系起来。用户可以插入 “键-值” 对（insert/put），也可以通过一个键来找到一个值（search/get）。除此之外，为方便">
+<meta property="og:updated_time" content="2016-05-17T01:11:34.263Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="3-1 Symbol Tables">
+<meta name="twitter:description" content="为了方便查找，人们设计出符号表（symbol table）这样一个抽象数据类型：在其中存储信息（value），之后可以通过指明一个键（key）来访问这个信息。符号表有时候也可以称为字典，有时也可以称为索引。
+符号表的主要目标是把一个值（value）与一个键（key）联系起来。用户可以插入 “键-值” 对（insert/put），也可以通过一个键来找到一个值（search/get）。除此之外，为方便">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 3-1 Symbol Tables | MayMoon </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">MayMoon</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">随便写写</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                3-1 Symbol Tables
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-16T19:54:01+08:00" content="2016-05-16">
+              2016-05-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/《Algorithms》-notes/" itemprop="url" rel="index">
+                    <span itemprop="name">《Algorithms》 notes</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>为了方便查找，人们设计出符号表（symbol table）这样一个抽象数据类型：在其中存储信息（value），之后可以通过指明一个键（key）来访问这个信息。符号表有时候也可以称为字典，有时也可以称为索引。</p>
+<p>符号表的主要目标是把一个值（value）与一个键（key）联系起来。用户可以插入 “键-值” 对（insert/put），也可以通过一个键来找到一个值（search/get）。除此之外，为方便使用，符号表还提供了其他一些方法。</p>
+<a id="more"></a>
+<h2 id="API"><a href="#API" class="headerlink" title="API"></a>API</h2><pre><code>class ST &lt;Key, Value&gt; :
+                    ST()                          # create a symbol table
+              void put(Key key, Value val)       # put key-value pair into the table(remove key from table if value is null)
+                Value get(Key key)                  # value paired with key(null if key is absent)
+              void delete(Key key)               # remove key (and its value) from table
+           boolean contains(Key key)             # is there a value paired with key?
+           boolean isEmpty()                     # is the table empty?
+               int size()                        # number of key-value pairs in the table
+    Itertable&lt;Key&gt; keys()                        # all the keys in the table
+</code></pre><h3 id="重复的键"><a href="#重复的键" class="headerlink" title="重复的键"></a>重复的键</h3><p>我们采用以下约定：</p>
+<ul>
+<li>每个键只联系着一个值</li>
+<li>当用户插入一个 “键-值” 对时，如果这个键已经在符号表中，则新的值会替换旧的值</li>
+</ul>
+<h3 id="空键"><a href="#空键" class="headerlink" title="空键"></a>空键</h3><p>键不能为空（NULL）</p>
+<h3 id="空值"><a href="#空值" class="headerlink" title="空值"></a>空值</h3><p>我们采取如下约定：没有键与空值联系到一起。这个约定可以产生两个我们想要的效果：</p>
+<ol>
+<li><p>我们可以通过判断 get() 方法是否返回一个空值来确定表中是否已经定义了某个键</p>
+</li>
+<li><p>我们可以用 put() 方法，让第二个参数为 null，来实现删除操作</p>
+</li>
+</ol>
+<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><ul>
+<li>消极删除</li>
+</ul>
+<p>我们将要删除的键与空值联系到一起，之后再删除所有这样的键（清空内存）</p>
+<ul>
+<li>积极删除</li>
+</ul>
+<p>我们总是立即从表中删除键</p>
+<h2 id="有序符号表（ordered-symbol-tables）"><a href="#有序符号表（ordered-symbol-tables）" class="headerlink" title="有序符号表（ordered symbol tables）"></a>有序符号表（ordered symbol tables）</h2><h3 id="API-1"><a href="#API-1" class="headerlink" title="API"></a>API</h3><pre><code>class ST &lt;Key extends Comparable&lt;Key&gt;, Value&gt; :
+                    ST()                          # create a symbol table
+              void put(Key key, Value val)       # put key-value pair into the table(remove key from table if value is null)
+                Value get(Key key)                  # value paired with key(null if key is absent)
+              void delete(Key key)               # remove key (and its value) from table
+           boolean contains(Key key)             # is there a value paired with key?
+           boolean isEmpty()                     # is the table empty?
+               int size()                        # number of key-value pairs in the table
+               Key min()                         # smallest key
+               Key max()                         # largest key
+               Key floor(Key key)                # largest key less than or equal to key
+               Key ceiling(Key key)              # smallest key greater than or equal to key
+               int rank(Key key)                 # number of keys less than key
+               Key select(int k)                 # key of rank k
+              void deleteMin()                   # delete smallest key
+              void deleteMax()                   # delete largest key
+               int size(Key lo, Key hi)          # numbers of keys in [lo..hi]
+    Itertable&lt;Key&gt; keys(Key lo, Key hi)          # keys in [lo..hi], in sorted order
+    Itertable&lt;Key&gt; keys()                        # all the keys in the table, in sorted order
+</code></pre><h5 id="Minimum-and-maximum"><a href="#Minimum-and-maximum" class="headerlink" title="Minimum and maximum"></a>Minimum and maximum</h5><p>和优先队列很相似，主要区别在于优先队列允许相同的键，而符号表中不允许</p>
+<h2 id="性能测试"><a href="#性能测试" class="headerlink" title="性能测试"></a>性能测试</h2><p>当我们研究符号表的效率时，有两个测量尺度很重要：</p>
+<ul>
+<li>总单词数</li>
+<li>不同的单词数（distinct）</li>
+</ul>
+<p>我们的目标是设计出一种符号表的实现，可以处理大规模数据的 许多次 get() 和 put() 操作。<br>目前，我们假设以下环境：</p>
+<ul>
+<li>查找和插入操作是混合的（intermixed）</li>
+<li>互异（distinct）的单词数不是个小数目</li>
+<li>查找次数远大于插入次数是很可能的</li>
+<li>查找和插入的顺序不是随机的，尽管不可预测</li>
+</ul>
+<p>下面有两种实现：</p>
+<h2 id="实现一：无序链表的顺序查找（sequential-search-in-an-unordered-linked-list）"><a href="#实现一：无序链表的顺序查找（sequential-search-in-an-unordered-linked-list）" class="headerlink" title="实现一：无序链表的顺序查找（sequential search in an unordered linked list）"></a>实现一：无序链表的顺序查找（sequential search in an unordered linked list）</h2><p>对于 get() 操作，我们顺序遍历链表，比较元素的键。如果找到匹配的，则返回元素的值；如果没找到匹配，则返回 null。</p>
+<p>对于 put() 操作，我们顺序遍历链表，比较元素的键。如果找到匹配的，则更新元素的值；如果没找到匹配，则新建一个节点，并把它插入到链表头部。</p>
+<p><strong>————————————————————————</strong></p>
+<p><strong>对于一个大小为 N，基于无序链表实现的符号表，查找失败和插入均需要 N 次比较，而查找命中在最坏情况下需要 N 次比较，平均需要 ~N/2 次。在实际应用中，插入 N 个键互异的元素到一个初始为空的链表实现的符号表中需要 ~N<sup>2</sup>/2 次比较操作</strong></p>
+<p><strong>————————————————————————</strong></p>
+<h2 id="实现二：有序数组的二分查找（Binary-search-in-an-ordered-array）"><a href="#实现二：有序数组的二分查找（Binary-search-in-an-ordered-array）" class="headerlink" title="实现二：有序数组的二分查找（Binary search in an ordered array）"></a>实现二：有序数组的二分查找（Binary search in an ordered array）</h2><p>有序符号表的底层实现是两个平行的数组，一个用来存储键，另一个用来存储值。这种实现的核心是 rank() 方法。<br><br>实现 get() 方法，我们用 rank() 得到欲查找键在数组中应该排的位置，如果和该处的键相同，直接访问；否则返回 null<br><br>实现 put() 方法，我们用 rank() 得到欲查找键在数组中应该排的位置，如果和该处的键相同，更新对应的 value 值；如果不同，则将所有更大的键后移一位，将新键插入到这里<br></p>
+<blockquote>
+<p>默认使用大小可自动变的数组 (array resizing)</p>
+</blockquote>
+<p>我们使用二分查找来实现 rank()，rank() 满足以下特点：</p>
+<ul>
+<li>如果键在符号表中，rank() 返回它在符号表中的索引，这个数字和表中比它小的键的总数是相同的。</li>
+<li><p>如果键不再符号表中，rank() 也返回表中比它小的键的总数</p>
+<pre><code>// 递归的二分查找
+int rank(Key key, int lo, int hi)
+{
+    if (hi &lt; lo) return lo;
+    int mid = lo + (hi - lo) / 2;
+    int cmp = key.compareTo(keys[mid]);
+    if      (cmp &lt; 0)
+        return rank(key, lo, mid-1);
+    else if (cmp &gt; 0)
+        return rank(key, mid+1, hi);
+    else return mid;
+}
+
+//循环的二分查找
+int rank(Key key)
+{
+    int lo = 0, hi = N-1;
+    while(lo &lt;= hi)
+    {
+        int mid = lo + (hi - lo) / 2;
+        int cmp = key.compareTo(keys[mid]);
+        if      (cmp &lt; 0)    hi = mid - 1;
+        else if (cmp &gt; 0)    lo = mid + 1;
+        else return mid;
+    }
+    return lo;
+}
+</code></pre></li>
+</ul>
+<p><strong>————————————————————————</strong></p>
+<p><strong>对于一个 N 键有序数组，二分查找法每次查找使用不超过 lgN+1 次比较操作（无论查找匹配或失败）</strong></p>
+<p><strong>————————————————————————</strong></p>
+<p><strong>对于一个 N 键有序数组，插入一个新键在最差情况下需要用 ~2N 次数组访问（array access），所以将 N 个键插入到一个初始为空的数组中最差需要 ~N<sup>2</sup> 次数组访问</strong></p>
+<p><strong>————————————————————————</strong></p>
+<h2 id="两种实现的开销比较-amp-其他实现的比较"><a href="#两种实现的开销比较-amp-其他实现的比较" class="headerlink" title="两种实现的开销比较 &amp; 其他实现的比较"></a>两种实现的开销比较 &amp; 其他实现的比较</h2><h3 id="Cost-summary-for-basic-symbol-table-implementations"><a href="#Cost-summary-for-basic-symbol-table-implementations" class="headerlink" title="Cost summary for basic symbol-table implementations"></a>Cost summary for basic symbol-table implementations</h3><table>
+<thead>
+<tr>
+<th>algorithm</th>
+<th>worst-case<br>search</th>
+<th>worst-case<br>insert</th>
+<th>average-case<br>search hit</th>
+<th>average-case<br>insert</th>
+<th>efficiently <br>support ordered <br>operations</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sequential search<br>(unordered linked list)</td>
+<td>N</td>
+<td>N</td>
+<td>N/2</td>
+<td>N</td>
+<td>no</td>
+</tr>
+<tr>
+<td>binary search<br>(ordered array)</td>
+<td>lgN</td>
+<td>2N</td>
+<td>lgN</td>
+<td>N</td>
+<td>yes</td>
+</tr>
+</tbody>
+</table>
+<h3 id="Pros-and-cons-of-symbol-table-implementations"><a href="#Pros-and-cons-of-symbol-table-implementations" class="headerlink" title="Pros and cons of symbol-table implementations"></a>Pros and cons of symbol-table implementations</h3><table>
+<thead>
+<tr>
+<th>underlying<br>datastructure</th>
+<th>implementations</th>
+<th>pros</th>
+<th>cons</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>linked list<br>(sequential search)</td>
+<td><em>SequentialSearchST</em></td>
+<td>best for tiny STs</td>
+<td>slow for large STs</td>
+</tr>
+<tr>
+<td>ordered array<br>(binary search)</td>
+<td><em>BinarySearchST</em></td>
+<td>optimal search<br>and space,<br>order-based ops</td>
+<td>slow insert</td>
+</tr>
+<tr>
+<td>binary search tree</td>
+<td><em>BST</em></td>
+<td>easy to<br>implement,<br>order-based ops</td>
+<td>no guarantees<br>space for links</td>
+</tr>
+<tr>
+<td>balanced BST</td>
+<td><em>RedBlackBST</em></td>
+<td>optimal search<br>and insert,<br>order-based ops</td>
+<td>space for links</td>
+</tr>
+<tr>
+<td>hash table</td>
+<td>SeparateChainingHashST<br>LinearProbingHashST</td>
+<td>fast search/insert<br>for common types<br>of data</td>
+<td>need hash for each type<br>no order-based ops<br>space for links/empty</td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/algorithm/" rel="tag">#algorithm</a>
+          
+            <a href="/tags/symbol-table/" rel="tag">#symbol table</a>
+          
+            <a href="/tags/binary-search/" rel="tag">#binary search</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/05/15/2016-05-15-2.4-Priority-Queues/" rel="next" title="2-4 Priority Queues">
+                <i class="fa fa-chevron-left"></i> 2-4 Priority Queues
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/pic.PNG"
+               alt="Wang Kx" />
+          <p class="site-author-name" itemprop="name">Wang Kx</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#API"><span class="nav-number">1.</span> <span class="nav-text">API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#重复的键"><span class="nav-number">1.1.</span> <span class="nav-text">重复的键</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#空键"><span class="nav-number">1.2.</span> <span class="nav-text">空键</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#空值"><span class="nav-number">1.3.</span> <span class="nav-text">空值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删除"><span class="nav-number">1.4.</span> <span class="nav-text">删除</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有序符号表（ordered-symbol-tables）"><span class="nav-number">2.</span> <span class="nav-text">有序符号表（ordered symbol tables）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#API-1"><span class="nav-number">2.1.</span> <span class="nav-text">API</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Minimum-and-maximum"><span class="nav-number">2.1.0.1.</span> <span class="nav-text">Minimum and maximum</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#性能测试"><span class="nav-number">3.</span> <span class="nav-text">性能测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现一：无序链表的顺序查找（sequential-search-in-an-unordered-linked-list）"><span class="nav-number">4.</span> <span class="nav-text">实现一：无序链表的顺序查找（sequential search in an unordered linked list）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现二：有序数组的二分查找（Binary-search-in-an-ordered-array）"><span class="nav-number">5.</span> <span class="nav-text">实现二：有序数组的二分查找（Binary search in an ordered array）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#两种实现的开销比较-amp-其他实现的比较"><span class="nav-number">6.</span> <span class="nav-text">两种实现的开销比较 & 其他实现的比较</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Cost-summary-for-basic-symbol-table-implementations"><span class="nav-number">6.1.</span> <span class="nav-text">Cost summary for basic symbol-table implementations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pros-and-cons-of-symbol-table-implementations"><span class="nav-number">6.2.</span> <span class="nav-text">Pros and cons of symbol-table implementations</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wang Kx</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=0.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
