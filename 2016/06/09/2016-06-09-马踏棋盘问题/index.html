@@ -64,7 +64,7 @@
 <meta property="og:site_name" content="MayMoon">
 <meta property="og:description" content="马踏棋盘问题又称Knight Tour Problem，指的是在一个n*n棋盘上，找出一条路径，可以使马不重复地踏遍整个棋盘的格子。对于每一步，最多有八个方向可以走。">
 <meta property="og:image" content="http://i.imgur.com/anHlqEN.png">
-<meta property="og:updated_time" content="2016-06-09T12:46:48.366Z">
+<meta property="og:updated_time" content="2016-06-10T01:17:10.480Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="马踏棋盘问题（Knight Tour Problem）">
 <meta name="twitter:description" content="马踏棋盘问题又称Knight Tour Problem，指的是在一个n*n棋盘上，找出一条路径，可以使马不重复地踏遍整个棋盘的格子。对于每一步，最多有八个方向可以走。">
@@ -399,6 +399,8 @@ KT.printPath()                 ## 打印路径棋盘
                 self.board[move[1][0]-1][move[1][1]-1] = 0
 </code></pre><p>注：判断条件<code>moves[0][0] == [0] and cnt != 1</code>是为了判断是否到达一个死节点。设想如果一个节点（记为A点）的下一步方向中有一个（记为B）的再下一步可走数目为0，那么说明这个节点B只能通过A来到达，那么A必须是倒数第二步，B必须是最后一步，否则就永远不可能走到B点。</p>
 <h3 id="运行-1"><a href="#运行-1" class="headerlink" title="运行"></a>运行</h3><p>这样改进之后，不论以哪一个点开始，都可以在1秒内计算出路径。</p>
+<p>参考资料：</p>
+<p><a href="http://interactivepython.org/runestone/static/pythonds/Graphs/TheKnightsTourProblem.html" target="_blank" rel="external">http://interactivepython.org/runestone/static/pythonds/Graphs/TheKnightsTourProblem.html</a></p>
 
       
     </div>
@@ -433,6 +435,10 @@ KT.printPath()                 ## 打印路径棋盘
           </div>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/06/16/2016-06-16-3.5-Hash-Table/" rel="prev" title="3-5 Hash Tables">
+                3-5 Hash Tables <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -500,7 +506,7 @@ KT.printPath()                 ## 打印路径棋盘
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-count">15</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -517,7 +523,7 @@ KT.printPath()                 ## 打印路径棋盘
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-count">26</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

@@ -1,0 +1,745 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="algorithm,symbol table,hash," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="我们用数组来存储符号表的键-值对，通过算术运算将键转换成数组的索引。当需要查找元素时，将待查找元素的键转换成数组索引，直接通过下标访问即可。这样的办法称为哈希（hashing）。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="3-5 Hash Tables">
+<meta property="og:url" content="http://yoursite.com/2016/06/16/2016-06-16-3.5-Hash-Table/index.html">
+<meta property="og:site_name" content="MayMoon">
+<meta property="og:description" content="我们用数组来存储符号表的键-值对，通过算术运算将键转换成数组的索引。当需要查找元素时，将待查找元素的键转换成数组索引，直接通过下标访问即可。这样的办法称为哈希（hashing）。">
+<meta property="og:updated_time" content="2016-06-16T12:35:46.354Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="3-5 Hash Tables">
+<meta name="twitter:description" content="我们用数组来存储符号表的键-值对，通过算术运算将键转换成数组的索引。当需要查找元素时，将待查找元素的键转换成数组索引，直接通过下标访问即可。这样的办法称为哈希（hashing）。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 3-5 Hash Tables | MayMoon </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">MayMoon</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">随便写写</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                3-5 Hash Tables
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-16T19:54:01+08:00" content="2016-06-16">
+              2016-06-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/《Algorithms》-notes/" itemprop="url" rel="index">
+                    <span itemprop="name">《Algorithms》 notes</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>我们用数组来存储符号表的键-值对，通过算术运算将键转换成数组的索引。当需要查找元素时，将待查找元素的键转换成数组索引，直接通过下标访问即可。这样的办法称为哈希（hashing）。</p>
+<a id="more"></a>
+<p>这样的算法包含两部分：首先是<strong>计算哈希函数</strong>(hash function)，将键转换为数组索引。理想化的结果是每一个键的哈希值互不相同。通常情况下，多个键会映射到同一个哈希值，所以有了第二部分——<strong>冲突修复</strong>(collision resolution)，我们后面将采用两种办法来实现冲突修复：<strong>分离链接</strong>(separate chaining)和<strong>线性探查</strong>(linear probing)。</p>
+<p>哈希是一个很好的时空复杂度平衡(time-space tradeoff)的例子。理想情况下，每个键的哈希值互不相同，这样，就可以直接通过数组索引访问，但这样需要维护一张很大的哈希表，内存占用太大。如果多个键指向同一个哈希值，就可以显著减少哈希表的大小，但通过数组所有找到元素位置后，还需要某种办法（比如最简单的线性扫描）才能唯一的查找到元素，增加了时间开销。</p>
+<h2 id="哈希函数（Hash-Function）"><a href="#哈希函数（Hash-Function）" class="headerlink" title="哈希函数（Hash Function）"></a>哈希函数（Hash Function）</h2><p>如果我们有一个大小为M的数组来存储键-值对，那么我们就需要一个哈希函数能将元素的键转化为[0,M-1]之内的整数，作为数组的索引。这个函数必须满足两个条件：</p>
+<ol>
+<li><strong>易于计算</strong></li>
+<li><strong>使键均匀分布</strong>，即每个键转化为[0,M-1]之间的任意整数必须是近似等可能的</li>
+</ol>
+<p>哈希函数依赖于键本身的数据结构，所以不同类型的键就需要不同的哈希函数。</p>
+<blockquote>
+<p>为了更好地理解均匀分布的含义，考虑下面一个例子：我们要存储1000个人的个人信息，他们的身份证号作为键，要构造出一个哈希函数来将每个人的身份证号转换为[0-999]直接的数字。我们可以直接取身份证号后三位，也可以直接取身份证号前三位，但显然取后三位要比前三位好。因为前三位与地理位置紧密相关，1000个人的身份证号前三位很可能不是均匀分布于[0,999]，可能有一半以上的人前三位相同。<br>当然更好的做法是将身份证号的18位转化成18位的大整数，用这个整数来计算哈希值。</p>
+</blockquote>
+<h3 id="正整数的哈希"><a href="#正整数的哈希" class="headerlink" title="正整数的哈希"></a>正整数的哈希</h3><p>对于整数，最常用的办法是模运算哈希(modular hashing)。我们选一个合适的质数M来作为哈希表的大小，对每个整数进行模M运算，得到的结果就是它的哈希值。</p>
+<h4 id="为什么一定要用质数"><a href="#为什么一定要用质数" class="headerlink" title="为什么一定要用质数"></a>为什么一定要用质数</h4><p>比较下面表格中的两种情况</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Key</th>
+<th style="text-align:center">hash (M=100)</th>
+<th style="text-align:center">hash (M=97)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">212</td>
+<td style="text-align:center">12</td>
+<td style="text-align:center">18</td>
+</tr>
+<tr>
+<td style="text-align:center">618</td>
+<td style="text-align:center">18</td>
+<td style="text-align:center">36</td>
+</tr>
+<tr>
+<td style="text-align:center">302</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">11</td>
+</tr>
+<tr>
+<td style="text-align:center">940</td>
+<td style="text-align:center">40</td>
+<td style="text-align:center">67</td>
+</tr>
+<tr>
+<td style="text-align:center">702</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">23</td>
+</tr>
+<tr>
+<td style="text-align:center">704</td>
+<td style="text-align:center">4</td>
+<td style="text-align:center">25</td>
+</tr>
+<tr>
+<td style="text-align:center">612</td>
+<td style="text-align:center">12</td>
+<td style="text-align:center">30</td>
+</tr>
+<tr>
+<td style="text-align:center">606</td>
+<td style="text-align:center">6</td>
+<td style="text-align:center">24</td>
+</tr>
+<tr>
+<td style="text-align:center">772</td>
+<td style="text-align:center">72</td>
+<td style="text-align:center">93</td>
+</tr>
+<tr>
+<td style="text-align:center">510</td>
+<td style="text-align:center">10</td>
+<td style="text-align:center">25</td>
+</tr>
+<tr>
+<td style="text-align:center">423</td>
+<td style="text-align:center">23</td>
+<td style="text-align:center">35</td>
+</tr>
+<tr>
+<td style="text-align:center">650</td>
+<td style="text-align:center">50</td>
+<td style="text-align:center">68</td>
+</tr>
+<tr>
+<td style="text-align:center">317</td>
+<td style="text-align:center">17</td>
+<td style="text-align:center">26</td>
+</tr>
+<tr>
+<td style="text-align:center">907</td>
+<td style="text-align:center">7</td>
+<td style="text-align:center">34</td>
+</tr>
+<tr>
+<td style="text-align:center">507</td>
+<td style="text-align:center">7</td>
+<td style="text-align:center">22</td>
+</tr>
+<tr>
+<td style="text-align:center">304</td>
+<td style="text-align:center">4</td>
+<td style="text-align:center">13</td>
+</tr>
+<tr>
+<td style="text-align:center">714</td>
+<td style="text-align:center">14</td>
+<td style="text-align:center">35</td>
+</tr>
+<tr>
+<td style="text-align:center">857</td>
+<td style="text-align:center">57</td>
+<td style="text-align:center">81</td>
+</tr>
+<tr>
+<td style="text-align:center">801</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">25</td>
+</tr>
+<tr>
+<td style="text-align:center">900</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">27</td>
+</tr>
+<tr>
+<td style="text-align:center">413</td>
+<td style="text-align:center">13</td>
+<td style="text-align:center">25</td>
+</tr>
+<tr>
+<td style="text-align:center">701</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">22</td>
+</tr>
+<tr>
+<td style="text-align:center">418</td>
+<td style="text-align:center">18</td>
+<td style="text-align:center">30</td>
+</tr>
+<tr>
+<td style="text-align:center">601</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">19</td>
+</tr>
+</tbody>
+</table>
+<p>从表格中可以看出，用质数可以使元素分布得更均匀。因为使用100实际上只用了后两位数字所包含的信息，而用质数则用到了每一位包含的信息。</p>
+<h3 id="浮点数的哈希"><a href="#浮点数的哈希" class="headerlink" title="浮点数的哈希"></a>浮点数的哈希</h3><p>如果键是0-1之间的实数，那么可以给每个数乘M然后向下取整得到[0,M-1]之内的数组索引。但这种做法是有缺陷的，因为它给予高位上的数字更大的影响权重，而最后一位对结果几乎不起什么作用。<br>解决这个问题的一种办法就是对小数的二进制表示直接进行模运算哈希</p>
+<h3 id="字符串的哈希"><a href="#字符串的哈希" class="headerlink" title="字符串的哈希"></a>字符串的哈希</h3><p>我们可以将字符串看作是一个大整数来进行模运算哈希，将字符串里的每个字符转化成对应的整数，代码如下：</p>
+<pre><code>int hash = 0;
+for (int i = 0; i &lt; s.length(); i++)
+    hash = (R * hash + s.charAt(i)) % M;
+</code></pre><p>当R比任意字符对应的整数大时，我们实际上相当于把字符串转化成了一个N位R进制的整数。如果选一个足够小但又比任何字符对应整数大的R，我们就可以得到想要的分布于[0,M-1]之间的整数。</p>
+<h3 id="保持相等的一致性（Consistent-with-equals）"><a href="#保持相等的一致性（Consistent-with-equals）" class="headerlink" title="保持相等的一致性（Consistent with equals）"></a>保持相等的一致性（Consistent with equals）</h3><p>不论是哪种类型，哈希函数必须保持相等的一致性：即若两个键相等，则它们的哈希值相等；若哈希值相等，则键不一定相等。</p>
+<h3 id="用户自定义类型的哈希"><a href="#用户自定义类型的哈希" class="headerlink" title="用户自定义类型的哈希"></a>用户自定义类型的哈希</h3><p>对于用户自定义的类型，可以对类中的每个部分进行哈希，然后进行算术运算，得到最终的哈希值。例如，对于Transaction类型，可以采用以下的办法：</p>
+<pre><code>public class Transaction
+{
+    ...
+    private final String who;
+    private final Date when;
+    private final double amount;
+
+    public hashCode()
+    {
+        int hash = 17;
+        hash = 31 * hash + who.hashCode();
+        hash = 31 * hash + when.hashCode();
+        hash = 31 * hash + ((Double) amount).hashCode();
+        return hash;
+    }
+    ...
+}
+</code></pre><blockquote>
+<p>注：对于基本类型（如double），需要进行包装(wrap)，才可以使用hashCode()方法。</p>
+</blockquote>
+<h3 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h3><p>可以在类里面添加一个属性hash，这样，只需要第一次计算hash值就可以，此后只需要访问hash这个属性。</p>
+<h2 id="用分离链接的办法解决冲突（Hashing-with-separate-chaining）"><a href="#用分离链接的办法解决冲突（Hashing-with-separate-chaining）" class="headerlink" title="用分离链接的办法解决冲突（Hashing with separate chaining）"></a>用分离链接的办法解决冲突（Hashing with separate chaining）</h2><p>当发生冲突时（多个键对应同一哈希值，这是很常见的），一个很直接且常用的办法就是对哈希表中的每个索引建一个链表，来存储对应这个哈希值的所有的键。<br><br><strong>————————————————————————</strong><br><br><strong>在采用分离链接法，有M个链表、N个键-值对的哈希表中，每个链表中的元素个数小于 C*N/M 的可能性十分接近于1。（其中，C是一个很小的常数）。而且，对于查找失败和插入操作，所需要的比较操作次数为 ~N/M</strong><br><br><strong>————————————————————————</strong><br></p>
+<blockquote>
+<p>注意：如果哈希函数不是均匀的，那么查找和插入的开销甚至不会优于顺序查找。<br></p>
+<h3 id="表的大小"><a href="#表的大小" class="headerlink" title="表的大小"></a>表的大小</h3></blockquote>
+<p>采用分离链接法时，我们要选择一个足够小的M值使得不至于浪费很多空间来存储大量的空表，同时又要足够大，使得不至于浪费太多时间去对长链表进行顺序查找。</p>
+<h3 id="基于顺序的操作"><a href="#基于顺序的操作" class="headerlink" title="基于顺序的操作"></a>基于顺序的操作</h3><p>进行哈希后，元素间的顺序关系就不存在了，所以哈希表不能高效支持任何基于顺序的操作，比如找出最值。任何基于顺序的操作的时间复杂度都为O(n)。</p>
+<h2 id="用线性探查的办法解决冲突（Hashing-with-linear-probing）"><a href="#用线性探查的办法解决冲突（Hashing-with-linear-probing）" class="headerlink" title="用线性探查的办法解决冲突（Hashing with linear probing）"></a>用线性探查的办法解决冲突（Hashing with linear probing）</h2><p>另一种解决冲突的办法是将N个元素存储到一个大小为M（M&gt;N）的哈希表中，用表中的空位来解决冲突的问题。这类方法都称为<strong>开放地址</strong>法，其中最简单的是<strong>线性探查</strong>。</p>
+<p>线性探查的基本原理如下：当我们通过哈希值索引到哈希表中的某一位置时，检查这个位置上的元素与查找元素的键是否相同，如果不同，在哈希表中向后移动一位，继续比较键，直到遇到空位置或者键匹配。遇到空位置，即说明是search miss，对于查找，可以返回查找失败；对于插入，可以在此处插入新的键-值对。</p>
+<ul>
+<li>键与查找的键相同：查找成功</li>
+<li>遇到空位置：查找失败</li>
+<li>键与查找的键不同：尝试哈希表中的下一个元素</li>
+</ul>
+<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><p>对于删除操作，我们不能简单地将待删除元素位置的键设为空。如果这样，那么该键后面紧邻的键将永远不能被查出。所以我们要将待删除元素后面紧邻的所有键依次向前移动一位（重新插入）。</p>
+<h3 id="簇"><a href="#簇" class="headerlink" title="簇"></a>簇</h3><p>将采用线性探查的哈希表中彼此相邻的一组元素称为一个簇。由查找原理可知，越小的簇越有利于提高查找效率，越大的簇会导致越长的线性搜索。然而，不幸的是，采用线性探查方法，越大的簇更易于增大，因为插入元素的哈希值落在大簇中的可能性更大（落在每个索引处等可能）。<br><br>有一个办法可以解决这个问题，即换一种探查序列。在线性探查中，一旦匹配到哈希值，我们探查的序列是：1，2，3，4，···；我们可以换成1，2，4，8，···这样的平方探查(quadratic probing)序列或某种伪随机数序列。</p>
+<h3 id="性能分析"><a href="#性能分析" class="headerlink" title="性能分析"></a>性能分析</h3><p><strong>————————————————————————</strong><br><br><strong>在一个使用线性探查，大小为M，含有 N = αM 个键的哈希表中：对于查找成功和查找失败（插入），分别平均需要 ~(1+1/(1-α))/2 和 ~(1+1/(1-α)^2)/2次探查(probe)。这个估计在α接近1时会失去准确性，然而我们不需要这部分的准确性，因为通过可变数组，我们总可以使数组内元素数量保持在1/8~1/2之间。</strong><br><br><strong>————————————————————————</strong><br></p>
+<h3 id="数组大小可变"><a href="#数组大小可变" class="headerlink" title="数组大小可变"></a>数组大小可变</h3><p>对于线性探查来说，数组大小可变是必须的，一个满的数组会导致死循环，一个接近满的数组也会降低性能，而接近空的数组又会浪费空间。对于分离链接来说，数组大小可变是可选的，只要你对N有一个不错的估计。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>哈希表的最大优点是：对于查找和插入来说，时间复杂度都为O(1)。而它的主要缺点是：不支持基于顺序的操作。两种解决冲突的办法没有绝对的优劣之分，分离链接更能使用零散的内存块，而线性探查使用一整块内存来存储数组，使用哪一个取决于具体的环境。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/algorithm/" rel="tag">#algorithm</a>
+          
+            <a href="/tags/symbol-table/" rel="tag">#symbol table</a>
+          
+            <a href="/tags/hash/" rel="tag">#hash</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/09/2016-06-09-马踏棋盘问题/" rel="next" title="马踏棋盘问题（Knight Tour Problem）">
+                <i class="fa fa-chevron-left"></i> 马踏棋盘问题（Knight Tour Problem）
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/pic.PNG"
+               alt="Wang Kx" />
+          <p class="site-author-name" itemprop="name">Wang Kx</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#哈希函数（Hash-Function）"><span class="nav-number">1.</span> <span class="nav-text">哈希函数（Hash Function）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#正整数的哈希"><span class="nav-number">1.1.</span> <span class="nav-text">正整数的哈希</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么一定要用质数"><span class="nav-number">1.1.1.</span> <span class="nav-text">为什么一定要用质数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#浮点数的哈希"><span class="nav-number">1.2.</span> <span class="nav-text">浮点数的哈希</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串的哈希"><span class="nav-number">1.3.</span> <span class="nav-text">字符串的哈希</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#保持相等的一致性（Consistent-with-equals）"><span class="nav-number">1.4.</span> <span class="nav-text">保持相等的一致性（Consistent with equals）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用户自定义类型的哈希"><span class="nav-number">1.5.</span> <span class="nav-text">用户自定义类型的哈希</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存"><span class="nav-number">1.6.</span> <span class="nav-text">缓存</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用分离链接的办法解决冲突（Hashing-with-separate-chaining）"><span class="nav-number">2.</span> <span class="nav-text">用分离链接的办法解决冲突（Hashing with separate chaining）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#表的大小"><span class="nav-number">2.1.</span> <span class="nav-text">表的大小</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于顺序的操作"><span class="nav-number">2.2.</span> <span class="nav-text">基于顺序的操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用线性探查的办法解决冲突（Hashing-with-linear-probing）"><span class="nav-number">3.</span> <span class="nav-text">用线性探查的办法解决冲突（Hashing with linear probing）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#删除"><span class="nav-number">3.1.</span> <span class="nav-text">删除</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#簇"><span class="nav-number">3.2.</span> <span class="nav-text">簇</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#性能分析"><span class="nav-number">3.3.</span> <span class="nav-text">性能分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数组大小可变"><span class="nav-number">3.4.</span> <span class="nav-text">数组大小可变</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wang Kx</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=0.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
