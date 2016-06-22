@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="linear regression,machine learning," />
+  <meta name="keywords" content="hexo,mathjax," />
 
 
 
@@ -57,62 +57,28 @@
 
 
 
-<meta name="description" content="1.Introduction
-
-
-监督学习
-无监督学习  
-
-
-
-
- 分类问题
-聚类问题         
-
-
- 回归问题">
+<meta name="description" content="之前一直用的是mathTex来插入公式，不过，这个方式相当于插入了一张在线图片，显示效果不是很好。终于闲下来，有机会琢磨一下怎么用MathJax了。
+配置MathJaxStep 1 安装插件有大神写好的部署MathJax的插件，可以一键安装。在博客文件夹下执行：
+npm install hexo-math --save
+hexo math install
+Step 2 修改转义字符MathJax的">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Introduction to ML & Linear Regression">
-<meta property="og:url" content="http://yoursite.com/2016/04/23/2016-04-23-Intro-to-ML-&-Linear-Regression/index.html">
+<meta property="og:title" content="在Hexo博客中使用MathJax">
+<meta property="og:url" content="http://yoursite.com/2016/06/22/2016-06-22-在hexo博客中使用MathJax/index.html">
 <meta property="og:site_name" content="MayMoon">
-<meta property="og:description" content="1.Introduction
-
-
-监督学习
-无监督学习  
-
-
-
-
- 分类问题
-聚类问题         
-
-
- 回归问题">
-<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?   h_\theta(X)=\theta^T*X =\theta_0*x_0+\theta_1*x_1+...+\theta_n*x_n \text{ }\text{ }\text{ }\text{ }\text{ }\text{ }\text{ }\text{ }\text{ } x_0^{(i)}=1">
-<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?   J(\theta)=\frac{1}{2m}\sum_{k=1}^n(h_\theta(x^{(i)}-y^{(i)})^2">
-<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?   \theta_j:=\theta_j-\alpha\frac{\partial}{\partial\theta_j}J(\theta)">
-<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?   \frac{\partial}{\partial\theta_j}J(\theta)=\frac{1}{m}\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})\cdot x_j^{(i)}">
-<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?   x_i:=\frac{x_i-\mu_i}{s_i}\mbox{ }\mbox{ }\mbox{ }\mbox{ }\mbox{ }\mbox{ }\mbox{ }\mbox{ }\mbox{ }s_i\mbox{ means the range of }x_i\mbox{ ,aka max-min}">
-<meta property="og:image" content="http://www.forkosh.com/mathtex.cgi?   \theta=(X^TX)^{-1}X^Ty">
-<meta property="og:updated_time" content="2016-04-24T01:05:08.969Z">
+<meta property="og:description" content="之前一直用的是mathTex来插入公式，不过，这个方式相当于插入了一张在线图片，显示效果不是很好。终于闲下来，有机会琢磨一下怎么用MathJax了。
+配置MathJaxStep 1 安装插件有大神写好的部署MathJax的插件，可以一键安装。在博客文件夹下执行：
+npm install hexo-math --save
+hexo math install
+Step 2 修改转义字符MathJax的">
+<meta property="og:updated_time" content="2016-06-22T15:23:27.513Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Introduction to ML & Linear Regression">
-<meta name="twitter:description" content="1.Introduction
-
-
-监督学习
-无监督学习  
-
-
-
-
- 分类问题
-聚类问题         
-
-
- 回归问题">
-<meta name="twitter:image" content="http://www.forkosh.com/mathtex.cgi?   h_\theta(X)=\theta^T*X =\theta_0*x_0+\theta_1*x_1+...+\theta_n*x_n \text{ }\text{ }\text{ }\text{ }\text{ }\text{ }\text{ }\text{ }\text{ } x_0^{(i)}=1">
+<meta name="twitter:title" content="在Hexo博客中使用MathJax">
+<meta name="twitter:description" content="之前一直用的是mathTex来插入公式，不过，这个方式相当于插入了一张在线图片，显示效果不是很好。终于闲下来，有机会琢磨一下怎么用MathJax了。
+配置MathJaxStep 1 安装插件有大神写好的部署MathJax的插件，可以一键安装。在博客文件夹下执行：
+npm install hexo-math --save
+hexo math install
+Step 2 修改转义字符MathJax的">
 
 
 
@@ -130,7 +96,7 @@
   };
 </script>
 
-  <title> Introduction to ML & Linear Regression | MayMoon </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> 在Hexo博客中使用MathJax | MayMoon </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -270,7 +236,7 @@
             
             
               
-                Introduction to ML & Linear Regression
+                在Hexo博客中使用MathJax
               
             
           </h1>
@@ -282,8 +248,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-23T19:54:01+08:00" content="2016-04-23">
-              2016-04-23
+            <time itemprop="dateCreated" datetime="2016-06-22T19:54:01+08:00" content="2016-06-22">
+              2016-06-22
             </time>
           </span>
 
@@ -296,8 +262,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Machine-Learning-Course-notes/" itemprop="url" rel="index">
-                    <span itemprop="name">Machine Learning Course notes</span>
+                  <a href="/categories/杂记/" itemprop="url" rel="index">
+                    <span itemprop="name">杂记</span>
                   </a>
                 </span>
 
@@ -328,85 +294,22 @@
       
 
       
-        <h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1.Introduction"></a>1.Introduction</h2><table>
-<thead>
-<tr>
-<th>监督学习</th>
-<th>无监督学习  </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td> 分类问题</td>
-<td>聚类问题         </td>
-</tr>
-<tr>
-<td> 回归问题</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<a id="more"></a>
-<h2 id="2-Linear-Regression"><a href="#2-Linear-Regression" class="headerlink" title="2.Linear Regression"></a>2.Linear Regression</h2><blockquote>
-<p>m = number of training examples</p>
-<p>x<sup>(i)</sup> = input of i<sup>th</sup> training example </p>
-<p>y<sup>(i)</sup> = output of i<sup>th</sup> training example</p>
-<p>x<sub>j</sub><sup>(i)</sup> = input of i<sup>th</sup> training example</p>
+        <p>之前一直用的是mathTex来插入公式，不过，这个方式相当于插入了一张在线图片，显示效果不是很好。终于闲下来，有机会琢磨一下怎么用MathJax了。</p>
+<h2 id="配置MathJax"><a href="#配置MathJax" class="headerlink" title="配置MathJax"></a>配置MathJax</h2><h3 id="Step-1-安装插件"><a href="#Step-1-安装插件" class="headerlink" title="Step 1 安装插件"></a>Step 1 安装插件</h3><p>有大神写好的部署MathJax的插件，可以一键安装。在博客文件夹下执行：</p>
+<pre><code>npm install hexo-math --save
+hexo math install
+</code></pre><h3 id="Step-2-修改转义字符"><a href="#Step-2-修改转义字符" class="headerlink" title="Step 2 修改转义字符"></a>Step 2 修改转义字符</h3><p>MathJax的语法会用到<code>//</code>等会被marked渲染引擎转义的字符，所以需要修改默认的转义字符。</p>
+<p>定位到<code>./node_modules/marked/lib/</code>中（这个地址来自参考资料1，可能略有不同，比如我自己的就是：<code>.\node_modules\hexo-renderer-marked\node_modules\marked</code>），用文本编辑器打开marked.js（我的是marked.min.js）</p>
+<p>将</p>
+<pre><code>escape: /^\\([\\`*{}\[\]()# +\-.!_&gt;])/,
+</code></pre><p>改为</p>
+<pre><code>escape: /^\\([`*\[\]()# +\-.!_&gt;])/,
+</code></pre><blockquote>
+<p>在我的默认设置里，下划线没有被转义，所以到这一步就已经完成啦。需要设置的，请参考参考资料1</p>
 </blockquote>
-<p>预测函数</p>
-<p><img src="http://www.forkosh.com/mathtex.cgi?   h_\theta(X)=\theta^T*X =\theta_0*x_0+\theta_1*x_1+...+\theta_n*x_n \text{ }\text{ }\text{ }\text{ }\text{ }\text{ }\text{ }\text{ }\text{ } x_0^{(i)}=1"> </p>
-<p>代价函数</p>
-<p><img src="http://www.forkosh.com/mathtex.cgi?   J(\theta)=\frac{1}{2m}\sum_{k=1}^n(h_\theta(x^{(i)}-y^{(i)})^2"></p>
-<p>梯度下降 (分别改变，一次更新；alpha为学习率）</p>
-<p><img src="http://www.forkosh.com/mathtex.cgi?   \theta_j:=\theta_j-\alpha\frac{\partial}{\partial\theta_j}J(\theta)"><br><img src="http://www.forkosh.com/mathtex.cgi?   \frac{\partial}{\partial\theta_j}J(\theta)=\frac{1}{m}\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})\cdot x_j^{(i)}">  </p>
-<h2 id="3-Feature-scaling"><a href="#3-Feature-scaling" class="headerlink" title="3.Feature scaling"></a>3.Feature scaling</h2><blockquote>
-<p>help gradient decents converge more quickly, get every feature into approximately a   -1 &lt;= x<sub>i</sub> &lt;= 1 range</p>
-</blockquote>
-<p><img src="http://www.forkosh.com/mathtex.cgi?   x_i:=\frac{x_i-\mu_i}{s_i}\mbox{ }\mbox{ }\mbox{ }\mbox{ }\mbox{ }\mbox{ }\mbox{ }\mbox{ }\mbox{ }s_i\mbox{ means the range of }x_i\mbox{ ,aka max-min}"></p>
-<h2 id="4-Choose-learning-rate-alpha"><a href="#4-Choose-learning-rate-alpha" class="headerlink" title="4.Choose learning rate alpha"></a>4.Choose learning rate alpha</h2><table>
-<thead>
-<tr>
-<th>0.001</th>
-<th>0.003</th>
-<th>0.01</th>
-<th>0.03</th>
-<th>0.1</th>
-<th>0.3</th>
-<th>1</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h2 id="5-Normal-Equation"><a href="#5-Normal-Equation" class="headerlink" title="5.Normal Equation"></a>5.Normal Equation</h2><blockquote>
-<p>no need to do feature scaling</p>
-</blockquote>
-<p><img src="http://www.forkosh.com/mathtex.cgi?   \theta=(X^TX)^{-1}X^Ty"></p>
-<h2 id="6-Gradient-Descent-Vs-Normal-Equation"><a href="#6-Gradient-Descent-Vs-Normal-Equation" class="headerlink" title="6.Gradient Descent Vs Normal Equation"></a>6.Gradient Descent Vs Normal Equation</h2><table>
-<thead>
-<tr>
-<th>Gradient Descent</th>
-<th>Normal Equation</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Need to choose alpha</td>
-<td>No need to choose alpha</td>
-</tr>
-<tr>
-<td>Needs many iterations</td>
-<td>Do not need many iterations</td>
-</tr>
-<tr>
-<td>Works well when n is large</td>
-<td>Slow if n is large</td>
-</tr>
-</tbody>
-</table>
+<h2 id="MathJax-基本语法备忘"><a href="#MathJax-基本语法备忘" class="headerlink" title="MathJax 基本语法备忘"></a>MathJax 基本语法备忘</h2><p>查了一下，已经有人总结的很好了，就不再做重复工作了。</p>
+<p><a href="http://mlworks.cn/posts/introduction-to-mathjax-and-latex-expression/" target="_blank" rel="external">Mathjax与LaTex公式简介 by Ryan Zhao</a></p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="http://blog.csdn.net/emptyset110/article/details/50123231" target="_blank" rel="external">1. 搭建一个支持LaTEX的hexo博客 by 薛定谔的死猫</a></p>
 
       
     </div>
@@ -421,9 +324,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/linear-regression/" rel="tag">#linear regression</a>
+            <a href="/tags/hexo/" rel="tag">#hexo</a>
           
-            <a href="/tags/machine-learning/" rel="tag">#machine learning</a>
+            <a href="/tags/mathjax/" rel="tag">#mathjax</a>
           
         </div>
       
@@ -432,17 +335,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/04/17/2016-04-17-2.1-Elementary-Sort/" rel="next" title="2-1 Elementary Sort">
-                <i class="fa fa-chevron-left"></i> 2-1 Elementary Sort
+              <a href="/2016/06/20/2016-06-20-预习数据结构/" rel="next" title="'预习'数据结构">
+                <i class="fa fa-chevron-left"></i> '预习'数据结构
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/04/24/2016-04-24-Neural-Network/" rel="prev" title="Neural Network">
-                Neural Network <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -558,7 +457,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Introduction"><span class="nav-number">1.</span> <span class="nav-text">1.Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Linear-Regression"><span class="nav-number">2.</span> <span class="nav-text">2.Linear Regression</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Feature-scaling"><span class="nav-number">3.</span> <span class="nav-text">3.Feature scaling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Choose-learning-rate-alpha"><span class="nav-number">4.</span> <span class="nav-text">4.Choose learning rate alpha</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-Normal-Equation"><span class="nav-number">5.</span> <span class="nav-text">5.Normal Equation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-Gradient-Descent-Vs-Normal-Equation"><span class="nav-number">6.</span> <span class="nav-text">6.Gradient Descent Vs Normal Equation</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置MathJax"><span class="nav-number">1.</span> <span class="nav-text">配置MathJax</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-1-安装插件"><span class="nav-number">1.1.</span> <span class="nav-text">Step 1 安装插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-2-修改转义字符"><span class="nav-number">1.2.</span> <span class="nav-text">Step 2 修改转义字符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MathJax-基本语法备忘"><span class="nav-number">2.</span> <span class="nav-text">MathJax 基本语法备忘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
         </section>
