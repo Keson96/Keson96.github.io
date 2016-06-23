@@ -41,7 +41,7 @@
 <link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="hexo,mathjax," />
+  <meta name="keywords" content="wangkaixin, maymoon" />
 
 
 
@@ -57,16 +57,16 @@
 
 
 
-<meta name="description" content="之前一直用的是MathTex来插入公式，不过，这个方式相当于插入了一张在线图片，显示效果不是很好。终于闲下来，有机会琢磨一下怎么用MathJax了。">
+<meta name="description" content="信息分析复习">
 <meta property="og:type" content="article">
-<meta property="og:title" content="在Hexo博客中使用MathJax">
-<meta property="og:url" content="http://yoursite.com/2016/06/22/2016-06-22-在hexo博客中使用MathJax/index.html">
+<meta property="og:title" content="临时文件">
+<meta property="og:url" content="http://yoursite.com/2016/06/23/2016-06-23-信息分析/index.html">
 <meta property="og:site_name" content="MayMoon">
-<meta property="og:description" content="之前一直用的是MathTex来插入公式，不过，这个方式相当于插入了一张在线图片，显示效果不是很好。终于闲下来，有机会琢磨一下怎么用MathJax了。">
-<meta property="og:updated_time" content="2016-06-22T15:27:14.893Z">
+<meta property="og:description" content="信息分析复习">
+<meta property="og:updated_time" content="2016-06-23T09:04:23.209Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="在Hexo博客中使用MathJax">
-<meta name="twitter:description" content="之前一直用的是MathTex来插入公式，不过，这个方式相当于插入了一张在线图片，显示效果不是很好。终于闲下来，有机会琢磨一下怎么用MathJax了。">
+<meta name="twitter:title" content="临时文件">
+<meta name="twitter:description" content="信息分析复习">
 
 
 
@@ -84,7 +84,7 @@
   };
 </script>
 
-  <title> 在Hexo博客中使用MathJax | MayMoon </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> 临时文件 | MayMoon </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -224,7 +224,7 @@
             
             
               
-                在Hexo博客中使用MathJax
+                临时文件
               
             
           </h1>
@@ -236,8 +236,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-06-22T19:54:01+08:00" content="2016-06-22">
-              2016-06-22
+            <time itemprop="dateCreated" datetime="2016-06-23T19:54:01+08:00" content="2016-06-23">
+              2016-06-23
             </time>
           </span>
 
@@ -282,23 +282,191 @@
       
 
       
-        <p>之前一直用的是MathTex来插入公式，不过，这个方式相当于插入了一张在线图片，显示效果不是很好。终于闲下来，有机会琢磨一下怎么用MathJax了。</p>
+        <p>信息分析复习</p>
 <a id="more"></a>
-<h2 id="配置MathJax"><a href="#配置MathJax" class="headerlink" title="配置MathJax"></a>配置MathJax</h2><h3 id="Step-1-安装插件"><a href="#Step-1-安装插件" class="headerlink" title="Step 1 安装插件"></a>Step 1 安装插件</h3><p>有大神写好的部署MathJax的插件，可以一键安装。在博客文件夹下执行：</p>
-<pre><code>npm install hexo-math --save
-hexo math install
-</code></pre><h3 id="Step-2-修改转义字符"><a href="#Step-2-修改转义字符" class="headerlink" title="Step 2 修改转义字符"></a>Step 2 修改转义字符</h3><p>MathJax的语法会用到<code>//</code>等会被marked渲染引擎转义的字符，所以需要修改默认的转义字符。</p>
-<p>定位到<code>./node_modules/marked/lib/</code>中（这个地址来自参考资料1，可能略有不同，比如我自己的就是：<code>.\node_modules\hexo-renderer-marked\node_modules\marked</code>），用文本编辑器打开marked.js（我的是marked.min.js）</p>
-<p>将</p>
-<pre><code>escape: /^\\([\\`*{}\[\]()# +\-.!_&gt;])/,
-</code></pre><p>改为</p>
-<pre><code>escape: /^\\([`*\[\]()# +\-.!_&gt;])/,
-</code></pre><blockquote>
-<p>在我的默认设置里，下划线没有被转义，所以到这一步就已经完成啦。需要设置的，请参考参考资料1</p>
-</blockquote>
-<h2 id="MathJax-基本语法备忘"><a href="#MathJax-基本语法备忘" class="headerlink" title="MathJax 基本语法备忘"></a>MathJax 基本语法备忘</h2><p>查了一下，已经有人总结的很好了，就不再做重复工作了。</p>
-<p><a href="http://mlworks.cn/posts/introduction-to-mathjax-and-latex-expression/" target="_blank" rel="external">Mathjax与LaTex公式简介 by Ryan Zhao</a></p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="http://blog.csdn.net/emptyset110/article/details/50123231" target="_blank" rel="external">1. 搭建一个支持LaTEX的hexo博客 by 薛定谔的死猫</a></p>
+<p>##名词解释</p>
+<ol>
+<li><p>信息分析：需求依托，手段，加工过程，增值信息，决策服务</p>
+</li>
+<li><p>展览会：固定日期，主要形式，中介活动</p>
+</li>
+<li><p>演绎推理： 普通-&gt;特殊</p>
+</li>
+<li><p>常规推理：三段论（二前提-&gt;一结论），一般-&gt;个别</p>
+</li>
+<li><p>假言命题：对思维对象作有条件判断的命题</p>
+</li>
+<li><p>假言推理：以···为前提，根据···的逻辑特性进行的推理</p>
+</li>
+<li><p>选言命题：至少有一种情况存在</p>
+</li>
+<li><p>选言命题：以···为前提，根据···的逻辑特性进行的推理</p>
+</li>
+<li><p>二难推理：两个假言和一个选言为前提</p>
+</li>
+<li><p>归纳推理：个别对象-&gt;某类对象整体</p>
+</li>
+<li><p>完全归纳推理：某类的每一个-&gt;某类整体</p>
+</li>
+<li><p>不完全归纳推理：某类的一部分-&gt;某类整体</p>
+</li>
+<li><p>简单枚举归纳推理：经验为依据，没有遇到反例-&gt;整体具有特性</p>
+</li>
+<li><p>科学归纳推理：科学分析为依据，因果关系-&gt;整体具有特性</p>
+</li>
+<li><p>特尔菲法：多轮反馈，专家意见集中，获得判断结果</p>
+</li>
+<li><p>相关分析：量化相互依存关系</p>
+</li>
+<li><p>回归分析：用数学描述相互依存关系</p>
+</li>
+<li><p>时间序列：按时间采集的统计序列</p>
+</li>
+<li><p>趋势变动：较长时间，持续变动</p>
+</li>
+<li><p>周期变动：大于一年，涨落相同</p>
+</li>
+<li><p>季节变动：小于一年，周期波动</p>
+</li>
+<li><p>随机变动：剩下的，白噪声</p>
+</li>
+<li><p>时间序列分析：分解-&gt;预测</p>
+</li>
+<li><p>平滑：突变-&gt;修匀</p>
+</li>
+<li><p>确定性决策：肯定的条件，不同方案结果可知</p>
+</li>
+<li><p>不确定性决策：不同条件不同结果，概率未知</p>
+</li>
+<li><p>风险性决策：不同条件不同结果，概率可知</p>
+</li>
+<li><p>层次分析：分解决策问题，定量主观判断</p>
+</li>
+<li><p>联合分析：模拟产品属性组合，用户评价，分析最重要属性</p>
+</li>
+<li><p>SWOT分析方法： 优劣势，机会威胁，矩阵排列，</p>
+</li>
+</ol>
+<h2 id="简答"><a href="#简答" class="headerlink" title="简答"></a>简答</h2><ol>
+<li>实地调查的主要特点</li>
+</ol>
+<p>针对性强，互动性好；直观性强，原始数据多；内容新，速度快；渠道广泛</p>
+<ol>
+<li>如何鉴别信息资料的质量</li>
+</ol>
+<p>可靠性；先进性；使用性</p>
+<ol>
+<li>信息分析研究报告撰写程序</li>
+</ol>
+<p>(1) 确定主题</p>
+<p>(2) 选择材料</p>
+<p>(3) 设计结构</p>
+<p>(4) 拟定提纲</p>
+<p>(5) 撰写初稿</p>
+<p>(6) 修改报告</p>
+<ol>
+<li>使用比较法应注意什么</li>
+</ol>
+<p>可比性；比较深度；比较方式；图表使用</p>
+<ol>
+<li>简述不完全归纳推理/完全归纳推理特点</li>
+</ol>
+<p>具有某种属性的对象是部分/全体；结论断定的知识范围是/否超出前提的范围</p>
+<ol>
+<li>获得正确推理需注意</li>
+</ol>
+<p>前提正确；推理过程正确</p>
+<ol>
+<li>提高枚举推理可靠性</li>
+</ol>
+<p>越多越好；注意反例</p>
+<ol>
+<li>归纳推理和演绎推理的区别</li>
+</ol>
+<p>思维进程：一般&lt;-&gt;特殊；结论范围：是/否超出前提；归纳推出的不一定为真</p>
+<ol>
+<li>专家调查法形式</li>
+</ol>
+<p>专家个人调查法；专家会议调查法；特尔菲法</p>
+<ol>
+<li>特尔菲法的基本特征</li>
+</ol>
+<p>匿名性；反馈性；统计性</p>
+<ol>
+<li>特尔菲法步骤</li>
+</ol>
+<p>制定计划；选择专家；设计调查表；多次反馈；处理数据，得出结论</p>
+<ol>
+<li>特尔菲法选择专家应注意问题：</li>
+</ol>
+<p>专家自身要求；专家具有代表性；专家人数</p>
+<ol>
+<li>特尔菲法调查表要求</li>
+</ol>
+<p>力求简明；问题数目；不掺杂主观意见</p>
+<ol>
+<li>特尔菲法缺点</li>
+</ol>
+<p>缺乏论证；评估尺度不一；专家知识局限</p>
+<ol>
+<li>相关分析与回归分析的区别与联系</li>
+</ol>
+<p>联系：相关的形式，相关的密切程度，互相补充</p>
+<p>区别：相关的形式，相关的密切程度；需不需要确定自变量/因变量</p>
+<ol>
+<li>相关分析和回归分析的局限性</li>
+</ol>
+<p>无法判读是否有联系；无法反映因果关系</p>
+<ol>
+<li>时间序列回归分析法有什么缺陷</li>
+</ol>
+<p>近期数据权重大；不能online learning；运算量大</p>
+<ol>
+<li>两种生长曲线的区别</li>
+</ol>
+<p>发展只与已生长量有关，选择 Gompertz 曲线；发展与已生长和待生长都有关，选择Logistic曲线；Logistic曲线是对称S型曲线，Gompertz是非对称S型曲线。</p>
+<ol>
+<li>一个决策具有哪些条件就是确定性/不确定性/风险性决策</li>
+</ol>
+<p>明确的决策目标；两个或两个以上的方案；一个/两个及以上的客观状态；不同方案的损益可计算；状态发生的概率不可知/可知</p>
+<ol>
+<li>风险性决策中，客观状态的发生概率如何估算</li>
+</ol>
+<p>实验；历史资料；个人经验</p>
+<ol>
+<li>不确定性决策方法</li>
+</ol>
+<p>乐观准则，悲观准则，乐观系数，等可能性准则，后悔值法</p>
+<ol>
+<li>决策树法的特点</li>
+</ol>
+<p>直观；过程化，按步骤；便于集体决策</p>
+<ol>
+<li>模糊评价法注意问题</li>
+</ol>
+<p>删除相关程度大的指标；指标要尽量客观</p>
+<ol>
+<li>层次分析法步骤</li>
+</ol>
+<p>问题概念化，找出因素；分析因素关系，构造层次结构；两两比较，构造判断矩阵；一致性检验；层次总排序</p>
+<ol>
+<li>层次结构的特征</li>
+</ol>
+<p>上下层支配关系；层次数目不受限制；层间关系强于同层关系</p>
+<ol>
+<li>联合分析步骤</li>
+</ol>
+<p>确定特征和特征水平；产品模拟；数据收集；计算特征效用；市场预测</p>
+<ol>
+<li>波士顿矩阵法</li>
+</ol>
+<p>横轴：市场占有 20；纵轴：销售增长 10；问号，现金牛，明星，瘦狗</p>
+<ol>
+<li>文献计量学三大定律</li>
+</ol>
+<p>(1) 洛特卡定律：作者频率与文献数量间关系，作者分布理论。</p>
+<p>(2) 布拉德福定律：文献分散理论 a:a<sup>2</sup>:a<sup>3</sup>:···</p>
+<p>(3) 齐普夫定律：词频分布理论，等级*频数=常数</p>
 
       
     </div>
@@ -311,30 +479,18 @@ hexo math install
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/hexo/" rel="tag">#hexo</a>
-          
-            <a href="/tags/mathjax/" rel="tag">#mathjax</a>
-          
-        </div>
-      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/06/20/2016-06-20-预习数据结构/" rel="next" title="'预习'数据结构">
-                <i class="fa fa-chevron-left"></i> '预习'数据结构
+              <a href="/2016/06/22/2016-06-22-在hexo博客中使用MathJax/" rel="next" title="在Hexo博客中使用MathJax">
+                <i class="fa fa-chevron-left"></i> 在Hexo博客中使用MathJax
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/06/23/2016-06-23-信息分析/" rel="prev" title="临时文件">
-                临时文件 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -450,7 +606,7 @@ hexo math install
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置MathJax"><span class="nav-number">1.</span> <span class="nav-text">配置MathJax</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-1-安装插件"><span class="nav-number">1.1.</span> <span class="nav-text">Step 1 安装插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Step-2-修改转义字符"><span class="nav-number">1.2.</span> <span class="nav-text">Step 2 修改转义字符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MathJax-基本语法备忘"><span class="nav-number">2.</span> <span class="nav-text">MathJax 基本语法备忘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简答"><span class="nav-number">1.</span> <span class="nav-text">简答</span></a></li></ol></div>
             
           </div>
         </section>

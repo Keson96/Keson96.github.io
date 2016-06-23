@@ -226,6 +226,116 @@
             
               
                 
+                <a class="post-title-link" href="/2016/06/23/2016-06-23-信息分析/" itemprop="url">
+                  临时文件
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-23T19:54:01+08:00" content="2016-06-23">
+              2016-06-23
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/杂记/" itemprop="url" rel="index">
+                    <span itemprop="name">杂记</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>信息分析复习</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/06/23/2016-06-23-信息分析/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/06/22/2016-06-22-在hexo博客中使用MathJax/" itemprop="url">
                   在Hexo博客中使用MathJax
                 </a>
@@ -287,25 +397,12 @@
 
       
         
-          
-            <p>之前一直用的是mathTex来插入公式，不过，这个方式相当于插入了一张在线图片，显示效果不是很好。终于闲下来，有机会琢磨一下怎么用MathJax了。</p>
-<h2 id="配置MathJax"><a href="#配置MathJax" class="headerlink" title="配置MathJax"></a>配置MathJax</h2><h3 id="Step-1-安装插件"><a href="#Step-1-安装插件" class="headerlink" title="Step 1 安装插件"></a>Step 1 安装插件</h3><p>有大神写好的部署MathJax的插件，可以一键安装。在博客文件夹下执行：</p>
-<pre><code>npm install hexo-math --save
-hexo math install
-</code></pre><h3 id="Step-2-修改转义字符"><a href="#Step-2-修改转义字符" class="headerlink" title="Step 2 修改转义字符"></a>Step 2 修改转义字符</h3><p>MathJax的语法会用到<code>//</code>等会被marked渲染引擎转义的字符，所以需要修改默认的转义字符。</p>
-<p>定位到<code>./node_modules/marked/lib/</code>中（这个地址来自参考资料1，可能略有不同，比如我自己的就是：<code>.\node_modules\hexo-renderer-marked\node_modules\marked</code>），用文本编辑器打开marked.js（我的是marked.min.js）</p>
-<p>将</p>
-<pre><code>escape: /^\\([\\`*{}\[\]()# +\-.!_&gt;])/,
-</code></pre><p>改为</p>
-<pre><code>escape: /^\\([`*\[\]()# +\-.!_&gt;])/,
-</code></pre><blockquote>
-<p>在我的默认设置里，下划线没有被转义，所以到这一步就已经完成啦。需要设置的，请参考参考资料1</p>
-</blockquote>
-<h2 id="MathJax-基本语法备忘"><a href="#MathJax-基本语法备忘" class="headerlink" title="MathJax 基本语法备忘"></a>MathJax 基本语法备忘</h2><p>查了一下，已经有人总结的很好了，就不再做重复工作了。</p>
-<p><a href="http://mlworks.cn/posts/introduction-to-mathjax-and-latex-expression/" target="_blank" rel="external">Mathjax与LaTex公式简介 by Ryan Zhao</a></p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="http://blog.csdn.net/emptyset110/article/details/50123231" target="_blank" rel="external">1. 搭建一个支持LaTEX的hexo博客 by 薛定谔的死猫</a></p>
-
-          
+          <p>之前一直用的是MathTex来插入公式，不过，这个方式相当于插入了一张在线图片，显示效果不是很好。终于闲下来，有机会琢磨一下怎么用MathJax了。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/06/22/2016-06-22-在hexo博客中使用MathJax/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -852,9 +949,12 @@ hexo math install
 
       
         
-          
-            <h3 id="Shadowsocks"><a href="#Shadowsocks" class="headerlink" title="Shadowsocks"></a>Shadowsocks</h3><h3 id="Shadowsocks-Qt"><a href="#Shadowsocks-Qt" class="headerlink" title="Shadowsocks Qt"></a>Shadowsocks Qt</h3><h3 id="Onedrive-for-win7"><a href="#Onedrive-for-win7" class="headerlink" title="Onedrive for win7"></a>Onedrive for win7</h3><h3 id="Anaconda"><a href="#Anaconda" class="headerlink" title="Anaconda"></a>Anaconda</h3><h3 id="Sublime-text-3"><a href="#Sublime-text-3" class="headerlink" title="Sublime text 3"></a>Sublime text 3</h3><h3 id="MarkdownPad-2"><a href="#MarkdownPad-2" class="headerlink" title="MarkdownPad 2"></a>MarkdownPad 2</h3><h3 id="Bandizip"><a href="#Bandizip" class="headerlink" title="Bandizip"></a>Bandizip</h3><h3 id="等线字体"><a href="#等线字体" class="headerlink" title="等线字体"></a>等线字体</h3><h3 id="FireFox"><a href="#FireFox" class="headerlink" title="FireFox"></a>FireFox</h3><h3 id="UltraISO"><a href="#UltraISO" class="headerlink" title="UltraISO"></a>UltraISO</h3><h3 id="putty"><a href="#putty" class="headerlink" title="putty"></a>putty</h3>
-          
+          <h3 id="Shadowsocks"><a href="#Shadowsocks" class="headerlink" title="Shadowsocks"></a>Shadowsocks</h3><h3 id="Shadowsocks-Qt"><a href="#Shadowsocks-Qt" class="headerlink" title="Shadowsocks Qt"></a>Shadowsocks Qt</h3><h3 id="Onedrive-for-win7"><a href="#Onedrive-for-win7" class="headerlink" title="Onedrive for win7"></a>Onedrive for win7</h3>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/05/26/2016-05-26-随身常备软件/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1212,121 +1312,6 @@ hexo math install
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/04/24/2016-04-24-Logistic-Regression-&-Regularization/" itemprop="url">
-                  Logistic Regression & Regularization
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-24T19:54:23+08:00" content="2016-04-24">
-              2016-04-24
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Machine-Learning-Course-notes/" itemprop="url" rel="index">
-                    <span itemprop="name">Machine Learning Course notes</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="1-Logistic-Regression"><a href="#1-Logistic-Regression" class="headerlink" title="1.Logistic Regression"></a>1.Logistic Regression</h2><p>预测函数</p>
-<p><img src="http://www.forkosh.com/mathtex.cgi?   h_\theta(X)=\frac{1}{1+e^{-\theta^TX} }"></p>
-<p><img src="http://www.forkosh.com/mathtex.cgi?   h_\theta(X)\mbox{ estimated probability that }y=1\mbox{ on input }X,\mbox{ predict }y=1\mbox{ if }h_\theta(x)\ge0.5,\mbox{ that is }\theta^T* x\ge0"></p>
-<blockquote>
-<p>用训练集确定theta，由theta确定决策边界</p>
-</blockquote>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/24/2016-04-24-Logistic-Regression-&-Regularization/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1372,7 +1357,7 @@ hexo math install
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">17</span>
+              <span class="site-state-item-count">18</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
