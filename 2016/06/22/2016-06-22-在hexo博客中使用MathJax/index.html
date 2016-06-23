@@ -63,7 +63,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/06/22/2016-06-22-在hexo博客中使用MathJax/index.html">
 <meta property="og:site_name" content="MayMoon">
 <meta property="og:description" content="之前一直用的是MathTex来插入公式，不过，这个方式相当于插入了一张在线图片，显示效果不是很好。终于闲下来，有机会琢磨一下怎么用MathJax了。">
-<meta property="og:updated_time" content="2016-06-22T15:27:14.893Z">
+<meta property="og:updated_time" content="2016-06-23T14:57:39.832Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在Hexo博客中使用MathJax">
 <meta name="twitter:description" content="之前一直用的是MathTex来插入公式，不过，这个方式相当于插入了一张在线图片，显示效果不是很好。终于闲下来，有机会琢磨一下怎么用MathJax了。">
@@ -288,14 +288,21 @@
 <pre><code>npm install hexo-math --save
 hexo math install
 </code></pre><h3 id="Step-2-修改转义字符"><a href="#Step-2-修改转义字符" class="headerlink" title="Step 2 修改转义字符"></a>Step 2 修改转义字符</h3><p>MathJax的语法会用到<code>//</code>等会被marked渲染引擎转义的字符，所以需要修改默认的转义字符。</p>
-<p>定位到<code>./node_modules/marked/lib/</code>中（这个地址来自参考资料1，可能略有不同，比如我自己的就是：<code>.\node_modules\hexo-renderer-marked\node_modules\marked</code>），用文本编辑器打开marked.js（我的是marked.min.js）</p>
+<p>定位到<code>./node_modules/marked/lib/</code>中（也可能是：<code>hexo\node_modules\hexo-renderer-marked\node_modules\marked\lib</code>），用文本编辑器打开marked.js（我的是marked.min.js）</p>
 <p>将</p>
 <pre><code>escape: /^\\([\\`*{}\[\]()# +\-.!_&gt;])/,
 </code></pre><p>改为</p>
 <pre><code>escape: /^\\([`*\[\]()# +\-.!_&gt;])/,
-</code></pre><blockquote>
-<p>在我的默认设置里，下划线没有被转义，所以到这一步就已经完成啦。需要设置的，请参考参考资料1</p>
-</blockquote>
+</code></pre><p>将</p>
+<pre><code>em: /^\b_((?:[^_]|__)+?)_\b|^\*((?:\*\*|[\s\S])+?)\*(?!\*)/,
+</code></pre><p>改为</p>
+<pre><code>em:/^\*((?:\*\*|[\s\S])+?)\*(?!\*)/,
+</code></pre><p>如果到这里还是不起作用，只好暴力修改返回值了</p>
+<p>将</p>
+<pre><code>return &apos;&lt;em&gt;&apos; + text + &apos;&lt;/em&gt;&apos;;
+</code></pre><p>改为</p>
+<pre><code>return &apos;_&apos; + text + &apos;_&apos;;
+</code></pre><p>需要用斜体的话，就手动加em标签</p>
 <h2 id="MathJax-基本语法备忘"><a href="#MathJax-基本语法备忘" class="headerlink" title="MathJax 基本语法备忘"></a>MathJax 基本语法备忘</h2><p>查了一下，已经有人总结的很好了，就不再做重复工作了。</p>
 <p><a href="http://mlworks.cn/posts/introduction-to-mathjax-and-latex-expression/" target="_blank" rel="external">Mathjax与LaTex公式简介 by Ryan Zhao</a></p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="http://blog.csdn.net/emptyset110/article/details/50123231" target="_blank" rel="external">1. 搭建一个支持LaTEX的hexo博客 by 薛定谔的死猫</a></p>

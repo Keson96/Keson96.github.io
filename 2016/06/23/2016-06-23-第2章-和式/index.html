@@ -57,16 +57,22 @@
 
 
 
-<meta name="description" content="2.1 记号 NOTATION和式和项一般形式的和式 $a_1 + a_2 + \cdots + a_n$">
+<meta name="description" content="2.1 记号 NOTATION和式与项一般形式的和式 $a_1 + a_2 + \cdots + a_n$
+和式的每个元素 $a_k$ 称为项(term)
+除了用···来表示和式，我们也可以用（很多时候的确在用）求和符号表示和式">
 <meta property="og:type" content="article">
 <meta property="og:title" content="第2章-和式">
 <meta property="og:url" content="http://yoursite.com/2016/06/23/2016-06-23-第2章-和式/index.html">
 <meta property="og:site_name" content="MayMoon">
-<meta property="og:description" content="2.1 记号 NOTATION和式和项一般形式的和式 $a_1 + a_2 + \cdots + a_n$">
-<meta property="og:updated_time" content="2016-06-23T11:07:21.038Z">
+<meta property="og:description" content="2.1 记号 NOTATION和式与项一般形式的和式 $a_1 + a_2 + \cdots + a_n$
+和式的每个元素 $a_k$ 称为项(term)
+除了用···来表示和式，我们也可以用（很多时候的确在用）求和符号表示和式">
+<meta property="og:updated_time" content="2016-06-23T14:56:39.866Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="第2章-和式">
-<meta name="twitter:description" content="2.1 记号 NOTATION和式和项一般形式的和式 $a_1 + a_2 + \cdots + a_n$">
+<meta name="twitter:description" content="2.1 记号 NOTATION和式与项一般形式的和式 $a_1 + a_2 + \cdots + a_n$
+和式的每个元素 $a_k$ 称为项(term)
+除了用···来表示和式，我们也可以用（很多时候的确在用）求和符号表示和式">
 
 
 
@@ -282,7 +288,37 @@
       
 
       
-        <h2 id="2-1-记号-NOTATION"><a href="#2-1-记号-NOTATION" class="headerlink" title="2.1 记号 NOTATION"></a>2.1 记号 NOTATION</h2><h3 id="和式和项"><a href="#和式和项" class="headerlink" title="和式和项"></a>和式和项</h3><p>一般形式的和式 $a_1 + a_2 + \cdots + a_n$</p>
+        <h2 id="2-1-记号-NOTATION"><a href="#2-1-记号-NOTATION" class="headerlink" title="2.1 记号 NOTATION"></a>2.1 记号 NOTATION</h2><h3 id="和式与项"><a href="#和式与项" class="headerlink" title="和式与项"></a>和式与项</h3><p>一般形式的和式 $a_1 + a_2 + \cdots + a_n$</p>
+<p>和式的每个元素 $a_k$ 称为<strong>项</strong>(term)</p>
+<p>除了用···来表示和式，我们也可以用（很多时候的确在用）求和符号表示和式</p>
+<a id="more"></a>
+<h3 id="求和符号"><a href="#求和符号" class="headerlink" title="求和符号"></a>求和符号</h3><blockquote>
+<p>自从傅里叶引进 $\sum$ 这个符号代表求和，它就风靡了整个数学界</p>
+</blockquote>
+<h4 id="有确定界形式VS一般形式"><a href="#有确定界形式VS一般形式" class="headerlink" title="有确定界形式VS一般形式"></a>有确定界形式VS一般形式</h4><ol>
+<li><p>一般形式的含义更加清楚。</p>
+<p> $$\sum_{k=0}^{49} (2k+1)^2$$</p>
+<p> $$\sum_{\stackrel{1 \le k&lt;100}{k是奇数}} k^2$$</p>
+</li>
+</ol>
+<pre><code>这两个求和式是等价的，但后者显然更加清楚易懂
+</code></pre><ol>
+<li><p>一般形式更加容易处理</p>
+<p> $$\sum_{1 \le k \le n}a_k=\sum_{1 \le k+1 \le n}a_{k+1} $$</p>
+<p> $$ \sum_{k=1}^n a_k=\sum_{k=0}^{n-1}a_{k+1} $$</p>
+<p> 相同的变换，第一个式子使用一般形式，几乎不需要思考就可以做出这样的代换；第二个等式的转换就有点不容易看出来，也容易出错。</p>
+</li>
+</ol>
+<blockquote>
+<p>在这里使用 $k$ 而不是 $i$ 作为指标变量，因为 $i$ 还有更重要的任务，代表 $\sqrt{-1}$</p>
+</blockquote>
+<h4 id="更一般的形式"><a href="#更一般的形式" class="headerlink" title="更一般的形式"></a>更一般的形式</h4><p>$$ \sum_{P(k)}a_k $$</p>
+<p>其中，$k$是满足性质$P(k)$的一个整数</p>
+<h3 id="不加限定条件的表示和式"><a href="#不加限定条件的表示和式" class="headerlink" title="不加限定条件的表示和式"></a>不加限定条件的表示和式</h3><blockquote>
+<p>艾弗森在它的程序语言APL中提出一个思想：我们可以把一个为真或为假的命题放在括号中，如$[p是素数]$，其结果是1或0。</p>
+</blockquote>
+<p>所以，我们就可以不加限制条件的表示和式</p>
+<p>$$\sum_p [p是素数][p \le N]/p$$</p>
 
       
     </div>
@@ -428,7 +464,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-记号-NOTATION"><span class="nav-number">1.</span> <span class="nav-text">2.1 记号 NOTATION</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#和式和项"><span class="nav-number">1.1.</span> <span class="nav-text">和式和项</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-记号-NOTATION"><span class="nav-number">1.</span> <span class="nav-text">2.1 记号 NOTATION</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#和式与项"><span class="nav-number">1.1.</span> <span class="nav-text">和式与项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#求和符号"><span class="nav-number">1.2.</span> <span class="nav-text">求和符号</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#有确定界形式VS一般形式"><span class="nav-number">1.2.1.</span> <span class="nav-text">有确定界形式VS一般形式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更一般的形式"><span class="nav-number">1.2.2.</span> <span class="nav-text">更一般的形式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不加限定条件的表示和式"><span class="nav-number">1.3.</span> <span class="nav-text">不加限定条件的表示和式</span></a></li></ol></li></ol></div>
             
           </div>
         </section>
