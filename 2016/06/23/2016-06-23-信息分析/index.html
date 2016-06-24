@@ -63,7 +63,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/06/23/2016-06-23-信息分析/index.html">
 <meta property="og:site_name" content="MayMoon">
 <meta property="og:description" content="信息分析复习">
-<meta property="og:updated_time" content="2016-06-23T09:04:23.209Z">
+<meta property="og:updated_time" content="2016-06-24T01:54:05.957Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="临时文件">
 <meta name="twitter:description" content="信息分析复习">
@@ -467,6 +467,52 @@
 <p>(1) 洛特卡定律：作者频率与文献数量间关系，作者分布理论。</p>
 <p>(2) 布拉德福定律：文献分散理论 a:a<sup>2</sup>:a<sup>3</sup>:···</p>
 <p>(3) 齐普夫定律：词频分布理论，等级*频数=常数</p>
+<h2 id="计算"><a href="#计算" class="headerlink" title="计算"></a>计算</h2><ol>
+<li><p>自然指标转为相对等级</p>
+<p> 将最优者定为10分，最劣者定为0分，中间的用内插法确定（等比例）</p>
+</li>
+<li><p>专利文献信息分析</p>
+<p> (1) 时间序列法</p>
+<p> (2) 二山分析法：在同一张图上比较两个或以上国家的某领域专利技术，从而判断技术差距或技术转移</p>
+<p> (3) 三角图分析：等边三角形三边分别代表外观设计，发明/实用新型，商标专利。三角形内部某点到三边距离相当于各项权重，不同点连成线可看出发展趋势。</p>
+<p> (4) 技术系数法：越靠近左上方越高新，越靠近右下方越落后</p>
+<p> (5) 矢量动态模型法：纵轴：参加企业数；横轴：专利申请数量，画出矢量图可以看出行业发展</p>
+</li>
+<li><p>决策树</p>
+<p> □ 表示决策点；〇 表示各行动分支末端，即状态点；Δ 表示结果点，在图中一般不用标出，只写数字即可。</p>
+<p> 每种状态要标出概率；每个状态点要标出损益；如果行动分支会影响损益，也要标出；决策点的损益取行动分支下损益有利的那个。</p>
+</li>
+<li><p>动态规划</p>
+<p> |$S_i$|给定$S_i$|后，采取方|案$m_i$|时的$f_i$|最优|解|<br> |:-:|:-:|:-:|:-:|:-:|:-:|:-:|<br> ||$m_i = 1$|$m_i = 2$|···|$m_i = N$|$f_i(S_i)$|$m_i^*$|<br> |$B_1$|||||<br> |$B_2$|||</p>
+</li>
+<li><p>马尔科夫链</p>
+<p> 转移矩阵$P$中元素 $a_{ij}$表示由状态i转移到状态j的概率</p>
+<p> $n$步转移的转移矩阵为$P^n$</p>
+<p> 对于带利润的马尔科夫链，先算出一个利润向量$q_1$，此后$q_{i+1} = q_i + P*q_i$</p>
+</li>
+<li><p>模糊综合评价法</p>
+<p> (1) 确定N个参评对象，A个评价指标（权重向量为A），B个评分等级（向量为B）</p>
+<p> (2) 针对每个参评对象，进行如下步骤：1.评议；2.建立模糊矩阵$R$（把每个人数折合成百分比）；3.得到模糊评价结果 $C=AR$ 4.得到综合评价结果（是个实数）$Q_1 = C\dotB$</p>
+<p> (3) 将得到的$Q_i$进行比较，得到排序结果</p>
+</li>
+<li><p>SWOT分析法</p>
+<p> SO/ST/WO/WT对策，综合使用</p>
+</li>
+<li><p>层次分析法</p>
+<ol>
+<li><p>建立层次模型</p>
+</li>
+<li><p>建立判断矩阵，归一化（求行和平均值）</p>
+</li>
+<li><p>用行和平均值向量乘未归一化的判断矩阵，将结果向量求和，得到最大特征根$\lambda_{max}$</p>
+</li>
+<li><p>计算$C.I.=(\lambda-n)/(n-1)$</p>
+</li>
+<li><p>层次总排序 </p>
+</li>
+</ol>
+</li>
+</ol>
 
       
     </div>
@@ -484,17 +530,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/06/22/2016-06-22-在hexo博客中使用MathJax/" rel="next" title="在Hexo博客中使用MathJax">
-                <i class="fa fa-chevron-left"></i> 在Hexo博客中使用MathJax
+              <a href="/2016/06/23/2016-06-23-第2章-和式/" rel="next" title="第2章-和式">
+                <i class="fa fa-chevron-left"></i> 第2章-和式
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/06/23/2016-06-23-第2章-和式/" rel="prev" title="第2章-和式">
-                第2章-和式 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -610,7 +652,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简答"><span class="nav-number">1.</span> <span class="nav-text">简答</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简答"><span class="nav-number">1.</span> <span class="nav-text">简答</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#计算"><span class="nav-number">2.</span> <span class="nav-text">计算</span></a></li></ol></div>
             
           </div>
         </section>
@@ -706,7 +748,24 @@
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
 
 
 

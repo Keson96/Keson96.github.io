@@ -364,14 +364,14 @@
 <p>前缀表达式：<br>后缀表达式：运算符在算子之前的表达式，不需要括号，运算符之间无优先级差别，比如 <code> − × ÷ 15 − 7 + 1 1 3 + 2 + 1 1 </code>。参见<a href="https://en.wikipedia.org/wiki/Polish_notation" target="_blank" rel="external">Polish notation</a></p>
 <h3 id="计算算术表达式结果的算法"><a href="#计算算术表达式结果的算法" class="headerlink" title="计算算术表达式结果的算法"></a>计算算术表达式结果的算法</h3><p><strong>Dijkstra 算法 （Using two stacks)</strong></p>
 <p>从左到右一次取出一个元素，然后按照以下原则处理：</p>
-<p><em>（完全括号化的情况）</em></p>
+<p>_（完全括号化的情况）_</p>
 <ul>
 <li>如果是算子（数字），则将其压入算子栈</li>
 <li>如果是运算符，则将其压入运算符栈</li>
 <li>如果是左括号，则忽略</li>
 <li>当遇到右括号时，从运算符栈弹出一个运算符，从算子栈弹出这个运算符需要数量的算子，进行运算，将结果压入算子栈</li>
 </ul>
-<p><em>（一般情况）</em></p>
+<p>_（一般情况）_</p>
 <ul>
 <li>如果是算子（数字），则将其压入算子栈</li>
 <li>如果是运算符O1：<ul>
