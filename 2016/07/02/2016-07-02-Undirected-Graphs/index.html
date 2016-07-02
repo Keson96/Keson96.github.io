@@ -69,7 +69,7 @@
 <meta property="og:image" content="http://i.imgur.com/FIm7JtF.png">
 <meta property="og:image" content="http://i.imgur.com/92vCnlC.png">
 <meta property="og:image" content="http://i.imgur.com/4tDuUJa.png">
-<meta property="og:updated_time" content="2016-07-02T11:27:32.147Z">
+<meta property="og:updated_time" content="2016-07-02T11:38:25.628Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="4-1 Undirected Grapfs">
 <meta name="twitter:description" content="图是若干节点(vertices)和若干连接这些节点的边(edge)组成的集合。节点的名字不是十分重要，我们用 0 到 V-1 的数字来标记 V 个节点，用v-w表示节点v和节点w相连的一条边，w-v表示同一条边。以上关于无向图的定义允许出现下面两种情况：1. 自循环：即一条边连接着一个节点和它自己。 2.平行边：两条边连接着相同的一对节点。">
@@ -328,10 +328,10 @@
 <p>一个<strong>二分图</strong>(bipartite graph)的所有节点可以分为两类，使每条边连接的两个节点属于不同类。</p>
 <p><img src="http://i.imgur.com/RrTx6NV.png" alt=""></p>
 <h2 id="图的数据结构"><a href="#图的数据结构" class="headerlink" title="图的数据结构"></a>图的数据结构</h2><h3 id="API"><a href="#API" class="headerlink" title="API"></a>API</h3><pre><code>public class Graph
-                     Graph(int V)                # create a V-vertex graph with no edges 
-                     Graph(In in)                # read a graph from input stream in
-                 int V()                        # numbers of vertices
-                 int E()                        # numbers of edges
+                     Graph(int V)                  # create a V-vertex graph with no edges 
+                     Graph(In in)                  # read a graph from input stream in
+                 int V()                           # numbers of vertices
+                 int E()                           # numbers of edges
                 void addEdge(int v, int w)         # add edge v-w to this graph
    Iterable&lt;Integer&gt; adj(int v)                    # vertices adjacent to v
               String toString()                    # string representation
@@ -353,45 +353,47 @@
 <ul>
 <li>空间使用量与V+E成正比</li>
 <li>添加一条边的时间复杂度为O(1)</li>
-<li><p>遍历节点v的邻近节点所用时间与v的度成正比<br>.<br>  public class Graph<br>  {</p>
-<pre><code>private final int V;
-private int E;
-private Bag&lt;Integer&gt;[] adj;
-
-public Graph(int V)
+<li><p>遍历节点v的邻近节点所用时间与v的度成正比</p>
+<pre><code>public class Graph
 {
-    this.V = V; this.E = 0;
-    adj = (Bag&lt;Integer&gt;[]) new Bag[V];
-    for (int v = 0; v &lt; V; v++)
-        adj[v] = new Bag&lt;Integer&gt;()
-}
+    private final int V;
+    private int E;
+    private Bag&lt;Integer&gt;[] adj;
 
-public Graph(In in)
-{
-    this(in.readInt());
-    int E = in.readInt();
-    for (int i = 0; i &lt; E; i++)
+    public Graph(int V)
     {
-        int v = in.readInt();
-        int w = in.readInt();
-        addEdge(v,w);
+        this.V = V; this.E = 0;
+        adj = (Bag&lt;Integer&gt;[]) new Bag[V];
+        for (int v = 0; v &lt; V; v++)
+            adj[v] = new Bag&lt;Integer&gt;()
     }
+
+    public Graph(In in)
+    {
+        this(in.readInt());
+        int E = in.readInt();
+        for (int i = 0; i &lt; E; i++)
+        {
+            int v = in.readInt();
+            int w = in.readInt();
+            addEdge(v,w);
+        }
+    }
+
+    public int V() {    return V;    }
+    public int E() {    return E;    }
+
+    public void addEdge(int v, int w)
+    {
+        adj[v].add(w);
+        adj[w].add(v);
+        E++;
+    }
+
+    public Iterable&lt;Integer&gt; adj(int v)
+    {    return adj[v];    }
 }
-
-public int V() {    return V;    }
-public int E() {    return E;    }
-
-public void addEdge(int v, int w)
-{
-    adj[v].add(w);
-    adj[w].add(v);
-    E++;
-}
-
-public Iterable&lt;Integer&gt; adj(int v)
-{    return adj[v];    }
-</code></pre><p>  }</p>
-</li>
+</code></pre></li>
 </ul>
 <blockquote>
 <p>当然，我们需要考虑其他操作：比如添加/删除节点，这时候需要使用符号表来替代数组；删除边/检查图中是否包含某个边，这时候可以用集合(SET)来代替Bag(链表实现)。在下面的实现中，为了算法的简洁易懂，我们依然使用Bag。</p>
@@ -433,7 +435,7 @@ public Iterable&lt;Integer&gt; adj(int v)
 <td style="text-align:center">E+V</td>
 <td style="text-align:center">logV</td>
 <td style="text-align:center">logV</td>
-<td style="text-align:center">logV+degree(V)</td>
+<td style="text-align:center">logV+<br>degree(V)</td>
 </tr>
 </tbody>
 </table>
@@ -522,51 +524,54 @@ public Iterable&lt;Integer&gt; adj(int v)
 <p>对于BFS，我们使用队列来进行实现，具体步骤如下：</p>
 <ul>
 <li>从队列中取出下一个节点v，并标记它（表示已经过）</li>
-<li><p>把v的邻接节点中所有未标记的节点放入队列<br>########<br>  public class BreadthFirstPaths<br>  {</p>
-<pre><code>private boolean[] marked;
-private int[] edgeTo;
-private final int s;
-
-public BreadthFirstPaths(Graph G, int s)
+<li><p>把v的邻接节点中所有未标记的节点放入队列</p>
+<pre><code>public class BreadthFirstPaths
 {
-    marked = new boolean[G.V()];
-    edgeTo = new int[G.V()];
-    this.s = s;
-    bfs(G, s);
-}
+    private boolean[] marked;
+    private int[] edgeTo;
+    private final int s;
 
-private void bfs(Graph G, int s)
-{
-    Queue&lt;Integer&gt; queue = new Queue&lt;Integer&gt;();
-    marked[s] = true;
-    queue.enqueue(s);
-    while(!q.isEmpty())
+    public BreadthFirstPaths(Graph G, int s)
     {
-        int v = queue.dequeue();
-        for (int w : G.adj(v))
-            if (!marked[w])
-            {
-                edgeTo[w] = v;
-                marked[w] = true;
-                queue.enqueue(w);
-            }
+        marked = new boolean[G.V()];
+        edgeTo = new int[G.V()];
+        this.s = s;
+        bfs(G, s);
     }
+
+    private void bfs(Graph G, int s)
+    {
+        Queue&lt;Integer&gt; queue = new Queue&lt;Integer&gt;();
+        marked[s] = true;
+        queue.enqueue(s);
+        while(!q.isEmpty())
+        {
+            int v = queue.dequeue();
+            for (int w : G.adj(v))
+                if (!marked[w])
+                {
+                    edgeTo[w] = v;
+                    marked[w] = true;
+                    queue.enqueue(w);
+                }
+        }
+    }
+
+    public boolean hasPathTo(int v)
+    {    return marked[v];    }
+
+    public Iterable&lt;Integer&gt; pathTo(int v)
+    //  Omitted, Same as for DFS
 }
-
-public boolean hasPathTo(int v)
-{    return marked[v];    }
-
-public Iterable&lt;Integer&gt; pathTo(int v)
-//  Omitted, Same as for DFS
-</code></pre><p>  }</p>
-</li>
+</code></pre></li>
 </ul>
 <p><strong>————————————————————————</strong><br><br><strong>对于任意一个从s可到达的节点v，BFS计算出了一条最短的从s到v的路径。在最坏的情况下，BFS消耗的时间与 V+E 成正比。</strong><br><br><strong>————————————————————————</strong><br></p>
 <h3 id="DFS和BFS的联系"><a href="#DFS和BFS的联系" class="headerlink" title="DFS和BFS的联系"></a>DFS和BFS的联系</h3><p>DFS和BFS都可以总结为下面一个过程：我们把源节点放入某种数据结构中，然后执行以下步骤直到数据结构为空：</p>
 <ul>
 <li>从数据结构中取出下一个节点v，并标记它</li>
-<li>把所有与v邻近的未标记节点放入数据结构中<br>########<br>对DFS来说，这样的数据结构是LIFO的栈，取出的是最新加入的元素；对BFS来说，这样的数据结构是FIFO的队列，取出的最早加入的元素。<br><br>DFS总是寻找最远的节点，只有当遇到死胡同是才会选择稍近一些的节点；BFS则正相反，只有把最近的节点都经过了才会向远处探索。<br><br>所以，DFS生成的路径更长更曲折；BFS生成的路径更短更直接。</li>
+<li>把所有与v邻近的未标记节点放入数据结构中</li>
 </ul>
+<p>对DFS来说，这样的数据结构是LIFO的栈，取出的是最新加入的元素；对BFS来说，这样的数据结构是FIFO的队列，取出的最早加入的元素。<br>DFS总是寻找最远的节点，只有当遇到死胡同是才会选择稍近一些的节点；BFS则正相反，只有把最近的节点都经过了才会向远处探索。<br>所以，DFS生成的路径更长更曲折；BFS生成的路径更短更直接。</p>
 <h2 id="连通部分（Connected-Component）"><a href="#连通部分（Connected-Component）" class="headerlink" title="连通部分（Connected Component）"></a>连通部分（Connected Component）</h2><p>我们判断两个节点是否连通，需要每次进行dfs查找，但我们对具体路径并不关心，只在乎两个节点是否连通。在下面的CC类中，我们先对整张图进行处理，存储下每个节点所处连通部分的信息，这样，每次查询的时间复杂度都为常数级别。</p>
 <h3 id="API-1"><a href="#API-1" class="headerlink" title="API"></a>API</h3><pre><code>public class CC
             CC(Graph G)                 // 构造函数
@@ -611,7 +616,7 @@ public Iterable&lt;Integer&gt; pathTo(int v)
         else if (w != u) hasCycle = true; 
 }
 </code></pre><p>基本原理是：深度优先查找到最深处后，递归地回溯比较。如果某个节点的邻近节点已被标记，但却不是它的前驱（上一层被查找的节点），那就说明这个图含有环。下面是一个例子：</p>
-<p><img src="http://i.imgur.com/FIm7JtF.png" alt=""><br><img src="http://i.imgur.com/92vCnlC.png" alt=""></p>
+<p><img src="http://i.imgur.com/FIm7JtF.png" alt=""><img src="http://i.imgur.com/92vCnlC.png" alt=""></p>
 <p><img src="http://i.imgur.com/4tDuUJa.png" alt=""></p>
 <h2 id="两色染色问题（图是否是二分的）"><a href="#两色染色问题（图是否是二分的）" class="headerlink" title="两色染色问题（图是否是二分的）"></a>两色染色问题（图是否是二分的）</h2><p>我们在属性中添加一个boolean数组color，用来记录节点的颜色；并添加一个boolean变量，表示这个图是否是二分的，初始默认为True。</p>
 <pre><code>private void dfs(Graph G, int v)
@@ -765,7 +770,7 @@ public Iterable&lt;Integer&gt; pathTo(int v)
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">33</span>
+                <span class="site-state-item-count">31</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
