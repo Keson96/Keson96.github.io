@@ -226,8 +226,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/06/23/2016-06-23-信息分析/" itemprop="url">
-                  临时文件
+                <a class="post-title-link" href="/2016/07/02/2016-07-02-Undirected-Graphs/" itemprop="url">
+                  4-1 Undirected Grapfs
                 </a>
               
             
@@ -240,8 +240,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-06-23T19:54:01+08:00" content="2016-06-23">
-              2016-06-23
+            <time itemprop="dateCreated" datetime="2016-07-02T19:54:01+08:00" content="2016-07-02">
+              2016-07-02
             </time>
           </span>
 
@@ -254,8 +254,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/杂记/" itemprop="url" rel="index">
-                    <span itemprop="name">杂记</span>
+                  <a href="/categories/《Algorithms》-notes/" itemprop="url" rel="index">
+                    <span itemprop="name">《Algorithms》 notes</span>
                   </a>
                 </span>
 
@@ -287,9 +287,9 @@
 
       
         
-          <p>信息分析复习</p>
+          <p>图是若干节点(vertices)和若干连接这些节点的边(edge)组成的集合。<br><br>节点的名字不是十分重要，我们用 0 到 V-1 的数字来标记 V 个节点，用v-w表示节点v和节点w相连的一条边，w-v表示同一条边。<br><br>以上关于无向图的定义允许出现下面两种情况：1. 自循环：即一条边连接着一个节点和它自己。 2.平行边：两条边连接着相同的一对节点。</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2016/06/23/2016-06-23-信息分析/#more" rel="contents">
+            <a class="btn" href="/2016/07/02/2016-07-02-Undirected-Graphs/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -336,8 +336,135 @@
             
               
                 
+                <a class="post-title-link" href="/2016/06/27/2016-06-27-第1章-递归问题/" itemprop="url">
+                  第1章 递归
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-27T19:54:01+08:00" content="2016-06-27">
+              2016-06-27
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/具体数学笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">具体数学笔记</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1-1-河内塔和平面上的直线（The-Tower-of-Hanoi-amp-Lines-in-the-Plane"><a href="#1-1-河内塔和平面上的直线（The-Tower-of-Hanoi-amp-Lines-in-the-Plane" class="headerlink" title="1.1 河内塔和平面上的直线（The Tower of Hanoi &amp; Lines in the Plane)"></a>1.1 河内塔和平面上的直线（The Tower of Hanoi &amp; Lines in the Plane)</h2><h3 id="河内塔问题"><a href="#河内塔问题" class="headerlink" title="河内塔问题"></a>河内塔问题</h3><p><strong>Step 1</strong>: 引入记号</p>
+<p>用$T_n$表示将$n$个圆盘从一根柱子上移动到另一根柱子上的最小移动次数</p>
+<p><strong>Step 2</strong>: 考虑小的情形</p>
+<p>$T_1$显然是1，而$T_2=3$。当然，数学家还会考虑$T_0$的情况，虽然它的结果只是0。</p>
+<p><strong>Step 3</strong>: 考虑大的情形</p>
+<p>一方面，要将$n$个圆盘移动到另一个柱子上，像移动3个圆盘一样，可以采取这样的办法：先将上面的$n-1$个圆盘移动到不同的柱子上(需要$T_{n-1}$次移动)，然后移动最大的圆盘，再将那$n-1$个小圆盘移动到最大圆盘的上面(也需要$T_{n-1}$次移动)。这样，至多需要$2T_{n-1}+1$次移动就能移动$n(n&gt;0)$个圆盘了。即</p>
+<p>$$T_n \le 2T_{n-1}+1 , \quad n&gt;0$$</p>
+<p>另一方面，上面的式子中用的是$\le$号，那么，有更好的方法吗？实际上没有，我们迟早要移动那个最大的圆盘，而在这之前，那$n-1$个小圆盘已经按次序放在某个柱子上(这至少需要T_{n-1}次移动)。我们至少需要1次才能将最大的圆盘移动到目标柱子上，这之后，我们还必须把那$n-1$个小圆盘移动到大圆盘上面(而这也至少需要T_{n-1}次移动)。从而</p>
+<p>$$T_n \ge 2T_{n-1}+1 , \quad n&gt;0$$</p>
+<p>把这两个不等式和$T_0$结合起来就得到了</p>
+<p>$$ T_0 = 0$$<br>$$T_n = 2T_{n-1}+1 , \quad n&gt;0 \tag{1.1}$$</p>
+<p>像式(1.1)这样的一组等式称为<strong>递归式</strong>。它给出一个边界值，以及一个用前面的值给出一般值的方程。<br>然而，我们对这个结果还不够满意，希望能得出<strong>递归式的解</strong>（一个漂亮的封闭形式，即$T_n = \cdots$），这样，我们就可以快捷计算$T_n$。</p>
+<blockquote>
+<p>封闭形式粗略的定义：如果可以利用至多固定次数(其次数与$n$无关)的初等运算来计算量$f(n)$的表达式，那么这个表达式就是封闭形式。</p>
+</blockquote>
+<p>一种办法是猜出正确的解，而猜测解的最好办法就是研究小的情形。例如：$T_3 = 2 \times 3+1=7$，$T_4=2\times 7+1=15$，$T_5=2 \times 15+1=31$，$T_6=2 \times 31+1=63$。这看起来像是有</p>
+<p>$$T_n=2^n-1,\quad n \ge 0$$</p>
+<p>至少这对$n \le 6$是成立的。</p>
+<h3 id="数学归纳法"><a href="#数学归纳法" class="headerlink" title="数学归纳法"></a>数学归纳法</h3><p><strong>数学归纳法</strong>是证明某个命题对所有满足 $n\ge n_0$ 的整数都成立的一般方法，首先我们在 $n$ 取最小值 $n_0$ 时证明该命题，这一步称为<strong>基础</strong>；然后对 $n&gt;n_0$ ，假设命题对 $n_0$ 与 $n-1$ 之间（包含它们在内）的所有值都已经被证明，再证明该命题对 $n$ 成立，这一步称为<strong>归纳</strong>。这一种证明办法仅用有限步就得到无限多个结果。用数学归纳法可以将上面的猜想进行证明，而不仅仅停留在 $n\le 6$。</p>
+<p>基础是显然的：$T_0=2^0-1=0$<br>对</p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/06/23/2016-06-23-第2章-和式/" itemprop="url">
-                  第2章-和式
+                  第2章 和式
                 </a>
               
             
@@ -512,118 +639,6 @@
           <p>之前一直用的是MathTex来插入公式，不过，这个方式相当于插入了一张在线图片，显示效果不是很好。终于闲下来，有机会琢磨一下怎么用MathJax了。</p>
           <div class="post-more-link text-center">
             <a class="btn" href="/2016/06/22/2016-06-22-在hexo博客中使用MathJax/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/06/20/2016-06-20-预习数据结构/" itemprop="url">
-                  '预习'数据结构
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-06-20T16:19:01+08:00" content="2016-06-20">
-              2016-06-20
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/杂记/" itemprop="url" rel="index">
-                    <span itemprop="name">杂记</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>总觉得自己看《Algorithms》学的是野路子，还是好好按严奶奶的书学学正规的路数（Kidding &gt;_&lt; 当然是被考试逼的啦啦啦）</p>
-</blockquote>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/06/20/2016-06-20-预习数据结构/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1375,7 +1390,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-count">33</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
