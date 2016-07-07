@@ -1,0 +1,880 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="algorithm,directed graph,topological sort,kosaraju's algorithm,dag," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="总览（Glossary）————————————————————————
+一个有向图（directed graph, or simply digraph）是若干节点和有向边的集合。每条有向边有序地连接着一对节点。
+————————————————————————
+我们称一条有向边由节点对的第一个节点指向第二个节点。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="4-2 Directed Graphs">
+<meta property="og:url" content="http://yoursite.com/2016/07/07/2016-07-07-Directed-Graphs/index.html">
+<meta property="og:site_name" content="MayMoon">
+<meta property="og:description" content="总览（Glossary）————————————————————————
+一个有向图（directed graph, or simply digraph）是若干节点和有向边的集合。每条有向边有序地连接着一对节点。
+————————————————————————
+我们称一条有向边由节点对的第一个节点指向第二个节点。">
+<meta property="og:image" content="http://i.imgur.com/RRRT2nx.png">
+<meta property="og:image" content="http://i.imgur.com/jEfMQ2z.png">
+<meta property="og:image" content="http://i.imgur.com/3dBafNu.png">
+<meta property="og:image" content="http://i.imgur.com/wEiMQYk.png">
+<meta property="og:image" content="http://i.imgur.com/EqnmmFl.png">
+<meta property="og:image" content="http://i.imgur.com/zV6HAxA.png">
+<meta property="og:image" content="http://i.imgur.com/A4HvHT0.png">
+<meta property="og:updated_time" content="2016-07-07T15:10:44.125Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="4-2 Directed Graphs">
+<meta name="twitter:description" content="总览（Glossary）————————————————————————
+一个有向图（directed graph, or simply digraph）是若干节点和有向边的集合。每条有向边有序地连接着一对节点。
+————————————————————————
+我们称一条有向边由节点对的第一个节点指向第二个节点。">
+<meta name="twitter:image" content="http://i.imgur.com/RRRT2nx.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 4-2 Directed Graphs | MayMoon </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">MayMoon</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">随便写写</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                4-2 Directed Graphs
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-07T19:54:01+08:00" content="2016-07-07">
+              2016-07-07
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/《Algorithms》-notes/" itemprop="url" rel="index">
+                    <span itemprop="name">《Algorithms》 notes</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="总览（Glossary）"><a href="#总览（Glossary）" class="headerlink" title="总览（Glossary）"></a>总览（Glossary）</h2><p><strong>————————————————————————</strong></p>
+<p><strong>一个有向图（directed graph, or simply digraph）是若干节点和有向边的集合。每条有向边有序地连接着一对节点。</strong></p>
+<p><strong>————————————————————————</strong></p>
+<p>我们称一条有向边由节点对的第一个节点指向第二个节点。</p>
+<a id="more"></a>
+<h3 id="关于有向图的概念和定义"><a href="#关于有向图的概念和定义" class="headerlink" title="关于有向图的概念和定义"></a>关于有向图的概念和定义</h3><ul>
+<li>出度（outdegree）：从一个节点出发的有向边的数量称为这个节点的出度</li>
+<li>入度（indegree）：以一个节点结束的有向边的数量称为这个节点的入度</li>
+<li>有向图中的任意两个节点之间有下面四种关系：没有边，有一条 v-&gt;w 边，有一条 w-&gt;v 边，有两条边 v-&gt;w 和 w-&gt;v</li>
+<li>有向路径（directed path）：一个节点序列，其中每个节点（除最后一个）有一条边出发并指向序列中的下一个节点</li>
+<li>有向环（directed cycle）：一条有向路径，其中至少有一条边连接的两个节点是相同的</li>
+<li>简单环（simple cycle）：一个有向环，其中没有重复的节点或边（除了必须的首尾节点）</li>
+<li>路径或环长度（length）：路径上有向边的条数</li>
+<li>可到达（reachable）：如果有一条从 v 到 w 的有向路径，那么就说从 v 到 w 是可到达的。另外，我们接受这样的惯例：一个节点到它自己是可到达的。</li>
+</ul>
+<h2 id="有向图数据类型（Digraph-data-type）"><a href="#有向图数据类型（Digraph-data-type）" class="headerlink" title="有向图数据类型（Digraph data type）"></a>有向图数据类型（Digraph data type）</h2><h3 id="API"><a href="#API" class="headerlink" title="API"></a>API</h3><pre><code>    public class  Digraph
+                  Digraph(int V)            // create a V-vertex digraph with no edges
+                  Digraph(In in)            // read a digraph from input stream in
+              int V()                        // number of vertices
+              int E()                        // number of edges
+             void addEdge(int v, int w)     // add edge v-&gt;w to this digraph
+Iterable&lt;Integer&gt; adj(int v)                // vertices connected to v by edges
+          Digraph reverse()                    // reverse of this digraph
+           String toString()                // string representation
+</code></pre><h3 id="倒置有向图（Reverse-a-digraph）"><a href="#倒置有向图（Reverse-a-digraph）" class="headerlink" title="倒置有向图（Reverse a digraph）"></a>倒置有向图（Reverse a digraph）</h3><p>将有向图中所有边反向，所有节点保持不变，返回一个新的有向图</p>
+<pre><code>public Digraph reverse()
+{
+    Digraph R = new Digraph(V);
+    for (int v = 0; v &lt; V; v++)
+        R.addEdge(w, v);
+    return R;
+}
+</code></pre><h2 id="有向图中的可到达性（Reachability-in-digraph）"><a href="#有向图中的可到达性（Reachability-in-digraph）" class="headerlink" title="有向图中的可到达性（Reachability in digraph）"></a>有向图中的可到达性（Reachability in digraph）</h2><blockquote>
+<p>单源可到达问题：给定一个有向图和一个源节点 s，有没有一条从 s 出发的有向路径可以到达给定的目标节点 v <br> 多源可到达问题：给定一个图和一个节点的集合，有没有一条从集合中任一节点出发的路径可以到达给定的目标节点 v</p>
+</blockquote>
+<p>我们采用 DFS 来进行可到达性的判断</p>
+<pre><code>public class DirectedDFS
+{
+    private boolean[] marked;
+
+    public DirectedDFS(Digraph G, int s)
+    {
+        marked = new boolean[G.V()];
+        dfs(G, s);
+    }
+
+    public DirectedDFS(Digraph G, Iterable&lt;Integer&gt; sources)
+    {
+        marked = new boolean[G.V()];
+        for (int s : G.adj(v))
+            if (!makred[s]) dfs(G, s);
+    }
+
+    private void dfs(Digraph G, int v)
+    {
+        marked[v] = true;
+        for (int w : G.adj(v))
+            if (!marked[w]) dfs(G, w);
+    }
+}
+</code></pre><p><strong>————————————————————————</strong></p>
+<p><strong>在一个有向图中，DFS 标记了所有从源节点的集合出发可到达的节点，所用时间与所有被标记节点的出度之和成正比。</strong></p>
+<p><strong>————————————————————————</strong></p>
+<h3 id="“标记-清理”的垃圾回收机制（Mark-and-sweep-garbage-collection）"><a href="#“标记-清理”的垃圾回收机制（Mark-and-sweep-garbage-collection）" class="headerlink" title="“标记-清理”的垃圾回收机制（Mark-and-sweep garbage collection）"></a>“标记-清理”的垃圾回收机制（Mark-and-sweep garbage collection）</h3><p>多源可到达问题的一个重要应用就是在内存管理系统中。每个节点代表一个对象(object)，每条边代表一个引用(reference)。在程序的执行过程中，一部分对象可以直接存取（directly accessible），它们对应着源节点的集合；另一部分对象只能通过引用访问，它们对应着目标节点。垃圾回收机制定期从直接存取对象出发，扫描整个内存空间，利用DFS，标记出所有可以访问到的对象。然后，把那些不能访问到的对象占用的内存空间释放。</p>
+<h3 id="寻找路径"><a href="#寻找路径" class="headerlink" title="寻找路径"></a>寻找路径</h3><p>和无向图类似（DFS和BFS，即单源路径和单源最短路径）</p>
+<h2 id="环和DAG（Cycles-and-DAGs）"><a href="#环和DAG（Cycles-and-DAGs）" class="headerlink" title="环和DAG（Cycles and DAGs）"></a>环和DAG（Cycles and DAGs）</h2><p>判定一个有向图中是否含有环是一个比较复杂的问题，下面先从规划安排这个具体的问题出发。</p>
+<h3 id="规划安排问题（Scheduling-problems）"><a href="#规划安排问题（Scheduling-problems）" class="headerlink" title="规划安排问题（Scheduling problems）"></a>规划安排问题（Scheduling problems）</h3><p>广义的规划安排问题指的是通过安排，使得在若干限制条件下，若干任务可以完成。这里的限制条件可以是任务所需要的时间，也可以是任务所需要的资源等。一个常见且重要的限制条件就是次序，即任务之间的次序必须满足一定条件。</p>
+<h3 id="次序安排问题（Precedence-constrained-scheduled）"><a href="#次序安排问题（Precedence-constrained-scheduled）" class="headerlink" title="次序安排问题（Precedence-constrained scheduled）"></a>次序安排问题（Precedence-constrained scheduled）</h3><blockquote>
+<p>给定若干需要完成的任务，与若干条次序限制，即某个任务必须在另外一个任务完成之后开始，我们应该怎么安排任务的顺序，使得所有任务都能完成，且不违背任意一条次序限制条件。</p>
+</blockquote>
+<p><img src="http://i.imgur.com/RRRT2nx.png" alt=""></p>
+<p>可以用节点来表示任务，用有向边表示任务之间的顺序限制，如上图所示。例如，任务1必须在任务0之后完成。这样，次序安排问题就等价于更基本的一个问题，称为<strong>拓扑排序</strong>。</p>
+<p>给定一个有向图，将所有节点按如下规则排序：任意有向边都由一个排在前面的节点出发，指向一个排在后面的节点。（或者报告这样的排序不可能实现）。上面的有向图经过拓扑排序后如下图所示：</p>
+<p><img src="http://i.imgur.com/jEfMQ2z.png" alt=""></p>
+<h4 id="环的检测（Cycles-detection）"><a href="#环的检测（Cycles-detection）" class="headerlink" title="环的检测（Cycles detection）"></a>环的检测（Cycles detection）</h4><blockquote>
+<p>设想这样的顺序限制：x 必须在 y 之前完成，y 必须在 z 之前完成，z 必须在 x 之前完成。这样的话，就不存在符合条件的安排了。换言之，如果一个有向图<strong>含有环</strong>，那么它就不能进行拓扑排序。</p>
+</blockquote>
+<p>一个有向图可能有指数级个环，我们只需要找出其中一个，而不是全部。</p>
+<p><strong>————————————————————————</strong></p>
+<p><strong>一个有向无环图（directed acyclic graph, as DAG）是一个不含环的有向图。</strong></p>
+<p><strong>————————————————————————</strong></p>
+<p>我们使用深度优先来实现环的检测，在每次递归调用中，我们用一个栈来表示当前的路径（通过在调用前将元素对应的位置标为True，调用后将元素对应位置标为False）。如果我们找到了一条路径 v-w 而 w 恰好在栈里，那么就说明存在一个环，因为 w 在栈里隐含了有一条路径 w-v 。</p>
+<pre><code>public class DirectedCycle
+{
+    private boolean[] marked;
+    private int[] edgeTo;
+    private Stack&lt;Integer&gt; cycle;
+    private boolean[] onStack;
+
+    public DirectedCycle(Digraph G)
+    {
+        onStack = new boolean[G.V()];
+        edgeTo = new int[G.V()];
+        marked = new boolean[G.V()];
+        for (int v = 0; v &lt; G.V(); v++)
+            if (!marked[v]) dfs(G, v);
+    }
+
+    private void dfs(Digraph G, int v)
+    {
+        onStack[v] = true;
+        marked[v] = true;
+        for (int w : G.adj(v))
+            if (this.hasCycle())    return;
+            else if (!marked[w])
+            {    edgeTo[w] = v; dfs(G, w);    }
+            else if (onStack[w])
+            {
+                cycle = new Stack&lt;Integer&gt;();
+                for (int x = v; x != w; x = edgeTo[x])
+                    cycle.push(x);
+                cycle.push(w);
+                cycle.push(v);
+            }
+        onStack[v] = false;
+    }
+
+    public boolean hasCycle()
+    {    return cycle != null;    }
+
+    public Iterable&lt;Integer&gt; cycle()
+    {    return cycle;    }
+}
+</code></pre><p>下面是一个例子</p>
+<p><img src="http://i.imgur.com/3dBafNu.png" alt=""></p>
+<h4 id="拓扑排序（Topological-sort）"><a href="#拓扑排序（Topological-sort）" class="headerlink" title="拓扑排序（Topological sort）"></a>拓扑排序（Topological sort）</h4><p><strong>————————————————————————</strong></p>
+<p><strong>一个有向图可以进行拓扑排序当且仅当它是一个DAG</strong></p>
+<p><strong>————————————————————————</strong></p>
+<p>运用DFS，我们可以有三种可行顺序来遍历整个DAG（取决于使用的数据结构和在递归调用之前/后存储结点），分别是：</p>
+<ul>
+<li>先序（Preorder）：在递归调用之前将节点添加到队列中</li>
+<li>后序（Postorder）：在递归调用之后将节点添加到队列中</li>
+<li><p>倒置后序（Reverse postorder）：在递归调用之后将节点添加到栈中</p>
+<pre><code>public class DepthFirstOrder
+{
+    private boolean[] marked;
+
+    private Queue&lt;Integer&gt; pre;
+    private Queue&lt;Integer&gt; post;
+    private Stack&lt;Integer&gt; reversePost;
+
+    public DepthFirstOrder(Digraph G)
+    {
+        pre  = new Queue&lt;Integer&gt;();
+        post = new Queue&lt;Integer&gt;();
+        reversePost = new Stack&lt;Integer&gt;();
+        marked = new boolean[G.V()];
+
+        for (int v = 0; v &lt; G.V(); v++)
+            if (!marked[v]) dfs(G, v);
+    }
+
+    private void dfs(Digraph G, int v)
+    {
+        pre.enqueue(v);            // before the recursive call
+
+        marked[v] = true;
+        for ( int w: G.adj(v))
+            if (!marked[v])
+                dfs(G, w);
+
+        post.enqueue(v);
+        reversePost.push(v);
+    }
+
+    public Iterable&lt;Integer&gt; pre()
+    {    return pre; }
+    public Iterable&lt;Integer&gt; post()
+    {    return post; }
+    public Iterable&lt;Integer&gt; reversePost()
+    {    return reversePost; }
+}
+</code></pre></li>
+</ul>
+<p>下面是详细的图解</p>
+<p><img src="http://i.imgur.com/wEiMQYk.png" alt=""></p>
+<p><strong>————————————————————————</strong></p>
+<p><strong>一个DAG的倒置后序遍历也是它的一种拓扑排序结果</strong></p>
+<p><strong>————————————————————————</strong></p>
+<blockquote>
+<p>证明：<br>考虑任意一条边v-w，当调用dfs(v)的时候，必然有以下三种情况之一：</p>
+<ol>
+<li>dfs(w)被调用了(called)，而且也已经调用完成(returned)，意味着w已经被标记了。</li>
+<li>dfs(w)还未被调用了(called)，意味着w还未被标记，所以dfs(v)将会导致dfs(w)，那么，dfs(w)一定在dfs(v)之前调用完成。</li>
+<li>dfs(w)被调用了(called)，但还未调用完成，这暗示了有一条w-v的路径，那么这个图就不是DAG，所以这种情况是不可能的。<br>对于上面两种可能的情况，dfs(w)都在dfs(v)之前调用完成，所以在后序顺序中，w出现在前面；在倒置后序顺序中，w出现在v的后面。这样，在倒置后序顺序中，就满足了我们需要的每条边v-w都是从一个排在前面的节点指向排在后面的节点。</li>
+</ol>
+</blockquote>
+<p><strong>————————————————————————</strong></p>
+<p><strong>利用DFS，我们可以在$O(V+E)$时间内对一个DAG进行拓扑排序。（利用一次DFS探测有向图是否含有环，利用另一次DFS进行倒置后序排序）</strong></p>
+<p><strong>————————————————————————</strong></p>
+<h2 id="有向图的强连通性（Strong-connectivity-in-digraphs）"><a href="#有向图的强连通性（Strong-connectivity-in-digraphs）" class="headerlink" title="有向图的强连通性（Strong connectivity in digraphs）"></a>有向图的强连通性（Strong connectivity in digraphs）</h2><p><strong>————————————————————————</strong></p>
+<p><strong>如果两个节点v和w互相可到达，我们就说这两个节点是强连通的(strongly connnected)；如果一个有向图中任一节点与其他所有节点都是强连通的，那么我们说这个有向图是强连通的</strong></p>
+<p><strong>————————————————————————</strong></p>
+<p>强连通具有以下性质：</p>
+<ul>
+<li>自反性（Reflexive）：每个节点和它自己是强连通的</li>
+<li>对称性（Symmetric）：如果v与w是强连通的，那么w与v就是强连通的</li>
+<li>传递性（Transitive）：如果v与w是强连通的，w和x是强连通的，那么v与x也是强连通的</li>
+</ul>
+<h3 id="强连通部分（Strong-components）"><a href="#强连通部分（Strong-components）" class="headerlink" title="强连通部分（Strong components）"></a>强连通部分（Strong components）</h3><p>类似于无向图中的连通部分概念，有向图可以分为若干个强连通部分，如下图所示</p>
+<p><img src="http://i.imgur.com/EqnmmFl.png" alt=""></p>
+<p>一个含有V个节点的有向图有 1 ~ V 个强连通部分：当它是强连通图时有1个连通部分，当它是DAG时有V个连通部分</p>
+<h3 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h3><p>强连通性是有向图的一个重要的特性，有以下方面的应用：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">application</th>
+<th style="text-align:center">vertex</th>
+<th style="text-align:center">edge</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><em>web</em></td>
+<td style="text-align:center">page</td>
+<td style="text-align:center">hyperlink</td>
+</tr>
+<tr>
+<td style="text-align:center"><em>textbook</em></td>
+<td style="text-align:center">topic</td>
+<td style="text-align:center">reference</td>
+</tr>
+<tr>
+<td style="text-align:center"><em>software</em></td>
+<td style="text-align:center">module</td>
+<td style="text-align:center">call</td>
+</tr>
+</tbody>
+</table>
+<h3 id="API-1"><a href="#API-1" class="headerlink" title="API"></a>API</h3><pre><code>public class SCC
+            SCC(Digraph G)                        // 预处理构造函数
+    boolean stronglyConnected(int v, int w)        // v 和 w 是强连通的吗？
+        int count()                                // 强连通部分的数量
+</code></pre><h3 id="Kosaraju’s-algorithm"><a href="#Kosaraju’s-algorithm" class="headerlink" title="Kosaraju’s algorithm"></a>Kosaraju’s algorithm</h3><p>利用这个算法，我们很快地将图分成若干个连通部分，算法步骤如下：</p>
+<ul>
+<li>给定一个有向图G，用 DepthFirstOrder计算出它的倒置有向图G<sup>R</sup>的倒置后序（reverse postorder）</li>
+<li>对G用标准的DFS，但是在循环的时候，采用刚计算出来的顺序，而不是常规的数字顺序</li>
+<li>在一次dfs调用中标记的节点都在同一个强连通部分中，所以可以给它们标上强连通部分的序号</li>
+</ul>
+<p>程序如下：</p>
+<pre><code>public class KosarajuSCC
+{
+    private boolean[] marked;
+    private int[] id;
+    private int count;
+
+    public KOsarajuSCC(Digraph G)
+    {
+        marked = new boolean[G.V()];
+        id = new int[G.V()];
+        DepthFirstOrder order = new DepthFirstOrder(G.reverse());
+        for (int s : order.reversePost())
+            if (!marked[s])
+            {    dfs(G, s); count++; }
+    }
+
+    private void dfs(Digraph G, int v)
+    {  // same as standard dfs, omitted  }
+
+    public boolean stronglyConnected(int v, int w)
+    {    return id[v] == id[w];    }
+
+    public int count()
+    {    return count;    }
+}
+</code></pre><p><strong>————————————————————————</strong></p>
+<p><strong>在一个有向图G的DFS搜索中，如果未标记节点按照由G<sup>R</sup>的倒置后序顺序逐一进行dfs调用，那么在构造函数中的一次dfs(G,s)调用中标记的节点都处于同一个强连通部分</strong></p>
+<p><strong>————————————————————————</strong></p>
+<blockquote>
+<p>证明：<br><strong>1. 先证明必要性，即每个与节点s强连通的节点v都会在构造函数中的dfs(G,s)调用中被标记。</strong><br>利用反证法证明。假设有个节点v与s强连通，但却没有在dfs(G,s)调用中被标记。由于s有一条到v的路径，但v却未在dfs(G,s)调用中被标记，说明v在dfs(G,s)调用前就已经被标记了。又因为从v有一条到s的路径，且v在dfs(G,s)调用前就已经被标记了，所以在调用dfs(G,v)的过程中，一定会递归调用dfs(G,s)，则说明dfs(G,s)不会再构造函数中被调用。而前提是dfs(G,s)在构造函数中被调用，所以产生矛盾，故命题成立。<br> <strong>2. 再证明充分性，即每个在构造函数中的dfs(G,s)调用中标记的节点v都与s是强连通的。</strong><br> 由于v是在dfs(G,s)调用中被标记的，所以在G中从s到v一定有一条路径，故只要证明G中从v到s有一条路径即可，就能说明v和s是强连通的。这等价于要证明在G<sup>R</sup>中有一条从s到v的路径。<br> 由前提可知，在dfs(G,s)中标记了v，所以说明在倒置后序中，v排在s的后面。根据reversePost的构造过程可知，G<sup>R</sup>中的dfs(G,v)一定比dfs(G,s)先调用完成。<br> 那么在G<sup>R</sup>的DFS调用中就有以下两种情况：<br> (1) dfs(G,v)比dfs(G,s)先调用<br> (2) dfs(G,v)比dfs(G,s)后调用<br> 如下图所示<br><img src="http://i.imgur.com/zV6HAxA.png" alt=""><br>其中，如果是第一种情况是不可能的，因为在G<sup>R</sup>中有一条从v到s的路径，所以只可能是第二种情况。在这种情况下，可以看出来在G<sup>R</sup>中从s到v有一条路径，故证毕。</p>
+</blockquote>
+<p>下图是算法的详细追踪</p>
+<p><img src="http://i.imgur.com/A4HvHT0.png" alt=""></p>
+<p><strong>————————————————————————</strong></p>
+<p><strong>Kosaraju 算法使用O(V+E)的时间和空间进行预处理，然后支持O(1)复杂度的强连通查询</strong></p>
+<p><strong>————————————————————————</strong></p>
+<h3 id="给定节点对的可到达查询（All-pairs-reachability）"><a href="#给定节点对的可到达查询（All-pairs-reachability）" class="headerlink" title="给定节点对的可到达查询（All-pairs reachability）"></a>给定节点对的可到达查询（All-pairs reachability）</h3><p>给定节点v和w，查询是否有一条v到w的路径。对于无向图来说，只需要查询v和w是不是属于同一个连通部分，但对于有向图来说，却不能通过查询v和w是不是属于同一个强连通部分来确定有没有这样的路径。</p>
+<p>我们可以通过计算图G的传递闭包来进行查询。由于图的传递闭包是比较密的图，所以常用邻接矩阵来表示。可以利用DirectedDFS计算传递闭包，如下所示：</p>
+<pre><code>public class TransitiveClosure
+{
+    private DirectedDFS[] all;
+    TransitiveClosure(Digraph G)
+    {
+        all = new DirectedDFS[G.V()];
+        for (int v = 0; v &lt; G.V(); v++)
+            all[v] = new DirectedDFS(G, v);
+    }
+
+    public boolean reachable(int v, int w)
+    {    return all[v].marked(w);    }
+}
+</code></pre>
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/algorithm/" rel="tag">#algorithm</a>
+          
+            <a href="/tags/directed-graph/" rel="tag">#directed graph</a>
+          
+            <a href="/tags/topological-sort/" rel="tag">#topological sort</a>
+          
+            <a href="/tags/kosaraju-s-algorithm/" rel="tag">#kosaraju's algorithm</a>
+          
+            <a href="/tags/dag/" rel="tag">#dag</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/02/2016-07-02-Undirected-Graphs/" rel="next" title="4-1 Undirected Graphs">
+                <i class="fa fa-chevron-left"></i> 4-1 Undirected Graphs
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/pic.PNG"
+               alt="Wang Kx" />
+          <p class="site-author-name" itemprop="name">Wang Kx</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#总览（Glossary）"><span class="nav-number">1.</span> <span class="nav-text">总览（Glossary）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#关于有向图的概念和定义"><span class="nav-number">1.1.</span> <span class="nav-text">关于有向图的概念和定义</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有向图数据类型（Digraph-data-type）"><span class="nav-number">2.</span> <span class="nav-text">有向图数据类型（Digraph data type）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#API"><span class="nav-number">2.1.</span> <span class="nav-text">API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#倒置有向图（Reverse-a-digraph）"><span class="nav-number">2.2.</span> <span class="nav-text">倒置有向图（Reverse a digraph）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有向图中的可到达性（Reachability-in-digraph）"><span class="nav-number">3.</span> <span class="nav-text">有向图中的可到达性（Reachability in digraph）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#“标记-清理”的垃圾回收机制（Mark-and-sweep-garbage-collection）"><span class="nav-number">3.1.</span> <span class="nav-text">“标记-清理”的垃圾回收机制（Mark-and-sweep garbage collection）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#寻找路径"><span class="nav-number">3.2.</span> <span class="nav-text">寻找路径</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#环和DAG（Cycles-and-DAGs）"><span class="nav-number">4.</span> <span class="nav-text">环和DAG（Cycles and DAGs）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#规划安排问题（Scheduling-problems）"><span class="nav-number">4.1.</span> <span class="nav-text">规划安排问题（Scheduling problems）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#次序安排问题（Precedence-constrained-scheduled）"><span class="nav-number">4.2.</span> <span class="nav-text">次序安排问题（Precedence-constrained scheduled）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#环的检测（Cycles-detection）"><span class="nav-number">4.2.1.</span> <span class="nav-text">环的检测（Cycles detection）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#拓扑排序（Topological-sort）"><span class="nav-number">4.2.2.</span> <span class="nav-text">拓扑排序（Topological sort）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有向图的强连通性（Strong-connectivity-in-digraphs）"><span class="nav-number">5.</span> <span class="nav-text">有向图的强连通性（Strong connectivity in digraphs）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#强连通部分（Strong-components）"><span class="nav-number">5.1.</span> <span class="nav-text">强连通部分（Strong components）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实际应用"><span class="nav-number">5.2.</span> <span class="nav-text">实际应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#API-1"><span class="nav-number">5.3.</span> <span class="nav-text">API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kosaraju’s-algorithm"><span class="nav-number">5.4.</span> <span class="nav-text">Kosaraju’s algorithm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#给定节点对的可到达查询（All-pairs-reachability）"><span class="nav-number">5.5.</span> <span class="nav-text">给定节点对的可到达查询（All-pairs reachability）</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wang Kx</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=0.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -68,7 +68,7 @@
 <meta property="og:image" content="http://i.imgur.com/4hVwG29.png">
 <meta property="og:image" content="http://i.imgur.com/bD1RdDI.png">
 <meta property="og:image" content="http://i.imgur.com/4tDuUJa.png">
-<meta property="og:updated_time" content="2016-07-02T11:50:18.142Z">
+<meta property="og:updated_time" content="2016-07-07T07:43:35.692Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="4-1 Undirected Graphs">
 <meta name="twitter:description" content="图是若干节点(vertices)和若干连接这些节点的边(edge)组成的集合。节点的名字不是十分重要，我们用 0 到 V-1 的数字来标记 V 个节点，用v-w表示节点v和节点w相连的一条边，w-v表示同一条边。以上关于无向图的定义允许出现下面两种情况：1. 自循环：即一条边连接着一个节点和它自己。 2.平行边：两条边连接着相同的一对节点。">
@@ -498,10 +498,11 @@
     {
         marked[v] = true;
         for(int w: G.adj(v))
-        {
-            edgeTo[w] = v;
-            dfs(G, w);
-        }
+            if (!marked[w])
+            {
+                edgeTo[w] = v;
+                dfs(G, w);
+            }
     }
 
     public boolean hasPathTo(int v)
@@ -678,13 +679,17 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/06/27/2016-06-27-第1章-递归问题/" rel="next" title="第1章 递归">
-                <i class="fa fa-chevron-left"></i> 第1章 递归
+              <a href="/2016/06/22/2016-06-22-在hexo博客中使用MathJax/" rel="next" title="在Hexo博客中使用MathJax">
+                <i class="fa fa-chevron-left"></i> 在Hexo博客中使用MathJax
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/07/07/2016-07-07-Directed-Graphs/" rel="prev" title="4-2 Directed Graphs">
+                4-2 Directed Graphs <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -752,7 +757,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">19</span>
+              <span class="site-state-item-count">18</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -769,7 +774,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-count">34</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
