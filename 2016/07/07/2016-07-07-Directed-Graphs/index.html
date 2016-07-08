@@ -76,7 +76,7 @@
 <meta property="og:image" content="http://i.imgur.com/EqnmmFl.png">
 <meta property="og:image" content="http://i.imgur.com/zV6HAxA.png">
 <meta property="og:image" content="http://i.imgur.com/A4HvHT0.png">
-<meta property="og:updated_time" content="2016-07-07T15:10:44.125Z">
+<meta property="og:updated_time" content="2016-07-08T00:52:07.014Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="4-2 Directed Graphs">
 <meta name="twitter:description" content="总览（Glossary）————————————————————————
@@ -315,14 +315,14 @@
 <li>可到达（reachable）：如果有一条从 v 到 w 的有向路径，那么就说从 v 到 w 是可到达的。另外，我们接受这样的惯例：一个节点到它自己是可到达的。</li>
 </ul>
 <h2 id="有向图数据类型（Digraph-data-type）"><a href="#有向图数据类型（Digraph-data-type）" class="headerlink" title="有向图数据类型（Digraph data type）"></a>有向图数据类型（Digraph data type）</h2><h3 id="API"><a href="#API" class="headerlink" title="API"></a>API</h3><pre><code>    public class  Digraph
-                  Digraph(int V)            // create a V-vertex digraph with no edges
-                  Digraph(In in)            // read a digraph from input stream in
-              int V()                        // number of vertices
-              int E()                        // number of edges
-             void addEdge(int v, int w)     // add edge v-&gt;w to this digraph
-Iterable&lt;Integer&gt; adj(int v)                // vertices connected to v by edges
+                  Digraph(int V)               // create a V-vertex digraph with no edges
+                  Digraph(In in)               // read a digraph from input stream in
+              int V()                          // number of vertices
+              int E()                          // number of edges
+             void addEdge(int v, int w)        // add edge v-&gt;w to this digraph
+Iterable&lt;Integer&gt; adj(int v)                   // vertices connected to v by edges
           Digraph reverse()                    // reverse of this digraph
-           String toString()                // string representation
+           String toString()                   // string representation
 </code></pre><h3 id="倒置有向图（Reverse-a-digraph）"><a href="#倒置有向图（Reverse-a-digraph）" class="headerlink" title="倒置有向图（Reverse a digraph）"></a>倒置有向图（Reverse a digraph）</h3><p>将有向图中所有边反向，所有节点保持不变，返回一个新的有向图</p>
 <pre><code>public Digraph reverse()
 {
@@ -373,10 +373,10 @@ Iterable&lt;Integer&gt; adj(int v)                // vertices connected to v by 
 <p>可以用节点来表示任务，用有向边表示任务之间的顺序限制，如上图所示。例如，任务1必须在任务0之后完成。这样，次序安排问题就等价于更基本的一个问题，称为<strong>拓扑排序</strong>。</p>
 <p>给定一个有向图，将所有节点按如下规则排序：任意有向边都由一个排在前面的节点出发，指向一个排在后面的节点。（或者报告这样的排序不可能实现）。上面的有向图经过拓扑排序后如下图所示：</p>
 <p><img src="http://i.imgur.com/jEfMQ2z.png" alt=""></p>
-<h4 id="环的检测（Cycles-detection）"><a href="#环的检测（Cycles-detection）" class="headerlink" title="环的检测（Cycles detection）"></a>环的检测（Cycles detection）</h4><blockquote>
+<h3 id="环的检测（Cycles-detection）"><a href="#环的检测（Cycles-detection）" class="headerlink" title="环的检测（Cycles detection）"></a>环的检测（Cycles detection）</h3><blockquote>
 <p>设想这样的顺序限制：x 必须在 y 之前完成，y 必须在 z 之前完成，z 必须在 x 之前完成。这样的话，就不存在符合条件的安排了。换言之，如果一个有向图<strong>含有环</strong>，那么它就不能进行拓扑排序。</p>
 </blockquote>
-<p>一个有向图可能有指数级个环，我们只需要找出其中一个，而不是全部。</p>
+<p>一个有向图可能有指数级数量个环，我们只需要找出其中一个，而不是全部。</p>
 <p><strong>————————————————————————</strong></p>
 <p><strong>一个有向无环图（directed acyclic graph, as DAG）是一个不含环的有向图。</strong></p>
 <p><strong>————————————————————————</strong></p>
@@ -424,7 +424,7 @@ Iterable&lt;Integer&gt; adj(int v)                // vertices connected to v by 
 }
 </code></pre><p>下面是一个例子</p>
 <p><img src="http://i.imgur.com/3dBafNu.png" alt=""></p>
-<h4 id="拓扑排序（Topological-sort）"><a href="#拓扑排序（Topological-sort）" class="headerlink" title="拓扑排序（Topological sort）"></a>拓扑排序（Topological sort）</h4><p><strong>————————————————————————</strong></p>
+<h3 id="拓扑排序（Topological-sort）"><a href="#拓扑排序（Topological-sort）" class="headerlink" title="拓扑排序（Topological sort）"></a>拓扑排序（Topological sort）</h3><p><strong>————————————————————————</strong></p>
 <p><strong>一个有向图可以进行拓扑排序当且仅当它是一个DAG</strong></p>
 <p><strong>————————————————————————</strong></p>
 <p>运用DFS，我们可以有三种可行顺序来遍历整个DAG（取决于使用的数据结构和在递归调用之前/后存储结点），分别是：</p>
@@ -529,7 +529,7 @@ Iterable&lt;Integer&gt; adj(int v)                // vertices connected to v by 
 </tbody>
 </table>
 <h3 id="API-1"><a href="#API-1" class="headerlink" title="API"></a>API</h3><pre><code>public class SCC
-            SCC(Digraph G)                        // 预处理构造函数
+            SCC(Digraph G)                         // 预处理构造函数
     boolean stronglyConnected(int v, int w)        // v 和 w 是强连通的吗？
         int count()                                // 强连通部分的数量
 </code></pre><h3 id="Kosaraju’s-algorithm"><a href="#Kosaraju’s-algorithm" class="headerlink" title="Kosaraju’s algorithm"></a>Kosaraju’s algorithm</h3><p>利用这个算法，我们很快地将图分成若干个连通部分，算法步骤如下：</p>
@@ -590,7 +590,8 @@ Iterable&lt;Integer&gt; adj(int v)                // vertices connected to v by 
     public boolean reachable(int v, int w)
     {    return all[v].marked(w);    }
 }
-</code></pre>
+</code></pre><p>不过这个方法只适用于比较小的图，因为它的空间复杂度为$O(V^2)$，时间复杂度为$O(V+E)$，能达到常数级的查询速度但却不需要平方级的空间的算法仍然还在研究中。</p>
+
       
     </div>
 
@@ -703,7 +704,7 @@ Iterable&lt;Integer&gt; adj(int v)                // vertices connected to v by 
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -712,7 +713,7 @@ Iterable&lt;Integer&gt; adj(int v)                // vertices connected to v by 
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">33</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -743,7 +744,7 @@ Iterable&lt;Integer&gt; adj(int v)                // vertices connected to v by 
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#总览（Glossary）"><span class="nav-number">1.</span> <span class="nav-text">总览（Glossary）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#关于有向图的概念和定义"><span class="nav-number">1.1.</span> <span class="nav-text">关于有向图的概念和定义</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有向图数据类型（Digraph-data-type）"><span class="nav-number">2.</span> <span class="nav-text">有向图数据类型（Digraph data type）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#API"><span class="nav-number">2.1.</span> <span class="nav-text">API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#倒置有向图（Reverse-a-digraph）"><span class="nav-number">2.2.</span> <span class="nav-text">倒置有向图（Reverse a digraph）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有向图中的可到达性（Reachability-in-digraph）"><span class="nav-number">3.</span> <span class="nav-text">有向图中的可到达性（Reachability in digraph）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#“标记-清理”的垃圾回收机制（Mark-and-sweep-garbage-collection）"><span class="nav-number">3.1.</span> <span class="nav-text">“标记-清理”的垃圾回收机制（Mark-and-sweep garbage collection）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#寻找路径"><span class="nav-number">3.2.</span> <span class="nav-text">寻找路径</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#环和DAG（Cycles-and-DAGs）"><span class="nav-number">4.</span> <span class="nav-text">环和DAG（Cycles and DAGs）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#规划安排问题（Scheduling-problems）"><span class="nav-number">4.1.</span> <span class="nav-text">规划安排问题（Scheduling problems）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#次序安排问题（Precedence-constrained-scheduled）"><span class="nav-number">4.2.</span> <span class="nav-text">次序安排问题（Precedence-constrained scheduled）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#环的检测（Cycles-detection）"><span class="nav-number">4.2.1.</span> <span class="nav-text">环的检测（Cycles detection）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#拓扑排序（Topological-sort）"><span class="nav-number">4.2.2.</span> <span class="nav-text">拓扑排序（Topological sort）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有向图的强连通性（Strong-connectivity-in-digraphs）"><span class="nav-number">5.</span> <span class="nav-text">有向图的强连通性（Strong connectivity in digraphs）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#强连通部分（Strong-components）"><span class="nav-number">5.1.</span> <span class="nav-text">强连通部分（Strong components）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实际应用"><span class="nav-number">5.2.</span> <span class="nav-text">实际应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#API-1"><span class="nav-number">5.3.</span> <span class="nav-text">API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kosaraju’s-algorithm"><span class="nav-number">5.4.</span> <span class="nav-text">Kosaraju’s algorithm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#给定节点对的可到达查询（All-pairs-reachability）"><span class="nav-number">5.5.</span> <span class="nav-text">给定节点对的可到达查询（All-pairs reachability）</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#总览（Glossary）"><span class="nav-number">1.</span> <span class="nav-text">总览（Glossary）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#关于有向图的概念和定义"><span class="nav-number">1.1.</span> <span class="nav-text">关于有向图的概念和定义</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有向图数据类型（Digraph-data-type）"><span class="nav-number">2.</span> <span class="nav-text">有向图数据类型（Digraph data type）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#API"><span class="nav-number">2.1.</span> <span class="nav-text">API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#倒置有向图（Reverse-a-digraph）"><span class="nav-number">2.2.</span> <span class="nav-text">倒置有向图（Reverse a digraph）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有向图中的可到达性（Reachability-in-digraph）"><span class="nav-number">3.</span> <span class="nav-text">有向图中的可到达性（Reachability in digraph）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#“标记-清理”的垃圾回收机制（Mark-and-sweep-garbage-collection）"><span class="nav-number">3.1.</span> <span class="nav-text">“标记-清理”的垃圾回收机制（Mark-and-sweep garbage collection）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#寻找路径"><span class="nav-number">3.2.</span> <span class="nav-text">寻找路径</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#环和DAG（Cycles-and-DAGs）"><span class="nav-number">4.</span> <span class="nav-text">环和DAG（Cycles and DAGs）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#规划安排问题（Scheduling-problems）"><span class="nav-number">4.1.</span> <span class="nav-text">规划安排问题（Scheduling problems）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#次序安排问题（Precedence-constrained-scheduled）"><span class="nav-number">4.2.</span> <span class="nav-text">次序安排问题（Precedence-constrained scheduled）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#环的检测（Cycles-detection）"><span class="nav-number">4.3.</span> <span class="nav-text">环的检测（Cycles detection）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拓扑排序（Topological-sort）"><span class="nav-number">4.4.</span> <span class="nav-text">拓扑排序（Topological sort）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有向图的强连通性（Strong-connectivity-in-digraphs）"><span class="nav-number">5.</span> <span class="nav-text">有向图的强连通性（Strong connectivity in digraphs）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#强连通部分（Strong-components）"><span class="nav-number">5.1.</span> <span class="nav-text">强连通部分（Strong components）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实际应用"><span class="nav-number">5.2.</span> <span class="nav-text">实际应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#API-1"><span class="nav-number">5.3.</span> <span class="nav-text">API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kosaraju’s-algorithm"><span class="nav-number">5.4.</span> <span class="nav-text">Kosaraju’s algorithm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#给定节点对的可到达查询（All-pairs-reachability）"><span class="nav-number">5.5.</span> <span class="nav-text">给定节点对的可到达查询（All-pairs reachability）</span></a></li></ol></li></ol></div>
             
           </div>
         </section>
