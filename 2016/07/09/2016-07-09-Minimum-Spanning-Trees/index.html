@@ -57,16 +57,12 @@
 
 
 
-<meta name="description" content="一个带权图（edge-weighted graph）的每条边上都带有我们赋予的权值。如果图是飞机的航线，那么权值可以表示距离、或者表示票价等。下面，我们主要考虑无向带权图（undirected edge-weighted graph）。
-最小生成树（Minimum spanning tree）————————————————————————
-一个带权图的最小生成树(MST)是它的所有生成树中权值之">
+<meta name="description" content="一个带权图（edge-weighted graph）的每条边上都带有我们赋予的权值。如果图是飞机的航线，那么权值可以表示距离、或者表示票价等。下面，我们主要考虑无向带权图（undirected edge-weighted graph）。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="4-3 Minimum Spanning Trees">
 <meta property="og:url" content="http://yoursite.com/2016/07/09/2016-07-09-Minimum-Spanning-Trees/index.html">
 <meta property="og:site_name" content="MayMoon">
-<meta property="og:description" content="一个带权图（edge-weighted graph）的每条边上都带有我们赋予的权值。如果图是飞机的航线，那么权值可以表示距离、或者表示票价等。下面，我们主要考虑无向带权图（undirected edge-weighted graph）。
-最小生成树（Minimum spanning tree）————————————————————————
-一个带权图的最小生成树(MST)是它的所有生成树中权值之">
+<meta property="og:description" content="一个带权图（edge-weighted graph）的每条边上都带有我们赋予的权值。如果图是飞机的航线，那么权值可以表示距离、或者表示票价等。下面，我们主要考虑无向带权图（undirected edge-weighted graph）。">
 <meta property="og:image" content="http://i.imgur.com/TE8A7tO.png">
 <meta property="og:image" content="http://i.imgur.com/B5Yb6wy.png">
 <meta property="og:image" content="http://i.imgur.com/oxcfpwr.png">
@@ -74,12 +70,10 @@
 <meta property="og:image" content="http://i.imgur.com/sovzd29.png">
 <meta property="og:image" content="http://i.imgur.com/B5C89PQ.png">
 <meta property="og:image" content="http://i.imgur.com/3ivDGkK.png">
-<meta property="og:updated_time" content="2016-07-09T03:19:17.606Z">
+<meta property="og:updated_time" content="2016-07-09T06:15:04.315Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="4-3 Minimum Spanning Trees">
-<meta name="twitter:description" content="一个带权图（edge-weighted graph）的每条边上都带有我们赋予的权值。如果图是飞机的航线，那么权值可以表示距离、或者表示票价等。下面，我们主要考虑无向带权图（undirected edge-weighted graph）。
-最小生成树（Minimum spanning tree）————————————————————————
-一个带权图的最小生成树(MST)是它的所有生成树中权值之">
+<meta name="twitter:description" content="一个带权图（edge-weighted graph）的每条边上都带有我们赋予的权值。如果图是飞机的航线，那么权值可以表示距离、或者表示票价等。下面，我们主要考虑无向带权图（undirected edge-weighted graph）。">
 <meta name="twitter:image" content="http://i.imgur.com/TE8A7tO.png">
 
 
@@ -297,6 +291,7 @@
 
       
         <p>一个带权图（edge-weighted graph）的每条边上都带有我们赋予的权值。如果图是飞机的航线，那么权值可以表示距离、或者表示票价等。下面，我们主要考虑无向带权图（undirected edge-weighted graph）。</p>
+<a id="more"></a>
 <h2 id="最小生成树（Minimum-spanning-tree）"><a href="#最小生成树（Minimum-spanning-tree）" class="headerlink" title="最小生成树（Minimum spanning tree）"></a>最小生成树（Minimum spanning tree）</h2><p><strong>————————————————————————</strong></p>
 <p><strong>一个带权图的最小生成树(MST)是它的所有生成树中权值之和最小的一个。</strong></p>
 <p><strong>————————————————————————</strong></p>
@@ -381,12 +376,12 @@
         visit(G, 0);
         while (!pq.isEmpty())
         {
-            Edge e = pq.delMin();                    // Get lowest-weight edge from pq
+            Edge e = pq.delMin();                      // Get lowest-weight edge from pq
             int v = e.either(), w = e.other(v);
-            if (marked[v] &amp;&amp; marked[w]) continue;    // Skip if ineligible
+            if (marked[v] &amp;&amp; marked[w]) continue;      // Skip if ineligible
             mst.enqueue(e);                            // Add edge to tree
-            if (!marked[v]) visit(G, v);            // Add vertex v to tree
-            if (!marked[w]) visit(G, w);            // Add vertex w to tree
+            if (!marked[v]) visit(G, v);               // Add vertex v to tree
+            if (!marked[w]) visit(G, w);               // Add vertex w to tree
         }
     }
 
@@ -518,7 +513,7 @@
 <tr>
 <td style="text-align:center">impossible?</td>
 <td style="text-align:center">$V$</td>
-<td style="text-align:center">$E$?</td>
+<td style="text-align:center">$E$ ?</td>
 </tr>
 </tbody>
 </table>
