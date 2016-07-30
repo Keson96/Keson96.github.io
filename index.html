@@ -226,6 +226,116 @@
             
               
                 
+                <a class="post-title-link" href="/2016/07/30/2016-06-27-第1章-递归问题/" itemprop="url">
+                  第1章 递归问题
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-30T19:54:01+08:00" content="2016-07-30">
+              2016-07-30
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/具体数学笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">具体数学笔记</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="1-1-河内塔（The-Tower-of-Hanoi"><a href="#1-1-河内塔（The-Tower-of-Hanoi" class="headerlink" title="1.1 河内塔（The Tower of Hanoi)"></a>1.1 河内塔（The Tower of Hanoi)</h2>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/07/30/2016-06-27-第1章-递归问题/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/07/13/2016-07-13-用LINGO做整数规划/" itemprop="url">
                   用LINGO做整数规划
                 </a>
@@ -287,233 +397,12 @@
 
       
         
-          
-            <p>由于python整数规划的包不太好找，所以就用LINGO来完成数模中整数规划的任务。学了一天半LINGO，算是入门了，记下一些笔记，以后好重新上手。</p>
-<h2 id="LINGO的程序框架"><a href="#LINGO的程序框架" class="headerlink" title="LINGO的程序框架"></a>LINGO的程序框架</h2><blockquote>
-<p>下面的语法都是LINGO语言（注意！不是LINDO）</p>
-</blockquote>
-<p>LINDO的主要框架由下所示：</p>
-<pre><code>model:
-
-sets:
-...
-endsets
-
-data:
-...
-enddata
-
-[OBJ]min = ...;
-
-...
-
-end
-</code></pre><blockquote>
-<p>LINGO中每条语句都需要分号结尾，命令不需要（比如sets:,endsets这些在LINGO中高亮显示的部分）</p>
-</blockquote>
-<h3 id="sets"><a href="#sets" class="headerlink" title="sets"></a>sets</h3><p>LINGO中没有向量，矩阵等概念，只有一个集合的概念。</p>
-<h4 id="如何输入向量"><a href="#如何输入向量" class="headerlink" title="如何输入向量"></a>如何输入向量</h4><p>我要定义$x = (x_1,x_2,x_3,x_4)$，就可以输入在省略号处输入：<br><code>input_x/1..4/:x;</code><br>其中input_x类似于变量类型(可以取其他名字)，表明这后面定义的是长度为4的集合；如果我们还要定义$\theta = (\theta_1,\theta_2,\theta_3,\theta_4,\theta_5)$，则可以一次性输入：<code>input_x/1..4/:x,theta;</code><br>也就是说，我们可以同时定义同一长度的多个集合。然后，就可以通过<code>x(1)</code>或<code>theta(2)</code>等来指代某个元素或数据</p>
-<h4 id="如何输入矩阵"><a href="#如何输入矩阵" class="headerlink" title="如何输入矩阵"></a>如何输入矩阵</h4><p>要输入如下的表：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center"></th>
-<th style="text-align:center">$y_1$</th>
-<th style="text-align:center">$y_2$</th>
-<th style="text-align:center">$y_3$</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">$x_1$</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">2</td>
-<td style="text-align:center">3</td>
-</tr>
-<tr>
-<td style="text-align:center">$x_2$</td>
-<td style="text-align:center">5</td>
-<td style="text-align:center">3</td>
-<td style="text-align:center">7</td>
-</tr>
-<tr>
-<td style="text-align:center">$x_3$</td>
-<td style="text-align:center">9</td>
-<td style="text-align:center">8</td>
-<td style="text-align:center">6</td>
-</tr>
-<tr>
-<td style="text-align:center">$x_4$</td>
-<td style="text-align:center">2</td>
-<td style="text-align:center">4</td>
-<td style="text-align:center">1</td>
-</tr>
-</tbody>
-</table>
-<p>假设已经通过如下代码<br><code>input_y/1..3/:y;</code><br>定义input_y这个类型</p>
-<p>要表示矩阵中的元素，我们需要这样定义：<br><code>matrix(input_x,input_y):c;</code><br>类似与上面的，matrix表示这个集合的类型(可以换其他名字)，c是一个集合变量名，括号中第一个位置表示行的集合类型（大小），第二个位置表示列的集合类型。同理，就可以通过c(1,2)这样的形式来指代某个位置的数据或元素。</p>
-<h3 id="data"><a href="#data" class="headerlink" title="data"></a>data</h3><p>在LINGO中，有些变量是我们要去规划的，有些数据是预先给出的，我们可以将这些都在sets中进行定义，然后在data中将给定的数据进行赋值。例如上面的矩阵，在sets中我们只是定义了矩阵的大小，但里面没有数据。</p>
-<pre><code>c = 
-1,2,3
-5,3,7
-9,8,6
-2,4,1;
-</code></pre><p>由于LINGO以分号作为语句结束标志，所以我们可以跨行输入矩阵。实际上，放在一行也是可以的，如下所示：</p>
-<pre><code>c = 1,2,3,5,3,7,9,8,6,2,4,1;
-</code></pre><h3 id="OBJ-min"><a href="#OBJ-min" class="headerlink" title="[OBJ] min"></a>[OBJ] min</h3><p>这不是一条命令，而是一条语句，所以结尾有分号，表示的是我们要优化的目标。</p>
-<p>比如<code> [OBJ]min = x(1)*x(2)*y(3) + y(1)*y(2)*x(3); </code></p>
-<p>当然，如果是最大化的话，可以将<code>min</code>换成<code>max</code></p>
-<h3 id="常用函数"><a href="#常用函数" class="headerlink" title="常用函数"></a>常用函数</h3><p>在介绍约束条件前，先介绍一下LINGO中常用的函数，因为写约束条件或优化目标常常离不开这些函数。LINGO中函数都是以@开头，加上函数名，比如<code>@for,@gin,@sum</code></p>
-<h4 id="循环—–-for"><a href="#循环—–-for" class="headerlink" title="循环—–@for"></a>循环—–@for</h4><p>比如，我们要写一条约束条件：对于任意的i=1,2,3,4，x(i)都大于3。则应该这样写：</p>
-<pre><code>@for( input_x(i) : x(i) &gt; 3 );
-</code></pre><p>其中，input_x为x的集合类型，它指示了这个循环的次数</p>
-<p>再举一个例子：对于任意的i=1,2,3,4和j=1,2,3，x(i)*y(j)大于5</p>
-<pre><code>@for ( matrix(i,j): x(i)*y(j) &gt; 5 );
-</code></pre><h4 id="求和—–-sum"><a href="#求和—–-sum" class="headerlink" title="求和—–@sum"></a>求和—–@sum</h4><p>比如，我们要写一约束条件：$\sum_{i=1}^4 x_i &lt;10$</p>
-<pre><code>@sum(input_x(i): x(i)) &lt; 10;
-</code></pre><p>注意：不等号在括号的外面，相当于只是一条约束条件</p>
-<p>再举一个例子，假设我们没有给$c_{ij}$赋值，就可以对$c_{ij}$进行约束，比如：</p>
-<pre><code>@sum(matrix(i,j) : c(i,j)) &gt; 20;
-</code></pre><h4 id="限制为整数—–-gin"><a href="#限制为整数—–-gin" class="headerlink" title="限制为整数—–@gin"></a>限制为整数—–@gin</h4><p>比如，我们要限制y(1)为整数，则可以写：</p>
-<pre><code>@gin(y(1));
-</code></pre><p>也可以将@gin和@for合用，比如用来限制$x_i$都是整数：</p>
-<pre><code>@for( input_x(i): @gin(x(i)) );
-</code></pre><h3 id="限制条件"><a href="#限制条件" class="headerlink" title="限制条件"></a>限制条件</h3><p>限制条件其实就是若干条语句，在开头的结构中用min下面的三个省略号表示</p>
-<p>可以很简单，比如：</p>
-<pre><code>x(1) &lt; 5;
-</code></pre><p>也可以很复杂，比如：</p>
-<pre><code>@for(input_x(i):@sum(input_y(j):c(i,j)*y(j)) &gt;= theta(i));
-</code></pre><h3 id="求解"><a href="#求解" class="headerlink" title="求解"></a>求解</h3><p>全部写完后，就可以点击Solve按钮（一个小靶子的样子）进行求解。</p>
-<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><p>没有什么比一个简单的例子更容易让人上手一门语言</p>
-<h3 id="钢管下料问题"><a href="#钢管下料问题" class="headerlink" title="钢管下料问题"></a>钢管下料问题</h3><p>某工厂为客户裁切钢管，原料钢管每根长19米。现在有一客户需要50根4米长的钢管，20根6米长的钢管和15根8米长的钢管。问：<br>(1) 怎样切割产生的余料最少？<br>(2) 为节省成本，工厂最多只能使用三种切割模式。在这种情况下，求问怎样切割使用的钢管根数最少？</p>
-<p>解：<br>(1) 用枚举法，共有以下7种切割模式：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center"></th>
-<th style="text-align:center">4米</th>
-<th style="text-align:center">6米</th>
-<th style="text-align:center">8米</th>
-<th style="text-align:center">余料（单位：米）</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">模式1</td>
-<td style="text-align:center">4</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">3</td>
-</tr>
-<tr>
-<td style="text-align:center">模式2</td>
-<td style="text-align:center">3</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">1</td>
-</tr>
-<tr>
-<td style="text-align:center">模式3</td>
-<td style="text-align:center">2</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">3</td>
-</tr>
-<tr>
-<td style="text-align:center">模式4</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">2</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">3</td>
-</tr>
-<tr>
-<td style="text-align:center">模式5</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">1</td>
-</tr>
-<tr>
-<td style="text-align:center">模式6</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">3</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">1</td>
-</tr>
-<tr>
-<td style="text-align:center">模式7</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">2</td>
-<td style="text-align:center">3</td>
-</tr>
-<tr>
-<td style="text-align:center">需求</td>
-<td style="text-align:center">50</td>
-<td style="text-align:center">20</td>
-<td style="text-align:center">15</td>
-</tr>
-</tbody>
-</table>
-<pre><code>model:
-min = 3*x1+x2+3*x3+3*x4+x5+x6+3*x7;
-4*x1 + 3*x2 + 2*x3 + x4 + x5 &gt;= 50;
-x2 + 2*x4 + x5 + 3*x6 &gt;= 20;
-x3 + x5 + 2*x7 &gt;= 15;
-@gin(x1);@gin(x2);@gin(x3);@gin(x4);@gin(x5);@gin(x6);@gin(x7);
-end
-</code></pre><p>求解可得：最小余料为27米，其中按模式二切割12根，按模式5切割15根</p>
-<p>(2) 当有4种钢管时，使用枚举法耗时太大。题目限制只能使用3种切割方式，所以将这三种切割方式所切割的钢管根数分别记为$x_1,x_2,x_3$；记$r_{ij}$为使用$j$种切割方式切割所产生的第$i$种钢管的数量，则有以下约束条件：</p>
-<p>$r_{11}x_1+r_{12}x_2+r_{13}x_3 \ge 50$<br>$r_{21}x_1+r_{22}x_2+r_{23}x_3 \ge 10$<br>$r_{31}x_1+r_{32}x_2+r_{33}x_3 \ge 20$<br>$r_{41}x_1+r_{42}x_2+r_{43}x_3 \ge 15$</p>
-<p>我们假设合理切割模式的余料不超过3米，则有：</p>
-<p>$16 \le 4r_{11}+5r_{21}+6r_{31}+8r_{41} \ge 19$<br>$16 \le 4r_{12}+5r_{22}+6r_{32}+8r_{42} \ge 19$<br>$16 \le 4r_{13}+5r_{23}+6r_{33}+8r_{43} \ge 19$</p>
-<p>另外，$r_{ij}$和$x_j$都必须为整数</p>
-<p>除此之外，我们可以可以缩小可行域。原料钢管用量的下界为：$\lceil \frac{4\times50+5\times10+6\times20+8\times15}{19}\rceil =26$</p>
-<p>（找出一个特解）如果使用下面的生产计划：<br>模式1：切割成4根4米的钢管，需13根；<br>模式2：切割成1根5米和2根6米的钢管，需10根；<br>模式3：切割成2根8米的钢管，需8根；<br>故原料钢管的总根数上界为$13+10+8=31$</p>
-<p>总的代码如下：</p>
-<pre><code>model:
-
-sets:
-pattern/1..3/:x;
-tube/1..4/:t, demand, meter;
-link(tube,pattern):r;
-endsets
-
-data:
-demand = 50,10,20,15;
-meter = 4,5,6,8;
-enddata
-
-[OBJ]min = @sum(pattern(i):x(i));
-@for(tube(i):@sum(pattern(j):r(i,j)*x(j))&gt;=demand(i));
-@for(pattern(j):@sum(tube(i):r(i,j)*meter(i)) &gt;= 16);
-@for(pattern(j):@sum(tube(i):r(i,j)*meter(i)) &lt;= 19);
-@for(pattern(j):@gin(x(j)));
-@for(link(i,j):@gin(r(i,j)));
-@sum(pattern(j):(x(j))) &lt;= 31;
-@sum(pattern(j):(x(j))) &gt;= 26;
-end
-</code></pre><h2 id="其他问题"><a href="#其他问题" class="headerlink" title="其他问题"></a>其他问题</h2><h3 id="读入数据"><a href="#读入数据" class="headerlink" title="读入数据"></a>读入数据</h3><p>差不多都可以搜索到方法，写一下读取最常用的excel文件的方法。首先，要在excel中选中要读取的数据区，给它定义一个名称（2016版Excel在“公式”选项卡下），此例中选中的数据区的大小为4*3，定义的名称为data_mat，读取代码如下：</p>
-<pre><code>sets:
-col/1..3/:x;
-row/1..4/:y;
-cell(row,col):num;
-endsets
-
-data:
-num=@OLE(&apos;C:\Users\MayMoon\Desktop\data.xlsx&apos;,data_mat);
-enddata
-</code></pre><h3 id="结果分析"><a href="#结果分析" class="headerlink" title="结果分析"></a>结果分析</h3><ul>
-<li>Reduced Cost<br>指的是该非基变量每增加一个单位（其他非基变量保持不变），目标函数减少的量（对于max问题）</li>
-<li>Slack Or Surplus<br>指的是资源的剩余</li>
-<li>Dual Price（影子价格）<br>指的是最优解情况下，资源增加1单位效益的增量</li>
-</ul>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
-<li><a href="http://blog.sina.com.cn/s/blog_a16714bf0101deuz.html" target="_blank" rel="external">Lingo超经典案例大全</a></li>
-<li>《优化模型与LINDO/LINGO优化软件》PPT by 谢金星</li>
-</ol>
-
-          
+          <p>由于python整数规划的包不太好找，所以就用LINGO来完成数模中整数规划的任务。学了一天半LINGO，算是入门了，记下一些笔记，以后好重新上手。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/07/13/2016-07-13-用LINGO做整数规划/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1419,124 +1308,11 @@ enddata
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/05/24/2016-05-24-3.2-Binary-Search-Trees/" itemprop="url">
-                  3-2 Binary Search Trees
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-05-24T19:54:01+08:00" content="2016-05-24">
-              2016-05-24
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/《Algorithms》-notes/" itemprop="url" rel="index">
-                    <span itemprop="name">《Algorithms》 notes</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>我们来研究一种符号表的实现————它结合了使用链表带来的<strong>插入元素的灵活性</strong>和使用顺序数组带来的<strong>查找元素的高效性</strong>，称为二叉搜索树。</p>
-<p><strong>————————————————————————</strong></p>
-<p><strong>一个二叉搜索树是一个二叉树，每个节点都有一个可以比较的键，并满足以下约束条件：每个节点的键都比它左子树中所有节点的键大，都比它右子树中所有节点的键小</strong></p>
-<p><strong>————————————————————————</strong></p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/05/24/2016-05-24-3.2-Binary-Search-Trees/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1577,7 +1353,7 @@ enddata
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">20</span>
+              <span class="site-state-item-count">21</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1585,7 +1361,7 @@ enddata
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1594,7 +1370,7 @@ enddata
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">40</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -1706,24 +1482,7 @@ enddata
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-      all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-  });
-</script>
-
-<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-<!-- End: Injected MathJax -->
-<!-- hexo-inject:end -->
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 
 

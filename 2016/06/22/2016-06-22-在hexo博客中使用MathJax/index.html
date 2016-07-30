@@ -63,7 +63,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/06/22/2016-06-22-在hexo博客中使用MathJax/index.html">
 <meta property="og:site_name" content="MayMoon">
 <meta property="og:description" content="之前一直用的是MathTex来插入公式，不过，这个方式相当于插入了一张在线图片，显示效果不是很好。终于闲下来，有机会琢磨一下怎么用MathJax了。">
-<meta property="og:updated_time" content="2016-06-23T14:57:39.832Z">
+<meta property="og:updated_time" content="2016-07-29T01:43:20.925Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在Hexo博客中使用MathJax">
 <meta name="twitter:description" content="之前一直用的是MathTex来插入公式，不过，这个方式相当于插入了一张在线图片，显示效果不是很好。终于闲下来，有机会琢磨一下怎么用MathJax了。">
@@ -287,8 +287,8 @@
 <h2 id="配置MathJax"><a href="#配置MathJax" class="headerlink" title="配置MathJax"></a>配置MathJax</h2><h3 id="Step-1-安装插件"><a href="#Step-1-安装插件" class="headerlink" title="Step 1 安装插件"></a>Step 1 安装插件</h3><p>有大神写好的部署MathJax的插件，可以一键安装。在博客文件夹下执行：</p>
 <pre><code>npm install hexo-math --save
 hexo math install
-</code></pre><h3 id="Step-2-修改转义字符"><a href="#Step-2-修改转义字符" class="headerlink" title="Step 2 修改转义字符"></a>Step 2 修改转义字符</h3><p>MathJax的语法会用到<code>//</code>等会被marked渲染引擎转义的字符，所以需要修改默认的转义字符。</p>
-<p>定位到<code>./node_modules/marked/lib/</code>中（也可能是：<code>hexo\node_modules\hexo-renderer-marked\node_modules\marked\lib</code>），用文本编辑器打开marked.js（我的是marked.min.js）</p>
+</code></pre><h3 id="Step-2-修改转义字符"><a href="#Step-2-修改转义字符" class="headerlink" title="Step 2 修改转义字符"></a>Step 2 修改转义字符</h3><p>MathJax的语法会用到<code>\\</code>等会被marked渲染引擎转义的字符，所以需要修改默认的转义字符。</p>
+<p>定位到<code>./node_modules/marked/lib/</code>中（也可能是：<code>hexo\node_modules\hexo-renderer-marked\node_modules\marked\lib</code>），用文本编辑器打开marked.js</p>
 <p>将</p>
 <pre><code>escape: /^\\([\\`*{}\[\]()# +\-.!_&gt;])/,
 </code></pre><p>改为</p>
@@ -409,7 +409,7 @@ hexo math install
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">20</span>
+              <span class="site-state-item-count">21</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -417,7 +417,7 @@ hexo math install
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -426,7 +426,7 @@ hexo math install
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">40</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
