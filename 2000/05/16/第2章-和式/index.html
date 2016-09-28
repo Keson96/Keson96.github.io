@@ -1,0 +1,610 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="wangkaixin, maymoon" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="2.1 记号 NOTATION和式与项一般形式的和式 $a_1 + a_2 + \cdots + a_n$
+和式的每个元素 $a_k$ 称为项(term)
+除了用···来表示和式，我们也可以用（很多时候的确在用）求和符号表示和式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="🔨第二章 和式">
+<meta property="og:url" content="http://yoursite.com/2000/05/16/第2章-和式/index.html">
+<meta property="og:site_name" content="MayMoon">
+<meta property="og:description" content="2.1 记号 NOTATION和式与项一般形式的和式 $a_1 + a_2 + \cdots + a_n$
+和式的每个元素 $a_k$ 称为项(term)
+除了用···来表示和式，我们也可以用（很多时候的确在用）求和符号表示和式">
+<meta property="og:updated_time" content="2016-09-26T00:16:34.833Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="🔨第二章 和式">
+<meta name="twitter:description" content="2.1 记号 NOTATION和式与项一般形式的和式 $a_1 + a_2 + \cdots + a_n$
+和式的每个元素 $a_k$ 称为项(term)
+除了用···来表示和式，我们也可以用（很多时候的确在用）求和符号表示和式">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 🔨第二章 和式 | MayMoon </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">MayMoon</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">随便写写</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user fa-fw"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                🔨第二章 和式
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2000-05-16T19:54:01+08:00" content="2000-05-16">
+              2000-05-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Under-Construction/" itemprop="url" rel="index">
+                    <span itemprop="name">Under Construction</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="2-1-记号-NOTATION"><a href="#2-1-记号-NOTATION" class="headerlink" title="2.1 记号 NOTATION"></a>2.1 记号 NOTATION</h2><h3 id="和式与项"><a href="#和式与项" class="headerlink" title="和式与项"></a>和式与项</h3><p>一般形式的和式 $a_1 + a_2 + \cdots + a_n$</p>
+<p>和式的每个元素 $a_k$ 称为<strong>项</strong>(term)</p>
+<p>除了用···来表示和式，我们也可以用（很多时候的确在用）求和符号表示和式</p>
+<a id="more"></a>
+<h3 id="求和符号"><a href="#求和符号" class="headerlink" title="求和符号"></a>求和符号</h3><blockquote>
+<p>自从傅里叶引进 $\sum$ 这个符号代表求和，它就风靡了整个数学界</p>
+</blockquote>
+<h4 id="有确定界形式VS一般形式"><a href="#有确定界形式VS一般形式" class="headerlink" title="有确定界形式VS一般形式"></a>有确定界形式VS一般形式</h4><ul>
+<li><p>一般形式的含义更加清楚。</p>
+<p>$$\sum_{k=0}^{49} (2k+1)^2$$</p>
+<p>$$\sum_{\stackrel{1 \le k&lt;100}{k是奇数}} k^2$$</p>
+</li>
+</ul>
+<p> 这两个求和式是等价的，但后者显然更加清楚易懂</p>
+<ul>
+<li><p>一般形式更加容易处理</p>
+<p>$$\sum_{1 \le k \le n}a_k=\sum_{1 \le k+1 \le n}a_{k+1} $$</p>
+<p>$$ \sum_{k=1}^n a_k=\sum_{k=0}^{n-1}a_{k+1} $$</p>
+<p>相同的变换，第一个式子使用一般形式，几乎不需要思考就可以做出这样的代换；第二个等式的转换就有点不容易看出来，也容易出错。</p>
+</li>
+</ul>
+<blockquote>
+<p>在这里使用 $k$ 而不是 $i$ 作为指标变量，因为 $i$ 还有更重要的任务，代表 $\sqrt{-1}$</p>
+</blockquote>
+<h4 id="更一般的形式"><a href="#更一般的形式" class="headerlink" title="更一般的形式"></a>更一般的形式</h4><p>$$ \sum_{P(k)}a_k $$</p>
+<p>其中，$k$是满足性质$P(k)$的一个整数</p>
+<h3 id="不加限定条件的表示和式"><a href="#不加限定条件的表示和式" class="headerlink" title="不加限定条件的表示和式"></a>不加限定条件的表示和式</h3><blockquote>
+<p>艾弗森在它的程序语言APL中提出一个思想：我们可以把一个为真或为假的命题放在括号中，如$[p是素数]$，其结果是1或0。</p>
+</blockquote>
+<p>所以，我们就可以不加限制条件的表示和式</p>
+<p>$$\sum_p [p是素数][p \le N]/p$$</p>
+<p>这个和式表示 $\le N$ 的素数倒数之和</p>
+<h2 id="2-2-和式与递归式-SUMS-AND-RECURRENCES"><a href="#2-2-和式与递归式-SUMS-AND-RECURRENCES" class="headerlink" title="2.2 和式与递归式 SUMS AND RECURRENCES"></a>2.2 和式与递归式 SUMS AND RECURRENCES</h2><h3 id="和式转化为递归式"><a href="#和式转化为递归式" class="headerlink" title="和式转化为递归式"></a>和式转化为递归式</h3><p>如何来求和式的值呢？一种方法是观察和式与递归式之间存在的密切关系。和式<br>$$S_n=\sum_{k=0}^na_k$$<br>等价于递归式<br>$$\begin{array}{} S_0 &amp;=a_0 \\ S_n &amp;= S_{n-1}+a_n ,\quad n&gt;0 \end{array} \tag{2.6}$$<br>这样，就可以利用第一章学到的用封闭形式求解递归式的方法。再来复习一下：</p>
+<p>例如，如果$a_n$等于一个常数加上$n$的倍数，那么和式-递归式(2.6)的一般形式犹如<br>$$\begin{array}{} R_0 &amp;=\alpha \\ R_n &amp;= R_{n-1}+\beta+\gamma n ,\quad n&gt;0 \end{array} \tag{2.7}$$一般来说，它的解可以写成形式<br>$$R_n=A(n)\alpha+B(n)\beta+C(n)\gamma\tag{2.8}$$其中$A(n)$，$B(n)$，$C(n)$是系数，它们依赖于一般的参数$\alpha$，$\beta$，$\gamma$<br>使用成套方法，用$n$的简单函数代替$R_n$，希望能求出常数参数$\alpha$，$\beta$，$\gamma$<br>令 $R_n=1$ 就意味着 $\alpha=1$，$\beta=0$，$\gamma=0$，从而$$A(n)=1$$<br>令 $R_n=n$ 就意味着 $\alpha=0$，$\beta=1$，$\gamma=0$，从而$$B(n)=n$$<br>令 $R_n=n^2$ 就意味着 $\alpha=0$，$\beta=-1$，$\gamma=2$，从而$$2C(n)-B(n)=n^2$$则$C(n)=(n^2+n)/2$<br>于是，如果我们想要计算$\sum_{k=0}^n(a+bk)$，则和式-递归式(2.6)就转换成(2.7)，其中$\alpha=\beta=a$，$\gamma=b$，而答案是$$aA(n)+aB(n)+bC(n)=a(n+1)+b(n+1)n/2$$</p>
+<h3 id="递归式转换成和式"><a href="#递归式转换成和式" class="headerlink" title="递归式转换成和式"></a>递归式转换成和式</h3><p>另一方面，许多递归式都可以转换成和式，这样有助于我们求解一些复杂的递归式。</p>
+<p>河内塔递归式就是一个恰当的例子：<br>$$\begin{array}{} T_0 &amp;=0 \\ T_n &amp;= 2T_{n-1}+1 ,\quad n&gt;0 \end{array}$$<br>如果两边都用$2^n$来除，它就可以写成<br>$$\begin{array}{} T_0/2^0 &amp;=0 \\ T_n/2^n &amp;= T_{n-1}/2^{n-1}+1/2^n ,\quad n&gt;0 \end{array}$$<br>现在令$S_n=T_n/2^n$，我们就有<br>$$\begin{array}{} S_0 &amp;=0 \\ S_n &amp;= S_{n-1}+2^{-n} ,\quad n&gt;0 \end{array}$$<br>由此得到<br>$$S_n=\sum_{k=1}^n$$<br>几何级数的和$$2^{-1}+2^{-2}+\cdots+2^{-n}=1-\left(\frac{1}{2}\right)^n$$故而  $T_n=2^nS_n=2^n-1$</p>
+<h4 id="一般性的方法"><a href="#一般性的方法" class="headerlink" title="一般性的方法"></a>一般性的方法</h4><p>在上面的例子中我们用$2^n$来除，将$T_n$转换成了$S_n$。这一技巧是一般技术的一个特殊情形，实际上一般技术可以将任何形如<br>$$a_nT_n=b_nT_{n-1}+c_n\tag{2.9}$$<br>的递归式转换成一个和式。**其思想在于用一个求和因子$s_n$来乘两边：<br>$$s_na_nT_n=s_nb_nT_{n-1}+s_nc_n$$<br>因子$s_n$需要恰当选择使得<br>$$s_nb_n=s_{n-1}a_{n-1}$$<br>这样一来，如果记$S_n=s_na_nT_n$，我们就得到了一个和式-递归式<br>$$S_n=S_{n-1}+s_nc_n$$<br>从而<br>$$S_n=s_0a_0T_0+\sum_{k=1}^ns_kc_k=s_1b_1T_0+\sum_{k=1}^ns_kc_k$$<br>而原来的递归式(2.9)的解就是<br>$$T_n=\frac{1}{s_na_n}\left(s_1b_1T_0+\sum_{k=1}^ns_kc_k\right)\tag{2.10}$$</p>
+<p>但是，我们怎样才能求出正确的$s_n$呢？没问题，关系式$s_n=s_{n-1}a_{n-1}/b_n$可以被展开，从而我们发现，分式<br>$$s_n=\cfrac{a_{n-1}a_{n-2}\cdots a_1}{b_{n}b_{n-1}\cdots b_2}\tag{2.11}$$<br>或者这个值的任何适当的常数倍，会是一个合适的求和因子。注意不要用0做除数，所以只要所有的$a$和$b$都不为零，那么求和因子方法就能奏效</p>
+<h3 id="另一个例子"><a href="#另一个例子" class="headerlink" title="另一个例子"></a>另一个例子</h3><p>我们来把上面的探索结果应用到“快速排序”中所出现的递归式。排序$n$个元素的随机序列时，快速排序所做的比较操作的平均次数满足递归式<br>$$\begin{array}{} C_0&amp;=&amp;C_1=0 \\ C_n&amp;=&amp; n+1+\cfrac{2}{n}\sum_{k=0}^{n-1}C_k ,\quad n&gt;1 \end{array}\tag{2.12}$$<br>这个递归式看起来十分复杂，它含有一个对前面的值求和的和式。我们可以系统地来化简(2.12)的复杂性，首先避免除法，然后再规避掉符号$\sum$。用$n$乘两边，就得到关系式：<br>$$nC_n=n^2+n+2\sum_{k=0}^{n-1}C_k ,\quad n&gt;1$$<br>如果我们用$n-1$代替$n$，就有<br>$$(n-1)C_{n-1}=(n-1)^2+(n-1)+2\sum_{k=0}^{n-2}C_k,\quad n-1&gt;1$$<br>现在可以从第一个方程中减去这个方程，求和号就消失了：<br>$$nC_n-(n-1)C_{n-1}=2n+2C_{n-1}, \quad n&gt;2$$<br>这样一来，原来关于$C_n$的递归式就变得简单多了：<br>$$\begin{array}{} C_0&amp;=C_1=0; \quad C_2=3 \\ nC_n&amp;=(n+1)C_{n-1}+2n ,\quad n&gt;2 \end{array}$$<br>这个递归式形如(2.9)，其中$a_n=n$,$b_n=n+1$，且<br>$$c_n=2n-2[n=1]+2[n=2]$$<br>故而我们现在能用求和因子方法。前面介绍的一般方法告诉我们，要用<br>$$s_n=\cfrac{a_{n-1}a_{n-2}\cdots a_1}{b_{n}b_{n-1}\cdots b_2}=\cfrac{(n-1)\times(n-2)\times\cdots\times 1}{(n+1)\times n\times 3}=\cfrac{2}{(n+1)n}$$的某个倍数来遍乘该递归式。根据(2.10)，它的解就是<br>$$C_n=2(n+1)\sum_{k=1}^n \cfrac{1}{k+1}-\cfrac{2}{3}(n+1),\quad n&gt;1$$<br>这个和式中有一个量和应用中频繁出现的一个量极为相似———<strong>调和数</strong><br>$$H_n=1+\cfrac12+\cdots+\cfrac1n=\sum_{k=1}^n \cfrac1k\tag{2.13}$$<br>我们可以利用$H_n$将$C_n$写成封闭形式：<br>$$\begin{array}{}<br>\sum\limits_{1\le k\le n}\cfrac{1}{k+1}&amp;=&amp;\sum\limits_{1\le k-1\le n}\cfrac{1}{k} \\<br>&amp;=&amp;\sum\limits_{2\le k\le n+1}\cfrac{1}{k} \\<br>&amp;=&amp;\left(\sum\limits_{1\le k\le n}\cfrac{1}{k}\right)-\cfrac11+\cfrac{1}{n+1} \\<br>&amp;=&amp;H_n-\cfrac{n}{n+1}<br>\end{array}<br>$$<br>所以$$C_n=2(n+1)H_n-\cfrac83 n-\cfrac23,\quad n&gt;1$$</p>
+<h2 id="2-3-和式的处理-MANIPULATION-OF-SUMS"><a href="#2-3-和式的处理-MANIPULATION-OF-SUMS" class="headerlink" title="2.3 和式的处理 MANIPULATION OF SUMS"></a>2.3 和式的处理 MANIPULATION OF SUMS</h2><p>成功处理和式的关键在于，将一个$\sum$改变成一个更简单或更接近目标的$\sum$。学习一些基本的变换法则，就会很容易做到这一点。</p>
+<h3 id="基本变换法则"><a href="#基本变换法则" class="headerlink" title="基本变换法则"></a>基本变换法则</h3><p>设$K$是任意一个有限整数集合。$K$中元素的和式可以用三条简单的法则加以变换：<br>$$\sum\limits_{k\in K}ca_k=c\sum\limits_{k\in K}a_k \qquad \text{(分配律)}\tag{2.15}$$<br>$$\sum\limits_{k\in K}(a_k+b_k)=\sum\limits_{k\in K}a_k+\sum\limits_{k\in K}b_k \qquad \text{(结合律)}\tag{2.16}$$<br>$$\sum\limits_{k\in K}a_k=\sum\limits_{p(k)\in K}a_{p(k)} \qquad \text{（交换律）} \tag{2.17}$$<br>运用分配律，我们能把常数移入和移出$\sum$；运用结合律，我们可以把一个$\sum$分成两个部分；运用交换律，我们可以按照愿意采用的任何方式来重新将求和项排序，这里$p(k)$是所有整数集合的任意一个排列。</p>
+<h3 id="一个例子：求等差级数的一般和"><a href="#一个例子：求等差级数的一般和" class="headerlink" title="一个例子：求等差级数的一般和"></a>一个例子：求等差级数的一般和</h3><p>假设我们要计算一个等差级数的一般和：<br>$$S=\sum\limits_{0\le k\le n}(a+bk)$$根据交换律，我们可以用$n-k$代替$k$，得到$$S=\sum\limits_{0\le n-k\le n}(a+b(n-k))=\sum\limits_{0\le k\le n}(a+bn-bk)$$利用结合律，可以把这两个方程相加$$2S=\sum\limits_{0\le k\le n}((a+bk)+(a+bn-bk))=\sum\limits_{0\le k\le n}(2a+bn)$$现在利用分配律$$2S=(2a+bn)\sum\limits_{0\le k\le n}1=(2a+bn)(b+n)$$故我们就证明了$$\sum\limits_{k=0}^n(a+bk)=(a+\frac{1}{2}bn)(n+1) \tag{2.18}$$</p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><p>在一般的交换律(2.17)中的函数$p(k)$都假设是所有整数的排列。即对每个整数$n$，都恰好存在一个整数$k$，使得$p(k)=n$。现在，我们将排列限制稍稍放松。我们只需要求，当$n$是指标集$K$中的一个元素时，恰好有一个整数$k$满足$p(k)=n$，而不关心那些不在$K$中的$n$。<br>例如，由于当$n\in K$且$n$是偶数时恰好有一个$k$使得$2k=n$，故可以进行以下推导：$$\sum\limits_{\substack{k\in K \\ k是偶数 }}a_k=\sum\limits_{\substack{n\in K \\ n是偶数 }}a_n=\sum\limits_{\substack{2k\in K \\ 2k是偶数 }}a_{2k}=\sum\limits_{2k\in K}a_{2k}$$</p>
+<p>通过公式中间的逻辑命题来得到0或者1的艾佛森约定，可以与分配律、结合律以及交换律一起使用，以导出和式的其他性质。下面就是一个常用的性质：如果$K$与$K’$是整数的任意集合，那么$$\sum\limits_{k\in K}a_k+\sum\limits_{k\in K’}a_k=\sum\limits_{k\in K\cap K’}a_k+\sum\limits_{k\in K\cup K’}a_k$$<br>上面的这个法则可以用来把单独一项从和式中分出去$$\sum\limits{0\le k\le n}a_k=a_0+\sum\limits{1\le k\le n}a_k,\quad n\ge 0$$</p>
+<p>把一项分出去的运算是<strong>扰动法</strong>的基础，利用扰动法，我们常常可以用封闭形式来计算一个和式。其思想是从一个未知的和式开始，并记它为$S_n$：$$S_n=\sum\limits_{0\le k\le n}a_k$$然后，通过将它的最后一项和第一项分离出来，用两种方法重新改写$S_{n+1}$：$$\begin{array}{}<br>S_n+a_{n+1}=\sum\limits_{0\le k\le n+1}a_k&amp;=&amp;a_0+\sum\limits_{1\le k\le n+1}a_k \\<br>&amp;=&amp;a_0+\sum\limits_{0\le k+1\le n+1}a_{k+1} \\<br>&amp;=&amp;a_0+\sum\limits_{0\le k\le n}a_{k+1}<br>\end{array}\tag{2.24}$$</p>
+<h3 id="一个例子：求几何级数的一般和"><a href="#一个例子：求几何级数的一般和" class="headerlink" title="一个例子：求几何级数的一般和"></a>一个例子：求几何级数的一般和</h3><p>$$S_n=\sum\limits_{0\le k\le n}ax^k$$<br>利用扰动法，则有<br>$$S_n+ax^{n+1}=ax^0+\sum\limits_{0\le k\le n}ax^{k+1}$$</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2000/05/16/Balanced Search Trees/" rel="prev" title="🔨Balanced Search Trees">
+                🔨Balanced Search Trees <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/pic.PNG"
+               alt="Wang Kx" />
+          <p class="site-author-name" itemprop="name">Wang Kx</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-记号-NOTATION"><span class="nav-number">1.</span> <span class="nav-text">2.1 记号 NOTATION</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#和式与项"><span class="nav-number">1.1.</span> <span class="nav-text">和式与项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#求和符号"><span class="nav-number">1.2.</span> <span class="nav-text">求和符号</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#有确定界形式VS一般形式"><span class="nav-number">1.2.1.</span> <span class="nav-text">有确定界形式VS一般形式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更一般的形式"><span class="nav-number">1.2.2.</span> <span class="nav-text">更一般的形式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不加限定条件的表示和式"><span class="nav-number">1.3.</span> <span class="nav-text">不加限定条件的表示和式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-和式与递归式-SUMS-AND-RECURRENCES"><span class="nav-number">2.</span> <span class="nav-text">2.2 和式与递归式 SUMS AND RECURRENCES</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#和式转化为递归式"><span class="nav-number">2.1.</span> <span class="nav-text">和式转化为递归式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#递归式转换成和式"><span class="nav-number">2.2.</span> <span class="nav-text">递归式转换成和式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一般性的方法"><span class="nav-number">2.2.1.</span> <span class="nav-text">一般性的方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#另一个例子"><span class="nav-number">2.3.</span> <span class="nav-text">另一个例子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-和式的处理-MANIPULATION-OF-SUMS"><span class="nav-number">3.</span> <span class="nav-text">2.3 和式的处理 MANIPULATION OF SUMS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本变换法则"><span class="nav-number">3.1.</span> <span class="nav-text">基本变换法则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一个例子：求等差级数的一般和"><span class="nav-number">3.2.</span> <span class="nav-text">一个例子：求等差级数的一般和</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他"><span class="nav-number">3.3.</span> <span class="nav-text">其他</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一个例子：求几何级数的一般和"><span class="nav-number">3.4.</span> <span class="nav-text">一个例子：求几何级数的一般和</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wang Kx</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=0.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
