@@ -57,16 +57,16 @@
 
 
 
-<meta name="description" content="批量梯度下降（Batch Gradient Decent）批量梯度下降的思路是：对于要优化的目标参数，比如$\theta$，在迭代的第$i$步，计算出误差函数的梯度$\nabla_i$，然后沿着负梯度下降某个步长$\alpha$，更新$\theta_{i+1}:=\theta_i - \alpha\nabla_i$，进行下一次迭代。$\alpha$可以随$i$变化，也可以保持不变。批量梯度下降的">
+<meta name="description" content="批量梯度下降（Batch Gradient Decent）">
 <meta property="og:type" content="article">
 <meta property="og:title" content="批量梯度下降和随机梯度下降">
 <meta property="og:url" content="http://yoursite.com/2016/09/28/2016-09-28-批量梯度下降和随机梯度下降/index.html">
 <meta property="og:site_name" content="MayMoon">
-<meta property="og:description" content="批量梯度下降（Batch Gradient Decent）批量梯度下降的思路是：对于要优化的目标参数，比如$\theta$，在迭代的第$i$步，计算出误差函数的梯度$\nabla_i$，然后沿着负梯度下降某个步长$\alpha$，更新$\theta_{i+1}:=\theta_i - \alpha\nabla_i$，进行下一次迭代。$\alpha$可以随$i$变化，也可以保持不变。批量梯度下降的">
-<meta property="og:updated_time" content="2016-09-28T11:54:59.729Z">
+<meta property="og:description" content="批量梯度下降（Batch Gradient Decent）">
+<meta property="og:updated_time" content="2016-09-28T12:22:49.746Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="批量梯度下降和随机梯度下降">
-<meta name="twitter:description" content="批量梯度下降（Batch Gradient Decent）批量梯度下降的思路是：对于要优化的目标参数，比如$\theta$，在迭代的第$i$步，计算出误差函数的梯度$\nabla_i$，然后沿着负梯度下降某个步长$\alpha$，更新$\theta_{i+1}:=\theta_i - \alpha\nabla_i$，进行下一次迭代。$\alpha$可以随$i$变化，也可以保持不变。批量梯度下降的">
+<meta name="twitter:description" content="批量梯度下降（Batch Gradient Decent）">
 
 
 
@@ -282,8 +282,8 @@
       
 
       
-        <a id="more"></a>
-<h2 id="批量梯度下降（Batch-Gradient-Decent）"><a href="#批量梯度下降（Batch-Gradient-Decent）" class="headerlink" title="批量梯度下降（Batch Gradient Decent）"></a>批量梯度下降（Batch Gradient Decent）</h2><p>批量梯度下降的思路是：对于要优化的目标参数，比如$\theta$，在迭代的第$i$步，计算出误差函数的梯度$\nabla_i$，然后沿着负梯度下降某个步长$\alpha$，更新$\theta_{i+1}:=\theta_i - \alpha\nabla_i$，进行下一次迭代。$\alpha$可以随$i$变化，也可以保持不变。<br>批量梯度下降的过程如下：<br>$\text{Repeat until convergence}$<br>$\{$<br>$\theta:=\theta - \alpha\nabla$<br>$\}$<br>批量梯度下降存在一个问题：在每一次迭代中，都需要整个数据集才能计算出梯度。如果数据集大小$m$非常大，则梯度下降法便会运行得很慢。</p>
+        <h2 id="批量梯度下降（Batch-Gradient-Decent）"><a href="#批量梯度下降（Batch-Gradient-Decent）" class="headerlink" title="批量梯度下降（Batch Gradient Decent）"></a>批量梯度下降（Batch Gradient Decent）</h2><a id="more"></a>
+<p>批量梯度下降的思路是：对于要优化的目标参数，比如$\theta$，在迭代的第$i$步，计算出误差函数的梯度$\nabla_i$，然后沿着负梯度下降某个步长$\alpha$，更新$\theta_{i+1}:=\theta_i - \alpha\nabla_i$，进行下一次迭代。$\alpha$可以随$i$变化，也可以保持不变。<br>批量梯度下降的过程如下：<br>$\text{Repeat until convergence}$<br>$\{$<br>$\theta:=\theta - \alpha\nabla$<br>$\}$<br>批量梯度下降存在一个问题：在每一次迭代中，都需要整个数据集才能计算出梯度。如果数据集大小$m$非常大，则梯度下降法便会运行得很慢。</p>
 <h2 id="随机梯度下降（Stochastic-Gradient-Decent）"><a href="#随机梯度下降（Stochastic-Gradient-Decent）" class="headerlink" title="随机梯度下降（Stochastic Gradient Decent）"></a>随机梯度下降（Stochastic Gradient Decent）</h2><p>随机梯度下降可以克服这个问题，同时仍可以得到一个比较优的解。它的思路是：每次只使用一个样本来确定梯度，循环$m$次，就可以得到一个十分逼近最优解的值。<br>随机梯度下降的过程如下：<br>$\text{For $j=1$ to $m$}$<br>$\{$<br>$\theta:=\theta - \alpha\nabla_j$<br>$\}$<br>其中$\nabla_j$表示用第$j$个样本计算出来的梯度。当然，随机梯度下降不是完美的。它比批量梯度下降收缩得快，但却不太容易收敛到最优值，而是在最优值附近振动$\star$。然而，在许多实际应用中，这个逼近的最优值已经足够。</p>
 <blockquote>
 <p>$\star$ 如果在算法运行过程中逐渐将步长$\alpha$减小至$0$，则可能使结果收敛到最优，而不是在最优解附近振动。</p>
