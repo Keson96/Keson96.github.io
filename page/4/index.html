@@ -226,6 +226,258 @@
             
               
                 
+                <a class="post-title-link" href="/2000/07/05/局部搜索算法/" itemprop="url">
+                  🔨局部搜索方法
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2000-07-05T19:54:01+08:00" content="2000-07-05">
+              2000-07-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Under-Construction/" itemprop="url" rel="index">
+                    <span itemprop="name">Under Construction</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="局部搜索方法"><a href="#局部搜索方法" class="headerlink" title="局部搜索方法"></a>局部搜索方法</h1><p>局部搜索方法是解决无约束优化的一种方法，一般只能得到局部最优解。如果自变量 $x$ 是一维的，即一个实数，我们要优化 $f(x)$ ，就只能将 $x$ 向左移动或向右移动，如下图所示。我们希望$f(x)$最大，就将$x$向使能使$f(x)$增大的方向移动（左或右）。对于A和B，它们分别向右向左移动，最终到达全局最优点P；而对于C和D，它们只能到达局部最优点Q。所以这些方法称为局部搜索方法。一般来说，$x$ 是 $n$ 维向量，即$x \in \mathbb R^n$，这样的话，$x$可以移动的方向就有很多个。<br>$n$维情况下，$f(x):\mathbb R^n \to \mathbb R$</p>
+<p><img src="http://i.imgur.com/c0U62Fz.png" alt=""></p>
+<p>局部搜索算法的一般过程：</p>
+<ul>
+<li>找到初始点 $x^{(0)} \in \mathcal S$</li>
+<li>设 $k=0$</li>
+<li>$\mathtt {repeat}$<ul>
+<li>评价 $f(x^{(k)})$ </li>
+<li>计算一个搜索方向 $q_k$</li>
+<li>计算步长 $\lambda_k$</li>
+<li>令$x^{(k+1)}$为$x^{(k)}+\lambda_kq_k$</li>
+<li>$k = k + 1$</li>
+</ul>
+</li>
+<li>$\mathtt {until}$终止条件满足</li>
+<li>返回$x^{(k)}$作为解</li>
+</ul>
+<blockquote>
+<p>$x^{(k)}$指的是迭代$k$次后$x$的取值<br>终止条件一般使用精度，即梯度值；也就是说，再进行优化，每一步优化的效果微乎其微，小于一个我们设定好的值时，便停止迭代。另一种常用的终止条件就是显式地规定迭代次数。</p>
+</blockquote>
+<h2 id="梯度下降法（Gradient-descent-最速下降法-steepest-descent）"><a href="#梯度下降法（Gradient-descent-最速下降法-steepest-descent）" class="headerlink" title="梯度下降法（Gradient descent / 最速下降法 steepest descent）"></a>梯度下降法（Gradient descent / 最速下降法 steepest descent）</h2><p>梯度下降法是利用不断更新$x$的值，使得$f(x)$不断变小，直到收敛。由于负梯度方向是使函数值下降最快的方向，所以在迭代的每一步，以负梯度方向更新$x$的值。</p>
+<h4 id="为什么负梯度下降速度最快"><a href="#为什么负梯度下降速度最快" class="headerlink" title="为什么负梯度下降速度最快"></a>为什么负梯度下降速度最快</h4><p>若第$k$次迭代值为$x^{(k)}$，则可以讲$f(x)$在$x^{(k)}$附近进行一阶泰勒展开：<br>$$f(x) = f(x^{(k)}) + g_k \cdot (x-x^{(k)})$$<br>其中，$g_k=g(x^{(k)})=\nabla f(x^{(k)})$为$f(x)$在$x^{(k)}$的梯度。上面的式子是一维的情况，下面的式子是$n$维的情况（即$x$不再是一个实数，而是一个$n$维向量）<br>$$f(x) = f(x^{(k)}) + g_k^T \cdot (x-x^{(k)})$$</p>
+<blockquote>
+<p>当$x$是n维向量时，对$f(x)$求导的结果是:<br>$$\nabla f(x) = \begin{pmatrix}<br>\frac{\partial f(x)}{\partial x_1}\ \\<br>\vdots \\<br>\frac{\partial f(x)}{\partial x_n}<br>\end{pmatrix}$$<br>由于$g_k = \nabla f(x^{(k)})$是一个列向量，而$x-x^{(k)}$也是列向量，所以必须将$g_k$转置，即为式中的$g_k^T$，才可以相乘得到一个实数</p>
+</blockquote>
+<p>记 $d_k= x-x^{(k)}$，则我们要最小化$g_k \cdot d_k$，才能使$f(x)$下降得最快。<br>由于 $d_k$和$g_k$都是$n$维向量，所以，当$d_k = -g_k$时，两者乘积最小，为$-\Vert{g_k}\Vert^2$，所以说负梯度下降速度最快。</p>
+<h3 id="算法步骤"><a href="#算法步骤" class="headerlink" title="算法步骤"></a>算法步骤</h3><p>输入：目标函数$f(x)$，梯度函数$g(x)=\nabla f(x)$，计算精度$\epsilon$<br>输出：$f(x)$的极小值点$x^{*}$<br>(1) 取初始值$x^{(0)} \in \mathbb R^n$，置$k=0$<br>(2) 计算$f(x^{(k)})$<br>(3) 计算梯度$g_k=g(x^{(k)})$，当$\Vert g_k\Vert &lt; \epsilon$时，停止迭代，令$x^{*}=x^{(k)}$；否则，令$p_k=-g(x^{(k)})$，求$\lambda_k$，使$$f(x^{(k)}+\lambda_kp_k)=\min_{\lambda&gt;=0}f(x^{(k)}+\lambda p_k)$$<br>(4) 置$x^{(k+1)}=x{(k)}+\lambda_kp_k$，计算$f(x^{(k+1)})$<br>当$\Vert f(x^{(k+1)})-f(x^{(k)})\Vert&lt;\epsilon$或$\Vert x^{(k+1)}-x^{(k)}\Vert&lt;\epsilon$时，停止迭代，令$x^{*}=x^{(k+1)}$<br>(5) 否则，置$k=k+1$，转至(3)</p>
+<h3 id="梯度下降法的讨论"><a href="#梯度下降法的讨论" class="headerlink" title="梯度下降法的讨论"></a>梯度下降法的讨论</h3><p>当目标函数是凸函数时，梯度下降法的解是全局最优解。一般情况下，其解不保证是全局最优解。梯度下降法只利用了一阶导数的信息，其收敛速度未必是很快的。（详见参考资料2）</p>
+<p>参考资料：</p>
+<ol>
+<li><p><a href="http://www.codelast.com/%e5%8e%9f%e5%88%9b%e6%9c%80%e9%80%9f%e4%b8%8b%e9%99%8d%e6%b3%95%ef%bc%8c%e7%89%9b%e9%a1%bf%e6%b3%95%ef%bc%8c%e5%85%b1%e8%bd%ad%e6%96%b9%e5%90%91%e6%b3%95%ef%bc%8c%e5%85%b1%e8%bd%ad%e6%a2%af%e5%ba%a6/" target="_blank" rel="external">[原创]最速下降法/steepest descent，牛顿法/newton，共轭方向法/conjugate direction，共轭梯度法/conjugate gradient 及其他</a></p>
+</li>
+<li><p><a href="http://www.codelast.com/%e5%8e%9f%e5%88%9b-%e5%86%8d%e8%b0%88-%e6%9c%80%e9%80%9f%e4%b8%8b%e9%99%8d%e6%b3%95%e6%a2%af%e5%ba%a6%e6%b3%95steepest-descent/" target="_blank" rel="external">[原创] 再谈 最速下降法/梯度法/Steepest Descent</a></p>
+</li>
+<li><p>《统计学习方法》附录A</p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2000/05/16/lars&lasso&stagewise/" itemprop="url">
+                  🔨LARS与Lasso和Forward Stagewise
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2000-05-16T19:54:01+08:00" content="2000-05-16">
+              2000-05-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Under-Construction/" itemprop="url" rel="index">
+                    <span itemprop="name">Under Construction</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在之前的文章中，我们说过，系数$\boldsymbol{\beta}$在LARS、Lasso和前向阶进算法(Forward Stagewise)中的相似变化并不是巧合，LARS可以通过小的改动来实现Lasso和阶进算法。</p>
+<h2 id="LARS-与-Lasso"><a href="#LARS-与-Lasso" class="headerlink" title="LARS 与 Lasso"></a>LARS 与 Lasso</h2>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2000/05/16/Network Flow Algorithms/" itemprop="url">
                   🔨Network Flow Algorithms
                 </a>
@@ -289,151 +541,6 @@
         
           
             
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2000/05/16/过拟合专题/" itemprop="url">
-                  🔨过拟合专题
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2000-05-16T19:54:01+08:00" content="2000-05-16">
-              2000-05-16
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Under-Construction/" itemprop="url" rel="index">
-                    <span itemprop="name">Under Construction</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="什么是过拟合"><a href="#什么是过拟合" class="headerlink" title="什么是过拟合"></a>什么是过拟合</h2><p>过拟合指的是在机器学习过程中过度拟合训练集数据， 使得数据中的噪声对习得的模型产生很大影响。模型在训练集上的误差很小，但泛化能力差。</p>
-<h2 id="过拟合的特征"><a href="#过拟合的特征" class="headerlink" title="过拟合的特征"></a>过拟合的特征</h2><table>
-<thead>
-<tr>
-<th style="text-align:center"></th>
-<th style="text-align:center">偏差(Bias)</th>
-<th style="text-align:center">方差(Variance)</th>
-<th style="text-align:center">模型复杂度(Complexity)</th>
-<th style="text-align:center">模型灵活性(Flexibility)</th>
-<th style="text-align:center">模型泛化能力(Generalization)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">欠拟合(Underfitting)</td>
-<td style="text-align:center">高</td>
-<td style="text-align:center">低</td>
-<td style="text-align:center">低</td>
-<td style="text-align:center">低</td>
-<td style="text-align:center">高</td>
-</tr>
-<tr>
-<td style="text-align:center">过拟合(Overfitting)</td>
-<td style="text-align:center">低</td>
-<td style="text-align:center">高</td>
-<td style="text-align:center">高</td>
-<td style="text-align:center">高</td>
-<td style="text-align:center">低</td>
-</tr>
-</tbody>
-</table>
-<h2 id="如何判断过拟合"><a href="#如何判断过拟合" class="headerlink" title="如何判断过拟合"></a>如何判断过拟合</h2><h2 id="防止过拟合"><a href="#防止过拟合" class="headerlink" title="防止过拟合"></a>防止过拟合</h2><ol>
-<li><p>降低模型复杂度：降维</p>
-<h2 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h2></li>
-<li><p><a href="http://blog.csdn.net/er8cjiang/article/details/50981426" target="_blank" rel="external">一篇文章,带你明白什么是过拟合,欠拟合以及交叉验证  
-</a></p>
-</li>
-</ol>
-
           
         
       
@@ -692,6 +799,113 @@ private Node put(Node h, Key key, Value val)
             
               
                 
+                <a class="post-title-link" href="/2000/05/16/收缩技术/" itemprop="url">
+                  🔨收缩技术(Shrinkage Methods)
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2000-05-16T19:54:01+08:00" content="2000-05-16">
+              2000-05-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Under-Construction/" itemprop="url" rel="index">
+                    <span itemprop="name">Under Construction</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2000/05/16/第2章-和式/" itemprop="url">
                   🔨第二章 和式
                 </a>
@@ -804,8 +1018,8 @@ private Node put(Node h, Key key, Value val)
             
               
                 
-                <a class="post-title-link" href="/2000/05/16/Least Angle Regression/" itemprop="url">
-                  🔨最小角回归(Least Angle Regression)
+                <a class="post-title-link" href="/2000/05/16/过拟合专题/" itemprop="url">
+                  🔨过拟合专题
                 </a>
               
             
@@ -866,144 +1080,45 @@ private Node put(Node h, Key key, Value val)
       
         
           
-            <p>最小角回归(Least Angle Regression，下面简称为LARS)是一种模型选择算法。和传统的模型选择方法相比，它是一个相对不那么”贪心”的版本，同时表现出很好的性能。通过对LARS的一点小改动，它可以用来实现LASSO和前向阶进回归(Forward Stagewise linear regression)。LARS的一大优点是计算开销小。</p>
-<h2 id="模型选择算法"><a href="#模型选择算法" class="headerlink" title="模型选择算法"></a>模型选择算法</h2><p>模型选择方法的目标是从同一个数据集上选择一个最适应的模型，经典的模型选择算法有：前向选择(Forward Selection)，后向删除(Backward Elimination)，全子集回归(All Subsets Regression)等。<br>模型选择也可以看作是对特征进行选择：前向选择就是选择对模型贡献最大的$k$个特征，后向删除就是逐一删除贡献最小的特征直到剩下$k$个特征；除了这些<strong>离散</strong>的方法，还有相对<strong>连续</strong>的特征选择方法，比如LASSO。<br>下面，我们讨论两种优秀的模型选择算法：LASSO和前向阶进回归。</p>
-<h3 id="OLS（Ordinary-Least-Square）"><a href="#OLS（Ordinary-Least-Square）" class="headerlink" title="OLS（Ordinary Least Square）"></a>OLS（Ordinary Least Square）</h3><p>记 $\mathbf{x}_1,\mathbf{x}_2,\cdots,\mathbf{x}_m$ 为若干$n$维向量，代表自变量。$\mathbf{y}$代表$n$个样本的响应值(responses)。通过归一化，我们总可以让自变量的均值为0，且向量$\mathbf{x}$长度为1，使得响应值的均值也为0，即<br>$$\sum_{i=1}^n y_i=0,\quad \sum_{i=1}^n x_{ij}=0,\quad \text{and} \quad \sum_{i=1}^n x_{ij}^2 =1\quad \text{for $j = 1,2,\cdots,m$}\tag{1}$$<br>给定一组回归系数 $\hat{\boldsymbol{\beta}}=(\hat{\beta_1},\hat{\beta_2},\cdots,\hat{\beta_m})^T$就可以给出一组预测值 $\hat{\boldsymbol{\mu}}$<br>$$\hat{\boldsymbol{\mu}}=\sum_{j=1}^m\mathbf{x}_j\hat{\beta_j}=X\hat{\boldsymbol{\beta}} \quad [X_{n\times m}=(\mathbf{x}_1,\mathbf{x}_2,\cdots,\mathbf{x}_m)]\tag{2}$$<br>对应的总平方误差为<br>$$S(\hat{\boldsymbol{\beta}})=||\mathbf{y}-\hat{\boldsymbol{\mu}}||^2=\sum_{i=1}^n(y_i-\hat{\mu_i})^2\tag{3}$$<br>一般的最小化平方差的线性回归等价于下面的无约束优化问题：<br>$$\min S(\hat{\boldsymbol{\beta}})\tag{4}$$</p>
-<h3 id="前向阶进回归（Forward-Stagewise-Selection）"><a href="#前向阶进回归（Forward-Stagewise-Selection）" class="headerlink" title="前向阶进回归（Forward Stagewise Selection）"></a>前向阶进回归（Forward Stagewise Selection）</h3><p>前向阶进回归与经典的前向选择很相似。<br>前向选择的基本思想是：逐个选择对模型贡献最大的变量，直到满足一个停止条件（可以是变量的数目，也可以是新加变量对模型改进效果的某种度量）。具体过程可描述为：给定一个变量的集合，我们从中选出与响应值 $y$ 相关度最大的变量，比方说 $x_{j1}$，然后做 $y$ 关于 $x_{j1}$ 的线性回归。得到的残差向量与 $x_{j1}$ 正交（为什么正交后面会说明），把这个残差当作响应值，重复这个过程，找出下一个相关度最高的变量。在 $k$ 步之后，我们就得到了 $k$ 个变量的集合 $x_{j1},x_{j2},\cdots,x_{jk}$ ，用它们构成最终的线性回归模型。<br>不过，前向选择是一种过于贪心的算法，它在每一步只关心局部最优，可能会在第二部排除某个和 $x_{j1}$ 相关但却很有用的变量，导致最后得到的模型并不是一个好的模型。</p>
-<p>而前向阶进更像是前向选择的一个更小心的版本，每一步迈得小很多，可能要走几千步才能得到最终得模型。<br>开始时，设 $\hat{\boldsymbol{\mu}}=0$ 然后一小步一小步迭代地构建起整个回归模型。如果 $\hat{\boldsymbol{\mu}}$ 是某时刻算法的预测值，设$\mathbf{c}(\hat{\boldsymbol{\mu}})$为此时的相关度向量<br>$$\hat{\mathbf{c}}=\mathbf{c}(\hat{\boldsymbol{\mu}})=X^T(\mathbf{y}-\hat{\boldsymbol{\mu}})\tag{5}$$<br>则$\hat{c_j}$正比于变量$x_j$和残差向量之间的相关度。下一步是选择具有最大绝对相关度的方向，更新$\hat{\boldsymbol{\mu}}$<br>$$\hat{j}=\arg\max|\hat{c_j}|\quad \text{and}\quad \hat{\boldsymbol{\mu}}\to \hat{\boldsymbol{\mu}}+\epsilon\cdot\text{sign}(\hat{c_j})\cdot\mathbf{x}_{\hat{j}}\tag{6}$$<br>其中，$\epsilon$是一个小的常数。这里的“小”非常关键，如果$\epsilon$选得比较大，比如$\epsilon=|\hat{c_{\hat{j}}}|$就会变成了经典前向选择算法，则会排除掉那些与$x_{\hat{j}}$相关的变量。</p>
-<h3 id="Lasso"><a href="#Lasso" class="headerlink" title="Lasso"></a>Lasso</h3><p>用 $T(\hat{\boldsymbol{\beta}})$ 表示 $\hat{\boldsymbol{\beta}}$ 的绝对值范数<br>$$T(\hat{\boldsymbol{\beta}})=\sum_{j=1}^m|\hat{\beta_j}|\tag{7}$$<br>则Lasso即为下面的约束优化问题：<br>$$\min S(\hat{\boldsymbol{\beta}}) \quad \text{s.t.} \quad T(\hat{\boldsymbol{\beta}}) \le t\tag{8}$$<br>Lasso也可以作为一种收缩方法用来防止过拟合，类似于岭回归，等价于下面的优化问题：<br>$$\min S(\hat{\boldsymbol{\beta}})+\lambda T(\hat{\boldsymbol{\beta}})\tag{9}$$<br>只不过在岭回归中，使用的是$L_2$范数。这里的$\lambda$与$t$具有一一对应关系。</p>
-<blockquote>
-<p>Lasso是<font color="red"><strong>l</strong></font>east <font color="red"><strong>a</strong></font>bsolute <font color="red"><strong>s</strong></font>hrinkage and <font color="red"><strong>s</strong></font>election <font color="red"><strong>o</strong></font>perator的缩写</p>
-</blockquote>
-<h3 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h3><p>对于一个含有10个变量的回归问题，下图描述了用Lasso和阶进算法时，每个变量的系数随所有系数绝对值之和的变化。</p>
-<p><img src="http://i.imgur.com/i4c6WhG.png" alt=""></p>
-<p>每条线旁边的编号代表变量的编号。随着$t$的不断增大，逐渐有新的变量被纳入到模型中。横轴上的顺序表示变量纳入模型的顺序，即$3,9,4,7,2,\cdots,1$，反映变量对模型的贡献度，其中$x_3,x_9$最大，依次次之。越往后，变量系数$\hat{\beta_j}$之间的差距越大（尤其是$x_5$），表明模型为了减少偏差，使方差变得过大，发生过拟合。<br>当 $t=3460$ 时，$\hat{\boldsymbol{\beta}}$ 和OLS得到的系数是相同的。也就是说 $t$ 的约束已经失去作用。可以看出，Lasso会将OLS的系数收缩到0，收缩效果在 $t$ 比较小的时候尤为明显。</p>
-<p>我们注意到，这两张图几乎一样，除了局部的细微差别($x_8$)。这样高的相似性并不是偶然，我们在后面会解释这两种算法其实都是LARS的不同变体。</p>
-<h2 id="LARS-算法"><a href="#LARS-算法" class="headerlink" title="LARS 算法"></a>LARS 算法</h2><p>LARS类似于阶进算法，也是不断迭代运行。不过LARS只需要 $m$ 步迭代就可以完成，$m$ 是变量的个数。对于上图中 $m=10$ 的例子，LARS就只需要10步，而阶进算法需要多达6000步。</p>
-<p>LARS算法的过程大致如下：首先，像传统的前向选择一样，将所有系数 $\hat{\beta_j}$ 置为0，然后选择一个与响应值相关度最大的变量，比方说$x_{j1}$。然后，在这个方向上前进尽可能大的一步（增大/小系数$\hat{\beta_{j1}}$），直到另一个变量，比如$x_{j2}$，与目前的残差有同样大的相关度。这时候，LARS算法和前向选择分道扬镳。不向前向选择中那样继续沿 $x_{j1}$ 方向前进，LARS选择 $x_{j1}$ 与 $x_{j2}$ 的角平分线方向前进（即同时等量增大/小$\hat{\beta_{j1}}$和$\hat{\beta_{j2}}$），直到第三个变量 $x_{j3}$ 达到相关度的要求，进入到这个”最相关”的集合中，然后再沿这三个变量的角平分线方向前进（同时等量增大/小$\hat{\beta_{j1}}$、$\hat{\beta_{j2}}$ 和 $\hat{\beta_{j2}}$），依次类推。</p>
-<p>LARS逐步构建起模型 $\hat{\boldsymbol{\mu}}=X\hat{\boldsymbol{\beta}}$，每一步添加一个变量进去。所以，在 $k$ 步后，只有 $k$ 个系数 $\hat{\beta_j}$ 是非零的。下图展示了在 $m=2$ 时，即 $X=(\mathbf{x}_1,\mathbf{x}_2)$ 时，LARS的过程。此时，相关度只依赖于 $\mathbf{y}$ 在由 $\mathbf{x}_1$ 和 $\mathbf{x}_2$ 确定的线性空间$\mathcal{L}(X)$ 上的投影 $\overline{\mathbf{y}}_2$。<br>$$\mathbf{c}(\hat{\boldsymbol{\mu}})=X^T(\mathbf{y}-\hat{\boldsymbol{\mu}})=X^T(\overline{\mathbf{y}}_2-\hat{\boldsymbol{\mu}})\tag{10}$$<br><img src="http://i.imgur.com/Dkendep.png" alt=""><br>算法从 $\hat{\boldsymbol{\mu}}_0=\mathbf{0}$ 开始。在上图中，$\overline{\mathbf{y}}_2-\hat{\boldsymbol{\mu}}_0$ 与 $\mathbf{x}_1$ 的夹角比 $\mathbf{x}_2$ 小，即说明 $c_1(\hat{\boldsymbol{\mu}}_0) &gt; c_2(\hat{\boldsymbol{\mu}}_0)$，故LARS沿着 $\mathbf{x}_1$ 方向增加 $\hat{\boldsymbol{\mu}}_0$<br>$$\hat{\boldsymbol{\mu}}_1 = \hat{\boldsymbol{\mu}}_0 + \hat{\gamma}_1\mathbf{x}_1\tag{11}$$<br>阶进算法会选择 $\hat{\gamma}_1$ 等于某个很小的值 $\epsilon$，所以会重复迭代很多步。当沿图中的 $\mathbf{x}_1$ 方向一小步一小步地增加到 $\hat{\boldsymbol{\mu}}_1$ 时，$c_1(\hat{\boldsymbol{\mu}}_1) = c_2(\hat{\boldsymbol{\mu}}_1)$。然后阶进算法沿$\mathbf{x}_1$前进了一小步，发现有相关度更大的变量，于是就沿$\mathbf{x}_2$的方向前进一小步（图中的竖直方向有误），之后又发现此时的$\mathbf{x}_1$具有更大的相关度，依此类推，故整个路径是一个折线。</p>
-<p>前向选择采用十分激进的做法，相当于选择足够大的 $\hat{\gamma}_1$ 使得 $\hat{\boldsymbol{\mu}}_1 = \overline{\mathbf{y}}_1$（$\overline{\mathbf{y}}_1$ 为 $\mathbf{y}$ 在 $\mathcal{L}(\mathbf{x}_1)$ 上的投影）。我们可以发现，此时的残差 $\overline{\mathbf{y}}_2-\overline{\mathbf{y}}_1$ 与 $\mathbf{x}_1$ 是正交的。在后面的选择过程中，前向选择会更倾向于选择那些与 $\mathbf{x}_1$ 正交的变量，因为残差在这个方向的投影为0，与 $\mathbf{x}_1$ 相关程度大的向量与残差的相关度便会很小。前项选择方法似乎认为在某轮迭代过程中，$y$ 在某个方向的分量是“全部”由这个变量造成的，从而激进地选择了前进很大的一步（选择大的 $\hat{\gamma}_1$）。以上图为例，前向选择会沿 $\mathbf{x}_2$ 的方向前进，步长为残差在 $\mathbf{x}_2$ 上的投影长度，如下图中 $\hat{\mathbf{u}}_2$ 所示，然而这并不是一个好的模型。</p>
-<p><img src="http://i.imgur.com/inT5kER.png" alt=""></p>
-<p>LARS选了一个大小适中的 $\hat{\gamma}_1$，不向阶进算法那么小，也不像前向选择那么大。选择这样的 $\hat{\gamma}_1$ 值使得残差 $\overline{\mathbf{y}}_2-\hat{\mathbf{u}}_1$ 与 $\mathbf{x}_1$ 和 $\mathbf{x}_2$ 的相关度相同，即残差沿着 $\mathbf{x}_1$ 和 $\mathbf{x}_2$ 的角平分线方向。记这个方向上的单位向量为 $\mathbf{u}_2$，则下一次更新 $\hat{\boldsymbol{\mu}}$ 为<br>$$\hat{\boldsymbol{\mu}}_2 = \hat{\boldsymbol{\mu}}_1 + \hat{\gamma}_2\mathbf{u}_2\tag{12}$$<br>当 $m=2$ 时，选择 $\hat{\gamma}_2$ 使得 $\hat{\boldsymbol{\mu}}_2 = \overline{\mathbf{y}}_2$。当 $m&gt;2$ 时，则选择更小一点的 $\hat{\gamma}_2$，使一个新的变量加入到这个“最相关”的集合中。LARS算法也可以视为让 $\epsilon\to 0$ 时的阶进算法，不过计算开销要小很多（$\epsilon\to 0$ 时阶进算法开销趋向无穷）。</p>
-<h3 id="完整描述"><a href="#完整描述" class="headerlink" title="完整描述"></a>完整描述</h3><p>理解了LARS算法的思想后，我们就可以来完整地用更抽象的数学语言来描述这个算法。</p>
-<h4 id="确定方向-mathbf-u"><a href="#确定方向-mathbf-u" class="headerlink" title="确定方向 $\mathbf{u}$"></a>确定方向 $\mathbf{u}$</h4><p>我们假设向量 $\mathbf{x}_1,\mathbf{x}_2,\cdots,\mathbf{x}_m$ 之间是线性独立的。对于索引集合 $\{1,2,\cdots,m\}$ 的一个子集 $\mathcal{A}$，我们定义矩阵<br>$$X_{\mathcal{A}}=(\cdots s_j\mathbf{x}_j\cdots)_{j\in\mathcal{A}}\tag{13}$$<br>其中符号变量 $s_j$ 可以取1或-1，令<br>$$\mathcal{G}_{\mathcal{A}}=X_{\mathcal{A}}’X_{\mathcal{A}} \quad\text{and}\quad A_{\mathcal{A}}=(1_{\mathcal{A}}\mathcal{G}_{\mathcal{A}}^{-1}1_{\mathcal{A}})^{-\frac{1}{2}}\tag{14}$$<br>其中，$1_{\mathcal{A}}$ 是长度为 $|\mathcal{A}|$ 的全1向量。则<br>$$\mathbf{u}_{\mathcal{A}}=X_{\mathcal{A}}w_{\mathcal{A}}\quad\text{where}\quad w_{\mathcal{A}}=A_{\mathcal{A}}\mathcal{G}_{\mathcal{A}}^{-1}1_{\mathcal{A}}\tag{15}$$<br>$\mathbf{u}_{\mathcal{A}}$ 是使各个变量与之夹角相等（小于90度）的方向单位向量，即有<br>$$X’_{\mathcal{A}}\mathbf{u}_{\mathcal{A}}=A_{\mathcal{A}}1_{\mathcal{A}}\quad\text{and}\quad||\mathbf{u}_{\mathcal{A}}||^2=1\tag{16}$$</p>
-<h4 id="完整过程"><a href="#完整过程" class="headerlink" title="完整过程"></a>完整过程</h4><p>我们先从 $\hat{\boldsymbol{\mu}}_0=\mathbf{0}$ 一步一步建立起 $\hat{\boldsymbol{\mu}}$ 。假设 $\hat{\boldsymbol{\mu}}_{\mathcal{A}}$ 是当前LARS算法的估计，于是<br>$$\hat{\mathbf{c}}=X’(\mathbf{y}-\hat{\boldsymbol{\mu}}_{\mathcal{A}})\tag{17}$$<br>是当前的相关度向量。“活跃集” $\mathcal{A}$ 是与 $\mathbf{y}$ 具有最大绝对相关度的变量的下标集合<br>$$\hat{C}=\max_j\{|\hat{c}_j|\}\quad\text{and}\quad \mathcal{A}=\{j:|\hat{c}_j|=\hat{C}\}\tag{18}$$<br>让<br>$$s_j=\text{sign}\{\hat{c}_j\}\quad\text{for}\quad j\in\mathcal{A}\tag{19}$$<br>用(13)~(15)式计算出$X_{\mathcal{A}},A_{\mathcal{A}},\mathbf{\mathcal{A}}$，计算出向量<br>$$\mathbf{a}\equiv X’\mathbf{u}_{\mathcal{A}}\tag{20}$$<br>LARS算法的下一步就是更新 $\hat{\boldsymbol{\mu}}_{\mathcal{A}}$，即<br>$$\hat{\boldsymbol{\mu}}_{\mathcal{A}_+}=\hat{\boldsymbol{\mu}}_{\mathcal{A}}+\hat{\gamma}\mathbf{u}_{\mathcal{A}}\tag{21}$$<br>其中<br>$$\hat{\gamma}=\text{min}^+_{j\in\mathcal{A}^c}\left\{\cfrac{\hat{C}-\hat{c}_j}{A_{\mathcal{A}}-a_j},\cfrac{\hat{C}+\hat{c}_j}{A_{\mathcal{A}}+a_j}\right\}\tag{22}$$<br>$\text{min}^+$ 表示只取正的最小值。</p>
-<p>式(21)和(22)有以下解释：定义<br>$$\boldsymbol{\mu}(\gamma)=\hat{\boldsymbol{\mu}}_{\mathcal{A}}+\gamma\mathbf{u}_{\mathcal{A}}\tag{23}$$<br>对于 $\gamma&gt;0$，当前的相关度为<br>$$c_j(\gamma)=\mathbf{x}’_j(\mathbf{y}-\boldsymbol{\mu}(\gamma))=\hat{c}_j-\gamma a_j\tag{24}$$<br>对于 $j\in\mathcal{A}$，式(16)-(18)可得出<br>$$|c_j(\gamma)|=\hat{C}-\gamma A_{\mathcal{A}}\tag{25}$$<br>这意味着所有的当前最大绝对相关度是同等下降的。对于 $j\in\mathcal{A}^c$，让式(24)和式(25)相等可以得到：在 $\gamma=(\hat{C}-\hat{c}_j)/(A_{\mathcal{A}}-a_j)$ 时 $c_j(\gamma)$ 取得最大值；在 $\gamma=(\hat{C}+\hat{c}_j)/(A_{\mathcal{A}}+a_j)$ 时负相关度 $-c_j(\gamma)$ 取得最大值。因此式(22)中的 $\hat{\gamma}$ 应该取这两个中较小的正值 $\gamma$，使得新的下标 $\hat{j}$ 加入到“活跃集”中。新的“活跃集”为 $\mathcal{A}_+=\mathcal{A}\cup \{\hat{j}\}$，新的最大绝对相关度为 $\hat{C}_+=\hat{C}-\hat{\gamma}A_{\mathcal{A}}$ 。<br>如下图所示，新变量加入后，每个最大绝对相关度下降都是相同的，体现为最外侧的蓝线所代表的变量越来越多：在第一段只有变量3，第二段有变量3和9，第三段有变量3、4和9，……</p>
-<p><img src="http://i.imgur.com/zeFTMKT.png" alt=""><br>随着变量越来越多，最大绝对相关度越来越小，说明能已选择的变量已经能很好地解释 $\mathbf{y}$，剩下没选的变量对模型的贡献很小。</p>
-<h2 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h2><ol>
-<li><a href="https://web.stanford.edu/~hastie/Papers/LARS/LeastAngle_2002.pdf" target="_blank" rel="external">Least Angle Regression</a></li>
-<li><em>The Elements of Statistical Learning</em></li>
-<li>《机器学习》 周志华 著</li>
-<li><a href="https://onlinecourses.science.psu.edu/stat857/node/158" target="_blank" rel="external">The Lasso</a></li>
+            <h2 id="什么是过拟合"><a href="#什么是过拟合" class="headerlink" title="什么是过拟合"></a>什么是过拟合</h2><p>过拟合指的是在机器学习过程中过度拟合训练集数据， 使得数据中的噪声对习得的模型产生很大影响。模型在训练集上的误差很小，但泛化能力差。</p>
+<h2 id="过拟合的特征"><a href="#过拟合的特征" class="headerlink" title="过拟合的特征"></a>过拟合的特征</h2><table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">偏差(Bias)</th>
+<th style="text-align:center">方差(Variance)</th>
+<th style="text-align:center">模型复杂度(Complexity)</th>
+<th style="text-align:center">模型灵活性(Flexibility)</th>
+<th style="text-align:center">模型泛化能力(Generalization)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">欠拟合(Underfitting)</td>
+<td style="text-align:center">高</td>
+<td style="text-align:center">低</td>
+<td style="text-align:center">低</td>
+<td style="text-align:center">低</td>
+<td style="text-align:center">高</td>
+</tr>
+<tr>
+<td style="text-align:center">过拟合(Overfitting)</td>
+<td style="text-align:center">低</td>
+<td style="text-align:center">高</td>
+<td style="text-align:center">高</td>
+<td style="text-align:center">高</td>
+<td style="text-align:center">低</td>
+</tr>
+</tbody>
+</table>
+<h2 id="如何判断过拟合"><a href="#如何判断过拟合" class="headerlink" title="如何判断过拟合"></a>如何判断过拟合</h2><h2 id="防止过拟合"><a href="#防止过拟合" class="headerlink" title="防止过拟合"></a>防止过拟合</h2><ol>
+<li><p>降低模型复杂度：降维</p>
+<h2 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h2></li>
+<li><p><a href="http://blog.csdn.net/er8cjiang/article/details/50981426" target="_blank" rel="external">一篇文章,带你明白什么是过拟合,欠拟合以及交叉验证  
+</a></p>
+</li>
 </ol>
 
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2000/05/16/收缩技术/" itemprop="url">
-                  🔨收缩技术(Shrinkage Methods)
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2000-05-16T19:54:01+08:00" content="2000-05-16">
-              2000-05-16
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Under-Construction/" itemprop="url" rel="index">
-                    <span itemprop="name">Under Construction</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
           
         
       
@@ -1072,7 +1187,7 @@ private Node put(Node h, Key key, Value val)
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">36</span>
+              <span class="site-state-item-count">37</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1089,7 +1204,7 @@ private Node put(Node h, Key key, Value val)
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">59</span>
+                <span class="site-state-item-count">61</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

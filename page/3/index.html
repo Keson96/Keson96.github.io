@@ -226,6 +226,117 @@
             
               
                 
+                <a class="post-title-link" href="/2016/05/16/2016-05-16-3.1-Symbol-Tables/" itemprop="url">
+                  3-1 Symbol Tables
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-05-16T19:54:01+08:00" content="2016-05-16">
+              2016-05-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/《Algorithms》-notes/" itemprop="url" rel="index">
+                    <span itemprop="name">《Algorithms》 notes</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>为了方便查找，人们设计出符号表（symbol table）这样一个抽象数据类型：在其中存储信息（value），之后可以通过指明一个键（key）来访问这个信息。符号表有时候也可以称为字典，有时也可以称为索引。</p>
+<p>符号表的主要目标是把一个值（value）与一个键（key）联系起来。用户可以插入 “键-值” 对（insert/put），也可以通过一个键来找到一个值（search/get）。除此之外，为方便使用，符号表还提供了其他一些方法。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/05/16/2016-05-16-3.1-Symbol-Tables/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/05/15/2016-05-15-2.4-Priority-Queues/" itemprop="url">
                   2-4 Priority Queues
                 </a>
@@ -1231,150 +1342,6 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2000/07/05/局部搜索算法/" itemprop="url">
-                  🔨局部搜索方法
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2000-07-05T19:54:01+08:00" content="2000-07-05">
-              2000-07-05
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Under-Construction/" itemprop="url" rel="index">
-                    <span itemprop="name">Under Construction</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="局部搜索方法"><a href="#局部搜索方法" class="headerlink" title="局部搜索方法"></a>局部搜索方法</h1><p>局部搜索方法是解决无约束优化的一种方法，一般只能得到局部最优解。如果自变量 $x$ 是一维的，即一个实数，我们要优化 $f(x)$ ，就只能将 $x$ 向左移动或向右移动，如下图所示。我们希望$f(x)$最大，就将$x$向使能使$f(x)$增大的方向移动（左或右）。对于A和B，它们分别向右向左移动，最终到达全局最优点P；而对于C和D，它们只能到达局部最优点Q。所以这些方法称为局部搜索方法。一般来说，$x$ 是 $n$ 维向量，即$x \in \mathbb R^n$，这样的话，$x$可以移动的方向就有很多个。<br>$n$维情况下，$f(x):\mathbb R^n \to \mathbb R$</p>
-<p><img src="http://i.imgur.com/c0U62Fz.png" alt=""></p>
-<p>局部搜索算法的一般过程：</p>
-<ul>
-<li>找到初始点 $x^{(0)} \in \mathcal S$</li>
-<li>设 $k=0$</li>
-<li>$\mathtt {repeat}$<ul>
-<li>评价 $f(x^{(k)})$ </li>
-<li>计算一个搜索方向 $q_k$</li>
-<li>计算步长 $\lambda_k$</li>
-<li>令$x^{(k+1)}$为$x^{(k)}+\lambda_kq_k$</li>
-<li>$k = k + 1$</li>
-</ul>
-</li>
-<li>$\mathtt {until}$终止条件满足</li>
-<li>返回$x^{(k)}$作为解</li>
-</ul>
-<blockquote>
-<p>$x^{(k)}$指的是迭代$k$次后$x$的取值<br>终止条件一般使用精度，即梯度值；也就是说，再进行优化，每一步优化的效果微乎其微，小于一个我们设定好的值时，便停止迭代。另一种常用的终止条件就是显式地规定迭代次数。</p>
-</blockquote>
-<h2 id="梯度下降法（Gradient-descent-最速下降法-steepest-descent）"><a href="#梯度下降法（Gradient-descent-最速下降法-steepest-descent）" class="headerlink" title="梯度下降法（Gradient descent / 最速下降法 steepest descent）"></a>梯度下降法（Gradient descent / 最速下降法 steepest descent）</h2><p>梯度下降法是利用不断更新$x$的值，使得$f(x)$不断变小，直到收敛。由于负梯度方向是使函数值下降最快的方向，所以在迭代的每一步，以负梯度方向更新$x$的值。</p>
-<h4 id="为什么负梯度下降速度最快"><a href="#为什么负梯度下降速度最快" class="headerlink" title="为什么负梯度下降速度最快"></a>为什么负梯度下降速度最快</h4><p>若第$k$次迭代值为$x^{(k)}$，则可以讲$f(x)$在$x^{(k)}$附近进行一阶泰勒展开：<br>$$f(x) = f(x^{(k)}) + g_k \cdot (x-x^{(k)})$$<br>其中，$g_k=g(x^{(k)})=\nabla f(x^{(k)})$为$f(x)$在$x^{(k)}$的梯度。上面的式子是一维的情况，下面的式子是$n$维的情况（即$x$不再是一个实数，而是一个$n$维向量）<br>$$f(x) = f(x^{(k)}) + g_k^T \cdot (x-x^{(k)})$$</p>
-<blockquote>
-<p>当$x$是n维向量时，对$f(x)$求导的结果是:<br>$$\nabla f(x) = \begin{pmatrix}<br>\frac{\partial f(x)}{\partial x_1}\ \\<br>\vdots \\<br>\frac{\partial f(x)}{\partial x_n}<br>\end{pmatrix}$$<br>由于$g_k = \nabla f(x^{(k)})$是一个列向量，而$x-x^{(k)}$也是列向量，所以必须将$g_k$转置，即为式中的$g_k^T$，才可以相乘得到一个实数</p>
-</blockquote>
-<p>记 $d_k= x-x^{(k)}$，则我们要最小化$g_k \cdot d_k$，才能使$f(x)$下降得最快。<br>由于 $d_k$和$g_k$都是$n$维向量，所以，当$d_k = -g_k$时，两者乘积最小，为$-\Vert{g_k}\Vert^2$，所以说负梯度下降速度最快。</p>
-<h3 id="算法步骤"><a href="#算法步骤" class="headerlink" title="算法步骤"></a>算法步骤</h3><p>输入：目标函数$f(x)$，梯度函数$g(x)=\nabla f(x)$，计算精度$\epsilon$<br>输出：$f(x)$的极小值点$x^{*}$<br>(1) 取初始值$x^{(0)} \in \mathbb R^n$，置$k=0$<br>(2) 计算$f(x^{(k)})$<br>(3) 计算梯度$g_k=g(x^{(k)})$，当$\Vert g_k\Vert &lt; \epsilon$时，停止迭代，令$x^{*}=x^{(k)}$；否则，令$p_k=-g(x^{(k)})$，求$\lambda_k$，使$$f(x^{(k)}+\lambda_kp_k)=\min_{\lambda&gt;=0}f(x^{(k)}+\lambda p_k)$$<br>(4) 置$x^{(k+1)}=x{(k)}+\lambda_kp_k$，计算$f(x^{(k+1)})$<br>当$\Vert f(x^{(k+1)})-f(x^{(k)})\Vert&lt;\epsilon$或$\Vert x^{(k+1)}-x^{(k)}\Vert&lt;\epsilon$时，停止迭代，令$x^{*}=x^{(k+1)}$<br>(5) 否则，置$k=k+1$，转至(3)</p>
-<h3 id="梯度下降法的讨论"><a href="#梯度下降法的讨论" class="headerlink" title="梯度下降法的讨论"></a>梯度下降法的讨论</h3><p>当目标函数是凸函数时，梯度下降法的解是全局最优解。一般情况下，其解不保证是全局最优解。梯度下降法只利用了一阶导数的信息，其收敛速度未必是很快的。（详见参考资料2）</p>
-<p>参考资料：</p>
-<ol>
-<li><p><a href="http://www.codelast.com/%e5%8e%9f%e5%88%9b%e6%9c%80%e9%80%9f%e4%b8%8b%e9%99%8d%e6%b3%95%ef%bc%8c%e7%89%9b%e9%a1%bf%e6%b3%95%ef%bc%8c%e5%85%b1%e8%bd%ad%e6%96%b9%e5%90%91%e6%b3%95%ef%bc%8c%e5%85%b1%e8%bd%ad%e6%a2%af%e5%ba%a6/" target="_blank" rel="external">[原创]最速下降法/steepest descent，牛顿法/newton，共轭方向法/conjugate direction，共轭梯度法/conjugate gradient 及其他</a></p>
-</li>
-<li><p><a href="http://www.codelast.com/%e5%8e%9f%e5%88%9b-%e5%86%8d%e8%b0%88-%e6%9c%80%e9%80%9f%e4%b8%8b%e9%99%8d%e6%b3%95%e6%a2%af%e5%ba%a6%e6%b3%95steepest-descent/" target="_blank" rel="external">[原创] 再谈 最速下降法/梯度法/Steepest Descent</a></p>
-</li>
-<li><p>《统计学习方法》附录A</p>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1420,7 +1387,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">36</span>
+              <span class="site-state-item-count">37</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1437,7 +1404,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">59</span>
+                <span class="site-state-item-count">61</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
