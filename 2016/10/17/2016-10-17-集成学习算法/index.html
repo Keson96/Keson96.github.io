@@ -57,17 +57,17 @@
 
 
 
-<meta name="description" content="集成学习集成学习(ensemble learning)是通过构建并结合多个学习器来完成学习任务。这样的多个个体学习器称为可以是同质的(同一类学习器)，也可以是异质的(不同类学习器)。">
+<meta name="description" content="集成学习集成学习(ensemble learning)是通过构建并结合多个学习器来完成学习任务。个体学习器可以是同质的(同一类学习器)，也可以是异质的(不同类学习器)。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="集成学习算法(Ensemble Learning)">
-<meta property="og:url" content="http://yoursite.com/2016/10/17/集成学习算法/index.html">
+<meta property="og:url" content="http://yoursite.com/2016/10/17/2016-10-17-集成学习算法/index.html">
 <meta property="og:site_name" content="MayMoon">
-<meta property="og:description" content="集成学习集成学习(ensemble learning)是通过构建并结合多个学习器来完成学习任务。这样的多个个体学习器称为可以是同质的(同一类学习器)，也可以是异质的(不同类学习器)。">
+<meta property="og:description" content="集成学习集成学习(ensemble learning)是通过构建并结合多个学习器来完成学习任务。个体学习器可以是同质的(同一类学习器)，也可以是异质的(不同类学习器)。">
 <meta property="og:image" content="http://i.imgur.com/N3GLFvI.png">
-<meta property="og:updated_time" content="2016-10-17T11:52:05.090Z">
+<meta property="og:updated_time" content="2016-10-17T12:01:01.894Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="集成学习算法(Ensemble Learning)">
-<meta name="twitter:description" content="集成学习集成学习(ensemble learning)是通过构建并结合多个学习器来完成学习任务。这样的多个个体学习器称为可以是同质的(同一类学习器)，也可以是异质的(不同类学习器)。">
+<meta name="twitter:description" content="集成学习集成学习(ensemble learning)是通过构建并结合多个学习器来完成学习任务。个体学习器可以是同质的(同一类学习器)，也可以是异质的(不同类学习器)。">
 <meta name="twitter:image" content="http://i.imgur.com/N3GLFvI.png">
 
 
@@ -284,7 +284,7 @@
       
 
       
-        <h2 id="集成学习"><a href="#集成学习" class="headerlink" title="集成学习"></a>集成学习</h2><p>集成学习(ensemble learning)是通过构建并结合多个学习器来完成学习任务。这样的多个个体学习器称为可以是同质的(同一类学习器)，也可以是异质的(不同类学习器)。</p>
+        <h2 id="集成学习"><a href="#集成学习" class="headerlink" title="集成学习"></a>集成学习</h2><p>集成学习(ensemble learning)是通过构建并结合多个学习器来完成学习任务。个体学习器可以是同质的(同一类学习器)，也可以是异质的(不同类学习器)。</p>
 <a id="more"></a>
 <p>集成学习通过将多个学习器(一般是<strong>弱学习器</strong>)结合，可以得到比单一学习器优越很多的泛化性能。一般来说，把好的东西和坏的东西掺到一起，得到的应该是比好的差一些，比坏的好一些。但集成学习为什么能得到比最好的单一学习器更好的性能呢？<br>考虑一个简单的例子，在二分类问题中，三个分类器在三个测试样本上的表现如下图所示，$\surd$表示分类正确，$\times$ 表示分类错误，集成学习的结果通过投票法产生。<br><img src="http://i.imgur.com/N3GLFvI.png" alt=""><br>这个例子表明，要获得好的集成，个体学习器应“好而不同”，即学习器不能太坏，并且要有“多样性”，即学习器之间具有差异。然而事实上，个体学习器的“准确性”和“多样性”本身就存在冲突。一般的，准确性很高之后，要增加多样性就需要牺牲准确性。</p>
 <p>根据个体学习器的生成方式，目前的集成学习方法大致可分为两类，即个体学习器之间存在<strong>强依赖关系</strong>、必须<strong>串行</strong>生成的序列化方法，以及个体学习器间不存在强依赖关系、可同时生成的<strong>并行</strong>化方法。前者的代表是Boosting，后者的代表是Bagging和随机森林(Random Forest)。</p>
@@ -419,7 +419,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">34</span>
+              <span class="site-state-item-count">36</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
