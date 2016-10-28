@@ -67,7 +67,7 @@
 <meta property="og:image" content="http://i.imgur.com/Dkendep.png">
 <meta property="og:image" content="http://i.imgur.com/inT5kER.png">
 <meta property="og:image" content="http://i.imgur.com/zeFTMKT.png">
-<meta property="og:updated_time" content="2016-10-26T14:04:23.627Z">
+<meta property="og:updated_time" content="2016-10-26T14:52:35.116Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="最小角回归(Least Angle Regression)">
 <meta name="twitter:description" content="最小角回归(Least Angle Regression，下面简称为LARS)是一种模型选择算法。和传统的模型选择方法相比，它是一个相对不那么”贪心”的版本，同时表现出很好的性能。通过对LARS的一点小改动，它可以用来实现LASSO和前向阶进回归(Forward Stagewise linear regression)。LARS的一大优点是计算开销小。">
@@ -308,7 +308,7 @@
 <p><img src="http://i.imgur.com/inT5kER.png" alt=""></p>
 <p>LARS选了一个大小适中的 $\hat{\gamma}_1$，不向阶进算法那么小，也不像前向选择那么大。选择这样的 $\hat{\gamma}_1$ 值使得残差 $\overline{\mathbf{y}}_2-\hat{\mathbf{u}}_1$ 与 $\mathbf{x}_1$ 和 $\mathbf{x}_2$ 的相关度相同，即残差沿着 $\mathbf{x}_1$ 和 $\mathbf{x}_2$ 的角平分线方向。记这个方向上的单位向量为 $\mathbf{u}_2$，则下一次更新 $\hat{\boldsymbol{\mu}}$ 为<br>$$\hat{\boldsymbol{\mu}}_2 = \hat{\boldsymbol{\mu}}_1 + \hat{\gamma}_2\mathbf{u}_2\tag{12}$$<br>当 $m=2$ 时，选择 $\hat{\gamma}_2$ 使得 $\hat{\boldsymbol{\mu}}_2 = \overline{\mathbf{y}}_2$。当 $m&gt;2$ 时，则选择更小一点的 $\hat{\gamma}_2$，使一个新的变量加入到这个“最相关”的集合中。LARS算法也可以视为让 $\epsilon\to 0$ 时的阶进算法，不过计算开销要小很多（$\epsilon\to 0$ 时阶进算法开销趋向无穷）。</p>
 <h3 id="完整描述"><a href="#完整描述" class="headerlink" title="完整描述"></a>完整描述</h3><p>理解了LARS算法的思想后，我们就可以来完整地用更抽象的数学语言来描述这个算法。</p>
-<h4 id="确定方向-mathbf-u"><a href="#确定方向-mathbf-u" class="headerlink" title="确定方向 $\mathbf{u}$"></a>确定方向 $\mathbf{u}$</h4><p>我们假设向量 $\mathbf{x}_1,\mathbf{x}_2,\cdots,\mathbf{x}_m$ 之间是线性独立的。对于索引集合 $\{1,2,\cdots,m\}$ 的一个子集 $\mathcal{A}$，我们定义矩阵<br>$$X_{\mathcal{A}}=(\cdots s_j\mathbf{x}_j\cdots)_{j\in\mathcal{A}}\tag{13}$$<br>其中符号变量 $s_j$ 可以取1或-1，令<br>$$\mathcal{G}_{\mathcal{A}}=X_{\mathcal{A}}’X_{\mathcal{A}} \quad\text{and}\quad A_{\mathcal{A}}=(1_{\mathcal{A}}\mathcal{G}_{\mathcal{A}}^{-1}1_{\mathcal{A}})^{-\frac{1}{2}}\tag{14}$$<br>其中，$1_{\mathcal{A}}$ 是长度为 $|\mathcal{A}|$ 的全1向量。则<br>$$\mathbf{u}_{\mathcal{A}}=X_{\mathcal{A}}w_{\mathcal{A}}\quad\text{where}\quad w_{\mathcal{A}}=A_{\mathcal{A}}\mathcal{G}_{\mathcal{A}}^{-1}1_{\mathcal{A}}\tag{15}$$<br>$\mathbf{u}_{\mathcal{A}}$ 是使各个变量与之夹角相等（小于90度）的方向单位向量，即有<br>$$X’_{\mathcal{A}}\mathbf{u}_{\mathcal{A}}=A_{\mathcal{A}}1_{\mathcal{A}}\quad\text{and}\quad||\mathbf{u}_{\mathcal{A}}||^2=1\tag{16}$$</p>
+<h4 id="确定方向-mathbf-u"><a href="#确定方向-mathbf-u" class="headerlink" title="确定方向 $\mathbf{u}$"></a>确定方向 $\mathbf{u}$</h4><p>我们假设向量 $\mathbf{x}_1,\mathbf{x}_2,\cdots,\mathbf{x}_m$ 之间是线性独立的。对于索引集合 $\{1,2,\cdots,m\}$ 的一个子集 $\mathcal{A}$，我们定义矩阵<br>$$X_{\mathcal{A}}=(\cdots s_j\mathbf{x}_j\cdots)_{j\in\mathcal{A}}\tag{13}$$<br>其中符号变量 $s_j$ 可以取1或-1，令<br>$$\mathcal{G}_{\mathcal{A}}=X_{\mathcal{A}}’X_{\mathcal{A}} \quad\text{and}\quad A_{\mathcal{A}}=(1_{\mathcal{A}}\mathcal{G}_{\mathcal{A}}^{-1}1_{\mathcal{A}})^{-\frac{1}{2}}\tag{14}$$<br>其中，$1_{\mathcal{A}}$ 是长度为 $\mathcal{A}$ 的维度的全1向量。则<br>$$\mathbf{u}_{\mathcal{A}}=X_{\mathcal{A}}w_{\mathcal{A}}\quad\text{where}\quad w_{\mathcal{A}}=A_{\mathcal{A}}\mathcal{G}_{\mathcal{A}}^{-1}1_{\mathcal{A}}\tag{15}$$<br>$\mathbf{u}_{\mathcal{A}}$ 是使各个变量与之夹角相等（小于90度）的方向单位向量，即有<br>$$X’_{\mathcal{A}}\mathbf{u}_{\mathcal{A}}=A_{\mathcal{A}}1_{\mathcal{A}}\quad\text{and}\quad||\mathbf{u}_{\mathcal{A}}||^2=1\tag{16}$$<br>对于为什么这样计算出来的方向是角平分线方向（与各个变量夹角相等），参考资料1中有详细的证明过程。</p>
 <h4 id="完整过程"><a href="#完整过程" class="headerlink" title="完整过程"></a>完整过程</h4><p>我们先从 $\hat{\boldsymbol{\mu}}_0=\mathbf{0}$ 一步一步建立起 $\hat{\boldsymbol{\mu}}$ 。假设 $\hat{\boldsymbol{\mu}}_{\mathcal{A}}$ 是当前LARS算法的估计，于是<br>$$\hat{\mathbf{c}}=X’(\mathbf{y}-\hat{\boldsymbol{\mu}}_{\mathcal{A}})\tag{17}$$<br>是当前的相关度向量。“活跃集” $\mathcal{A}$ 是与 $\mathbf{y}$ 具有最大绝对相关度的变量的下标集合<br>$$\hat{C}=\max_j\{|\hat{c}_j|\}\quad\text{and}\quad \mathcal{A}=\{j:|\hat{c}_j|=\hat{C}\}\tag{18}$$<br>让<br>$$s_j=\text{sign}\{\hat{c}_j\}\quad\text{for}\quad j\in\mathcal{A}\tag{19}$$<br>用(13)~(15)式计算出$X_{\mathcal{A}},A_{\mathcal{A}},\mathbf{\mathcal{A}}$，计算出向量<br>$$\mathbf{a}\equiv X’\mathbf{u}_{\mathcal{A}}\tag{20}$$<br>LARS算法的下一步就是更新 $\hat{\boldsymbol{\mu}}_{\mathcal{A}}$，即<br>$$\hat{\boldsymbol{\mu}}_{\mathcal{A}_+}=\hat{\boldsymbol{\mu}}_{\mathcal{A}}+\hat{\gamma}\mathbf{u}_{\mathcal{A}}\tag{21}$$<br>其中<br>$$\hat{\gamma}=\text{min}^+_{j\in\mathcal{A}^c}\left\{\cfrac{\hat{C}-\hat{c}_j}{A_{\mathcal{A}}-a_j},\cfrac{\hat{C}+\hat{c}_j}{A_{\mathcal{A}}+a_j}\right\}\tag{22}$$<br>$\text{min}^+$ 表示只取正的最小值。</p>
 <p>式(21)和(22)有以下解释：定义<br>$$\boldsymbol{\mu}(\gamma)=\hat{\boldsymbol{\mu}}_{\mathcal{A}}+\gamma\mathbf{u}_{\mathcal{A}}\tag{23}$$<br>对于 $\gamma&gt;0$，当前的相关度为<br>$$c_j(\gamma)=\mathbf{x}’_j(\mathbf{y}-\boldsymbol{\mu}(\gamma))=\hat{c}_j-\gamma a_j\tag{24}$$<br>对于 $j\in\mathcal{A}$，式(16)-(18)可得出<br>$$|c_j(\gamma)|=\hat{C}-\gamma A_{\mathcal{A}}\tag{25}$$<br>这意味着所有的当前最大绝对相关度是同等下降的。对于$j\in\mathcal{A}^c$，让式(24)和式(25)相等可以得到：在 $\gamma=(\hat{C}-\hat{c}_j)/(A_{\mathcal{A}}-a_j)$ 时 $c_j(\gamma)$ 取得最大值；在 $\gamma=(\hat{C}+\hat{c}_j)/(A_{\mathcal{A}}+a_j)$ 时负相关度 $-c_j(\gamma)$ 取得最大值。因此式(22)中的 $\hat{\gamma}$ 应该取这两个中较小的正值 $\gamma$，使得新的下标 $\hat{j}$ 加入到“活跃集”中。新的“活跃集”为 $\mathcal{A}_+=\mathcal{A}\cup \{\hat{j}\}$，新的最大绝对相关度为 $\hat{C}_+=\hat{C}-\hat{\gamma}A_{\mathcal{A}}$ 。<br>如下图所示，新变量加入后，每个最大绝对相关度下降都是相同的，体现为最外侧的蓝线所代表的变量越来越多：在第一段只有变量3，第二段有变量3和9，第三段有变量3、4和9，……</p>
 <p><img src="http://i.imgur.com/zeFTMKT.png" alt=""><br>随着变量越来越多，最大绝对相关度越来越小，说明能已选择的变量已经能很好地解释 $\mathbf{y}$，剩下没选的变量对模型的贡献很小。</p>
@@ -351,6 +351,10 @@
           </div>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/28/lars&lasso&stagewise/" rel="prev" title="LARS与Lasso和Forward Stagewise">
+                LARS与Lasso和Forward Stagewise <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -435,7 +439,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">61</span>
+                <span class="site-state-item-count">62</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
