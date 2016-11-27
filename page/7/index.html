@@ -216,6 +216,117 @@
             
               
                 
+                <a class="post-title-link" href="/2016/04/17/2016-04-17-2.1-Elementary-Sort/" itemprop="url">
+                  2-1 Elementary Sort
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-17T19:54:01+08:00" content="2016-04-17">
+              2016-04-17
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/《Algorithms》-notes/" itemprop="url" rel="index">
+                    <span itemprop="name">《Algorithms》 notes</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>在所有的排序算法实现中，只使用比较（Compare）和交换（exchange）两种函数操作。考虑算法的时间复杂度时，也只考虑这两种操作（如果没有交换操作，则考虑数组访问（array access）的代价）；考虑空间复杂度时，需考虑排序算法是在原处修改还是新建了一个数组来存储排序结果。</p>
+<p>有时候，我们在比较时，只需要比较每个元素的某个特征来对他们排序（以人为元素，我们可能只比较身高，而不比较他们的其他特征）。以下为求简介，统一称为“比较元素”</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/04/17/2016-04-17-2.1-Elementary-Sort/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/04/17/2016-04-17-终于搭好了博客/" itemprop="url">
                   终于搭好了博客
                 </a>
@@ -576,7 +687,38 @@
 </ul>
 <p>设 $f(\cdot)$ 是一个给定区间 $[x_s,x_f]$ 的单峰函数，如果我们打算只计算 $n$ 次函数值，我们应该怎么安排这 $n$ 个点的位置和顺序使得最终得到的区间 $[x’,x’’]$ 最小？</p>
 <h3 id="穷举搜索"><a href="#穷举搜索" class="headerlink" title="穷举搜索"></a>穷举搜索</h3><p>穷举搜索很容易想到，即计算函数 $f(\cdot)$ 在预先确定的 $n$ 个点处的值，有 $x_s&lt;x^1&lt;\cdots&lt;x^n&lt;x_f$。如果这 $n$ 个值中的最小值是 $x_k$，那么最终确定的区间即为 $[x^{k-1},x^{k+1}]$，长度即为$$L_n=x^{k+1}-x^{k-1}=\cfrac{2}{n+1}L_0$$其中 $L_0=x_f-x_s$</p>
-<h3 id="二分搜索"><a href="#二分搜索" class="headerlink" title="二分搜索"></a>二分搜索</h3><h1 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h1><ol>
+<h3 id="二分搜索"><a href="#二分搜索" class="headerlink" title="二分搜索"></a>二分搜索</h3><p><img src="http://i.imgur.com/rzdXxgC.png" alt=""><br>如图，通过比较两点处的函数值 $f(\cdot)$，利用单峰性的假设，每次可以丢弃将近一半的区间。<br>$n$ 次后得到最终的区间长度为$$L_n=\cfrac{L_0}{2^{n/2}}+\delta(1-\cfrac{1}{2^{n/2}})$$</p>
+<p>我们注意到：每次我们都需要计算新的两个点处的函数值 $f(x^1)$ 和 $f(x^2)$，丢弃掉的区间长度至少为 $\frac{1}{2}L_0-\cfrac{\delta}{2}$，剩下的区间长度至多为 $\frac{1}{2}L_0+\cfrac{\delta}{2}$。要使区间长度收缩得快，则越小 $\delta&gt;0$ 更好，然而，当 $\delta$ 太小的时候，$x^1\simeq x^2$。<br>我们怎么能安全地分开 $x^1$ 和 $x^2$ 又不至于失去太多收缩速度？另一方面，在上面的二分搜索中，每次都需要计算两个新的点，我们怎么能是 $f(x^1),f(x^2)$ 的信息被多次利用呢？</p>
+<h3 id="斐波那契搜索"><a href="#斐波那契搜索" class="headerlink" title="斐波那契搜索"></a>斐波那契搜索</h3><blockquote>
+<p>斐波那契数列<br>$F_0=F_1=1,\quad F_n=F_{n-1}+F_{n-2},\quad n=2,3,4,\cdots$<br>即 $\{F_n\}=\{1,1,2,3,5,8,13,21,\cdots\}$</p>
+</blockquote>
+<p><img src="http://i.imgur.com/nAfA8IT.png" alt=""><br>在斐波那契搜索中，每次只需要计算一个新的划分点，即每次都会有一个点将会被再次作为划分点，二次利用。</p>
+<p>定义$L_2^{*}=\cfrac{F_{n-2}}{F_n}L_0$，第一次划分的两个点距区间两端均为这个距离。利用单峰性，则新的区间为 $$L_2=L_0-L^{*}_2=L_0\left(1-\cfrac{F_{n-2}}{F_n}\right)=\cfrac{F_{n-1}}{F_n}L_0$$<br>不论是 $x^1$ 还是 $x^2$ 留在了新的区间 $L_2$ 中，都会有：它距区间一端的距离为$$L_2^{*}=\cfrac{F_{n-2}}{F_n}L_0=\cfrac{F_{n-2}}{F_{n-2}}L_2$$距另外一端的距离为$$L_2-L_2^{*}=\cfrac{F_{n-3}}{F_n}L_0=\cfrac{F_{n-3}}{F_{n-1}}L_2$$<br>我们新选择一个划分点 $x^3$ 使得 $L_2$ 内部的两个划分点距区间两端的距离均为$$L_3^{*}=\cfrac{F_{n-3}}{F_n}$$则这一轮产生的不确定区间的长度为$$L_3=L_2-L_3^{*}=L_2-\cfrac{F_{n-3}}{F_{n-1}}L_2=\cfrac{F_{n-2}}{F_{n-1}}L_2=\cfrac{F_{n-2}}{F_n}L_0$$<br><strong>一般化的算法过程如下：</strong>$$L_j^{*}=\cfrac{F_{n-j}}{F_{n-(j-2)}}L_{j-1},\quad L_j=\cfrac{F_{n-(j-1)}}{F_n}L_0$$最终得到的区间长度为 $L_n=\frac{F_1}{F_n}L_0=\frac{1}{F_n}L_0$</p>
+<h3 id="黄金分割搜索"><a href="#黄金分割搜索" class="headerlink" title="黄金分割搜索"></a>黄金分割搜索</h3><p>和斐波那契搜索类似，黄金分割搜索每次也只需要计算一个新的划分点，每次都会有一个点将会被再次作为划分点，二次利用，如下图所示。</p>
+<p><img src="http://i.imgur.com/PgEHlaH.png" alt=""><br>则 $L_n=0.618^n L_0$</p>
+<h3 id="精确性-VS-代价"><a href="#精确性-VS-代价" class="headerlink" title="精确性 VS 代价"></a>精确性 VS 代价</h3><p>我们在计算步长 $\alpha_k$ 时，面临一个权衡：越精确地计算 $\alpha_k$，开销就会越大</p>
+<h2 id="2-2-非精确线搜索"><a href="#2-2-非精确线搜索" class="headerlink" title="2.2 非精确线搜索"></a>2.2 非精确线搜索</h2><p>大多数实际的策略都采用非精确线搜索的办法，在最小的计算开销下使函数值 $f(\cdot)$ 充分变小（考虑最小化问题）。经典的线搜索算法通常尝试一个 $\alpha$ 的序列，当满足某些停止条件时，选择那个 $\alpha$ 并结束。<br>下面来介绍一些不同的停止条件。</p>
+<h3 id="充分下降条件"><a href="#充分下降条件" class="headerlink" title="充分下降条件"></a>充分下降条件</h3><p>一个常用的停止条件是 $\alpha_k$ 可以使目标函数 $f(\cdot)$ 产生充分的下降，即$$f(x_k+\alpha p_k)\le f(x_k)+c_1\alpha\nabla f_k^T p_k$$其中 $c_1 \in (0,1)$ 为一常数。<br><img src="http://i.imgur.com/hYS67KC.png" alt=""></p>
+<h3 id="曲率条件"><a href="#曲率条件" class="headerlink" title="曲率条件"></a>曲率条件</h3><p>仅靠充分下降条件并不能保证算法每一步都能有很好的进步（make reasonable progress）。事实上，我们可以发现，当 $\alpha$ 充分小时，充分下降条件总是满足的。所以，算法可能会常常产生令人无法接受的小步长。<br>为了避免这种情况，我们引入另一个条件，称为曲率条件，即需要 $\alpha_k$ 满足$$\nabla f(x_k+\alpha_k p_k)^T p_k\ge c_2\nabla f_k^T p_k$$其中 $c_2 \in (0,1)$ 为一常数。</p>
+<p><img src="http://i.imgur.com/N5MQss4.png" alt=""></p>
+<h3 id="Wolfe条件"><a href="#Wolfe条件" class="headerlink" title="Wolfe条件"></a>Wolfe条件</h3><p>将上面两个条件结合起来，就得到了Wolfe条件，如图</p>
+<p><img src="http://i.imgur.com/BpaiQR2.png" alt=""></p>
+<h3 id="强Wolfe条件"><a href="#强Wolfe条件" class="headerlink" title="强Wolfe条件"></a>强Wolfe条件</h3><p>强Wolfe条件对 $\alpha_k$ 的限制为 $$\begin{array}{c}f(x_k+\alpha_k p_k)\le f(x_k)+c_1\alpha_k\nabla f_k^T p_k \\<br>|\nabla f(x_k+\alpha_k p_k)^T p_k|\le c_2|\nabla f_k^T p_k|<br>\end{array}$$<br>注意到，这个条件比上面只多了绝对值符号。强Wolfe条件实际上限制了 $\phi’(\alpha_k)$ 不能为一个很大的正数，即可行的 $\alpha$ 不能离最低点太远。</p>
+<h3 id="Goldstein条件"><a href="#Goldstein条件" class="headerlink" title="Goldstein条件"></a>Goldstein条件</h3><p>像Wolfe条件一样，Goldstein条件也保证了步长 $\alpha$ 不至于太小，同时又能使函数值 $f$ 产生充分下降。</p>
+<p><img src="http://i.imgur.com/AA3qna2.png" alt=""><br><img src="http://i.imgur.com/SReNOuC.png" alt=""></p>
+<hr>
+<h3 id="后向跟踪方法（Backtracking-Approach）"><a href="#后向跟踪方法（Backtracking-Approach）" class="headerlink" title="后向跟踪方法（Backtracking Approach）"></a>后向跟踪方法（Backtracking Approach）</h3><p>如果备选的步长合适，那么通过后向跟踪方法，我们可以只用充分下降条件来做终止条件，同时选出一个不错的步长。（因为这时候 $\alpha$ 是从大往小变化，所以不可能变得太小）</p>
+<blockquote>
+<p>Choose $\overline{\alpha}&gt;0,\rho,c\in(0,1)$；set $\alpha\leftarrow\overline{\alpha}$<br><strong>repeat</strong> until $f(x_k+\alpha p_k)\le f(x_k)+c\alpha\nabla f_k^T p_k$<br>$\qquad \alpha\leftarrow\rho\alpha$<br><strong>end(repeat)</strong><br>Terminate with $\alpha_k=\alpha$</p>
+</blockquote>
+<p>特点：</p>
+<ol>
+<li>在有限次尝试后可以得到一个可接受的步长</li>
+<li>最终得到的步长要么是给定的值 $\overline{\alpha}$，要么就是一个比较小（但不是过于小）的满足充分下降条件的步长</li>
+<li>在实际中，收缩因子 $\rho$ 通常被设置为在每轮迭代中在一个区间 $[\rho_{\text{lo}},\rho_{\text{hi}}]$</li>
+<li>这种简单的终止线搜索的方法很适合牛顿法</li>
+</ol>
+<h1 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h1><ol>
 <li><a href="http://www.codelast.com/%e5%8e%9f%e5%88%9b%e6%9c%80%e9%80%9f%e4%b8%8b%e9%99%8d%e6%b3%95%ef%bc%8c%e7%89%9b%e9%a1%bf%e6%b3%95%ef%bc%8c%e5%85%b1%e8%bd%ad%e6%96%b9%e5%90%91%e6%b3%95%ef%bc%8c%e5%85%b1%e8%bd%ad%e6%a2%af%e5%ba%a6/" target="_blank" rel="external">[原创]最速下降法，牛顿法，共轭方向法，共轭梯度法及其他</a></li>
 <li><a href="http://www.codelast.com/%e5%8e%9f%e5%88%9b-%e5%86%8d%e8%b0%88-%e6%9c%80%e9%80%9f%e4%b8%8b%e9%99%8d%e6%b3%95%e6%a2%af%e5%ba%a6%e6%b3%95steepest-descent/" target="_blank" rel="external">[原创] 再谈 最速下降法/梯度法/Steepest Descent</a></li>
 <li>《统计学习方法》附录A</li>
@@ -585,116 +727,6 @@
 </ol>
 
           
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2000/05/16/XGBoosting/" itemprop="url">
-                  🔨XGBoosting（eXtreme Gradient Boosting）
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2000-05-16T19:54:01+08:00" content="2000-05-16">
-              2000-05-16
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Under-Construction/" itemprop="url" rel="index">
-                    <span itemprop="name">Under Construction</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>Boosting是<a href="http://keson96.github.io/2016/10/17/2016-10-17-集成学习算法/">集成学习</a>中一种重要的方法，通过集成弱分类器，可以获得比单一学习器性能都好的一个模型。XGBoosting是在<a href="http://keson96.github.io/2016/11/04/2016-11-04-Gradient-Boosting/">Gradient Boosting</a>基础上，进行了一些改动设计，使得算法效率显著提高，并可以并行化。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2000/05/16/XGBoosting/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
         
       
     </div>
@@ -869,7 +901,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">39</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

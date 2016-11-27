@@ -66,7 +66,7 @@
 <meta property="og:image" content="http://i.imgur.com/3tfeYa5.png">
 <meta property="og:image" content="http://i.imgur.com/AeP3Cn1.png">
 <meta property="og:image" content="http://i.imgur.com/UfJc50o.png">
-<meta property="og:updated_time" content="2016-11-04T10:32:07.611Z">
+<meta property="og:updated_time" content="2016-11-18T06:07:57.556Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="梯度提升(Gradient Boosting)">
 <meta name="twitter:description" content="什么是梯度提升(Gradient Boosting)可以认为 Gradient Boosting = Gradient Descent + Boosting在AdaBoost中，我们通过每一步添加一个弱分类器来最终得到一个由若干弱分类器线性组合成的强分类器。每一步训练弱分类器时都更关注之前误分类的样本。将误分类样本看成总模型的缺陷，则算法每一步都是通过添加一个弱分类器来试图减小总模型的缺陷。和 A">
@@ -278,7 +278,7 @@
       
         <h2 id="什么是梯度提升-Gradient-Boosting"><a href="#什么是梯度提升-Gradient-Boosting" class="headerlink" title="什么是梯度提升(Gradient Boosting)"></a>什么是梯度提升(Gradient Boosting)</h2><p>可以认为 <strong>Gradient Boosting = Gradient Descent + Boosting</strong><br>在AdaBoost中，我们通过每一步添加一个弱分类器来最终得到一个由若干弱分类器线性组合成的强分类器。每一步训练弱分类器时都更关注之前<strong>误分类的样本</strong>。将<strong>误分类样本</strong>看成总模型的缺陷，则算法每一步都是通过添加一个弱分类器来试图减小总模型的缺陷。<br>和 AdaBoost 一样，Gradient Boosting 也是一个步进算法，每一步添加一个弱分类器。不同的是，在 Gradient Boosting中，用来刻画缺陷的是<strong>梯度</strong>，通过梯度下降，来逐渐提高总模型的预测能力。</p>
 <a id="more"></a>
-<h3 id="一个小例子"><a href="#一个小例子" class="headerlink" title="一个小例子"></a>一个小例子</h3><p>给定了一组数据点 $(x_1,y_1),(x_2,y_2),\cdots,(x_n,y_n)$，要求给出一个模型 $F(x)$ 使得平方误差最小。<br>假设你已经得到了一个模型：有 $F(x_1)=0.8$，$y_1=0.9$，$F(x_2)=1.4$，$y_1=1.3$ …… 现在想改进这个模型，要怎么做？</p>
+<h3 id="一个小例子"><a href="#一个小例子" class="headerlink" title="一个小例子"></a>一个小例子</h3><p>给定了一组数据点 $(x_1,y_1),(x_2,y_2),\cdots,(x_n,y_n)$，要求给出一个模型 $F(x)$ 使得平方误差最小。<br>假设你已经得到了一个模型：有 $F(x_1)=0.8$，$y_1=0.9$，$F(x_2)=1.4$，$y_2=1.3$ …… 现在想改进这个模型，要怎么做？</p>
 <p>最简单的办法就是添加一个模型 $h$，即新的预测值由 $F(x)+h(x)$ 给出。<br>我们希望改进后满足$$\begin{array}{c}<br>F(x_1)+h(x_1)=y_1 \\<br>F(x_2)+h(x_2)=y_2 \\<br>\cdots \\<br>F(x_n)+h(x_n)=y_n<br>\end{array}$$<br>等价地，我们希望$$\begin{array}{c}<br>h(x_1)=y_1-F(x_1) \\<br>h(x_2)=y_2-F(x_2) \\<br>\cdots \\<br>h(x_n)=y_n-F(x_n) \\<br>\end{array}$$<br>所以我们可以训练出来一个模型 $h$ 来拟合数据 $(x_1,y_1-F(x_1)),(x_2,y_2-F(x_2)),\cdots,(x_n,y_n-F(x_n))$。如果添加 $h$ 后，我们对总模型仍不满意，可以继续添加新的模型。</p>
 <h3 id="与梯度下降的关系"><a href="#与梯度下降的关系" class="headerlink" title="与梯度下降的关系"></a>与梯度下降的关系</h3><p>上述的内容看起来与梯度下降没有关系，实则不然。回顾梯度下降的含义：通过向负梯度方向移动来最小化函数，即$$\theta_i:=\theta_i-\rho\cfrac{\partial J}{\partial \theta_i}$$<br>在上面的例子中，损失函数是 $L(y,F(x))=(y-F(x))^2/2$，我们想要通过调整 $F(x_1),\cdots,F(x_n)$ 来最小化 $J\left(\sum_{i=1}^n L(y_i,F(x_i))\right)$。则<br>$$\cfrac{\partial J}{\partial F(x_i)}=\cfrac{\partial \sum_{i=1}^n L(y_i,F(x_i))}{\partial F(x_i)}=\cfrac{\partial L(y_i,F(x_i))}{\partial F(x_i)}=F(x_i)-y_i$$<br>所以<br>$$\begin{array}{c,l}<br>F(x_i)&amp;:=&amp;F(x_i)+h(x_i) \\<br>&amp;:=&amp;F(x_i)+y_i-F(x_i) \\<br>&amp;:=&amp;F(x_i)-1\cfrac{\partial J}{\partial F(x_i)}<br>\end{array}$$</p>
 <h2 id="梯度提升回归（Gradient-Boosting-for-Regression）"><a href="#梯度提升回归（Gradient-Boosting-for-Regression）" class="headerlink" title="梯度提升回归（Gradient Boosting for Regression）"></a>梯度提升回归（Gradient Boosting for Regression）</h2><p>总结一下上面的算法。负梯度为<br>$$-g(x_i)=-\cfrac{\partial L(y_i,F(x_i))}{\partial F(x_i)}=y_i-F(x_i)$$<br>从一个最初的模型开始，比方说，$F(x_i)=\cfrac{\sum_{i=1}^n y_i}{n}$<br>重复下面过程直到收敛：</p>
@@ -444,6 +444,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2016/11/27/共轭梯度法(Conjugate Gradient Method)/" rel="prev" title="共轭梯度法（Conjugate Gradient Method）">
+                共轭梯度法（Conjugate Gradient Method） <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -510,7 +514,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">39</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

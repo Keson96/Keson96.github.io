@@ -67,7 +67,7 @@
 <meta property="og:image" content="http://i.imgur.com/Dkendep.png">
 <meta property="og:image" content="http://i.imgur.com/inT5kER.png">
 <meta property="og:image" content="http://i.imgur.com/zeFTMKT.png">
-<meta property="og:updated_time" content="2016-10-26T14:52:35.116Z">
+<meta property="og:updated_time" content="2016-11-18T04:50:55.858Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="最小角回归(Least Angle Regression)">
 <meta name="twitter:description" content="最小角回归(Least Angle Regression，下面简称为LARS)是一种模型选择算法。和传统的模型选择方法相比，它是一个相对不那么”贪心”的版本，同时表现出很好的性能。通过对LARS的一点小改动，它可以用来实现LASSO和前向阶进回归(Forward Stagewise linear regression)。LARS的一大优点是计算开销小。">
@@ -302,7 +302,7 @@
 <h4 id="完整过程"><a href="#完整过程" class="headerlink" title="完整过程"></a>完整过程</h4><p>我们先从 $\hat{\boldsymbol{\mu}}_0=\mathbf{0}$ 一步一步建立起 $\hat{\boldsymbol{\mu}}$ 。假设 $\hat{\boldsymbol{\mu}}_{\mathcal{A}}$ 是当前LARS算法的估计，于是<br>$$\hat{\mathbf{c}}=X’(\mathbf{y}-\hat{\boldsymbol{\mu}}_{\mathcal{A}})\tag{17}$$<br>是当前的相关度向量。“活跃集” $\mathcal{A}$ 是与 $\mathbf{y}$ 具有最大绝对相关度的变量的下标集合<br>$$\hat{C}=\max_j\{|\hat{c}_j|\}\quad\text{and}\quad \mathcal{A}=\{j:|\hat{c}_j|=\hat{C}\}\tag{18}$$<br>让<br>$$s_j=\text{sign}\{\hat{c}_j\}\quad\text{for}\quad j\in\mathcal{A}\tag{19}$$<br>用(13)~(15)式计算出$X_{\mathcal{A}},A_{\mathcal{A}},\mathbf{\mathcal{A}}$，计算出向量<br>$$\mathbf{a}\equiv X’\mathbf{u}_{\mathcal{A}}\tag{20}$$<br>LARS算法的下一步就是更新 $\hat{\boldsymbol{\mu}}_{\mathcal{A}}$，即<br>$$\hat{\boldsymbol{\mu}}_{\mathcal{A}_+}=\hat{\boldsymbol{\mu}}_{\mathcal{A}}+\hat{\gamma}\mathbf{u}_{\mathcal{A}}\tag{21}$$<br>其中<br>$$\hat{\gamma}=\text{min}^+_{j\in\mathcal{A}^c}\left\{\cfrac{\hat{C}-\hat{c}_j}{A_{\mathcal{A}}-a_j},\cfrac{\hat{C}+\hat{c}_j}{A_{\mathcal{A}}+a_j}\right\}\tag{22}$$<br>$\text{min}^+$ 表示只取正的最小值。</p>
 <p>式(21)和(22)有以下解释：定义<br>$$\boldsymbol{\mu}(\gamma)=\hat{\boldsymbol{\mu}}_{\mathcal{A}}+\gamma\mathbf{u}_{\mathcal{A}}\tag{23}$$<br>对于 $\gamma&gt;0$，当前的相关度为<br>$$c_j(\gamma)=\mathbf{x}’_j(\mathbf{y}-\boldsymbol{\mu}(\gamma))=\hat{c}_j-\gamma a_j\tag{24}$$<br>对于 $j\in\mathcal{A}$，式(16)-(18)可得出<br>$$|c_j(\gamma)|=\hat{C}-\gamma A_{\mathcal{A}}\tag{25}$$<br>这意味着所有的当前最大绝对相关度是同等下降的。对于$j\in\mathcal{A}^c$，让式(24)和式(25)相等可以得到：在 $\gamma=(\hat{C}-\hat{c}_j)/(A_{\mathcal{A}}-a_j)$ 时 $c_j(\gamma)$ 取得最大值；在 $\gamma=(\hat{C}+\hat{c}_j)/(A_{\mathcal{A}}+a_j)$ 时负相关度 $-c_j(\gamma)$ 取得最大值。因此式(22)中的 $\hat{\gamma}$ 应该取这两个中较小的正值 $\gamma$，使得新的下标 $\hat{j}$ 加入到“活跃集”中。新的“活跃集”为 $\mathcal{A}_+=\mathcal{A}\cup \{\hat{j}\}$，新的最大绝对相关度为 $\hat{C}_+=\hat{C}-\hat{\gamma}A_{\mathcal{A}}$ 。<br>如下图所示，新变量加入后，每个最大绝对相关度下降都是相同的，体现为最外侧的蓝线所代表的变量越来越多：在第一段只有变量3，第二段有变量3和9，第三段有变量3、4和9，……</p>
 <p><img src="http://i.imgur.com/zeFTMKT.png" alt=""><br>随着变量越来越多，最大绝对相关度越来越小，说明能已选择的变量已经能很好地解释 $\mathbf{y}$，剩下没选的变量对模型的贡献很小。</p>
-<h3 id="与Lasso和前向阶进的联系"><a href="#与Lasso和前向阶进的联系" class="headerlink" title="与Lasso和前向阶进的联系"></a>与Lasso和前向阶进的联系</h3><p>这部分内容单独写在另外的文章中。</p>
+<h3 id="与Lasso和前向阶进的联系"><a href="#与Lasso和前向阶进的联系" class="headerlink" title="与Lasso和前向阶进的联系"></a>与Lasso和前向阶进的联系</h3><p>这部分内容单独写在<a href="http://keson96.github.io/2016/10/28/2016-10-28-lars-lasso-stagewise/" target="_blank" rel="external">另外的文章</a>中。</p>
 <h2 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h2><ol>
 <li><a href="https://web.stanford.edu/~hastie/Papers/LARS/LeastAngle_2002.pdf" target="_blank" rel="external">Least Angle Regression</a></li>
 <li><em>The Elements of Statistical Learning</em></li>
@@ -412,7 +412,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">39</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
