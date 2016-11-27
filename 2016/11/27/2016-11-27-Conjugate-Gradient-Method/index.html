@@ -1,0 +1,596 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="wangkaixin, maymoon" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="共轭梯度法是求解大型线性方程组的一种很有效的方法，也可以通过改进用来求解非线性优化问题。下面先介绍线性线性共轭梯度法，再介绍非线性共轭梯度法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="共轭梯度法（Conjugate Gradient Method）">
+<meta property="og:url" content="http://yoursite.com/2016/11/27/2016-11-27-Conjugate-Gradient-Method/index.html">
+<meta property="og:site_name" content="MayMoon">
+<meta property="og:description" content="共轭梯度法是求解大型线性方程组的一种很有效的方法，也可以通过改进用来求解非线性优化问题。下面先介绍线性线性共轭梯度法，再介绍非线性共轭梯度法。">
+<meta property="og:image" content="http://i.imgur.com/GpWE6OS.png">
+<meta property="og:updated_time" content="2016-11-27T12:10:49.984Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="共轭梯度法（Conjugate Gradient Method）">
+<meta name="twitter:description" content="共轭梯度法是求解大型线性方程组的一种很有效的方法，也可以通过改进用来求解非线性优化问题。下面先介绍线性线性共轭梯度法，再介绍非线性共轭梯度法。">
+<meta name="twitter:image" content="http://i.imgur.com/GpWE6OS.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 共轭梯度法（Conjugate Gradient Method） | MayMoon </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">MayMoon</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">随便写写</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                共轭梯度法（Conjugate Gradient Method）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-11-27T19:54:01+08:00" content="2016-11-27">
+              2016-11-27
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/优化算法/" itemprop="url" rel="index">
+                    <span itemprop="name">优化算法</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>共轭梯度法是求解大型线性方程组的一种很有效的方法，也可以通过改进用来求解非线性优化问题。下面先介绍线性线性共轭梯度法，再介绍非线性共轭梯度法。</p>
+<a id="more"></a>
+<h1 id="线性共轭梯度法"><a href="#线性共轭梯度法" class="headerlink" title="线性共轭梯度法"></a>线性共轭梯度法</h1><p>共轭梯度法是一个<strong>迭代</strong>求解的算法。假如我们要求解线性方程组 $Ax=b$，其中 $A$ 是 $n\times n$ 的对称正定矩阵。这实际上等价于一个最小化问题，即 $$Ax=b \Leftrightarrow \min \phi(x)=\cfrac{1}{2}x^TAx-b^Tx$$ 它们有相同的解</p>
+<blockquote>
+<p>由于 $\phi(x)$ 是凸函数，所以它的局部最优点也是全局最优点，记为 $x^{\star}$<br>则有 $\phi’(x^{\star}) = 0$<br>又因为 $\phi’(x) = Ax - b$，所以优化问题和线性方程组有相同的解。</p>
+</blockquote>
+<h2 id="共轭方向法（Conjugate-Direction-Method）"><a href="#共轭方向法（Conjugate-Direction-Method）" class="headerlink" title="共轭方向法（Conjugate Direction Method）"></a>共轭方向法（Conjugate Direction Method）</h2><p>共轭梯度法其实是特殊情况下的共轭方向法，所以我们先介绍共轭方向法。<br>如果一个非零向量的集合 $\{p_0,p_1,\cdots,p_l\}$ 满足以下条件，我们就说它关于对称正定矩阵 $A$ 是<strong>共轭</strong>的 $$p_i^TAp_j=0 \quad \text{for all}\quad i\neq j$$很容易验证这样的一组向量也是线性独立的。<br>下面是共轭方向法的过程：</p>
+<ul>
+<li>给定一个初始解 $x_0\in\mathbb{R}^n$ 和一组共轭方向 $\{p_0,p_1,\cdots,p_{n-1}\}$</li>
+<li>通过式 $x_{k+1}=x_k+\alpha_kp_k$ 生成一个解序列 $\{x_k\}$</li>
+<li>其中 $\alpha_k$ 是二次方程 $\phi(\cdot)$ 沿 $x_k+\alpha_kp_k$ 方向的极小值点，$\alpha_k$ 可以这样计算 $$\alpha_k=-\cfrac{r_k^Tp_k}{p_k^TAp_k}$$</li>
+</ul>
+<blockquote>
+<p>记 $f(\alpha)=\phi(x_k+\alpha p_k)$，要求解使 $\phi(\cdot)$ 最小的 $\alpha_k$，可以令 $f’(\alpha)=0$ 来求解<br>$f(\alpha)=\cfrac{1}{2}(x_k+\alpha p_k)^TA(x_k+\alpha p_k)-b^T(x_k+\alpha p_k)$<br>对于第一项，根据复合求导法则，外部求导结果为 $A(x_k+\alpha p_k)$，内部求导结果为 $p_k^T$。所以，$f’(\alpha)=p_k^TA(x_k+\alpha p_k) -b^Tp_k$，令 $f’(\alpha)=0$，则可以得到上面的解，其中 $r_k=\phi’(x_k)=Ax_k-b^Tx_k$</p>
+</blockquote>
+<h3 id="二次终止定理"><a href="#二次终止定理" class="headerlink" title="二次终止定理"></a>二次终止定理</h3><p><strong>定理：</strong> 对于任一 $x_0\in\mathbb{R}^n$，用共轭方向法生成的序列 $\{x_k\}$ 最多用 $n$ 步就可以收敛到线性方程组 $Ax=b$ 的解 $x^{\star}$<br><strong>证明：</strong> 因为共轭方向 $\{p_i\}$ 是线性独立的，它们一定可以张成整个 $n$ 维空间 $\mathbb{R}^n$，则 $$x^{\star}-x_0=\sigma_0p_0+\sigma_1p_1+\cdots+\sigma_{n-1}p_{n-1}$$ 给上式左乘 $p_k^TA$，并利用共轭的性质，可以得到 $$\sigma_k=\cfrac{p_k^TA(x^{\star}-x_0)}{p_k^TAp_k}$$ 如果 $x_k$ 是由共轭方向法生成的，则有 $$x_k=x_0+\alpha_0p_0+\alpha_1p_1+\cdots+\alpha_{n-1}p_{n-1}$$<br>给上式左乘 $p_k^TA$，并利用共轭的性质，则有 $$p_k^TA(x_k-x_0)=0$$ 因此有 $$p_k^TA(x^{\star}-x_0)=p_k^TA(x^{\star}-x_k)=p_k^TA(b-Ax_k)=-p_k^Tr_k$$ 则有 $$\sigma_k=-\cfrac{p_k^Tr_k}{p_k^TAp_k}=\alpha_k$$ 即证明了通过共轭方向法可以在最多 $n$ 步时得到解 $x^{\star}$</p>
+<h3 id="共轭方向法的实质"><a href="#共轭方向法的实质" class="headerlink" title="共轭方向法的实质"></a>共轭方向法的实质</h3><p>如果矩阵 $A$ 是对角矩阵，则函数 $\phi(\cdot)$ 的等值线是轴与坐标轴平行的椭圆，如下图：</p>
+<p><img src="http://i.imgur.com/GpWE6OS.png" alt=""><br>这时我们可以沿每个坐标轴方向进行一维最小化，则可以在 $n$ 步之内找到最优点，每一步都在一个坐标轴方向上达到了最优。</p>
+<p>如果矩阵 $A$ 不是对角矩阵，即椭圆的轴与坐标轴不平行，则可以通过修正使得新的矩阵变成对角矩阵<br>定义新的变量 $\hat{x}=S^{-1}x$，其中 $S=[p_0\quad p_1\quad \cdots\quad p_{n-1}]$ 是由 $A$ 的一组共轭向量 $\{p_0,p_1,\cdots,p_{n-1}\}$ 组成的矩阵，定义 $$\hat{\phi}(\hat{x})=\phi(S\hat{x})=\cfrac{1}{2}\hat{x}^T(S^TAS)\hat{x}-(S^Tb)^T\hat{x}$$ 由共轭的性质可知，矩阵 $S^TAS$ 是一个对角矩阵，那么就可以在最多 $n$ 步一维最小化后找到最优解。<br>反过来思考共轭方向法，它可以看作是沿椭圆的每个轴进行一维最小化，在 $n$ 步内达到最优点（个人感觉，有待进一步研究）。</p>
+<h3 id="扩张子空间定理"><a href="#扩张子空间定理" class="headerlink" title="扩张子空间定理"></a>扩张子空间定理</h3><p><strong>定理：</strong>令 $x_0\in\mathbb{R}^n$ 为任意一个初始解，设序列 $\{x_k\}$ 是由共轭方向法产生的，则有$$r_k^Tp_i=0, \quad\forall i=0,\cdots,k-1$$ 并且 $x_k$ 是 $\phi(x)$ 在集合 $\{x|x=x_0+span\{p_0,p_1,\cdots,p_{k-1}\}\}$ 上的极小值点。</p>
+<p>证明略。扩张子空间告诉我们每一次迭代后，残差 $r_k$ 与所有迭代过的方向都是正交的，且 $x_k$ 是在当前子空间中的最优点。这说明每一次迭代都在它的方向上达到了最优，故而最多 $n$ 次迭代后就能达到全局最优。</p>
+<h2 id="共轭梯度法"><a href="#共轭梯度法" class="headerlink" title="共轭梯度法"></a>共轭梯度法</h2><p>共轭梯度法实际上是共轭方向法，只不过共轭方向的选取方法比较特殊：<strong>只依赖前一次的方向 $p_{k-1}$ 来计算出下一次的方向 $p_k$</strong><br>每一步的方向都是最速下降方向 $-r_k$ 和 $p_{k-1}$ 的线性组合：$$p_k=-r_k+\beta_kp_{k-1}$$ 其中 $\beta_k$ 可以由 $p_k$ 和 $p_{k-1}$ 关于 $A$ 共轭这个性质计算出来，即 $$\beta_k=\cfrac{r_k^TAp_{k-1}}{p_{k-1}^TAp_{k-1}}$$</p>
+<blockquote>
+<p>$p_k$ 和 $p_{k-1}$ 关于 $A$ 共轭，则有 $p_kAp_{k-1}=0$<br>即 $(-r_k+\beta_kp_{k-1})Ap_{k-1}=0$<br>就可以解出来上面的结果</p>
+</blockquote>
+<p>我们选择 $p_0=-r_0$<br>共轭梯度算法的过程如下所示：</p>
+<blockquote>
+<p>给定初始解 $x_0$<br>令 $r_0\leftarrow Ax_0-b,\quad p_0\leftarrow -r_0,\quad k\leftarrow 0$<br>$\mathbf{while} \quad r_k\neq 0$<br>$$\begin{array}{r,l}\alpha_k&amp;\leftarrow&amp;-\cfrac{r_k^Tp_k}{p_k^TAp_k} \\ x_{k+1}&amp;\leftarrow&amp;x_k+\alpha_kp_k \\ r_{k+1}&amp;\leftarrow&amp;Ax_{k+1}-b \\ \beta_{k+1}&amp;\leftarrow&amp;\cfrac{r_{k+1}^TAp_k}{p_k^TAp_k} \\ p_{k+1} &amp;=&amp; -r_{k+1}+\beta_{k+1}p_k \\ k&amp;\leftarrow&amp;k+1 \end{array}$$<br>$\mathbf{end(while)}$</p>
+</blockquote>
+<p>在实际中，常常用下面两个公式更新 $\alpha$ 和 $\beta$：$$\alpha_k\leftarrow-\cfrac{r_k^Tr_k}{p_k^TAp_k}\qquad \beta_{k+1}\leftarrow\cfrac{r_{k+1}^Tr_{k+1}}{r_k^Tr_k}$$</p>
+<h3 id="小于-n-次的情况"><a href="#小于-n-次的情况" class="headerlink" title="小于 $n$ 次的情况"></a>小于 $n$ 次的情况</h3><p>上面说的都是最多 $n$ 次就能找到最优解，那么迭代次数与什么有关呢？<br>我们可以看出，共轭方向法每次都在一个方向上达到最优，但如果椭球在这个方向上没有分量呢？（相当于一个高维空间的低维物体，高维分量为0）那么无论高维取什么值，函数都在扩充空间上都是最优的（因为在低维时已达到最优，而高维分量为0，对结果不影响）。<br>有定理表明，<strong>当 $A$ 有 $r$ 个非零奇异值时，算法最多进行 $r$ 次迭代就能达到最优点。</strong><br>为什么还有“最多”呢？因为有可能我们选取的解恰好有可能在某个方向上已经是最优的了。设想最优解是 $(0,0,1)^T$，我们一开始选择了 $(0,0,0)^T$，那么算法只需要一次就可以完成。</p>
+<h1 id="非线性共轭梯度法"><a href="#非线性共轭梯度法" class="headerlink" title="非线性共轭梯度法"></a>非线性共轭梯度法</h1><p>上面的算法可以用来对凸二次函数进行最小化，对它进行修改可以使其适用于一般的非线性函数 $f$。</p>
+<h2 id="The-Fletcher-Reeves-Method"><a href="#The-Fletcher-Reeves-Method" class="headerlink" title="The Fletcher-Reeves Method"></a>The Fletcher-Reeves Method</h2><p>对上面的算法主要做了两处改动：</p>
+<ul>
+<li><strong>步长 $\alpha_k$ 的选择</strong>：进行线搜索，得到一个 $f$ 在 $p_k$ 方向上的近似极小点</li>
+<li><strong>残差$r$</strong>：改为非线性函数 $f$ 的梯度 $\nabla f$</li>
+</ul>
+<p>当线搜索是精确线搜索时，则方向 $p_k$ 可以保证是下降方向；而当线搜索是非精确线搜索时，方向 $p_k$ 就不一定是下降方向了，此时可以限制 $\alpha_k$ 满足强Wolfe条件，则得到的方向 $p_k$ 一定是下降方向。</p>
+<blockquote>
+<p>关于强Wolfe条件和线搜索的内容可以参考这篇文章（还在整理中）</p>
+<h2 id="The-Polak-Ribiere-Method"><a href="#The-Polak-Ribiere-Method" class="headerlink" title="The Polak-Ribiere Method"></a>The Polak-Ribiere Method</h2></blockquote>
+<p>PR-CG算法和FR-CG算法的不同在于选取 $\beta_k$ 的不同：$$\beta_{k+1}^{\text{FR}}=\cfrac{\nabla f_{k+1}^T\nabla f_{k+1}}{\nabla f_k^T\nabla f_k}\qquad \beta_{k+1}^{\text{PR}}=\cfrac{\nabla f_{k+1}^T(\nabla f_{k+1}-\nabla f_k)}{\nabla f_k^T\nabla f_k}$$ <strong>当 $f$ 是严格凸的二次函数，且使用精确线搜索时，两种算法是相同的。</strong><br>数值结果表明，PR-CG算法更加地高效，强健性也更好。</p>
+<h2 id="重启"><a href="#重启" class="headerlink" title="重启"></a>重启</h2><p>在非线性共轭梯度法中，常常每过 $n$ 步就进行重启，重新设置 $\beta_k=0$，即选取最速下降方向。<br>一个常用的重启判定策略是：当连续两次的梯度值离正交很远时（即夹角偏离90度很大），进行一次重启。</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ol>
+<li>NJU《最优化理论》课程讲义</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/04/2016-11-04-Gradient-Boosting/" rel="next" title="梯度提升(Gradient Boosting)">
+                <i class="fa fa-chevron-left"></i> 梯度提升(Gradient Boosting)
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/pic.PNG"
+               alt="Wang Kx" />
+          <p class="site-author-name" itemprop="name">Wang Kx</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">40</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">63</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#线性共轭梯度法"><span class="nav-number">1.</span> <span class="nav-text">线性共轭梯度法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#共轭方向法（Conjugate-Direction-Method）"><span class="nav-number">1.1.</span> <span class="nav-text">共轭方向法（Conjugate Direction Method）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#二次终止定理"><span class="nav-number">1.1.1.</span> <span class="nav-text">二次终止定理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#共轭方向法的实质"><span class="nav-number">1.1.2.</span> <span class="nav-text">共轭方向法的实质</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#扩张子空间定理"><span class="nav-number">1.1.3.</span> <span class="nav-text">扩张子空间定理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#共轭梯度法"><span class="nav-number">1.2.</span> <span class="nav-text">共轭梯度法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#小于-n-次的情况"><span class="nav-number">1.2.1.</span> <span class="nav-text">小于 $n$ 次的情况</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#非线性共轭梯度法"><span class="nav-number">2.</span> <span class="nav-text">非线性共轭梯度法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#The-Fletcher-Reeves-Method"><span class="nav-number">2.1.</span> <span class="nav-text">The Fletcher-Reeves Method</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#The-Polak-Ribiere-Method"><span class="nav-number">2.2.</span> <span class="nav-text">The Polak-Ribiere Method</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重启"><span class="nav-number">2.3.</span> <span class="nav-text">重启</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wang Kx</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=0.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
