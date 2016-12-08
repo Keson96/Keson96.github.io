@@ -1,0 +1,570 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="wangkaixin, maymoon" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="对于无约束优化问题一样，我们有判断局部最优解的充分条件和必要条件。通过引进拉格朗日乘子，对于约束优化问题，我们也可以推导出类似的充分条件和必要条件。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="🔨约束优化问题（Constrained Optimization Problem）">
+<meta property="og:url" content="http://yoursite.com/2000/05/16/Constrained-Optimization-Problem/index.html">
+<meta property="og:site_name" content="MayMoon">
+<meta property="og:description" content="对于无约束优化问题一样，我们有判断局部最优解的充分条件和必要条件。通过引进拉格朗日乘子，对于约束优化问题，我们也可以推导出类似的充分条件和必要条件。">
+<meta property="og:image" content="http://i.imgur.com/MpzCsIE.png">
+<meta property="og:image" content="http://i.imgur.com/edX1ehs.png">
+<meta property="og:image" content="http://i.imgur.com/E4ibPTw.png">
+<meta property="og:updated_time" content="2016-11-28T15:52:34.891Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="🔨约束优化问题（Constrained Optimization Problem）">
+<meta name="twitter:description" content="对于无约束优化问题一样，我们有判断局部最优解的充分条件和必要条件。通过引进拉格朗日乘子，对于约束优化问题，我们也可以推导出类似的充分条件和必要条件。">
+<meta name="twitter:image" content="http://i.imgur.com/MpzCsIE.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 🔨约束优化问题（Constrained Optimization Problem） | MayMoon </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">MayMoon</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">随便写写</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                🔨约束优化问题（Constrained Optimization Problem）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2000-05-16T19:54:01+08:00" content="2000-05-16">
+              2000-05-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Under-Construction/" itemprop="url" rel="index">
+                    <span itemprop="name">Under Construction</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>对于无约束优化问题一样，我们有判断局部最优解的充分条件和必要条件。通过引进拉格朗日乘子，对于约束优化问题，我们也可以推导出类似的充分条件和必要条件。</p>
+<a id="more"></a>
+<blockquote>
+<p>回顾无约束优化<br><strong>必要条件</strong>：$x^{\star}$ 是无约束优化问题的局部最优解的必要条件是：$\nabla f(x^{\star})=0$ 且海塞矩阵 $\nabla^2f(x^{\star})$ 是半正定的。<br><strong>充分条件</strong>：任意一点 $x^{\star}$ 如果满足：$\nabla f(x^{\star})=0$ 且海塞矩阵 $\nabla^2f(x^{\star})$ 是正定的，那么这个点就是 $f$ 的一个严格局部最优点。</p>
+</blockquote>
+<h1 id="总览和术语"><a href="#总览和术语" class="headerlink" title="总览和术语"></a>总览和术语</h1><p><strong>一般形式</strong><br>一般化的约束优化问题具有下面的形式：$$\min_{x\in \mathbb{R}^n}f(x)\qquad \text{s.t.}\begin{cases}c_i(x)=0,\quad i=1,\cdots,n_e \\ d_j(x)\ge 0,\quad j=1,\cdots,n_i\end{cases}$$ 等式约束方程为 $c_i:\mathbb{R}^n\to\mathbb{R}$<br>不等式约束方程为 $d_j:\mathbb{R}^n\to\mathbb{R}$<br>将可行解的集合记为 $\Omega$，并假设这些函数都是二次可微的。<br><strong>有效集(Active Set)</strong><br>一个可行解 $x\in\Omega$ 处的活跃集包含所有等式约束和满足 $d_j(x)=0$ 的不等式约束，即$$\mathcal{A}(x)=\bigcup_{i=1}^{n_i}\{c_i\}\cup\{d_j|d_j(x)=0\}$$</p>
+<h1 id="一阶必要条件-First-order-necessary-KKT-conditions"><a href="#一阶必要条件-First-order-necessary-KKT-conditions" class="headerlink" title="一阶必要条件(First-order necessary KKT conditions)"></a>一阶必要条件(First-order necessary KKT conditions)</h1><h2 id="等式约束"><a href="#等式约束" class="headerlink" title="等式约束"></a>等式约束</h2><p>我们首先来看等式约束的情况，以下面这个具体的例子来说： $$\min f(x)=x_1+x_2\qquad\text{s.t. }c_1(x)=x_1^2+x_2^2-2=0$$<br><img src="http://i.imgur.com/MpzCsIE.png" alt=""><br>$\nabla f=(1,1)^T$，$\nabla c_1=(2x_1,2x_2)^T$，我们发现，在最优点 $x^{\star}$ 处，$\nabla f(x^{\star})$ 和 $\nabla c_1(x^{\star})$ 是平行的。<br>假设 $x\in\Omega$ 是一个可行解，即有 $c_1(x)=0$，如果我们能找到一个找到一个方向 $p$ 使得等式约束依然满足 $$0=c_1(x+p)\approx c_1(x)+\nabla c_1(x)^Tp=\nabla c_1(x)^Tp$$同时使函数值下降$$0&gt;f(x+p)-f(x)\approx \nabla f(x)^Tp$$那么就说明 $x$ 不是最优点。<br>反过来想，对于一个点 $x$，如果不存在满足上面两个条件的方向 $p$，就可以说这个点是局部最优点。<br>事实上，只有当 $\nabla f(x)$ 和 $\nabla c_1(x)$ 平行时才不会存在这样的方向，即存在某个实数使得 $\nabla f(x)=\lambda_1\nabla c_1(x)$。</p>
+<blockquote>
+<p>反之，我们可以定义出 $p=-\left(I-\cfrac{\nabla c_1(x)\nabla c_1(x)^T}{||\nabla c_1(x)||^2}\right)\nabla f(x)$ 来满足上述两个条件</p>
+</blockquote>
+<p>注意到，对于点 $x=(1,1)$，$\nabla f(x)$ 和 $\nabla c_1(x)$ 也是平行的。也就是说，这个条件是不能区别最大值点和最小值点的，因为它只用到了一阶导数的信息。<br>引入<strong>拉格朗日乘子</strong> $\lambda_1$，我们可以得到<strong>拉格朗日函数</strong>：$$L(x,\lambda_1)=f(x)-\lambda_1c_1(x)$$两边关于 $x$ 求导可得 $$\nabla_xL(x,\lambda_1)=\nabla f(x)-\lambda_1\nabla c_1(x)$$ 则 $\nabla f(x^{\star})=\lambda_1^{\star}\nabla c_1(x^{\star})$ 与 $\nabla_xL(x^{\star},\lambda_1^{\star})=0$ 是<strong>等价</strong>的。</p>
+<h2 id="不等式约束"><a href="#不等式约束" class="headerlink" title="不等式约束"></a>不等式约束</h2><p>同样以一个例子来说明： $$\min f(x)=x_1+x_2\qquad\text{s.t. }d_1(x)=x_1^2+x_2^2-2\ge0$$<br><img src="http://i.imgur.com/edX1ehs.png" alt=""><br>(¶图中应该是 $\nabla d_1$ 而不是 $\nabla c_1$)<br>类似地，给定一个可行解 $x$，如果我们能找到一个方向 $p$，既满足可行性又使函数值下降，则 $x$ 不是最优解，即 $$\begin{cases}\nabla d_1(x)^Tp\ge0 \\ \nabla f(x)^Tp&lt;0\end{cases}$$ 分大于和等于两种情况讨论</p>
+<p><strong>情况1：$x$ 严格在圆的内部，即 $d_1(x)&gt;0$</strong><br>在这种情况下，只要方向 $p$ 长度足够小，那么就可以满足条件（设想沿使函数值减小的方向前进了极其小的一步，此时依然在圆内）。<br>比方说选取 $p=-d_1(x)\frac{\nabla f(x)}{||\nabla f(x)||}$ 就可以在 $\nabla f(x)\neq 0$ 时满足条件。<br><strong>情况2：$x$ 在圆周上，即 $d_1(x)=0$</strong><br><img src="http://i.imgur.com/E4ibPTw.png" alt=""><br>(¶图中应该是 $\nabla d_1$ 而不是 $\nabla c_1$)<br>只要选择的方向 $p$ 落在深色的阴影区域中就可以满足那两个条件，那么什么时候这个区域不存在呢？就是存在 $\lambda_1\ge0$ 使得 $\nabla f(x)=\lambda_1\nabla d_1(x)$ 成立时，即 $\nabla f(x)$ 和 $\nabla d_1(x)$ 同向时。</p>
+<p><strong>总结上面两种情况</strong>：当在 $x^{\star}$ 处不存在可行的下降方向 $p$ 时，应当有 $$\nabla_xL(x^{\star},\lambda_1^{\star})=0,\quad \text{for some }\lambda_1^{\star}\ge0$$ 并且 $$\lambda_1^{\star}d_1(x^{\star})=0\qquad\begin{cases}\text{Case I}&amp;\quad d_1(x^{\star})&gt;0 \\\text{Case II} &amp;\quad d_1(x^{\star})=0\end{cases}$$</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2000/05/16/收缩技术/" rel="next" title="🔨收缩技术(Shrinkage Methods)">
+                <i class="fa fa-chevron-left"></i> 🔨收缩技术(Shrinkage Methods)
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2000/05/16/Balanced Search Trees/" rel="prev" title="🔨Balanced Search Trees">
+                🔨Balanced Search Trees <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/pic.PNG"
+               alt="Wang Kx" />
+          <p class="site-author-name" itemprop="name">Wang Kx</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">36</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">63</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#总览和术语"><span class="nav-number">1.</span> <span class="nav-text">总览和术语</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一阶必要条件-First-order-necessary-KKT-conditions"><span class="nav-number">2.</span> <span class="nav-text">一阶必要条件(First-order necessary KKT conditions)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#等式约束"><span class="nav-number">2.1.</span> <span class="nav-text">等式约束</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不等式约束"><span class="nav-number">2.2.</span> <span class="nav-text">不等式约束</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wang Kx</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=0.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

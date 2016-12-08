@@ -216,8 +216,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/04/24/2016-04-24-Logistic-Regression-&-Regularization/" itemprop="url">
-                  Logistic Regression & Regularization
+                <a class="post-title-link" href="/2016/05/15/2016-05-15-2.4-Priority-Queues/" itemprop="url">
+                  2-4 Priority Queues
                 </a>
               
             
@@ -230,8 +230,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-24T19:54:23+08:00" content="2016-04-24">
-              2016-04-24
+            <time itemprop="dateCreated" datetime="2016-05-15T19:54:01+08:00" content="2016-05-15">
+              2016-05-15
             </time>
           </span>
 
@@ -244,8 +244,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Machine-Learning-Course-notes/" itemprop="url" rel="index">
-                    <span itemprop="name">Machine Learning Course notes</span>
+                  <a href="/categories/《Algorithms》-notes/" itemprop="url" rel="index">
+                    <span itemprop="name">《Algorithms》 notes</span>
                   </a>
                 </span>
 
@@ -277,14 +277,10 @@
 
       
         
-          <h2 id="1-Logistic-Regression"><a href="#1-Logistic-Regression" class="headerlink" title="1.Logistic Regression"></a>1.Logistic Regression</h2><p>预测函数</p>
-<p><img src="http://www.forkosh.com/mathtex.cgi?   h_\theta(X)=\frac{1}{1+e^{-\theta^TX} }"></p>
-<p><img src="http://www.forkosh.com/mathtex.cgi?   h_\theta(X)\mbox{ estimated probability that }y=1\mbox{ on input }X,\mbox{ predict }y=1\mbox{ if }h_\theta(x)\ge0.5,\mbox{ that is }\theta^T* x\ge0"></p>
-<blockquote>
-<p>用训练集确定theta，由theta确定决策边界</p>
-</blockquote>
+          <p>很多应用要求我们把元素按顺序排列，但不一定是完整且严格的顺序，也不一定一次就排好。有时候，我们收集一些元素，找出他们中最大的那一个，然后再收集一些元素，找出此刻最大的一个。这时候，一个符合条件的数据结构应该支持下列两种操作：<strong>删除（找出）最大的元素</strong>，<strong>插入元素</strong>。这样的数据结构叫做 <strong>优先队列</strong>。</p>
+<p>下面主要介绍优先队列的朴素实现和基于完全二叉树实现(heap based)，以及在后者基础上产生的一种排序算法——<strong>堆排序</strong>（heapsort）</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/24/2016-04-24-Logistic-Regression-&-Regularization/#more" rel="contents">
+            <a class="btn" href="/2016/05/15/2016-05-15-2.4-Priority-Queues/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -331,8 +327,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/04/24/2016-04-24-Support-Vector-Machine/" itemprop="url">
-                  Support Vector Machine
+                <a class="post-title-link" href="/2016/04/17/2016-04-17-2.1-Elementary-Sort/" itemprop="url">
+                  2-1 Elementary Sort
                 </a>
               
             
@@ -345,8 +341,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-24T19:54:12+08:00" content="2016-04-24">
-              2016-04-24
+            <time itemprop="dateCreated" datetime="2016-04-17T19:54:01+08:00" content="2016-04-17">
+              2016-04-17
             </time>
           </span>
 
@@ -359,8 +355,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Machine-Learning-Course-notes/" itemprop="url" rel="index">
-                    <span itemprop="name">Machine Learning Course notes</span>
+                  <a href="/categories/《Algorithms》-notes/" itemprop="url" rel="index">
+                    <span itemprop="name">《Algorithms》 notes</span>
                   </a>
                 </span>
 
@@ -392,13 +388,10 @@
 
       
         
-          <h2 id="Large-Margin-Classification"><a href="#Large-Margin-Classification" class="headerlink" title="Large Margin Classification"></a>Large Margin Classification</h2><h3 id="Optimization-Objective"><a href="#Optimization-Objective" class="headerlink" title="Optimization Objective"></a>Optimization Objective</h3><p>For Logistic Regression, from the sigmoid function</p>
-<p><img src="http://www.forkosh.com/mathtex.cgi?  \text{If $y = 1$, we want $h_\theta(x)\approx1$, $\theta^Tx\gg0$ }"> </p>
-<p><img src="http://www.forkosh.com/mathtex.cgi?  \text{If $y = 0$, we want $h_\theta(x)\approx0$, $\theta^Tx\ll0$ }"> </p>
-<p>Cost of example : </p>
-<p><img src="http://www.forkosh.com/mathtex.cgi?  -(y\log h_\theta(x)+(1-y)\log (1-h_\theta(x)))=-y\log \frac{1}{1+e^{-z} }-(1-y)\log (1-\frac{1}{1+e^{-z} }) \qquad \text{where $z = \theta^Tx$}"></p>
+          <p>在所有的排序算法实现中，只使用比较（Compare）和交换（exchange）两种函数操作。考虑算法的时间复杂度时，也只考虑这两种操作（如果没有交换操作，则考虑数组访问（array access）的代价）；考虑空间复杂度时，需考虑排序算法是在原处修改还是新建了一个数组来存储排序结果。</p>
+<p>有时候，我们在比较时，只需要比较每个元素的某个特征来对他们排序（以人为元素，我们可能只比较身高，而不比较他们的其他特征）。以下为求简介，统一称为“比较元素”</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/24/2016-04-24-Support-Vector-Machine/#more" rel="contents">
+            <a class="btn" href="/2016/04/17/2016-04-17-2.1-Elementary-Sort/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -445,8 +438,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/04/24/2016-04-24-Applying-ML-&-ML-system-design/" itemprop="url">
-                  Applying ML & ML system design
+                <a class="post-title-link" href="/2016/04/17/2016-04-17-Building-Blog/" itemprop="url">
+                  终于搭好了博客
                 </a>
               
             
@@ -459,8 +452,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-24T19:54:00+08:00" content="2016-04-24">
-              2016-04-24
+            <time itemprop="dateCreated" datetime="2016-04-17T16:19:01+08:00" content="2016-04-17">
+              2016-04-17
             </time>
           </span>
 
@@ -473,8 +466,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Machine-Learning-Course-notes/" itemprop="url" rel="index">
-                    <span itemprop="name">Machine Learning Course notes</span>
+                  <a href="/categories/杂记/" itemprop="url" rel="index">
+                    <span itemprop="name">杂记</span>
                   </a>
                 </span>
 
@@ -506,11 +499,9 @@
 
       
         
-          <h2 id="Applying-ML"><a href="#Applying-ML" class="headerlink" title="Applying ML"></a>Applying ML</h2><h3 id="Evaluate-hypothesis"><a href="#Evaluate-hypothesis" class="headerlink" title="Evaluate hypothesis"></a>Evaluate hypothesis</h3><p>Split the dataset into training set and test set (often 70% and 30% respectively)</p>
-<p>Learning the parameter θ using training set</p>
-<p>Compute the test error θ using training set</p>
+          <p>花了两三天的工夫，终于搭好了博客。最先是因为忍受不了csdn blog的markdown排版才打算自己建一个博客。从一开始尝试 worldpress 到后来捣鼓 jekyll， 再到现在终于用 hexo 搭好平台，走了不少弯路。</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/24/2016-04-24-Applying-ML-&-ML-system-design/#more" rel="contents">
+            <a class="btn" href="/2016/04/17/2016-04-17-Building-Blog/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -557,8 +548,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/04/24/2016-04-24-Neural-Network/" itemprop="url">
-                  Neural Network
+                <a class="post-title-link" href="/2016/04/15/2016-04-15-1.3-Bags-Queues-Stacks/" itemprop="url">
+                  1-3 Bags,Queues and Stacks
                 </a>
               
             
@@ -571,8 +562,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-24T19:34:01+08:00" content="2016-04-24">
-              2016-04-24
+            <time itemprop="dateCreated" datetime="2016-04-15T23:34:01+08:00" content="2016-04-15">
+              2016-04-15
             </time>
           </span>
 
@@ -585,8 +576,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Machine-Learning-Course-notes/" itemprop="url" rel="index">
-                    <span itemprop="name">Machine Learning Course notes</span>
+                  <a href="/categories/《Algorithms》-notes/" itemprop="url" rel="index">
+                    <span itemprop="name">《Algorithms》 notes</span>
                   </a>
                 </span>
 
@@ -618,11 +609,13 @@
 
       
         
-          <h2 id="Step-1-Pick-a-neural-architecture"><a href="#Step-1-Pick-a-neural-architecture" class="headerlink" title="Step 1 Pick a neural architecture"></a>Step 1 Pick a neural architecture</h2><p>No. of input  units: Dimensions of features x<sup>(i)</sup></p>
-<p>No. of output units: Number of classes</p>
-<p>Reasonable default: 1 hidden layer, or if &gt;1 hidden layer, have same no. of hidden units in every hidden layer (usually the more the better)</p>
+          <p>基本的抽象数据类型涉及若干对象的集合以及在这个集合上定义的一些操作，包括添加、删除和集合中的对象等。下面主要以三种基本类型（Bag Stack Queue）来说明。</p>
+<ul>
+<li>我们在用不同的方式表现集合中的元素时，通常也会产生不同的操作效率</li>
+<li>使用泛型和循环可以显著地简化客户端代码</li>
+</ul>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/24/2016-04-24-Neural-Network/#more" rel="contents">
+            <a class="btn" href="/2016/04/15/2016-04-15-1.3-Bags-Queues-Stacks/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -669,8 +662,8 @@
             
               
                 
-                <a class="post-title-link" href="/2016/04/23/2016-04-23-Intro-to-ML-&-Linear-Regression/" itemprop="url">
-                  Introduction to ML & Linear Regression
+                <a class="post-title-link" href="/2000/05/16/过拟合专题/" itemprop="url">
+                  🔨过拟合专题
                 </a>
               
             
@@ -683,8 +676,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-04-23T19:54:01+08:00" content="2016-04-23">
-              2016-04-23
+            <time itemprop="dateCreated" datetime="2000-05-16T19:54:01+08:00" content="2000-05-16">
+              2000-05-16
             </time>
           </span>
 
@@ -697,8 +690,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Machine-Learning-Course-notes/" itemprop="url" rel="index">
-                    <span itemprop="name">Machine Learning Course notes</span>
+                  <a href="/categories/Under-Construction/" itemprop="url" rel="index">
+                    <span itemprop="name">Under Construction</span>
                   </a>
                 </span>
 
@@ -730,29 +723,47 @@
 
       
         
-          <h2 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1.Introduction"></a>1.Introduction</h2><table>
+          
+            <h2 id="什么是过拟合"><a href="#什么是过拟合" class="headerlink" title="什么是过拟合"></a>什么是过拟合</h2><p>过拟合指的是在机器学习过程中过度拟合训练集数据， 使得数据中的噪声对习得的模型产生很大影响。模型在训练集上的误差很小，但泛化能力差。</p>
+<h2 id="过拟合的特征"><a href="#过拟合的特征" class="headerlink" title="过拟合的特征"></a>过拟合的特征</h2><table>
 <thead>
 <tr>
-<th>监督学习</th>
-<th>无监督学习  </th>
+<th style="text-align:center"></th>
+<th style="text-align:center">偏差(Bias)</th>
+<th style="text-align:center">方差(Variance)</th>
+<th style="text-align:center">模型复杂度(Complexity)</th>
+<th style="text-align:center">模型灵活性(Flexibility)</th>
+<th style="text-align:center">模型泛化能力(Generalization)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td> 分类问题</td>
-<td>聚类问题         </td>
+<td style="text-align:center">欠拟合(Underfitting)</td>
+<td style="text-align:center">高</td>
+<td style="text-align:center">低</td>
+<td style="text-align:center">低</td>
+<td style="text-align:center">低</td>
+<td style="text-align:center">高</td>
 </tr>
 <tr>
-<td> 回归问题</td>
-<td></td>
+<td style="text-align:center">过拟合(Overfitting)</td>
+<td style="text-align:center">低</td>
+<td style="text-align:center">高</td>
+<td style="text-align:center">高</td>
+<td style="text-align:center">高</td>
+<td style="text-align:center">低</td>
 </tr>
 </tbody>
 </table>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/04/23/2016-04-23-Intro-to-ML-&-Linear-Regression/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+<h2 id="如何判断过拟合"><a href="#如何判断过拟合" class="headerlink" title="如何判断过拟合"></a>如何判断过拟合</h2><h2 id="防止过拟合"><a href="#防止过拟合" class="headerlink" title="防止过拟合"></a>防止过拟合</h2><ol>
+<li><p>降低模型复杂度：降维</p>
+<h2 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h2></li>
+<li><p><a href="http://blog.csdn.net/er8cjiang/article/details/50981426" target="_blank" rel="external">一篇文章,带你明白什么是过拟合,欠拟合以及交叉验证  
+</a></p>
+</li>
+</ol>
+
+          
         
       
     </div>
@@ -820,7 +831,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">40</span>
+              <span class="site-state-item-count">36</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -949,24 +960,7 @@
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
-</script>
-
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for(i=0; i < all.length; i += 1) {
-      all[i].SourceElement().parentNode.className += ' has-jax';
-    }
-  });
-</script>
-
-<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-<!-- End: Injected MathJax -->
-<!-- hexo-inject:end -->
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 
 
 

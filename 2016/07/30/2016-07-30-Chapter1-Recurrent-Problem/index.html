@@ -1,0 +1,798 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="递归问题,hanoi tower,josephus problem," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="1.1 河内塔 THE TOWER OF HANOI">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第1章 递归问题">
+<meta property="og:url" content="http://yoursite.com/2016/07/30/2016-07-30-Chapter1-Recurrent-Problem/index.html">
+<meta property="og:site_name" content="MayMoon">
+<meta property="og:description" content="1.1 河内塔 THE TOWER OF HANOI">
+<meta property="og:image" content="http://i.imgur.com/p02dFfh.png">
+<meta property="og:image" content="http://i.imgur.com/gyfgCyw.png">
+<meta property="og:image" content="http://i.imgur.com/CF3NuRc.png">
+<meta property="og:updated_time" content="2016-08-05T00:08:32.658Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="第1章 递归问题">
+<meta name="twitter:description" content="1.1 河内塔 THE TOWER OF HANOI">
+<meta name="twitter:image" content="http://i.imgur.com/p02dFfh.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 第1章 递归问题 | MayMoon </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">MayMoon</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">随便写写</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                第1章 递归问题
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-07-30T19:54:01+08:00" content="2016-07-30">
+              2016-07-30
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/具体数学笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">具体数学笔记</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-1-河内塔-THE-TOWER-OF-HANOI"><a href="#1-1-河内塔-THE-TOWER-OF-HANOI" class="headerlink" title="1.1 河内塔 THE TOWER OF HANOI"></a>1.1 河内塔 THE TOWER OF HANOI</h2><a id="more"></a>
+<h3 id="河内塔问题"><a href="#河内塔问题" class="headerlink" title="河内塔问题"></a>河内塔问题</h3><p><strong>Step 1</strong>: 引入记号</p>
+<p>用$T_n$表示将$n$个圆盘从一根柱子上移动到另一根柱子上的最小移动次数</p>
+<p><strong>Step 2</strong>: 考虑小的情形</p>
+<p>$T_1$显然是1，而$T_2=3$。当然，数学家还会考虑$T_0$的情况，虽然它的结果只是0。</p>
+<p><strong>Step 3</strong>: 考虑大的情形</p>
+<p>一方面，要将$n$个圆盘移动到另一个柱子上，像移动3个圆盘一样，可以采取这样的办法：先将上面的$n-1$个圆盘移动到不同的柱子上(需要$T_{n-1}$次移动)，然后移动最大的圆盘，再将那$n-1$个小圆盘移动到最大圆盘的上面(也需要$T_{n-1}$次移动)。这样，至多需要$2T_{n-1}+1$次移动就能移动$n(n&gt;0)$个圆盘了。即</p>
+<p>$$T_n \le 2T_{n-1}+1 , \quad n&gt;0$$</p>
+<p>另一方面，上面的式子中用的是$\le$号，那么，有更好的方法吗？实际上没有，我们迟早要移动那个最大的圆盘，而在这之前，那$n-1$个小圆盘已经按次序放在某个柱子上(这至少需要T_{n-1}次移动)。我们至少需要1次才能将最大的圆盘移动到目标柱子上，这之后，我们还必须把那$n-1$个小圆盘移动到大圆盘上面(而这也至少需要T_{n-1}次移动)。从而</p>
+<p>$$T_n \ge 2T_{n-1}+1 , \quad n&gt;0$$</p>
+<p>把这两个不等式和$T_0$结合起来就得到了</p>
+<p>$$ T_0 = 0$$<br>$$T_n = 2T_{n-1}+1 , \quad n&gt;0 \tag{1.1}$$</p>
+<p>像式(1.1)这样的一组等式称为<strong>递归式</strong>。它给出一个边界值，以及一个用前面的值给出一般值的方程。<br>然而，我们对这个结果还不够满意，希望能得出<strong>递归式的解</strong>（一个漂亮的封闭形式，即$T_n = \cdots$），这样，我们就可以快捷计算$T_n$。</p>
+<blockquote>
+<p>封闭形式粗略的定义：如果可以利用至多固定次数(其次数与$n$无关)的初等运算来计算量$f(n)$的表达式，那么这个表达式就是封闭形式。</p>
+</blockquote>
+<p>一种办法是猜出正确的解，而猜测解的最好办法就是研究小的情形。例如：$T_3 = 2 \times 3+1=7$，$T_4=2\times 7+1=15$，$T_5=2 \times 15+1=31$，$T_6=2 \times 31+1=63$。这看起来像是有</p>
+<p>$$T_n=2^n-1,\quad n \ge 0$$</p>
+<p>至少这对$n \le 6$是成立的。</p>
+<h3 id="数学归纳法"><a href="#数学归纳法" class="headerlink" title="数学归纳法"></a>数学归纳法</h3><p><strong>数学归纳法</strong>是证明某个命题对所有满足 $n\ge n_0$ 的整数都成立的一般方法，首先我们在 $n$ 取最小值 $n_0$ 时证明该命题，这一步称为<strong>基础</strong>；然后对 $n&gt;n_0$ ，假设命题对 $n_0$ 与 $n-1$ 之间（包含它们在内）的所有值都已经被证明，再证明该命题对 $n$ 成立，这一步称为<strong>归纳</strong>。这一种证明办法仅用有限步就得到无限多个结果。用数学归纳法可以将上面的猜想进行证明，而不仅仅停留在 $n\le 6$。</p>
+<p>基础是显然的：$T_0=2^0-1=0$<br>对$n&gt;0$用归纳法就得出$T_n = 2T_{n-1}+1 = 2(2^{n-1}-1)+1 = 2^n-1$</p>
+<p>在上面的河内塔问题研究中，我们经过了如下三个阶段：</p>
+<ul>
+<li>研究小的情形，这有助于下面两个阶段的研究</li>
+<li>对有意义的量求出数学表达式并给出证明。在河内塔问题中，即递归式</li>
+<li>对数学表达式求出封闭形式并予以证明</li>
+</ul>
+<p>事实上，我们关心的往往是第三阶段。通常情况下，我们没有聪明到可以猜想出正确的结果，这时候就需要一些普适性的、不需要超人洞察力的方法。</p>
+<h2 id="1-2-约瑟夫问题-THE-JOSEPHUS-PROBLEM"><a href="#1-2-约瑟夫问题-THE-JOSEPHUS-PROBLEM" class="headerlink" title="1.2 约瑟夫问题 THE JOSEPHUS PROBLEM"></a>1.2 约瑟夫问题 THE JOSEPHUS PROBLEM</h2><p>在犹太罗马战争期间，有41名犹太反抗者困在了被罗马人包围的洞穴中。这些反抗者宁愿自杀也不愿意被活捉，于是决定围成一个圆圈，并沿着圆圈每隔两人杀死一个人，直到剩下最后两个人为止。但是，约瑟夫和另一个未被告发的同谋者不希望无谓地自杀，于是他迅速计算出他和其朋友在这个圆圈中该站的位置，使得他们俩是最后被杀的两个人。</p>
+<p>我们简化一下这个问题：从围成标有记号$1$到$n$的圆圈的$n$个人开始，每隔一个删去一个人，直到只有一个人幸存下来。例如n=10时，下图是起始图形：</p>
+<p><img src="http://i.imgur.com/p02dFfh.png" alt=""></p>
+<p>消去的顺序是2，4，6，8，10，3，7，1，9，于是5幸存了下来。求：幸存者的号码$J(n)$</p>
+<p>从上面的例子中可以看出，$J(10)=5$，那么我们可以猜想对偶数有$J(n)=\frac{n}{2}$，对几个小情形进行研究，便很容易发现这个猜想是错的</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">$n$</th>
+<th style="text-align:center">1</th>
+<th style="text-align:center">2</th>
+<th style="text-align:center">3</th>
+<th style="text-align:center">4</th>
+<th style="text-align:center">5</th>
+<th style="text-align:center">6</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">$J(n)$</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center">5</td>
+</tr>
+</tbody>
+</table>
+<p>从上面的表格中可以看出，$J(n)$似乎总是奇数，这一点不难解释：在第一圈中，所有偶数号码都被消除了。此外，如果$n$是偶数，那么除了人数仅剩下一半且他们的号码有变化之外，我们得到的是与一开始类似的情形。假设一开始有$2n$个人，经过一轮剩下的是：</p>
+<p><img src="http://i.imgur.com/gyfgCyw.png" alt=""></p>
+<p>3号就是下一个要离开的人，除了每个人的号码加倍并减去1外，这正像$n$个人开始时的情形。就是说：$$J(2n)=2J(n)-1 , n \ge 1$$<br>那么我们就可以很快地计算出$J(40)=2J(20)-1=2(2J(10)-1)-1=17$</p>
+<p>对于奇数的情形，一开始有$2n+1$个人，所以标号为1的人会在标号为$2n$的人后面被删除，剩下的是：</p>
+<p><img src="http://i.imgur.com/CF3NuRc.png" alt=""></p>
+<p>这仍与$n$个人开始的情形很相似，但这一次他们的号码加倍并增加了1，从而有：$$J(2n+1)=2J(n)+1 , n \ge 1$$</p>
+<p>综合$J(1)=1$我们得到了在所有情形下定义$J(n)$的递归式：</p>
+<p>$$<br> \begin{array}{}<br>J(1)=1  \\ <br>J(2n)=2J(n)-1 ,  \qquad  n \ge 1 \\ <br>J(2n+1)=2J(n)+1 , \quad n \ge 1<br>\end{array} \tag{1.8}<br>$$</p>
+<p>有了这个递归式，我们很快就能算出$n$很大时$J(n)$的值，比如$J(1000000)$只需要19次计算就能得出。然而，这离我们想要的封闭表达式还有很大距离。不过，有了递归表达式，我们可以很快的给小的情形做一张表：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">$n$</th>
+<th style="text-align:center">1</th>
+<th style="text-align:center"></th>
+<th style="text-align:center">2</th>
+<th style="text-align:center">3</th>
+<th style="text-align:center"></th>
+<th style="text-align:center">4</th>
+<th style="text-align:center">5</th>
+<th style="text-align:center">6</th>
+<th style="text-align:center">7</th>
+<th style="text-align:center"></th>
+<th style="text-align:center">8</th>
+<th style="text-align:center">9</th>
+<th style="text-align:center">10</th>
+<th style="text-align:center">11</th>
+<th style="text-align:center">12</th>
+<th style="text-align:center">13</th>
+<th style="text-align:center">14</th>
+<th style="text-align:center">15</th>
+<th style="text-align:center"></th>
+<th style="text-align:center">16</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">$J(n)$</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">7</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">7</td>
+<td style="text-align:center">9</td>
+<td style="text-align:center">11</td>
+<td style="text-align:center">13</td>
+<td style="text-align:center">15</td>
+<td style="text-align:center"></td>
+<td style="text-align:center">1</td>
+</tr>
+</tbody>
+</table>
+<p>看来可以按照2的幂将表中的数据分组（表中用空格隔开），在每一组的开始$J(n)$总是等于1，并且组里的数据每次递进2。因此，如果我们将$n$写成$n=2^m+l$的形式，其中$2^m$是不超过$n$的2的最大幂，而$l$是剩下的数，那么递归式的解看起来是：<br>$$J(2^m+l)=2l+1 , \quad m \ge 0 , 0 \le l &lt; 2^m \tag{1.9}$$</p>
+<p>接下来要证明式(1.9)。对$m$用数学归纳法，当$m=0$时必然有$l=0$，故基础$J(1)=1$是成立的。接下来，归纳证明分两个部分，按照$l$是偶数还是奇数而定。如果$m&gt;0$且$2^m+l=2n$，那么$l$是偶数，则有：<br>$$J(2^m+l)=2J(2^{m-1}+l/2)-1=2(2l/2+1)-1=2l+1$$<br>当$2^m+l=2n+1$为奇数时，则有：<br>$$J(2^m+l)=2J(2^{m-1}+(l-1)/2)+1=2(2(l-1)/2+1)+1=2l+1$$<br>这样，就完成了归纳法，证明了式(1.9)</p>
+<h2 id="推广研究"><a href="#推广研究" class="headerlink" title="推广研究"></a>推广研究</h2><h3 id="函数-J-n-到底是什么？"><a href="#函数-J-n-到底是什么？" class="headerlink" title="函数$J(n)$到底是什么？"></a>函数$J(n)$到底是什么？</h3><p>在我们的求解过程中，2的幂起着重要的作用，所以不妨试试研究$n$和$J(n)$的以2为基数的表示。假设$n$的二进制展开式为：<br>$$n=(b_mb_{m-1} \cdots b_1b_0)_2$$<br>也就是说：<br>$$n=b_m2^m+b_{m-1}2^{m-1}+ \cdots +b_12+b_0$$<br>其中每个$b_i$为0或1，而首位数字$b_m$是1。注意$n=2^m+l$，我们依次就有：<br>$$\begin{aligned}{}<br>n=(1b_{m-1}b_{m-2} \cdots b_1b_0)_2  \\\<br>l=(0b_{m-1}b_{m-2} \cdots b_1b_0)_2  \\\<br>2l=(b_{m-1}b_{m-2} \cdots b_1b_00)_2 \\\<br>2l+1=(b_{m-1}b_{m-2} \cdots b_1b_01)_2  \\\<br>J(n)=(b_{m-1}b_{m-2} \cdots b_1b_01)_2<br>\end{aligned}$$<br>于是我们就证明了<br>$$J((b_mb_{m-1} \cdots b_1b_0)_2)=(b_{m-1}b_{m-2} \cdots b_1b_0b_m)_2 \tag{1.10}$$</p>
+<p>用计算机程序设计的术语说就是，$n$向左循环移动一位就得到$J(n)$<br>重复运用$J$就会得到一列递减的值，它们最终到达一个”不动点”，在该点有$J(n)=n$。利用循环移位的性质可以看出，不动点将是：对函数迭代足够次数总是会产生全由1组成的形式，它的值是$2^{v(n)}-1$，其中$v(n)$是$n$的二进制表示中1的个数。于是，由于$v(13)=3$，我们有：<br>$$J(J(\cdots J(13)\cdots)) = 2^3-1=7$$<br>类似地有：<br>$$J(J(\cdots J( (101101101101011)_2 )\cdots)) = 2^{10}-1=1023$$</p>
+<p>我们回到第一个猜测：当$n$为偶数时有$J(n)=\frac{n}{2}$，它在一般情形下显然并不成立，不过现在我们可以确定它在什么情形下成立：<br>$$\begin{array}{}<br>J(n)=\frac{n}{2}  \\\<br>2l+1=(2^m+l)/2 \\\<br>l=\frac{1}{3}(2^m-2)<br>\end{array}$$<br>如果这个数$l=\frac{1}{3}(2^m-2)$是整数，那么$n=2^m+l$就是一个解这是因为$l$小于$2^m$。不难验证，当$m$为奇数时，$2^m-2$是3的倍数，但当偶数时则不然。于是方程$J(n)=\frac{n}{2}$有无穷多个解，前面几个解如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">$m$</th>
+<th style="text-align:center">$l$</th>
+<th style="text-align:center">$n=2^m+l$</th>
+<th style="text-align:center">$J(n)=n/2$</th>
+<th style="text-align:center">$n$ (二进制)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">10</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">10</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">1010</td>
+</tr>
+<tr>
+<td style="text-align:center">5</td>
+<td style="text-align:center">10</td>
+<td style="text-align:center">42</td>
+<td style="text-align:center">21</td>
+<td style="text-align:center">101010</td>
+</tr>
+<tr>
+<td style="text-align:center">7</td>
+<td style="text-align:center">42</td>
+<td style="text-align:center">170</td>
+<td style="text-align:center">85</td>
+<td style="text-align:center">10101010</td>
+</tr>
+</tbody>
+</table>
+<h3 id="进一步推广"><a href="#进一步推广" class="headerlink" title="进一步推广"></a>进一步推广</h3><p>如果新的问题产生了和(1.8)有些相似的递归式，我们应该怎么去解？我们可能没有很好的运气去猜出它的解，所以需要引入常数$\alpha$，$\beta$，$\gamma$，来试图求得一个普适的封闭形式的解。<br>$$\begin{array}{}<br>f(1)=\alpha \\\<br>f(2n)=2f(n)+\beta , \quad n \ge 1 \\\<br>f(2n+1)=2f(n)+\gamma , \quad n \ge 1<br>\end{array} \tag{1.11} $$</p>
+<p>我们对较小的$n$值构造如下的表：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">$n$</th>
+<th style="text-align:left">$f(n)$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:left">$\alpha$</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:left">$2\alpha+\beta$</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:left">$2\alpha \qquad + \gamma$</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:left">$4\alpha+3\beta$</td>
+</tr>
+<tr>
+<td style="text-align:center">5</td>
+<td style="text-align:left">$4\alpha+2\beta+\gamma$</td>
+</tr>
+<tr>
+<td style="text-align:center">6</td>
+<td style="text-align:left">$4\alpha+\beta+2\gamma$</td>
+</tr>
+<tr>
+<td style="text-align:center">7</td>
+<td style="text-align:left">$4\alpha \qquad +3\gamma$</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:center">8</td>
+<td style="text-align:left">$8\alpha+7\beta$</td>
+</tr>
+<tr>
+<td style="text-align:center">9</td>
+<td style="text-align:left">$8\alpha+6\beta+\gamma$</td>
+</tr>
+</tbody>
+</table>
+<p>从上表可以看出，$\alpha$的系数是不超过$n$的2的最大幂。此外，在2的幂之间，$\beta$的系数递减1直到得到0，而$\gamma$的系数则从0开始递增1。于是，我们可以把$f(n)$表示成如下形式：<br>$$f(n)=A(n)\alpha+B(n)\beta+C(n)\gamma \tag{1.13}$$<br>看起来有<br>$$\begin{array}{}<br>A(n)=2^m \\\<br>B(n)=2^m-1-l \\\<br>C(n)=l<br>\end{array} \tag{1.14}$$<br>如通常一样，这里有$n=2^m+l$以及$0 \le l &lt; 2^m (n \ge 1)$<br>用归纳法证明(1.14)并不太困难，但是有更简单的办法：通过选取特殊的值，然后将它们组合起来。</p>
+<p>先考虑$\alpha=1,\beta=\gamma=0$这一特殊情形，此时$f(n)$等于$A(n)$，递归式(1.11)就变成：<br>$$\begin{array}{}<br>A(1)=1 \\\<br>A(2n)=2A(n) , \quad n \ge 1 \\\<br>A(2n+1)=2A(n), \quad n \ge 1<br>\end{array}$$<br>足以肯定的是，$A(2^m+l)=2^m$为真（对$m$用归纳法）</p>
+<p>接下来，从一个简单的函数$f(n)$出发，将$f(n)=1$代入(1.11)得到<br>$$\begin{array}{}<br>1=\alpha \\\<br>1=2\times 1+\beta \\\<br>1=2\times 1+\gamma<br>\end{array}$$<br>从而有：$A(n)-B(n)-C(n)=f(n)=1$</p>
+<p>类似地，我们可以代入$f(n)=n$:<br>$$\begin{array}{}<br>1=\alpha \\\<br>2n=2\times n+\beta \\\<br>2n+1=2\times n+\gamma<br>\end{array}$$<br>当$\alpha=1,\beta=0,\gamma=1$时，这些方程对所有的$n$都成立，故则有$A(n)+C(n)=n$</p>
+<p>所以，在一般情形解递归式(1.11)时，所得到的解中的函数$A(n)$、$B(n)$、$C(n)$满足方程<br>$$\begin{array}{}<br>A(n)=2^m \quad \text{其中$n=2^m+l$且$0\le l &lt; 2^m$} \\\<br>A(n)-B(n)-C(n)=1 \\\<br>A(n)+C(n)=n<br>\end{array}$$<br>于是可以立刻解得$C(n)=l$，$B(n)=2^m-1-l$</p>
+<p><strong>这一做法描绘出对求解递归式有惊人效果的成套方法。首先我们来寻求一组已知其解的通用参数，这会给我们一整套可以求解的特殊情形。然后将特殊情形组合起来得到一般的情形。有多少个独立的参数，就与要多少个独立的特解。</strong></p>
+<h3 id="推广的约瑟夫递归式"><a href="#推广的约瑟夫递归式" class="headerlink" title="推广的约瑟夫递归式"></a>推广的约瑟夫递归式</h3><p>我们知道，原来的约瑟夫递归式有个奇妙的解，即<br>$$J((b_mb_{m-1} \cdots b_1b_0)_2)=(b_{m-1}b_{m-2} \cdots b_1b_0b_m)_2 \quad 其中b_m=1$$<br>如果令$\beta_0=\beta$以及$\beta_1=\gamma$，那么就可以将式(1.11)改写成：<br>$$\begin{array}{}<br>f(1)=\alpha \\\<br>f(2n+j)=2f(n)+\beta_j , \quad j=0,1 ,\quad n\ge 1 \end{array} \tag{1.15}$$<br>这个递归式按照二进制展开就是：<br>$$\begin{align*}<br>f((b_mb_{m-1} \cdots b_1b_0)_2)&amp;=2f((b_mb_{m-1} \cdots b_1)_2)+\beta_{b_0} \\\<br>&amp;=4f((b_mb_{m-1} \cdots b_2)_2)+2\beta_{b_1}+\beta_{b_0} \\\<br>&amp; \qquad \qquad \vdots \\\<br>&amp;=2^mf((b_m)_2)+2^{m-1}\beta_{b_{m-1}}+\cdots+2\beta_{b_1}+\beta_{b_0} \\\<br>&amp;=2^m\alpha+2^{m-1}\beta_{b_{m-1}}+\cdots+2\beta_{b_1}+\beta_{b_0}<br>\end{align*}$$<br>解除二进制表示，允许任意的数字，而不仅仅是数字0和1，上述推导告诉我们<br>$$f((b_mb_{m-1} \cdots b_1b_0)_2)=(\alpha\beta_{b_{m-1}}\beta_{b_{m-2}}\cdots\beta_{b_1}\beta_{b_0})_2$$</p>
+<h3 id="再一步推广"><a href="#再一步推广" class="headerlink" title="再一步推广"></a>再一步推广</h3><p>将限制再放宽，我们可以进一步推广，递归式：<br>$$\begin{align*}<br>f(j)&amp;=\alpha_j,&amp;1\le j &lt;d \\\<br>f(dn+j)&amp;=cf(n)+\beta_j,\quad &amp;0 \le j&lt;d&amp;, n\ge 1 \end{align*}$$<br>与上一个递归式是相同的，除了这里是从基数$d$的数着手，而产生的值是用基数$c$表示之外。这就是说，它有变动基数的解<br>$$f((b_mb_{m-1} \cdots b_1b_0)_d)=(\alpha_{b_m}\beta_{b_{m-1}}\beta_{b_{m-2}}\cdots\beta_{b_1}\beta_{b_0})_c$$<br>例如下面的递归式：<br>$$\begin{align*}<br>f(1)&amp;=34 \\\<br>f(2)&amp;=5  \\\<br>f(3n)&amp;=10f(n)+76, \quad &amp;n \ge 1 \\\<br>f(3n+1)&amp;=10f(n)-2,&amp;n \ge 1 \\\<br>f(3n+2)&amp;=10f(n)+8,&amp;n \ge 1<br>\end{align*}$$</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/递归问题/" rel="tag">#递归问题</a>
+          
+            <a href="/tags/hanoi-tower/" rel="tag">#hanoi tower</a>
+          
+            <a href="/tags/josephus-problem/" rel="tag">#josephus problem</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/13/2016-07-13-Use-LINGO-Solving-Integer-Programming/" rel="next" title="用LINGO做整数规划">
+                <i class="fa fa-chevron-left"></i> 用LINGO做整数规划
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/02/2016-08-02-Heuristic-Search-Methods/" rel="prev" title="启发式搜索算法">
+                启发式搜索算法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/pic.PNG"
+               alt="Wang Kx" />
+          <p class="site-author-name" itemprop="name">Wang Kx</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">36</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">63</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-河内塔-THE-TOWER-OF-HANOI"><span class="nav-number">1.</span> <span class="nav-text">1.1 河内塔 THE TOWER OF HANOI</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#河内塔问题"><span class="nav-number">1.1.</span> <span class="nav-text">河内塔问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数学归纳法"><span class="nav-number">1.2.</span> <span class="nav-text">数学归纳法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-约瑟夫问题-THE-JOSEPHUS-PROBLEM"><span class="nav-number">2.</span> <span class="nav-text">1.2 约瑟夫问题 THE JOSEPHUS PROBLEM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推广研究"><span class="nav-number">3.</span> <span class="nav-text">推广研究</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#函数-J-n-到底是什么？"><span class="nav-number">3.1.</span> <span class="nav-text">函数$J(n)$到底是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进一步推广"><span class="nav-number">3.2.</span> <span class="nav-text">进一步推广</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#推广的约瑟夫递归式"><span class="nav-number">3.3.</span> <span class="nav-text">推广的约瑟夫递归式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#再一步推广"><span class="nav-number">3.4.</span> <span class="nav-text">再一步推广</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wang Kx</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=0.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

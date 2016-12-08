@@ -1,0 +1,664 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="algorithm,knight tour,dfs," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="马踏棋盘问题又称Knight Tour Problem，指的是在一个n*n棋盘上，找出一条路径，可以使马不重复地踏遍整个棋盘的格子。对于每一步，最多有八个方向可以走。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="马踏棋盘问题（Knight Tour Problem）">
+<meta property="og:url" content="http://yoursite.com/2016/06/09/2016-06-09-Knight-Tour-Problem/index.html">
+<meta property="og:site_name" content="MayMoon">
+<meta property="og:description" content="马踏棋盘问题又称Knight Tour Problem，指的是在一个n*n棋盘上，找出一条路径，可以使马不重复地踏遍整个棋盘的格子。对于每一步，最多有八个方向可以走。">
+<meta property="og:image" content="http://i.imgur.com/anHlqEN.png">
+<meta property="og:updated_time" content="2016-06-10T01:17:10.480Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="马踏棋盘问题（Knight Tour Problem）">
+<meta name="twitter:description" content="马踏棋盘问题又称Knight Tour Problem，指的是在一个n*n棋盘上，找出一条路径，可以使马不重复地踏遍整个棋盘的格子。对于每一步，最多有八个方向可以走。">
+<meta name="twitter:image" content="http://i.imgur.com/anHlqEN.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 马踏棋盘问题（Knight Tour Problem） | MayMoon </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">MayMoon</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">随便写写</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                马踏棋盘问题（Knight Tour Problem）
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-06-09T16:19:01+08:00" content="2016-06-09">
+              2016-06-09
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/杂记/" itemprop="url" rel="index">
+                    <span itemprop="name">杂记</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>马踏棋盘问题又称Knight Tour Problem，指的是在一个n*n棋盘上，找出一条路径，可以使马不重复地踏遍整个棋盘的格子。对于每一步，最多有八个方向可以走。</p>
+<a id="more"></a>
+<h2 id="深度优先（DFS）"><a href="#深度优先（DFS）" class="headerlink" title="深度优先（DFS）"></a>深度优先（DFS）</h2><p>最自然的想法基于深度优先算法，即从初始位置开始，在可走的方向中选出一个方向作为下一步，直到找不到可走的路径时，进行回溯，最终找出一条路径。如下图所示：</p>
+<p><img src="http://i.imgur.com/anHlqEN.png" alt=""></p>
+<p>图中的蓝色箭头表示马的前进，红色箭头表示遇到死路时进行回溯，直到走了64步时就说明找到了一条路径</p>
+<h2 id="Python-实现（Python-Implementation）"><a href="#Python-实现（Python-Implementation）" class="headerlink" title="Python 实现（Python Implementation）"></a>Python 实现（Python Implementation）</h2><h3 id="API"><a href="#API" class="headerlink" title="API"></a>API</h3><pre><code>class KnightTour
+    BDsize = 0                                        ## 表示棋盘的变长
+    board = [[0]*BDsize for _ in range(BDsize)]       ## 表示棋盘，0代表未踩过，1代表踩过
+    pathboard = [[0]*BDsize for _ in range(BDsize)]   ## 一个用来显示路径的棋盘，每个位置上的值表示它在路径上的顺序
+    start_pos = [1,1]                                 ## 表示起始点的坐标，坐标从1开始
+    eight_dire = [[2,1],[2,-1],[-2,1],[-2,-1],        ## 定义8个方向的坐标变化
+                    [1,2],[1,-2],[-1,2],[-1,-2]]
+
+    def __init__(self, bd_size, s_pos)                      ## 构造函数 
+    def FindMoves(self, cur_pos)                            ## 找出当前位置的下一步可能方向
+    def SearchNext(self, cur_pos,cnt)                       ## 从当前位置开始，递归地找出路径
+    def Tour(self)                                          ## 调用SearchNext计算出起始位置路径，并打印出来
+    def printBD(self, bd)                                   ## 美观地打印出棋盘
+</code></pre><h3 id="FindMoves-找出下一步的可能方向"><a href="#FindMoves-找出下一步的可能方向" class="headerlink" title="FindMoves 找出下一步的可能方向"></a>FindMoves 找出下一步的可能方向</h3><p>我们先找出一个点的下一步的所有方向的坐标（8个），然后再进行筛选，去除那些在棋盘外的和已经踏过的。</p>
+<pre><code>def FindMoves(self, cur_pos):
+    ## 所有八个方向
+    moves = [[x + y for x,y in zip(cur_pos,dire)] for dire in self.eight_dire]
+    ## 八个方向中下一步可以走的方向
+    valid_moves = [move for move in moves if 0&lt;move[0]&lt;self.BDsize+1 
+                    and 0&lt;move[1]&lt;self.BDsize+1
+                    and self.board[move[0]-1][move[1]-1] == 0]
+    return valid_moves
+</code></pre><blockquote>
+<p>注意：python列表下标从0开始，所以我们每次对board和pathboard进行索引时，必须减1</p>
+</blockquote>
+<h3 id="SearchNext-递归找出路径"><a href="#SearchNext-递归找出路径" class="headerlink" title="SearchNext 递归找出路径"></a>SearchNext 递归找出路径</h3><p>这个函数接收一个参数cnt，表示还要走多少步。当每走一步，我们就给cnt-1。先考虑最后一步，这时候cnt等于0，于是我们返回True表示路径存在。这样的话，就可以递归地设计查找路径的算法。</p>
+<p>递归过程：</p>
+<ol>
+<li>判断cnt是否为0：如果为0，返回True；否则，进入2</li>
+<li>利用FindMoves找出当前点的下一步可走方向的列表，判断列表元素的数量。如果为0，则说明无路可走，返回False；如果不为0，则用for循环遍历可走方向的列表</li>
+<li>对每一个方向，将board上对应位置的值置为1，相当于沿着这个方向走了一步</li>
+<li>用这个方向的坐标递归地计算下一步（参数cnt设置为cnt-1），如果返回值为真（说明沿这条路走下去有一条路径可以走完棋盘），则返回真；如果返回值不为真（说明沿这条路走下去没有一条路径可以走完棋盘），将board上对应位置的值改回0，相当于回退。</li>
+</ol>
+<p>代码</p>
+<pre><code>def searchNext(self, cur_pos, cnt):
+    ## 在表示路径的棋盘上标上当前是第几步
+    self.pathboard[cur_pos[0]-1][cur_pos[1]-1] = 64-cnt    
+    if cnt == 0:
+        return True
+    else:
+        moves = self.FindMoves(cur_pos)
+        if len(moves) == 0 :
+            return False
+        for move in moves:
+            self.board[move[0]-1][move[1]-1] = 1
+            if self.searchNext(move,cnt-1):    ## 递归调用，注意参数cnt-1
+                return True
+            else :
+                self.board[move[0]-1][move[1]-1] = 0
+</code></pre><h3 id="Tour"><a href="#Tour" class="headerlink" title="Tour"></a>Tour</h3><p>Tour相当于调用了方法SearchNext，实现了路径</p>
+<pre><code>def tour(self):
+    cur_pos = self.start_pos
+    self.board[cur_pos[0]-1][cur_pos[1]-1] = 1
+    self.searchNext(cur_pos, self.BDsize*self.BDsize-1)
+</code></pre><h3 id="printBD-打印棋盘"><a href="#printBD-打印棋盘" class="headerlink" title="printBD 打印棋盘"></a>printBD 打印棋盘</h3><p>这个方法可以打印任何传入的棋盘（二维列表）</p>
+<pre><code>def printBD(board):
+    print(&quot;-------------------------&quot;)
+    for row in board:
+        for column in row:
+            print(column, end=&apos;\t&apos;)
+        print(&quot;&quot;)
+    print(&quot;-------------------------&quot;)
+</code></pre><h3 id="printPath-打印路径棋盘"><a href="#printPath-打印路径棋盘" class="headerlink" title="printPath 打印路径棋盘"></a>printPath 打印路径棋盘</h3><p>调用方法printBD打印出路径棋盘</p>
+<pre><code>def printPath(self):
+    printBD(self.pathboard)
+</code></pre><h3 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h3><pre><code>KT = KnightTour(8,[1,1])       ## 建立一个8*8的棋盘，出发点设置为(1,1)
+KT.tour()                      ## 查找路径
+KT.printPath()                 ## 打印路径棋盘
+</code></pre><p>结果如下：</p>
+<pre><code>-------------------------
+1       16      31      40      3       18      21      56      
+30      39      2       17      42      55      4       19      
+15      32      41      46      53      20      57      22      
+38      29      48      43      58      45      54      5       
+33      14      37      52      47      60      23      62      
+28      49      34      59      44      63      6       9       
+13      36      51      26      11      8       61      24      
+50      27      12      35      64      25      10      7       
+-------------------------
+</code></pre><h2 id="改进的算法（Improvement）"><a href="#改进的算法（Improvement）" class="headerlink" title="改进的算法（Improvement）"></a>改进的算法（Improvement）</h2><p>上述基于深度优先的朴素算法时间复杂度很高，为 O(k<sup>N</sup>)，其中 N 是棋盘的格子数，k为一个很小的常数。</p>
+<p>上面例子的结果实际上是用下面的算法算出来的，如果用上面的算法，需要花好几小时才能算出一样的结果。</p>
+<p>改进的思想源于此：<br><br><br><strong>有时候，我们可走的方向不止一个，在上面的代码中，我们任意地选了第一个方向。换句话说，我们相当于选择了eight_dire列表中最靠前的可走方向。为改进算法的性能，我们现在更有计划地从可走方向中选择一个方向。具体来说，就是选择将来最不大可能再走到的地方。因为我们如果现在错过了这些将来不大可能走到的地方，以后可能会花很大代价去进行回溯，以便踏过这些格子。<br>那么，问题就变成了：如何确定哪个格子是将来最不可能走到的？可以给每个可走的方向再进行一次试走，看哪个方向上的下一步可走的步数最少。</strong></p>
+<p>举个例子：马现在处于(1,2)位置，可走的位置有(3,1)，(3,3)，(2,4)，为了选出一个方向，我们接着再试走一步：如果我们选了(3,1)，那么再下一步可以走(5,2)，(2,3)，(4,3)，共三个方向；同理，(3,3)的下一步方向有7个，(2,4)的下一步方向有5个。于是，(3,1)这个点就是将来不大可能被走到。（因为它只能走到3个点，就说明将来只有这三个点能走到它）所以我们现在就要先走(3,1)这个方向，以免将来很不容易走到它而产生大量回溯。</p>
+<p>引入count和count_next两个函数来进行判断。</p>
+<h3 id="count-next"><a href="#count-next" class="headerlink" title="count_next"></a>count_next</h3><p>count_next 接收一个坐标为参数，返回这个坐标下一步可能方向的总数。</p>
+<pre><code>def count_next(self, cur_pos):
+    valid_moves = self.FindMoves(cur_pos)
+    return len(valid_moves)
+</code></pre><h3 id="count"><a href="#count" class="headerlink" title="count"></a>count</h3><p>count 接收一个坐标为参数，并调用count_next，计算出这个坐标的下一步所有可能方向，以及每种方向对应的再下一步的方向总数</p>
+<pre><code>def count(self, cur_pos):
+    valid_moves = self.FindMoves(cur_pos)
+    return [[self.count_next(move),move] for move in valid_moves]
+</code></pre><h3 id="searchNext"><a href="#searchNext" class="headerlink" title="searchNext"></a>searchNext</h3><p>最后，我们修改一下我们的searchNext函数，对可能路径排序，选择排序结果中最不可能走到的那个方向，而不是选择第一个</p>
+<pre><code>def searchNext(self, cur_pos, cnt):
+    self.pathboard[cur_pos[0]-1][cur_pos[1]-1] = 64-cnt    
+    if cnt == 0:
+        return True
+    else:
+        moves = self.count(cur_pos)
+        moves.sort()
+        if moves[0][0] == 0 and cnt!= 1:
+            return False
+        for move in moves:
+            self.board[move[1][0]-1][move[1][1]-1] = 1
+            if self.searchNext(move[1], cnt-1):
+                return True
+            else :
+                self.board[move[1][0]-1][move[1][1]-1] = 0
+</code></pre><p>注：判断条件<code>moves[0][0] == [0] and cnt != 1</code>是为了判断是否到达一个死节点。设想如果一个节点（记为A点）的下一步方向中有一个（记为B）的再下一步可走数目为0，那么说明这个节点B只能通过A来到达，那么A必须是倒数第二步，B必须是最后一步，否则就永远不可能走到B点。</p>
+<h3 id="运行-1"><a href="#运行-1" class="headerlink" title="运行"></a>运行</h3><p>这样改进之后，不论以哪一个点开始，都可以在1秒内计算出路径。</p>
+<p>参考资料：</p>
+<p><a href="http://interactivepython.org/runestone/static/pythonds/Graphs/TheKnightsTourProblem.html" target="_blank" rel="external">http://interactivepython.org/runestone/static/pythonds/Graphs/TheKnightsTourProblem.html</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/algorithm/" rel="tag">#algorithm</a>
+          
+            <a href="/tags/knight-tour/" rel="tag">#knight tour</a>
+          
+            <a href="/tags/dfs/" rel="tag">#dfs</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/06/03/2016-06-03-How-MEMS-Gyroscope-Work/" rel="next" title="微机械陀螺仪原理">
+                <i class="fa fa-chevron-left"></i> 微机械陀螺仪原理
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/06/16/2016-06-16-3.5-Hash-Table/" rel="prev" title="3-5 Hash Tables">
+                3-5 Hash Tables <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/pic.PNG"
+               alt="Wang Kx" />
+          <p class="site-author-name" itemprop="name">Wang Kx</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">36</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">63</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#深度优先（DFS）"><span class="nav-number">1.</span> <span class="nav-text">深度优先（DFS）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python-实现（Python-Implementation）"><span class="nav-number">2.</span> <span class="nav-text">Python 实现（Python Implementation）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#API"><span class="nav-number">2.1.</span> <span class="nav-text">API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FindMoves-找出下一步的可能方向"><span class="nav-number">2.2.</span> <span class="nav-text">FindMoves 找出下一步的可能方向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SearchNext-递归找出路径"><span class="nav-number">2.3.</span> <span class="nav-text">SearchNext 递归找出路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tour"><span class="nav-number">2.4.</span> <span class="nav-text">Tour</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#printBD-打印棋盘"><span class="nav-number">2.5.</span> <span class="nav-text">printBD 打印棋盘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#printPath-打印路径棋盘"><span class="nav-number">2.6.</span> <span class="nav-text">printPath 打印路径棋盘</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行"><span class="nav-number">2.7.</span> <span class="nav-text">运行</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#改进的算法（Improvement）"><span class="nav-number">3.</span> <span class="nav-text">改进的算法（Improvement）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#count-next"><span class="nav-number">3.1.</span> <span class="nav-text">count_next</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#count"><span class="nav-number">3.2.</span> <span class="nav-text">count</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#searchNext"><span class="nav-number">3.3.</span> <span class="nav-text">searchNext</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行-1"><span class="nav-number">3.4.</span> <span class="nav-text">运行</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wang Kx</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=0.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

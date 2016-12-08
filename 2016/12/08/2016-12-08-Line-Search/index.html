@@ -1,0 +1,673 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="wangkaixin, maymoon" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="局部搜索方法是解决无约束优化的一种方法，一般只能得到局部最优解。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="局部搜索方法——线性搜索">
+<meta property="og:url" content="http://yoursite.com/2016/12/08/2016-12-08-Line-Search/index.html">
+<meta property="og:site_name" content="MayMoon">
+<meta property="og:description" content="局部搜索方法是解决无约束优化的一种方法，一般只能得到局部最优解。">
+<meta property="og:image" content="http://i.imgur.com/c0U62Fz.png">
+<meta property="og:image" content="http://i.imgur.com/iLHk02h.png">
+<meta property="og:image" content="http://i.imgur.com/PTY7PFL.png">
+<meta property="og:image" content="http://i.imgur.com/rzdXxgC.png">
+<meta property="og:image" content="http://i.imgur.com/nAfA8IT.png">
+<meta property="og:image" content="http://i.imgur.com/PgEHlaH.png">
+<meta property="og:image" content="http://i.imgur.com/hYS67KC.png">
+<meta property="og:image" content="http://i.imgur.com/N5MQss4.png">
+<meta property="og:image" content="http://i.imgur.com/BpaiQR2.png">
+<meta property="og:image" content="http://i.imgur.com/AA3qna2.png">
+<meta property="og:image" content="http://i.imgur.com/SReNOuC.png">
+<meta property="og:updated_time" content="2016-12-08T10:33:07.959Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="局部搜索方法——线性搜索">
+<meta name="twitter:description" content="局部搜索方法是解决无约束优化的一种方法，一般只能得到局部最优解。">
+<meta name="twitter:image" content="http://i.imgur.com/c0U62Fz.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 局部搜索方法——线性搜索 | MayMoon </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">MayMoon</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">随便写写</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                局部搜索方法——线性搜索
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-12-08T19:54:01+08:00" content="2016-12-08">
+              2016-12-08
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/优化算法/" itemprop="url" rel="index">
+                    <span itemprop="name">优化算法</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>局部搜索方法是解决无约束优化的一种方法，一般只能得到局部最优解。<br><a id="more"></a><br>如果自变量 $x$ 是一维的，即一个实数，我们要优化 $f(x)$ ，就只能将 $x$ 向左移动或向右移动，如下图所示。我们希望$f(x)$最大，就将 $x$ 向使能使$f(x)$增大的方向移动（左或右）。对于A和B，它们分别向右向左移动，最终到达全局最优点P；而对于C和D，它们只能到达局部最优点Q。所以这些方法称为局部搜索方法。一般来说，$x$ 是 $n$ 维向量，即$x \in \mathbb R^n$，这样的话，$x$可以移动的方向就有很多个。$n$ 维情况下，$f(x):\mathbb R^n \to \mathbb R$</p>
+<p><img src="http://i.imgur.com/c0U62Fz.png" alt=""></p>
+<p>局部搜索算法可分为<strong>线性搜索</strong>法(Line Search)和<strong>信赖域</strong>法(Trust Region)。</p>
+<ol>
+<li><p>线性搜索法中：从初始点开始，先选出一个方向 $p_k$，然后沿这个方向，从当前迭代点 $x_k$ 开始，搜索出一个使目标函数值更低的新的迭代点 $x_{k+1}$（也可以视为确定一个前进的步长 $\alpha_k$），即<br>$$\min_{\alpha_k&gt;0}f(x_k+\alpha_k p_k)$$一般来说，精确地求解 $\alpha_k$ 代价太大，求解的意义也不大，所以多使用近似结果。</p>
+</li>
+<li><p>信赖域法的思想则不同：信赖域法通过使用从 $f$ 中得到的信息来构建出一个函数 $m_k$ 使得 $m_k$ 和 $f$ 在 $x_k$ 附近十分近似，确定一个最大的边界限制 $\Delta$（超出这个边界后 $m_k$ 的近似效果不好），然后进行下面的最小化<br>$$\min_p m_k(x_k+p)\quad\quad \text{s.t. } ||p||_2&lt;\Delta$$</p>
+</li>
+</ol>
+<p>本篇只介绍线性搜索法。</p>
+<hr>
+<p>线性搜索法的一般过程：</p>
+<ul>
+<li>找到初始点 $x^{(0)} \in \mathcal S$</li>
+<li>设 $k=0$</li>
+<li>$\mathtt {repeat}$<ul>
+<li>评价 $f(x_k)$ </li>
+<li>计算一个搜索方向 $p_k$</li>
+<li>计算步长 $\alpha_k$</li>
+<li>令$x_{k+1}$为$x_k+\alpha_k p_k$</li>
+<li>$k = k + 1$</li>
+</ul>
+</li>
+<li>$\mathtt {until}$ 终止条件满足</li>
+<li>返回 $x_k$ 作为解</li>
+</ul>
+<blockquote>
+<p>$x_k$ 指的是迭代 $k$ 次后 $x$ 的取值<br>终止条件一般使用精度，即梯度值；也就是说，再进行优化，每一步优化的效果微乎其微，小于一个我们设定好的值时，便停止迭代。另一种常用的终止条件就是显式地规定迭代次数。</p>
+</blockquote>
+<h1 id="1-确定搜索方向"><a href="#1-确定搜索方向" class="headerlink" title="1. 确定搜索方向"></a>1. 确定搜索方向</h1><p>线性搜索法中最重要的一步就是确定搜索方向 $p_k$，一般有下面几种方法来确定 $p_k$：<strong>最速下降法</strong>，<strong>牛顿法</strong>，<strong>拟牛顿法</strong>。</p>
+<h2 id="1-1-最速下降法（Steepest-Descent）"><a href="#1-1-最速下降法（Steepest-Descent）" class="headerlink" title="1.1 最速下降法（Steepest Descent）"></a>1.1 最速下降法（Steepest Descent）</h2><p>最速下降法是通过不断更新 $x$ 的值，使得$f(x)$不断变小，直到收敛。由于负梯度方向是使函数值下降最快的方向，所以在迭代的每一步，以负梯度方向更新$x$的值。</p>
+<p><strong>为什么负梯度下降速度最快</strong><br>若第 $k$ 次迭代值为 $x_k$，则可以将 $f(x)$ 在 $x_k$ 附近进行一阶泰勒展开：<br>$$f(x) = f(x_k) + g_k \cdot (x-x_k)$$其中，$g_k=g(x_k)=\nabla f(x_k)$ 为 $f(x)$ 在 $x_k$ 的梯度。上面的式子是一维的情况，下面的式子是 $n$ 维的情况（即 $x$ 不再是一个实数，而是一个 $n$ 维向量）<br>$$f(x) = f(x_k) + g_k^T \cdot (x-x_k)$$则 $x-x_k = -g_k$ 时，$f(x)$ 下降最快（向量反向时内积最小）。</p>
+<h3 id="最速下降法的讨论"><a href="#最速下降法的讨论" class="headerlink" title="最速下降法的讨论"></a>最速下降法的讨论</h3><ol>
+<li>当目标函数是凸函数时，最速下降法的解是全局最优解。一般情况下，其解不保证是全局最优解。</li>
+<li>最速下降法只利用了一阶导数的信息，计算量小，但在一些复杂问题上，收敛速度可能得不到保证。（详见参考资料2）</li>
+<li>如果步长 $\alpha_k$ 是精确计算得到的，那么最速下降相邻两步的方向互相垂直，如下图所示</li>
+</ol>
+<p><img src="http://i.imgur.com/iLHk02h.png" alt=""></p>
+<h2 id="1-2-牛顿法"><a href="#1-2-牛顿法" class="headerlink" title="1.2 牛顿法"></a>1.2 牛顿法</h2><p>牛顿法使用函数的二阶导数信息来获得下降方向 $p_k$。用二阶泰勒展开近似 $f(x_k+p)$，我们得到<br>$$f(x_k+p)\simeq f(x_k)+p^T\nabla f_k+\frac{1}{2}p^T\nabla^2f_k p$$将上式右端记为 $m_k(p)$，若 $\nabla^2f_k$ 是正定的，我们就可以通过最小化 $m_k(p)$ 来找到方向 $p$<br>$$m’_k(p)=0 \quad \Rightarrow p_k^N=-\nabla^2f_k^{-1}\nabla f_k$$上标 $N$ 表示牛顿方向</p>
+<blockquote>
+<p>由于 $\cfrac{\partial \mathbf{x}^T \mathbf{a}}{\partial \mathbf{x}}=\mathbf{a}$，$\cfrac{\partial\mathbf{x}^T\mathbf{B}\mathbf{x}}{\partial \mathbf{x}}=(\mathbf{B}+\mathbf{B}^T)\mathbf{x}$<br>$m’_k(p) = \nabla f_k+ \cfrac{1}{2}(\nabla^2f_k+(\nabla^2f_k)^T)p$<br>由于 $\nabla^2f_k$ 是正定的，则 $\nabla^2f_k=(\nabla^2f_k)^T$<br>故而 $m’_k(p) = \nabla f_k+ \nabla^2f_k p$</p>
+</blockquote>
+<h3 id="牛顿法的讨论"><a href="#牛顿法的讨论" class="headerlink" title="牛顿法的讨论"></a>牛顿法的讨论</h3><ol>
+<li>只有当 $f(x_k+p)$ 和 $m_k$ 之间的差距不大时，牛顿法才是可靠的</li>
+<li>大多数牛顿法的线性搜索实现使用固定的步长 $\alpha=1$，只有当不能给出一个满意的目标函数下降时才会调节 $\alpha$</li>
+<li>当 $\nabla^2f_k$ 不是正定的时候，牛顿方向无法定义，所以也就不存在牛顿法</li>
+<li>由于牛顿法用到了二阶导数的信息，所以收敛速度很快</li>
+</ol>
+<h2 id="1-3-拟牛顿法"><a href="#1-3-拟牛顿法" class="headerlink" title="1.3 拟牛顿法"></a>1.3 拟牛顿法</h2><p>一般来说，计算Hessian矩阵是很耗时的，拟牛顿法的思想是用一个矩阵 $B_k$ 来近似真实的海塞矩阵 $\nabla^2f_k$，同时仍然保证超线性的收敛率。它是利用一阶导数的变化 $\nabla f_{k+1}-\nabla f_k$ 来近似得到二阶导数的信息。</p>
+<blockquote>
+<p>$f(x)\approx f(x_{k+1})+\nabla f(x_{k+1})(x-x_{k+1})+\frac{1}{2}(x-x_{k+1})^T\nabla^2f(x_{k+1})(x-x_{k+1})$<br>两边关于 $x$ 求导可以得到<br>$\nabla f(x)\approx \nabla f(x_{k+1})+\nabla^2f(x_{k+1})(x-x_{k+1})$<br>令 $x=x_k$，则有<br>$\nabla f_k\approx \nabla f_{k+1}+\nabla^2f_{k+1}(x_k-x_{k+1})$<br>$\nabla^2f_{k+1}(x_{x+1}-x_k)\approx \nabla f_{k+1}-\nabla f_k$</p>
+</blockquote>
+<p>故我们可以用 $B_{k}$ 来近似 $\nabla^2f_k$<br>$$B_{k+1}s_k=y_k$$其中 $s_k=x_{k+1}-x_k$，$y_k=\nabla f_{k+1}-\nabla f_k$<br>通常，我们还对 $B_k$ 做以下要求：</p>
+<ul>
+<li>对称性：因为真实的海塞矩阵是对称的</li>
+<li>低秩(Low Rank)：相邻两次近似 $B_k$ 和 $B_{k+1}$ 之间的差值是低秩的。</li>
+</ul>
+<p>初始的近似值 $B_0$ 必须自己提供，更新 $B_k$ 时，有不同的更新公式，最著名的有以下两个：</p>
+<ol>
+<li><strong>对称秩一公式（Symmetric-Rank-One Formula）</strong><br>$$B_{k+1}=B_k+\cfrac{(y_k-B_ks_k)(y_k-B_ks_k)^T}{(y_k-B_ks_k)^Ts_k}$$</li>
+<li><strong>BFGS公式</strong><br>$$B_{k+1}=B_k-\cfrac{B_ks_ks_k^TB_k}{s_k^TB_ks_k}+\cfrac{y_ky_k^T}{y_k^Ts_k}$$<br>由拟牛顿法给出的搜索方向为<br>$$p_k=-B_k^{-1}\nabla f_k$$<br>在实际的实现中，更新的是 $B_k$ 的逆而不是 $B_k$，若定义 $H_k:=B_k^{-1}$，则有<br>$$H_{k+1}=H_k-\cfrac{H_ky_ky_k^TH_k}{y_k^TH_ky_k}+\cfrac{s_ks_k^T}{s_k^Ty_k}$$<br>那么$p_k=-H_k\nabla f_k$</li>
+</ol>
+<h2 id="1-4-方向选择小结"><a href="#1-4-方向选择小结" class="headerlink" title="1.4 方向选择小结"></a>1.4 方向选择小结</h2><p>大多数线性搜索算法需要选一个下降方向 $p_k$，即满足$$p_k^T\nabla f_k&lt;0$$搜索方向通常具有以下形式$$p_k=-B_k^{-1}\nabla f_k$$<br>上述三种算法既可以总结为<br>$$B_k=\begin{cases}<br>I&amp;\text{最速下降法}\\<br>\nabla^2 f(x_k)&amp;\text{牛顿法} \\<br>\text{海塞矩阵的近似}&amp;\text{拟牛顿法}<br>\end{cases}$$</p>
+<h1 id="2-确定搜索策略"><a href="#2-确定搜索策略" class="headerlink" title="2. 确定搜索策略"></a>2. 确定搜索策略</h1><p>选择好搜索方向后，下一步要做的就是确定步长，一般有两种搜索策略：<strong>精确线搜索</strong>和<strong>非精确线搜索</strong></p>
+<h2 id="2-1-精确线搜索"><a href="#2-1-精确线搜索" class="headerlink" title="2.1 精确线搜索"></a>2.1 精确线搜索</h2><p>线搜索实际是一维最小化问题，目标是在一个闭区间 $[x_s,x_f]$ 上找到函数 $f$ 的最小值，一般我们假设 $f$ 是单峰函数，即在给定区间上只有一个最小值。有两种很优秀的方法：<strong>斐波那契搜索法</strong>和<strong>黄金分割搜索法</strong>。</p>
+<p>通过测量许多点处的函数值 $f(x)$ 来确定 $f$ 的最小值点，或者说至少近似地确定。我们面临的挑战是：<strong>如何尽可能少地计算函数值同时得到一个尽可能小的区间 $[x’,x’’]$ 使得 $x\in[x’,x’’]$</strong></p>
+<p><img src="http://i.imgur.com/PTY7PFL.png" alt=""><br>以两个点 $x^1,x^2$ 为例，来展示基本的计算过程，其中 $x_s&lt;x^1&lt;x^2&lt;x_f$：</p>
+<ul>
+<li>如果 $f(x^1)&lt;f(x^2)$，则丢弃区间 $[x^2,x_f]$</li>
+<li>如果 $f(x^1)&gt;f(x^2)$，则丢弃区间 $[x_s,x^1]$</li>
+<li>如果 $f(x^1)=f(x^2)$，则上面两个区间均被丢弃</li>
+</ul>
+<p>设 $f(\cdot)$ 是一个给定区间 $[x_s,x_f]$ 的单峰函数，如果我们打算只计算 $n$ 次函数值，我们应该怎么安排这 $n$ 个点的位置和顺序使得最终得到的区间 $[x’,x’’]$ 最小？</p>
+<h3 id="穷举搜索"><a href="#穷举搜索" class="headerlink" title="穷举搜索"></a>穷举搜索</h3><p>穷举搜索很容易想到，即计算函数 $f(\cdot)$ 在预先确定的 $n$ 个点处的值，有 $x_s&lt;x^1&lt;\cdots&lt;x^n&lt;x_f$。如果这 $n$ 个值中的最小值是 $x_k$，那么最终确定的区间即为 $[x^{k-1},x^{k+1}]$，长度即为$$L_n=x^{k+1}-x^{k-1}=\cfrac{2}{n+1}L_0$$其中 $L_0=x_f-x_s$</p>
+<h3 id="二分搜索"><a href="#二分搜索" class="headerlink" title="二分搜索"></a>二分搜索</h3><p><img src="http://i.imgur.com/rzdXxgC.png" alt=""><br>如图，通过比较两点处的函数值 $f(\cdot)$，利用单峰性的假设，每次可以丢弃将近一半的区间。<br>$n$ 次后得到最终的区间长度为$$L_n=\cfrac{L_0}{2^{n/2}}+\delta(1-\cfrac{1}{2^{n/2}})$$</p>
+<p>我们注意到：每次我们都需要计算新的两个点处的函数值 $f(x^1)$ 和 $f(x^2)$，丢弃掉的区间长度至少为 $\frac{1}{2}L_0-\cfrac{\delta}{2}$，剩下的区间长度至多为 $\frac{1}{2}L_0+\cfrac{\delta}{2}$。要使区间长度收缩得快，则越小 $\delta&gt;0$ 更好，然而，当 $\delta$ 太小的时候，$x^1\simeq x^2$。<br>我们怎么能安全地分开 $x^1$ 和 $x^2$ 又不至于失去太多收缩速度？另一方面，在上面的二分搜索中，每次都需要计算两个新的点，我们怎么能是 $f(x^1),f(x^2)$ 的信息被多次利用呢？</p>
+<h3 id="斐波那契搜索"><a href="#斐波那契搜索" class="headerlink" title="斐波那契搜索"></a>斐波那契搜索</h3><blockquote>
+<p>斐波那契数列<br>$F_0=F_1=1,\quad F_n=F_{n-1}+F_{n-2},\quad n=2,3,4,\cdots$<br>即 $\{F_n\}=\{1,1,2,3,5,8,13,21,\cdots\}$</p>
+</blockquote>
+<p><img src="http://i.imgur.com/nAfA8IT.png" alt=""><br>在斐波那契搜索中，每次只需要计算一个新的划分点，即每次都会有一个点将会被再次作为划分点，二次利用。</p>
+<p>定义$L_2^{*}=\cfrac{F_{n-2}}{F_n}L_0$，第一次划分的两个点距区间两端均为这个距离。利用单峰性，则新的区间为 $$L_2=L_0-L^{*}_2=L_0\left(1-\cfrac{F_{n-2}}{F_n}\right)=\cfrac{F_{n-1}}{F_n}L_0$$<br>不论是 $x^1$ 还是 $x^2$ 留在了新的区间 $L_2$ 中，都会有：它距区间一端的距离为$$L_2^{*}=\cfrac{F_{n-2}}{F_n}L_0=\cfrac{F_{n-2}}{F_{n-2}}L_2$$距另外一端的距离为$$L_2-L_2^{*}=\cfrac{F_{n-3}}{F_n}L_0=\cfrac{F_{n-3}}{F_{n-1}}L_2$$<br>我们新选择一个划分点 $x^3$ 使得 $L_2$ 内部的两个划分点距区间两端的距离均为$$L_3^{*}=\cfrac{F_{n-3}}{F_n}$$则这一轮产生的不确定区间的长度为$$L_3=L_2-L_3^{*}=L_2-\cfrac{F_{n-3}}{F_{n-1}}L_2=\cfrac{F_{n-2}}{F_{n-1}}L_2=\cfrac{F_{n-2}}{F_n}L_0$$<br><strong>一般化的算法过程如下：</strong>$$L_j^{*}=\cfrac{F_{n-j}}{F_{n-(j-2)}}L_{j-1},\quad L_j=\cfrac{F_{n-(j-1)}}{F_n}L_0$$最终得到的区间长度为 $L_n=\frac{F_1}{F_n}L_0=\frac{1}{F_n}L_0$</p>
+<h3 id="黄金分割搜索"><a href="#黄金分割搜索" class="headerlink" title="黄金分割搜索"></a>黄金分割搜索</h3><p>和斐波那契搜索类似，黄金分割搜索每次也只需要计算一个新的划分点，每次都会有一个点将会被再次作为划分点，二次利用，如下图所示。</p>
+<p><img src="http://i.imgur.com/PgEHlaH.png" alt=""><br>则 $L_n=0.618^n L_0$</p>
+<h3 id="精确性-VS-代价"><a href="#精确性-VS-代价" class="headerlink" title="精确性 VS 代价"></a>精确性 VS 代价</h3><p>我们在计算步长 $\alpha_k$ 时，面临一个权衡：越精确地计算 $\alpha_k$，开销就会越大</p>
+<h2 id="2-2-非精确线搜索"><a href="#2-2-非精确线搜索" class="headerlink" title="2.2 非精确线搜索"></a>2.2 非精确线搜索</h2><p>大多数实际的策略都采用非精确线搜索的办法，在最小的计算开销下使函数值 $f(\cdot)$ 充分变小（考虑最小化问题）。经典的线搜索算法通常尝试一个 $\alpha$ 的序列，当满足某些停止条件时，选择那个 $\alpha$ 并结束。<br>下面来介绍一些不同的停止条件。</p>
+<h3 id="充分下降条件"><a href="#充分下降条件" class="headerlink" title="充分下降条件"></a>充分下降条件</h3><p>一个常用的停止条件是 $\alpha_k$ 可以使目标函数 $f(\cdot)$ 产生充分的下降，即$$f(x_k+\alpha p_k)\le f(x_k)+c_1\alpha\nabla f_k^T p_k$$其中 $c_1 \in (0,1)$ 为一常数。<br><img src="http://i.imgur.com/hYS67KC.png" alt=""></p>
+<h3 id="曲率条件"><a href="#曲率条件" class="headerlink" title="曲率条件"></a>曲率条件</h3><p>仅靠充分下降条件并不能保证算法每一步都能有很好的进步（make reasonable progress）。事实上，我们可以发现，当 $\alpha$ 充分小时，充分下降条件总是满足的。所以，算法可能会常常产生令人无法接受的小步长。<br>为了避免这种情况，我们引入另一个条件，称为曲率条件，即需要 $\alpha_k$ 满足$$\nabla f(x_k+\alpha_k p_k)^T p_k\ge c_2\nabla f_k^T p_k$$其中 $c_2 \in (0,1)$ 为一常数。</p>
+<p><img src="http://i.imgur.com/N5MQss4.png" alt=""></p>
+<h3 id="Wolfe条件"><a href="#Wolfe条件" class="headerlink" title="Wolfe条件"></a>Wolfe条件</h3><p>将上面两个条件结合起来，就得到了Wolfe条件，如图</p>
+<p><img src="http://i.imgur.com/BpaiQR2.png" alt=""></p>
+<h3 id="强Wolfe条件"><a href="#强Wolfe条件" class="headerlink" title="强Wolfe条件"></a>强Wolfe条件</h3><p>强Wolfe条件对 $\alpha_k$ 的限制为 $$\begin{array}{c}f(x_k+\alpha_k p_k)\le f(x_k)+c_1\alpha_k\nabla f_k^T p_k \\<br>|\nabla f(x_k+\alpha_k p_k)^T p_k|\le c_2|\nabla f_k^T p_k|<br>\end{array}$$<br>注意到，这个条件比上面只多了绝对值符号。强Wolfe条件实际上限制了 $\phi’(\alpha_k)$ 不能为一个很大的正数，即可行的 $\alpha$ 不能离最低点太远。</p>
+<h3 id="Goldstein条件"><a href="#Goldstein条件" class="headerlink" title="Goldstein条件"></a>Goldstein条件</h3><p>像Wolfe条件一样，Goldstein条件也保证了步长 $\alpha$ 不至于太小，同时又能使函数值 $f$ 产生充分下降。</p>
+<p><img src="http://i.imgur.com/AA3qna2.png" alt=""><br><img src="http://i.imgur.com/SReNOuC.png" alt=""></p>
+<hr>
+<h3 id="后向跟踪方法（Backtracking-Approach）"><a href="#后向跟踪方法（Backtracking-Approach）" class="headerlink" title="后向跟踪方法（Backtracking Approach）"></a>后向跟踪方法（Backtracking Approach）</h3><p>如果备选的步长合适，那么通过后向跟踪方法，我们可以只用充分下降条件来做终止条件，同时选出一个不错的步长。（因为这时候 $\alpha$ 是从大往小变化，所以不可能变得太小）</p>
+<blockquote>
+<p>Choose $\overline{\alpha}&gt;0,\rho,c\in(0,1)$；set $\alpha\leftarrow\overline{\alpha}$<br><strong>repeat</strong> until $f(x_k+\alpha p_k)\le f(x_k)+c\alpha\nabla f_k^T p_k$<br>$\qquad \alpha\leftarrow\rho\alpha$<br><strong>end(repeat)</strong><br>Terminate with $\alpha_k=\alpha$</p>
+</blockquote>
+<p>特点：</p>
+<ol>
+<li>在有限次尝试后可以得到一个可接受的步长</li>
+<li>最终得到的步长要么是给定的值 $\overline{\alpha}$，要么就是一个比较小（但不是过于小）的满足充分下降条件的步长</li>
+<li>在实际中，收缩因子 $\rho$ 通常被设置为在每轮迭代中在一个区间 $[\rho_{\text{lo}},\rho_{\text{hi}}]$</li>
+<li>这种简单的终止线搜索的方法很适合牛顿法</li>
+</ol>
+<p><strong>凸二次规划</strong><br>特别地，对于凸二次规划 $f(x)=\frac{1}{2}x^TQx+b^Tx+c$，$\min_{\alpha&gt;0}\phi(\alpha)=f(x_k+\alpha p_k)$ 可以直接计算出结果$$\alpha_k=-\cfrac{\nabla f_k^Tp_k}{p_k^TQp_k}$$<br>对于其它一般非线性函数，则需要用迭代的方法求解。</p>
+<h1 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h1><ol>
+<li><a href="http://www.codelast.com/%e5%8e%9f%e5%88%9b%e6%9c%80%e9%80%9f%e4%b8%8b%e9%99%8d%e6%b3%95%ef%bc%8c%e7%89%9b%e9%a1%bf%e6%b3%95%ef%bc%8c%e5%85%b1%e8%bd%ad%e6%96%b9%e5%90%91%e6%b3%95%ef%bc%8c%e5%85%b1%e8%bd%ad%e6%a2%af%e5%ba%a6/" target="_blank" rel="external">[原创]最速下降法，牛顿法，共轭方向法，共轭梯度法及其他</a></li>
+<li><a href="http://www.codelast.com/%e5%8e%9f%e5%88%9b-%e5%86%8d%e8%b0%88-%e6%9c%80%e9%80%9f%e4%b8%8b%e9%99%8d%e6%b3%95%e6%a2%af%e5%ba%a6%e6%b3%95steepest-descent/" target="_blank" rel="external">[原创] 再谈 最速下降法/梯度法/Steepest Descent</a></li>
+<li>《统计学习方法》附录A</li>
+<li>NJU《最优化理论》课程讲义</li>
+<li><a href="http://www.math.uwaterloo.ca/~hwolkowi/matrixcookbook.pdf" target="_blank" rel="external">MatrixCookbook</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/27/2016-11-27-Conjugate-Gradient-Method/" rel="next" title="共轭梯度法（Conjugate Gradient Method）">
+                <i class="fa fa-chevron-left"></i> 共轭梯度法（Conjugate Gradient Method）
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/pic.PNG"
+               alt="Wang Kx" />
+          <p class="site-author-name" itemprop="name">Wang Kx</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">36</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">63</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-确定搜索方向"><span class="nav-number">1.</span> <span class="nav-text">1. 确定搜索方向</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-最速下降法（Steepest-Descent）"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 最速下降法（Steepest Descent）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#最速下降法的讨论"><span class="nav-number">1.1.1.</span> <span class="nav-text">最速下降法的讨论</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-牛顿法"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 牛顿法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#牛顿法的讨论"><span class="nav-number">1.2.1.</span> <span class="nav-text">牛顿法的讨论</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-拟牛顿法"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 拟牛顿法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-方向选择小结"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 方向选择小结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-确定搜索策略"><span class="nav-number">2.</span> <span class="nav-text">2. 确定搜索策略</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-精确线搜索"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 精确线搜索</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#穷举搜索"><span class="nav-number">2.1.1.</span> <span class="nav-text">穷举搜索</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二分搜索"><span class="nav-number">2.1.2.</span> <span class="nav-text">二分搜索</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#斐波那契搜索"><span class="nav-number">2.1.3.</span> <span class="nav-text">斐波那契搜索</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#黄金分割搜索"><span class="nav-number">2.1.4.</span> <span class="nav-text">黄金分割搜索</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#精确性-VS-代价"><span class="nav-number">2.1.5.</span> <span class="nav-text">精确性 VS 代价</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-非精确线搜索"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 非精确线搜索</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#充分下降条件"><span class="nav-number">2.2.1.</span> <span class="nav-text">充分下降条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#曲率条件"><span class="nav-number">2.2.2.</span> <span class="nav-text">曲率条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Wolfe条件"><span class="nav-number">2.2.3.</span> <span class="nav-text">Wolfe条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#强Wolfe条件"><span class="nav-number">2.2.4.</span> <span class="nav-text">强Wolfe条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Goldstein条件"><span class="nav-number">2.2.5.</span> <span class="nav-text">Goldstein条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后向跟踪方法（Backtracking-Approach）"><span class="nav-number">2.2.6.</span> <span class="nav-text">后向跟踪方法（Backtracking Approach）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料："><span class="nav-number">3.</span> <span class="nav-text">参考资料：</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wang Kx</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=0.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

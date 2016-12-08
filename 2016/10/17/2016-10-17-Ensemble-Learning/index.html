@@ -1,0 +1,598 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="集成学习,adaboost,random forest,bagging," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="集成学习集成学习(ensemble learning)是通过构建并结合多个学习器来完成学习任务。个体学习器可以是同质的(同一类学习器)，也可以是异质的(不同类学习器)。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="集成学习算法(Ensemble Learning)">
+<meta property="og:url" content="http://yoursite.com/2016/10/17/2016-10-17-Ensemble-Learning/index.html">
+<meta property="og:site_name" content="MayMoon">
+<meta property="og:description" content="集成学习集成学习(ensemble learning)是通过构建并结合多个学习器来完成学习任务。个体学习器可以是同质的(同一类学习器)，也可以是异质的(不同类学习器)。">
+<meta property="og:image" content="http://i.imgur.com/N3GLFvI.png">
+<meta property="og:updated_time" content="2016-10-17T12:01:01.894Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="集成学习算法(Ensemble Learning)">
+<meta name="twitter:description" content="集成学习集成学习(ensemble learning)是通过构建并结合多个学习器来完成学习任务。个体学习器可以是同质的(同一类学习器)，也可以是异质的(不同类学习器)。">
+<meta name="twitter:image" content="http://i.imgur.com/N3GLFvI.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 集成学习算法(Ensemble Learning) | MayMoon </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">MayMoon</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">随便写写</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                集成学习算法(Ensemble Learning)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-17T19:54:01+08:00" content="2016-10-17">
+              2016-10-17
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="集成学习"><a href="#集成学习" class="headerlink" title="集成学习"></a>集成学习</h2><p>集成学习(ensemble learning)是通过构建并结合多个学习器来完成学习任务。个体学习器可以是同质的(同一类学习器)，也可以是异质的(不同类学习器)。</p>
+<a id="more"></a>
+<p>集成学习通过将多个学习器(一般是<strong>弱学习器</strong>)结合，可以得到比单一学习器优越很多的泛化性能。一般来说，把好的东西和坏的东西掺到一起，得到的应该是比好的差一些，比坏的好一些。但集成学习为什么能得到比最好的单一学习器更好的性能呢？<br>考虑一个简单的例子，在二分类问题中，三个分类器在三个测试样本上的表现如下图所示，$\surd$表示分类正确，$\times$ 表示分类错误，集成学习的结果通过投票法产生。<br><img src="http://i.imgur.com/N3GLFvI.png" alt=""><br>这个例子表明，要获得好的集成，个体学习器应“好而不同”，即学习器不能太坏，并且要有“多样性”，即学习器之间具有差异。然而事实上，个体学习器的“准确性”和“多样性”本身就存在冲突。一般的，准确性很高之后，要增加多样性就需要牺牲准确性。</p>
+<p>根据个体学习器的生成方式，目前的集成学习方法大致可分为两类，即个体学习器之间存在<strong>强依赖关系</strong>、必须<strong>串行</strong>生成的序列化方法，以及个体学习器间不存在强依赖关系、可同时生成的<strong>并行</strong>化方法。前者的代表是Boosting，后者的代表是Bagging和随机森林(Random Forest)。</p>
+<h2 id="Boosting"><a href="#Boosting" class="headerlink" title="Boosting"></a>Boosting</h2><p>Boosting是一类可将弱学习器提升为强学习器的算法。这类算法的工作机制类似：先从初始训练集训练出一个基学习器，再根据基学习器的表现对训练样本分布进行调整，使得先前基学习器做错的样本在后续受到更多关注，然后基于调整后的样本分布来训练下一个基学习器；如此重复进行，直至基学习器数目达到事先指定的值$T$，最终将这$T$个基学习器进行加权结合。</p>
+<h3 id="AdaBoost"><a href="#AdaBoost" class="headerlink" title="AdaBoost"></a>AdaBoost</h3><p>假设给定一个二分类的训练数据集$$T=\{(x_1,y_1),(x_2,y_2),\cdots,(x_N,y_N)\}$$其中，每个样本点由实例与标记组成。实例$x_i\in\mathcal{X}\subseteq\mathbb{R}^n$，标记$y_i\in\mathcal{Y}=\{-1,+1\}$。AdaBoost利用以下算法，从训练数据中学习一系列弱分类器，并将它们<strong>线性组合</strong>得到一个强分类器。</p>
+<ol>
+<li>初始化训练数据的权值分布$$\mathcal{D}_1=(w_{11},w_{12},\cdots,w_{1N}),\quad w_{1i}=\cfrac{1}{N},\quad i=1,2,\cdots,N$$</li>
+<li>对$m=1,2,\cdots,M$<br> (a) 使用具有权值分布$\mathcal{D}_m$的训练数据学习，得到基本分类器$$G_m(x):\mathcal{X}\to\{-1,+1\}$$<br> (b) 计算$G_m(x)$在训练数据集上的分类误差率$$e_m=P(G_m(x_i)\neq y_i)=\sum\limits_{i=1}^N w_{mi}I(G_m(x_i)\neq y_i)$$<br> (c) 如果$e_m&gt;0.5$，则跳出循环，否则继续<br> (d) 计算这个弱分类器$G_m(x)$所占权重$$\alpha_m=\cfrac{1}{2}\ln\cfrac{1-e_m}{e_m}$$<br> (e) 更新训练数据集的权值分布$$\mathcal{D}_{m+1}=(w_{m+1,1},w_{m+1,2},\cdots,w_{m+1,N})$$ $$w_{m+1,i}=\cfrac{w_{mi}}{Z_m}\exp(-\alpha_my_iG_m(x_i)),\quad i=1,2,\cdots,N$$这里的$Z_m$是规范化因子，$Z_m=\sum_{i=1}^Nw_{mi}\exp(-\alpha_my_iG_m(x_i))$，使得$\mathcal{D}_{m+1}$成为一个概率分布</li>
+<li>构建基本分类器的线性组合$$f(x)=\sum_{m=1}^M\alpha_mG_m(x)$$得到最终分类器$$G(x)=\text{sign}(f(x))=\text{sign}\left(\sum_{m=1}^M\alpha_mG_m(x)\right)$$</li>
+</ol>
+<blockquote>
+<p>$\text{sign}(x) =<br>\begin{cases}<br>-1,  &amp; \text{if $x&lt;0$} \\<br>0, &amp; \text{if $x=0$}  \\<br>1, &amp; \text{if $x\gt0$}<br>\end{cases}<br>$</p>
+</blockquote>
+<p>由上面的式子可知，当$e_m\leq\frac{1}{2}$时，$\alpha_m\geq 0$，并且$\alpha_m$随着$e_m$的减小而增大，所以分类误差越小的基本分类器在最终分类器中的作用越大。<br>另外，在权值更新中，误分类的样本的权值被放大，被正确分类样本的权值得以减小。不改变所给的训练数据，而不断改变训练数据的权值分布，使得训练数据在基本分类器的学习中起不同的作用，这是AdaBoost的一个特点<br>注意，系数$\alpha_m$表示基本分类器的重要性，所以所有$\alpha_m$之和不为0。</p>
+<p>Boosting算法在训练的每一轮都要检查当前生成的基学习器是否满足条件（如算法中的$e_m&gt;0.5$，检查当前基分类器是否比随机猜测好），一旦条件不满足，则当前基学习器被抛弃，且学习过程停止。在这种情形下，初始设置的学习轮数$M$也许还远未达到，可能导致最终集成中只包含很少的基学习器而性能不佳。可以采取“重采样法”，在抛弃当前基学习器后，可根据当前分布重新对训练样本进行采样，基于新的采样结果重新训练出满足要求的基学习器。</p>
+<p>从偏差-方差分解地角度看，Boosting主要关注降低偏差，因此Boosting能基于泛化性能相当弱的学习器构建出很强的集成。</p>
+<h2 id="Bagging"><a href="#Bagging" class="headerlink" title="Bagging"></a>Bagging</h2><p>要获得泛化性能强的集成，集成中的个体学习器应尽可能相互独立（具有差异）。一个可能的做法是对训练样本进行采样，产生若干个不同的子集，再从每个数据子集中训练出一个基学习器。由于训练样本不同，获得的基学习器可望具有比较大的差异。但我们又需要基学习器不能太差，所以使用的样本不能太小。为解决这个问题，我们可以考虑采用bootstrap采样。</p>
+<p>Bagging是并行式集成学习方法的代表。我们用bootstrap采样出$T$个含$m$个训练样本的采样集，然后基于每个采样集训练出一个基学习器，再将这些基学习器进行结合。在对预测输出进行结合时，Bagging通常对分类任务使用简单投票法，对回归任务使用简单平均法。若分类时票数相同，则可以随机选择一个或进一步考察学习器投票的置信度。</p>
+<blockquote>
+<p>Bagging其实是Bootstrap AGGregatING的缩写</p>
+</blockquote>
+<p>训练一个Bagging集成与直接使用基学习算法训练一个学习器的复杂度同阶，说明Bagging是一个很高效的集成算法。此外，与标准AdaBoost只适用于二分类任务不同，Bagging能不加修改地用于多分类、回归等任务。</p>
+<p>从偏差-方差分解地角度看，Bagging主要关注降低方差。因此，它在不剪枝决策树、神经网络等易受样本扰动的学习器上效用更为明显。</p>
+<h2 id="随机森林-Random-Forest"><a href="#随机森林-Random-Forest" class="headerlink" title="随机森林(Random Forest)"></a>随机森林(Random Forest)</h2><p>随机森林(简称RF)是Bagging的一个扩展变体。RF在以决策树为基学习器构建Bagging集成的基础上，在决策树的训练过程中引入了<strong>随机属性选择</strong>。</p>
+<p>传统决策树在选择划分属性时是在当前结点的属性集合(假定有$d$个属性)中选择一个最优属性；而在RF中，对基决策树的每个结点，先从该结点的属性集合中随机选择一个包含$k$个属性的子集，然后再从这个子集中选一个最优属性用于划分。<strong>这里的 $k$ 控制了随机性的引入程度</strong>：若 $k=d$，则基决策树构建与传统决策树相同；若 $k=1$，则是随机选择一个属性划分；一般情况下，选择 $k=\log_2 d$。</p>
+<p>随机森林简单、容易实现、计算开销小，但在很多问题上作用强大。它对Bagging只做了小改动，但是与Bagging中基学习器的“多样性”仅通过样本扰动而来不同，随机森林中基学习器的多样性不仅来自样本扰动，还来自属性扰动，这就使得最终学习器的泛化性能进一步提升。</p>
+<p>随着学习器数目的增加，随机森林会收敛到比Bagging更低的泛化误差。而且，RF的训练开销要比Bagging小，因为它只需要对属性子集进行考察，而不是整个属性集。</p>
+<h2 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h2><ol>
+<li>《机器学习》周志华著</li>
+<li>《统计学习方法》李航著</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/集成学习/" rel="tag">#集成学习</a>
+          
+            <a href="/tags/adaboost/" rel="tag">#adaboost</a>
+          
+            <a href="/tags/random-forest/" rel="tag">#random forest</a>
+          
+            <a href="/tags/bagging/" rel="tag">#bagging</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/14/2016-10-14-General-Linear-Model/" rel="next" title="一般线性模型(General Linear Model)">
+                <i class="fa fa-chevron-left"></i> 一般线性模型(General Linear Model)
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/10/26/2016-10-26-Least-Angle-Regression/" rel="prev" title="最小角回归(Least Angle Regression)">
+                最小角回归(Least Angle Regression) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/pic.PNG"
+               alt="Wang Kx" />
+          <p class="site-author-name" itemprop="name">Wang Kx</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">36</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">63</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#集成学习"><span class="nav-number">1.</span> <span class="nav-text">集成学习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Boosting"><span class="nav-number">2.</span> <span class="nav-text">Boosting</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AdaBoost"><span class="nav-number">2.1.</span> <span class="nav-text">AdaBoost</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bagging"><span class="nav-number">3.</span> <span class="nav-text">Bagging</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#随机森林-Random-Forest"><span class="nav-number">4.</span> <span class="nav-text">随机森林(Random Forest)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料："><span class="nav-number">5.</span> <span class="nav-text">参考资料：</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wang Kx</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=0.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
