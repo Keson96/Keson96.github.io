@@ -64,7 +64,7 @@
 <meta property="og:site_name" content="MayMoon">
 <meta property="og:description" content="共轭梯度法是求解大型线性方程组的一种很有效的方法，也可以通过改进用来求解非线性优化问题。下面先介绍线性线性共轭梯度法，再介绍非线性共轭梯度法。">
 <meta property="og:image" content="http://i.imgur.com/GpWE6OS.png">
-<meta property="og:updated_time" content="2016-11-27T13:15:06.768Z">
+<meta property="og:updated_time" content="2016-12-08T10:50:19.183Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="共轭梯度法（Conjugate Gradient Method）">
 <meta name="twitter:description" content="共轭梯度法是求解大型线性方程组的一种很有效的方法，也可以通过改进用来求解非线性优化问题。下面先介绍线性线性共轭梯度法，再介绍非线性共轭梯度法。">
@@ -313,7 +313,7 @@
 </ul>
 <p>当线搜索是精确线搜索时，则方向 $p_k$ 可以保证是下降方向；而当线搜索是非精确线搜索时，方向 $p_k$ 就不一定是下降方向了，此时可以限制 $\alpha_k$ 满足强Wolfe条件，则得到的方向 $p_k$ 一定是下降方向。</p>
 <blockquote>
-<p>关于强Wolfe条件和线搜索的内容可以参考这篇文章（还在整理中）</p>
+<p>关于强Wolfe条件和线搜索的内容可以参考<a href="http://keson96.github.io/2016/12/08/2016-12-08-Line-Search/" target="_blank" rel="external">这篇文章</a></p>
 </blockquote>
 <h2 id="The-Polak-Ribiere-Method"><a href="#The-Polak-Ribiere-Method" class="headerlink" title="The Polak-Ribiere Method"></a>The Polak-Ribiere Method</h2><p>PR-CG算法和FR-CG算法的不同在于选取 $\beta_k$ 的不同：$$\beta_{k+1}^{\text{FR}}=\cfrac{\nabla f_{k+1}^T\nabla f_{k+1}}{\nabla f_k^T\nabla f_k}\qquad \beta_{k+1}^{\text{PR}}=\cfrac{\nabla f_{k+1}^T(\nabla f_{k+1}-\nabla f_k)}{\nabla f_k^T\nabla f_k}$$ <strong>当 $f$ 是严格凸的二次函数，且使用精确线搜索时，两种算法是相同的。</strong><br>数值结果表明，PR-CG算法更加地高效，强健性也更好。</p>
 <h2 id="重启"><a href="#重启" class="headerlink" title="重启"></a>重启</h2><p>在非线性共轭梯度法中，常常每过 $n$ 步就进行重启，重新设置 $\beta_k=0$，即选取最速下降方向。<br>一个常用的重启判定策略是：当连续两次的梯度值离正交很远时（即夹角偏离90度很大），进行一次重启。</p>
@@ -415,7 +415,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">36</span>
+              <span class="site-state-item-count">37</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -423,7 +423,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -432,7 +432,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">63</span>
+                <span class="site-state-item-count">57</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

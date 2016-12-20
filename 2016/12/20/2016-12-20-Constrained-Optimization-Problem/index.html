@@ -59,16 +59,21 @@
 
 <meta name="description" content="对于无约束优化问题一样，我们有判断局部最优解的充分条件和必要条件。通过引进拉格朗日乘子，对于约束优化问题，我们也可以推导出类似的充分条件和必要条件。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="🔨约束优化问题（Constrained Optimization Problem）">
-<meta property="og:url" content="http://yoursite.com/2000/05/16/Constrained-Optimization-Problem/index.html">
+<meta property="og:title" content="约束优化问题（Constrained Optimization Problem）">
+<meta property="og:url" content="http://yoursite.com/2016/12/20/2016-12-20-Constrained-Optimization-Problem/index.html">
 <meta property="og:site_name" content="MayMoon">
 <meta property="og:description" content="对于无约束优化问题一样，我们有判断局部最优解的充分条件和必要条件。通过引进拉格朗日乘子，对于约束优化问题，我们也可以推导出类似的充分条件和必要条件。">
 <meta property="og:image" content="http://i.imgur.com/MpzCsIE.png">
 <meta property="og:image" content="http://i.imgur.com/edX1ehs.png">
 <meta property="og:image" content="http://i.imgur.com/E4ibPTw.png">
-<meta property="og:updated_time" content="2016-11-28T15:52:34.891Z">
+<meta property="og:image" content="http://i.imgur.com/eBdZZs3.png">
+<meta property="og:image" content="http://i.imgur.com/2Yixkdh.png">
+<meta property="og:image" content="http://i.imgur.com/5lWLZsQ.png">
+<meta property="og:image" content="http://i.imgur.com/IXMRBAL.png">
+<meta property="og:image" content="http://i.imgur.com/qT8bzUU.png">
+<meta property="og:updated_time" content="2016-12-20T14:38:49.114Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="🔨约束优化问题（Constrained Optimization Problem）">
+<meta name="twitter:title" content="约束优化问题（Constrained Optimization Problem）">
 <meta name="twitter:description" content="对于无约束优化问题一样，我们有判断局部最优解的充分条件和必要条件。通过引进拉格朗日乘子，对于约束优化问题，我们也可以推导出类似的充分条件和必要条件。">
 <meta name="twitter:image" content="http://i.imgur.com/MpzCsIE.png">
 
@@ -88,7 +93,7 @@
   };
 </script>
 
-  <title> 🔨约束优化问题（Constrained Optimization Problem） | MayMoon </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> 约束优化问题（Constrained Optimization Problem） | MayMoon </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -218,7 +223,7 @@
             
             
               
-                🔨约束优化问题（Constrained Optimization Problem）
+                约束优化问题（Constrained Optimization Problem）
               
             
           </h1>
@@ -230,8 +235,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2000-05-16T19:54:01+08:00" content="2000-05-16">
-              2000-05-16
+            <time itemprop="dateCreated" datetime="2016-12-20T19:54:01+08:00" content="2016-12-20">
+              2016-12-20
             </time>
           </span>
 
@@ -244,8 +249,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Under-Construction/" itemprop="url" rel="index">
-                    <span itemprop="name">Under Construction</span>
+                  <a href="/categories/优化算法/" itemprop="url" rel="index">
+                    <span itemprop="name">优化算法</span>
                   </a>
                 </span>
 
@@ -281,7 +286,7 @@
 <blockquote>
 <p>回顾无约束优化<br><strong>必要条件</strong>：$x^{\star}$ 是无约束优化问题的局部最优解的必要条件是：$\nabla f(x^{\star})=0$ 且海塞矩阵 $\nabla^2f(x^{\star})$ 是半正定的。<br><strong>充分条件</strong>：任意一点 $x^{\star}$ 如果满足：$\nabla f(x^{\star})=0$ 且海塞矩阵 $\nabla^2f(x^{\star})$ 是正定的，那么这个点就是 $f$ 的一个严格局部最优点。</p>
 </blockquote>
-<h1 id="总览和术语"><a href="#总览和术语" class="headerlink" title="总览和术语"></a>总览和术语</h1><p><strong>一般形式</strong><br>一般化的约束优化问题具有下面的形式：$$\min_{x\in \mathbb{R}^n}f(x)\qquad \text{s.t.}\begin{cases}c_i(x)=0,\quad i=1,\cdots,n_e \\ d_j(x)\ge 0,\quad j=1,\cdots,n_i\end{cases}$$ 等式约束方程为 $c_i:\mathbb{R}^n\to\mathbb{R}$<br>不等式约束方程为 $d_j:\mathbb{R}^n\to\mathbb{R}$<br>将可行解的集合记为 $\Omega$，并假设这些函数都是二次可微的。<br><strong>有效集(Active Set)</strong><br>一个可行解 $x\in\Omega$ 处的活跃集包含所有等式约束和满足 $d_j(x)=0$ 的不等式约束，即$$\mathcal{A}(x)=\bigcup_{i=1}^{n_i}\{c_i\}\cup\{d_j|d_j(x)=0\}$$</p>
+<h1 id="总览和术语"><a href="#总览和术语" class="headerlink" title="总览和术语"></a>总览和术语</h1><p><strong>一般形式</strong><br>一般化的约束优化问题具有下面的形式：$$\min_{x\in \mathbb{R}^n}f(x)\qquad \text{s.t.}\begin{cases}c_i(x)=0,\quad i=1,\cdots,n_e \\ d_j(x)\ge 0,\quad j=1,\cdots,n_i\end{cases}$$ 等式约束方程为 $c_i:\mathbb{R}^n\to\mathbb{R}$<br>不等式约束方程为 $d_j:\mathbb{R}^n\to\mathbb{R}$<br>将可行解的集合记为 $\Omega$，并假设这些函数都是二次可微的。<br><strong>有效集(Active Set)</strong><br>一个可行解 $x\in\Omega$ 处的有效集包含所有等式约束和满足 $d_j(x)=0$ 的不等式约束，即$$\mathcal{A}(x)=\bigcup_{i=1}^{n_i}\{c_i\}\cup\{d_j|d_j(x)=0\}$$</p>
 <h1 id="一阶必要条件-First-order-necessary-KKT-conditions"><a href="#一阶必要条件-First-order-necessary-KKT-conditions" class="headerlink" title="一阶必要条件(First-order necessary KKT conditions)"></a>一阶必要条件(First-order necessary KKT conditions)</h1><h2 id="等式约束"><a href="#等式约束" class="headerlink" title="等式约束"></a>等式约束</h2><p>我们首先来看等式约束的情况，以下面这个具体的例子来说： $$\min f(x)=x_1+x_2\qquad\text{s.t. }c_1(x)=x_1^2+x_2^2-2=0$$<br><img src="http://i.imgur.com/MpzCsIE.png" alt=""><br>$\nabla f=(1,1)^T$，$\nabla c_1=(2x_1,2x_2)^T$，我们发现，在最优点 $x^{\star}$ 处，$\nabla f(x^{\star})$ 和 $\nabla c_1(x^{\star})$ 是平行的。<br>假设 $x\in\Omega$ 是一个可行解，即有 $c_1(x)=0$，如果我们能找到一个找到一个方向 $p$ 使得等式约束依然满足 $$0=c_1(x+p)\approx c_1(x)+\nabla c_1(x)^Tp=\nabla c_1(x)^Tp$$同时使函数值下降$$0&gt;f(x+p)-f(x)\approx \nabla f(x)^Tp$$那么就说明 $x$ 不是最优点。<br>反过来想，对于一个点 $x$，如果不存在满足上面两个条件的方向 $p$，就可以说这个点是局部最优点。<br>事实上，只有当 $\nabla f(x)$ 和 $\nabla c_1(x)$ 平行时才不会存在这样的方向，即存在某个实数使得 $\nabla f(x)=\lambda_1\nabla c_1(x)$。</p>
 <blockquote>
 <p>反之，我们可以定义出 $p=-\left(I-\cfrac{\nabla c_1(x)\nabla c_1(x)^T}{||\nabla c_1(x)||^2}\right)\nabla f(x)$ 来满足上述两个条件</p>
@@ -290,6 +295,35 @@
 <h2 id="不等式约束"><a href="#不等式约束" class="headerlink" title="不等式约束"></a>不等式约束</h2><p>同样以一个例子来说明： $$\min f(x)=x_1+x_2\qquad\text{s.t. }d_1(x)=x_1^2+x_2^2-2\ge0$$<br><img src="http://i.imgur.com/edX1ehs.png" alt=""><br>(¶图中应该是 $\nabla d_1$ 而不是 $\nabla c_1$)<br>类似地，给定一个可行解 $x$，如果我们能找到一个方向 $p$，既满足可行性又使函数值下降，则 $x$ 不是最优解，即 $$\begin{cases}\nabla d_1(x)^Tp\ge0 \\ \nabla f(x)^Tp&lt;0\end{cases}$$ 分大于和等于两种情况讨论</p>
 <p><strong>情况1：$x$ 严格在圆的内部，即 $d_1(x)&gt;0$</strong><br>在这种情况下，只要方向 $p$ 长度足够小，那么就可以满足条件（设想沿使函数值减小的方向前进了极其小的一步，此时依然在圆内）。<br>比方说选取 $p=-d_1(x)\frac{\nabla f(x)}{||\nabla f(x)||}$ 就可以在 $\nabla f(x)\neq 0$ 时满足条件。<br><strong>情况2：$x$ 在圆周上，即 $d_1(x)=0$</strong><br><img src="http://i.imgur.com/E4ibPTw.png" alt=""><br>(¶图中应该是 $\nabla d_1$ 而不是 $\nabla c_1$)<br>只要选择的方向 $p$ 落在深色的阴影区域中就可以满足那两个条件，那么什么时候这个区域不存在呢？就是存在 $\lambda_1\ge0$ 使得 $\nabla f(x)=\lambda_1\nabla d_1(x)$ 成立时，即 $\nabla f(x)$ 和 $\nabla d_1(x)$ 同向时。</p>
 <p><strong>总结上面两种情况</strong>：当在 $x^{\star}$ 处不存在可行的下降方向 $p$ 时，应当有 $$\nabla_xL(x^{\star},\lambda_1^{\star})=0,\quad \text{for some }\lambda_1^{\star}\ge0$$ 并且 $$\lambda_1^{\star}d_1(x^{\star})=0\qquad\begin{cases}\text{Case I}&amp;\quad d_1(x^{\star})&gt;0 \\\text{Case II} &amp;\quad d_1(x^{\star})=0\end{cases}$$</p>
+<h2 id="一阶必要KKT条件"><a href="#一阶必要KKT条件" class="headerlink" title="***** 一阶必要KKT条件 *****"></a>***** 一阶必要KKT条件 *****</h2><p><strong>如果 $x^{\star}$ 是一个弱局部最优解，下面的条件是满足的：$$\begin{array}{l}\color{red}{\nabla f(x^{\star})-\sum\limits_{i=1}^{n_e}\gamma_i \nabla c_i(x^{\star})-\sum\limits_{j=1}^{n_i}\lambda_j\nabla d_j(x^{\star})=0} \\ \color{green}{\lambda_j\ge 0,\quad j=1,…,n_i} \\ \color{purple}{c_i(x^{\star})=0,\quad i=1,…,n_e} \\ \color{purple}{d_j(x^{\star})\ge 0,\quad j=1,…,n_i} \\ \color{orange}{\lambda_j d_j(x^{\star})=0,\quad j=1,…,n_i}\end{array}$$分别表示<font color="red">静止性条件</font>，<font color="green">对偶可行性条件</font>，<font color="purple">原问题可行性条件</font>，<font color="orange">互补条件</font>。</strong></p>
+<h3 id="静止性条件（Stationarity）"><a href="#静止性条件（Stationarity）" class="headerlink" title="静止性条件（Stationarity）"></a>静止性条件（Stationarity）</h3><p>静止性指的是在点 $x^{\star}$ 处不存在可行的下降方向。<br><img src="http://i.imgur.com/eBdZZs3.png" height="280" width="280"><br><img src="http://i.imgur.com/2Yixkdh.png" height="280" width="280"></p>
+<h3 id="拉格朗日乘子"><a href="#拉格朗日乘子" class="headerlink" title="拉格朗日乘子"></a>拉格朗日乘子</h3><p>拉格朗日乘子 $\gamma_i$ 和 $\lambda_j$ 实际上告诉了我们函数最优值 $f(x^{\star})$ 对于每个约束的<strong>敏感性</strong>，反映出函数值 $f$ 有多么强烈地向方向 $c_i$ 和 $d_j$ 靠近或远离。<br>如果我们轻微地扰动第 $i$ 个等式约束的右端项，使得 $c_i(x)\ge -\epsilon||\nabla c_i(x^{\star})||$，则有 $$\cfrac{\mathrm{d}f(x^{\star}(\epsilon))}{\mathrm{d}\epsilon}=-\gamma_i||\nabla c_i(x^{\star})||$$</p>
+<p>于是，我们可以将约束条件分为三类：</p>
+<ul>
+<li>强有效约束（Strong Active）：拉格朗日乘子为正数的有效不等约束，和拉格朗日乘子非零的等式约束</li>
+<li>弱有效约束（Weak Active）：拉格朗日乘子为0的有效约束</li>
+<li>无效约束（Inactive）：不等于0的不等约束</li>
+</ul>
+<p><img src="http://i.imgur.com/5lWLZsQ.png" height="400"><br>如果去掉弱有效约束和无效约束，最优值仍不变。也就是说，只有强有效约束对最优值是有影响的。</p>
+<h3 id="互补条件（Complementary-Conditions）"><a href="#互补条件（Complementary-Conditions）" class="headerlink" title="互补条件（Complementary Conditions）"></a>互补条件（Complementary Conditions）</h3><p>互补条件 $\lambda_j d_j(x^{\star})=0$ 保证了每个不等约束必须是三类约束之一：</p>
+<ul>
+<li>无效约束：$d_j(x^{\star})&gt;0,\lambda_j=0$</li>
+<li>强有效约束：$d_j(x^{\star})=0,\lambda_j&gt;0$</li>
+<li>弱有效约束：$d_j(x^{\star})=0,\lambda_j=0$</li>
+</ul>
+<p>严格互补条件则保证了每个不等约束必须是前两种情况之一，即要么是无效约束，要么是强有效约束。</p>
+<h1 id="二阶最优条件（Second-order-optimality-conditions）"><a href="#二阶最优条件（Second-order-optimality-conditions）" class="headerlink" title="二阶最优条件（Second-order optimality conditions）"></a>二阶最优条件（Second-order optimality conditions）</h1><p>我们知道，满足 $p^T\nabla f(x^{\star})&gt;0$ 的方向 $p$ 可以使函数值增大，满足 $p^T\nabla f(x^{\star})&lt;0$ 的方向 $p$ 可以使函数值减小，但对于 $p^T\nabla f(x^{\star})=0$ 的方向 $p$，我们不知道它到底使函数值增大还是减小。如下图所示，$p^T\nabla f(x^{\star})=0$ 可以使函数值增大、减小或不变。</p>
+<p><img src="http://i.imgur.com/IXMRBAL.png" height="300"></p>
+<p>将这些模棱两可的方向的集合称为“关键锥”（critical cone）<br>$$\mathcal{C}(x^{\star},\gamma)=\{w\in\mathcal{F}(x)|\nabla d_j(x^{\star})^Tw=0,\forall j\in\mathcal{A}(x^{\star})\text{ with }\lambda_j&gt;0\}$$其中$$\mathcal{F}(x)=\left\{p|p \text{ 满足 }\begin{cases}\nabla c_i(x)^Tp=0\quad \forall i \\ \nabla d_j(x)^Tp\ge 0 \quad\forall d_j\in\mathcal{A}(x)\end{cases}\right\}$$</p>
+<h2 id="二阶必要条件"><a href="#二阶必要条件" class="headerlink" title="二阶必要条件"></a>二阶必要条件</h2><p>D1. 满足KKT条件<br>D2. $p^T\nabla^2\mathcal{L}(x^{\star},\gamma)p\ge 0 \quad \forall p\in\mathcal{C}(x^{\star},\gamma)$</p>
+<h2 id="二阶充分条件"><a href="#二阶充分条件" class="headerlink" title="二阶充分条件"></a>二阶充分条件</h2><p>E1. 满足KKT条件<br>E2. $p^T\nabla^2\mathcal{L}(x^{\star},\gamma)p\gt 0 \quad \forall p\in\mathcal{C}(x^{\star},\gamma)$</p>
+<p>类似于无约束的二阶条件，只不过约束问题的二阶条件是<strong>“有选择地”</strong>正定（或半正定）即可。</p>
+<p><img src="http://i.imgur.com/qT8bzUU.png" height="500"></p>
+<p>在Case I中，$f(x)$ 的斜率变化快于 $d_1(x)$，所以拉格朗日函数的二次型严格大于零<br>在Case II中，$f(x)$ 的斜率变化等于 $d_1(x)$，所以拉格朗日函数的二次型等于零<br>在Case III中，$f(x)$ 的斜率变化慢于 $d_1(x)$，所以拉格朗日函数的二次型严格小于零</p>
+<h1 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h1><ol>
+<li><a href="http://www.sandia.gov/~ktcarlb/opt_class/OPT_Lecture3.pdf" target="_blank" rel="external">Constrained Optimization</a></li>
+<li>NJU《最优化理论与方法》Lecture notes</li>
+</ol>
 
       
     </div>
@@ -307,17 +341,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2000/05/16/收缩技术/" rel="next" title="🔨收缩技术(Shrinkage Methods)">
-                <i class="fa fa-chevron-left"></i> 🔨收缩技术(Shrinkage Methods)
+              <a href="/2016/12/08/2016-12-08-Line-Search/" rel="next" title="局部搜索方法——线性搜索">
+                <i class="fa fa-chevron-left"></i> 局部搜索方法——线性搜索
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2000/05/16/Balanced Search Trees/" rel="prev" title="🔨Balanced Search Trees">
-                🔨Balanced Search Trees <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -385,7 +415,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">36</span>
+              <span class="site-state-item-count">37</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -393,7 +423,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -402,7 +432,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">63</span>
+                <span class="site-state-item-count">57</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -433,7 +463,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#总览和术语"><span class="nav-number">1.</span> <span class="nav-text">总览和术语</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一阶必要条件-First-order-necessary-KKT-conditions"><span class="nav-number">2.</span> <span class="nav-text">一阶必要条件(First-order necessary KKT conditions)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#等式约束"><span class="nav-number">2.1.</span> <span class="nav-text">等式约束</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不等式约束"><span class="nav-number">2.2.</span> <span class="nav-text">不等式约束</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#总览和术语"><span class="nav-number">1.</span> <span class="nav-text">总览和术语</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一阶必要条件-First-order-necessary-KKT-conditions"><span class="nav-number">2.</span> <span class="nav-text">一阶必要条件(First-order necessary KKT conditions)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#等式约束"><span class="nav-number">2.1.</span> <span class="nav-text">等式约束</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不等式约束"><span class="nav-number">2.2.</span> <span class="nav-text">不等式约束</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一阶必要KKT条件"><span class="nav-number">2.3.</span> <span class="nav-text">***** 一阶必要KKT条件 *****</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#静止性条件（Stationarity）"><span class="nav-number">2.3.1.</span> <span class="nav-text">静止性条件（Stationarity）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#拉格朗日乘子"><span class="nav-number">2.3.2.</span> <span class="nav-text">拉格朗日乘子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#互补条件（Complementary-Conditions）"><span class="nav-number">2.3.3.</span> <span class="nav-text">互补条件（Complementary Conditions）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二阶最优条件（Second-order-optimality-conditions）"><span class="nav-number">3.</span> <span class="nav-text">二阶最优条件（Second-order optimality conditions）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#二阶必要条件"><span class="nav-number">3.1.</span> <span class="nav-text">二阶必要条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二阶充分条件"><span class="nav-number">3.2.</span> <span class="nav-text">二阶充分条件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料："><span class="nav-number">4.</span> <span class="nav-text">参考资料：</span></a></li></ol></div>
             
           </div>
         </section>

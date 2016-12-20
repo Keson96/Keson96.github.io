@@ -64,7 +64,7 @@
 <meta property="og:site_name" content="MayMoon">
 <meta property="og:description" content="马踏棋盘问题又称Knight Tour Problem，指的是在一个n*n棋盘上，找出一条路径，可以使马不重复地踏遍整个棋盘的格子。对于每一步，最多有八个方向可以走。">
 <meta property="og:image" content="http://i.imgur.com/anHlqEN.png">
-<meta property="og:updated_time" content="2016-06-10T01:17:10.480Z">
+<meta property="og:updated_time" content="2016-12-19T07:01:20.902Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="马踏棋盘问题（Knight Tour Problem）">
 <meta name="twitter:description" content="马踏棋盘问题又称Knight Tour Problem，指的是在一个n*n棋盘上，找出一条路径，可以使马不重复地踏遍整个棋盘的格子。对于每一步，最多有八个方向可以走。">
@@ -280,7 +280,7 @@
 <p><img src="http://i.imgur.com/anHlqEN.png" alt=""></p>
 <p>图中的蓝色箭头表示马的前进，红色箭头表示遇到死路时进行回溯，直到走了64步时就说明找到了一条路径</p>
 <h2 id="Python-实现（Python-Implementation）"><a href="#Python-实现（Python-Implementation）" class="headerlink" title="Python 实现（Python Implementation）"></a>Python 实现（Python Implementation）</h2><h3 id="API"><a href="#API" class="headerlink" title="API"></a>API</h3><pre><code>class KnightTour
-    BDsize = 0                                        ## 表示棋盘的变长
+    BDsize = 0                                        ## 表示棋盘的边长
     board = [[0]*BDsize for _ in range(BDsize)]       ## 表示棋盘，0代表未踩过，1代表踩过
     pathboard = [[0]*BDsize for _ in range(BDsize)]   ## 一个用来显示路径的棋盘，每个位置上的值表示它在路径上的顺序
     start_pos = [1,1]                                 ## 表示起始点的坐标，坐标从1开始
@@ -289,9 +289,9 @@
 
     def __init__(self, bd_size, s_pos)                      ## 构造函数 
     def FindMoves(self, cur_pos)                            ## 找出当前位置的下一步可能方向
-    def SearchNext(self, cur_pos,cnt)                       ## 从当前位置开始，递归地找出路径
-    def Tour(self)                                          ## 调用SearchNext计算出起始位置路径，并打印出来
-    def printBD(self, bd)                                   ## 美观地打印出棋盘
+    def searchNext(self, cur_pos,cnt)                       ## 从当前位置开始，递归地找出路径
+    def tour(self)                                          ## 调用SearchNext计算出起始位置路径，并打印出来
+    def printBD(self, board)                                   ## 美观地打印出棋盘
 </code></pre><h3 id="FindMoves-找出下一步的可能方向"><a href="#FindMoves-找出下一步的可能方向" class="headerlink" title="FindMoves 找出下一步的可能方向"></a>FindMoves 找出下一步的可能方向</h3><p>我们先找出一个点的下一步的所有方向的坐标（8个），然后再进行筛选，去除那些在棋盘外的和已经踏过的。</p>
 <pre><code>def FindMoves(self, cur_pos):
     ## 所有八个方向
@@ -334,7 +334,7 @@
     self.board[cur_pos[0]-1][cur_pos[1]-1] = 1
     self.searchNext(cur_pos, self.BDsize*self.BDsize-1)
 </code></pre><h3 id="printBD-打印棋盘"><a href="#printBD-打印棋盘" class="headerlink" title="printBD 打印棋盘"></a>printBD 打印棋盘</h3><p>这个方法可以打印任何传入的棋盘（二维列表）</p>
-<pre><code>def printBD(board):
+<pre><code>def printBD(self, board):
     print(&quot;-------------------------&quot;)
     for row in board:
         for column in row:
@@ -343,7 +343,7 @@
     print(&quot;-------------------------&quot;)
 </code></pre><h3 id="printPath-打印路径棋盘"><a href="#printPath-打印路径棋盘" class="headerlink" title="printPath 打印路径棋盘"></a>printPath 打印路径棋盘</h3><p>调用方法printBD打印出路径棋盘</p>
 <pre><code>def printPath(self):
-    printBD(self.pathboard)
+    self.printBD(self.pathboard)
 </code></pre><h3 id="运行"><a href="#运行" class="headerlink" title="运行"></a>运行</h3><pre><code>KT = KnightTour(8,[1,1])       ## 建立一个8*8的棋盘，出发点设置为(1,1)
 KT.tour()                      ## 查找路径
 KT.printPath()                 ## 打印路径棋盘
@@ -496,7 +496,7 @@ KT.printPath()                 ## 打印路径棋盘
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">36</span>
+              <span class="site-state-item-count">37</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -504,7 +504,7 @@ KT.printPath()                 ## 打印路径棋盘
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -513,7 +513,7 @@ KT.printPath()                 ## 打印路径棋盘
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">63</span>
+                <span class="site-state-item-count">57</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
