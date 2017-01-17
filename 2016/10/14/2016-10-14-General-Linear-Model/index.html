@@ -63,7 +63,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/10/14/2016-10-14-General-Linear-Model/index.html">
 <meta property="og:site_name" content="MayMoon">
 <meta property="og:description" content="在线性回归中，我们有 $y|x;\theta\sim\mathcal{N}(\mu,\sigma^2)$；在逻辑回归中，我们有 $y|x;\theta\sim\text{Bernoulli}(\phi)$。其中，$\mu$ 和 $\phi$ 可以很好地定义为关于 $x$ 和 $\theta$ 的函数。下面，我们将说明线性回归、逻辑回归都是一般线性模型(General Linear Model)的特">
-<meta property="og:updated_time" content="2016-12-22T10:45:34.065Z">
+<meta property="og:updated_time" content="2016-12-23T14:35:41.146Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一般线性模型(General Linear Model)">
 <meta name="twitter:description" content="在线性回归中，我们有 $y|x;\theta\sim\mathcal{N}(\mu,\sigma^2)$；在逻辑回归中，我们有 $y|x;\theta\sim\text{Bernoulli}(\phi)$。其中，$\mu$ 和 $\phi$ 可以很好地定义为关于 $x$ 和 $\theta$ 的函数。下面，我们将说明线性回归、逻辑回归都是一般线性模型(General Linear Model)的特">
@@ -274,18 +274,18 @@
       
         <p>在线性回归中，我们有 $y|x;\theta\sim\mathcal{N}(\mu,\sigma^2)$；在逻辑回归中，我们有 $y|x;\theta\sim\text{Bernoulli}(\phi)$。其中，$\mu$ 和 $\phi$ 可以很好地定义为关于 $x$ 和 $\theta$ 的函数。下面，我们将说明线性回归、逻辑回归都是一般线性模型(General Linear Model)的特例。</p>
 <a id="more"></a>
-<h2 id="指数族分布-Exponential-Family-Distributions"><a href="#指数族分布-Exponential-Family-Distributions" class="headerlink" title="指数族分布(Exponential Family Distributions)"></a>指数族分布(Exponential Family Distributions)</h2><p>在介绍GLM之前，我们先定义指数族分布。如果一类分布(参数不同)可以写成如下的形式，我们就说这类分布属于指数族分布<br>$$p(y;\eta)=b(y)\exp(\eta^TT(y)-a(\eta))\tag{1}$$<br>其中，$\eta$ 称为<strong>自然参数(natural parameter, also canonical parameter)</strong>；$T(y)$ 称为<strong>充分统计量(sufficient statistic)</strong>，在大多数情形下，$T(y)=y$；$a(\eta)$ 称为<strong>对数配分函数(log partition function)</strong>。式中$e^{-a(\eta)}$ 扮演着很重要的角色，它确保分布 $p(y;\eta)$ 关于 $y$ 的和或积分值为1。<br>一组固定的$T,a,b$就可以确定一类分布（比如伯努利分布），由$\eta$ 确定分布的参数。当我们变化 $\eta$ 时，我们就能得到这类分布的不同实例。</p>
+<h2 id="指数族分布-Exponential-Family-Distributions"><a href="#指数族分布-Exponential-Family-Distributions" class="headerlink" title="指数族分布(Exponential Family Distributions)"></a>指数族分布(Exponential Family Distributions)</h2><p>在介绍GLM之前，我们先定义指数族分布。如果一类分布(参数不同)可以写成如下的形式，我们就说这类分布属于指数族分布<br>$$p(y;\eta)=b(y)\exp(\eta^TT(y)-a(\eta))\tag{1}$$<br>其中，$\eta$ 称为<strong>自然参数(natural parameter, also canonical parameter)</strong>；$T(y)$ 称为<strong>充分统计量(sufficient statistic)</strong>，在大多数情形下，$T(y)=y$；$a(\eta)$ 称为<strong>对数配分函数(log partition function)</strong>。式中$e^{-a(\eta)}$ 扮演着很重要的角色，它确保分布 $p(y;\eta)$ 关于 $y$ 的和或积分值为1。<br>一组固定的$T,a,b$就可以确定一类分布（比如伯努利分布），由 $\eta$ 确定分布的参数。当我们变化 $\eta$ 时，我们就能得到这类分布的不同实例。</p>
 <p>上面的定义可能比较难懂，下面将推导伯努利分布、正态分布、泊松分布属于指数族分布。</p>
-<h3 id="伯努利分布"><a href="#伯努利分布" class="headerlink" title="伯努利分布"></a>伯努利分布</h3><p>对于 $\text{Bernoulli}(\phi)$，我们有 $p(y=1;\phi)=\phi;\quad p(y=0;\phi)=1-\phi$<br>可以将伯努利分布写成：<br>$$\begin{array}{l}<br>p(y;\phi)&amp;=&amp;\phi^y(1-\phi)^{1-y} \\<br>&amp;=&amp; \exp(y\log\phi+(1-y)\log(1-\phi)) \\<br>&amp;=&amp; \exp\left(\left(\log\left(\cfrac{\phi}{1-\phi}\right)\right)y+\log(1-\phi)\right)<br>\end{array}$$<br>仔细对比可以发现，上式符合(1)式的结构。其中<br>$$\begin{array}{r,l}<br>\eta&amp;=&amp;\log\left(\cfrac{\phi}{1-\phi}\right) \\<br>T(y)&amp;=&amp; y \\<br>a(\eta)&amp;=&amp; -\log(1-\phi) \\<br>b(y) &amp;=&amp; 1<br>\end{array}$$<br>至此，我们说明了伯努利分布属于指数族分布。此外，用上面的第一个式子反解$\phi$，可以得到$\phi=1/(1+e^{-\eta})$，这正是Sigmoid函数！</p>
-<h3 id="正态分布"><a href="#正态分布" class="headerlink" title="正态分布"></a>正态分布</h3><p>在线性回归中，$\sigma^2$的值对拟合$\theta$没有任何影响，所以为了简化下面的推导，我们设$\theta^2=1$。于是就有<br>$$\begin{array}{l}<br>p(y;\mu)&amp;=&amp;\cfrac{1}{\sqrt{2\pi}}\exp\left(-\cfrac{1}{2}(y-\mu)^2\right) \\<br>&amp;=&amp; \cfrac{1}{\sqrt{2\pi}}\exp\left(-\cfrac{1}{2}y^2\right)\cdot\exp\left(\mu y-\cfrac{1}{2}\mu^2\right)<br>\end{array}$$<br>其中<br>$$\begin{array}{r,l}<br>\eta&amp;=&amp;\mu \\<br>T(y)&amp;=&amp;y \\<br>a(\eta)&amp;=&amp;\mu^2/2 \\<br>&amp;=&amp;\eta^2/2 \\<br>b(y)&amp;=&amp;(1/\sqrt{2\pi})\exp(-y^2/2)<br>\end{array}$$</p>
+<h3 id="伯努利分布"><a href="#伯努利分布" class="headerlink" title="伯努利分布"></a>伯努利分布</h3><p>对于 $\text{Bernoulli}(\phi)$，我们有 $p(y=1;\phi)=\phi;\quad p(y=0;\phi)=1-\phi$<br>可以将伯努利分布写成：<br>$$\begin{array}{l}<br>p(y;\phi)&amp;=&amp;\phi^y(1-\phi)^{1-y} \\<br>&amp;=&amp; \exp(y\log\phi+(1-y)\log(1-\phi)) \\<br>&amp;=&amp; \exp\left(\left(\log\left(\cfrac{\phi}{1-\phi}\right)\right)y+\log(1-\phi)\right)<br>\end{array}$$<br>仔细对比可以发现，上式符合(1)式的结构。其中<br>$$\begin{array}{r,l}<br>\eta&amp;=&amp;\log\left(\cfrac{\phi}{1-\phi}\right) \\<br>T(y)&amp;=&amp; y \\<br>a(\eta)&amp;=&amp; -\log(1-\phi) \\<br>b(y) &amp;=&amp; 1<br>\end{array}$$<br>至此，我们说明了伯努利分布属于指数族分布。此外，用上面的第一个式子反解 $\phi$，可以得到 $\phi=1/(1+e^{-\eta})$，这正是Sigmoid函数！</p>
+<h3 id="正态分布"><a href="#正态分布" class="headerlink" title="正态分布"></a>正态分布</h3><p>在线性回归中，$\sigma^2$的值对拟合 $\theta$ 没有任何影响，所以为了简化下面的推导，我们设$\theta^2=1$。于是就有<br>$$\begin{array}{l}<br>p(y;\mu)&amp;=&amp;\cfrac{1}{\sqrt{2\pi}}\exp\left(-\cfrac{1}{2}(y-\mu)^2\right) \\<br>&amp;=&amp; \cfrac{1}{\sqrt{2\pi}}\exp\left(-\cfrac{1}{2}y^2\right)\cdot\exp\left(\mu y-\cfrac{1}{2}\mu^2\right)<br>\end{array}$$<br>其中<br>$$\begin{array}{r,l}<br>\eta&amp;=&amp;\mu \\<br>T(y)&amp;=&amp;y \\<br>a(\eta)&amp;=&amp;\mu^2/2 \\<br>&amp;=&amp;\eta^2/2 \\<br>b(y)&amp;=&amp;(1/\sqrt{2\pi})\exp(-y^2/2)<br>\end{array}$$</p>
 <blockquote>
 <p>如果要考虑$\sigma^2$参数，则可以将正态分布归到更一般的指数族分布：$p(y;\eta,\tau)=b(a,\tau)\exp((\eta^TT(y)-a(\eta))/c(\tau))$。其中$\tau$被称为<strong>散度参数(dispersion parameter)</strong>。对于正态分布，$c(\tau)=\sigma^2$。</p>
 </blockquote>
 <h3 id="泊松分布"><a href="#泊松分布" class="headerlink" title="泊松分布"></a>泊松分布</h3><p>对于泊松分布，有<br>$$\begin{array}{r,l}<br>p(y;\eta)&amp;=&amp;\cfrac{\lambda^y}{y !}e^{-\lambda} \\<br>&amp;=&amp;\cfrac{1}{y !}\exp(y\log\lambda-\lambda)<br>\end{array}$$<br>其中<br>$$\begin{array}{r,l}<br>\eta&amp;=&amp;\log\lambda \\<br>T(y)&amp;=&amp;y \\<br>a(\eta)&amp;=&amp;\lambda \\<br>b(y)&amp;=&amp;\cfrac{1}{y!}<br>\end{array}$$</p>
-<h2 id="构建一般线性模型-Constructing-GLMs"><a href="#构建一般线性模型-Constructing-GLMs" class="headerlink" title="构建一般线性模型(Constructing GLMs)"></a>构建一般线性模型(Constructing GLMs)</h2><p>考虑一个分类或回归问题，我们要对给定的某个 $x$ 值预测出一个 $y$ 值。要为这个问题推导出一个GML，我们需要做出以下关于模型和$y$的条件分布的假设：</p>
+<h2 id="构建一般线性模型-Constructing-GLMs"><a href="#构建一般线性模型-Constructing-GLMs" class="headerlink" title="构建一般线性模型(Constructing GLMs)"></a>构建一般线性模型(Constructing GLMs)</h2><p>考虑一个分类或回归问题，我们要对给定的某个 $x$ 值预测出一个 $y$ 值。要为这个问题推导出一个GML，我们需要做出以下关于模型和 $y$ 的条件分布的假设：</p>
 <ol>
 <li>$y|x;\theta\sim\text{ExponentialFamily}(\eta)$</li>
-<li>给定一个$x$，我们的目标是预测出$T(y)$的期望值。在大多数模型中，有$T(y)=y$，所以，这意味着我们希望$h(x)$满足$h(x)=\mathrm{E}[y|x]$</li>
+<li>给定一个 $x$，我们的目标是预测出 $T(y)$ 的期望值。在大多数模型中，有 $T(y)=y$，所以，这意味着我们希望$h(x)$满足$h(x)=\mathrm{E}[y|x]$</li>
 <li>自然参数 $\eta$ 和输入 $x$ 之间线性相关：$\eta=\theta^Tx$</li>
 </ol>
 <p>第三条假设看上去似乎没有上面两条“合理”，我们不妨将其看作一种“设计技巧”。这样，可以让我们推导出一类非常优雅的学习算法，即GLM，还可以带来很多优良的性质。下面我们将说明线性回归和逻辑回归是如何作为GLM推导出来的。</p>
@@ -392,7 +392,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">37</span>
+              <span class="site-state-item-count">39</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -409,7 +409,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -458,8 +458,8 @@
       <div class="footer-inner">
         <div class="copyright" >
   
-  &copy; 
-  <span itemprop="copyrightYear">2016</span>
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

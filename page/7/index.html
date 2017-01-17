@@ -216,6 +216,116 @@
             
               
                 
+                <a class="post-title-link" href="/2016/04/17/2016-04-17-Building-Blog/" itemprop="url">
+                  终于搭好了博客
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-17T16:19:01+08:00" content="2016-04-17">
+              2016-04-17
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/杂记/" itemprop="url" rel="index">
+                    <span itemprop="name">杂记</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>花了两三天的工夫，终于搭好了博客。最先是因为忍受不了csdn blog的markdown排版才打算自己建一个博客。从一开始尝试 worldpress 到后来捣鼓 jekyll， 再到现在终于用 hexo 搭好平台，走了不少弯路。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/04/17/2016-04-17-Building-Blog/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/04/15/2016-04-15-1.3-Bags-Queues-Stacks/" itemprop="url">
                   1-3 Bags,Queues and Stacks
                 </a>
@@ -437,8 +547,8 @@
             
               
                 
-                <a class="post-title-link" href="/2000/05/16/Balanced Search Trees/" itemprop="url">
-                  🔨Balanced Search Trees
+                <a class="post-title-link" href="/2000/05/16/Softmax-Regression/" itemprop="url">
+                  🔨Softmax 回归(Softmax Regression)
                 </a>
               
             
@@ -499,114 +609,7 @@
       
         
           
-            <p>在许多应用中，二叉搜索树可以工作得很好，然而在最差情况下（插入一个有序序列），它的性能得不到保证。下面介绍一种平衡搜索树，可以在任何情况下保证 <strong>O(logN)</strong> 的时间复杂度。<br><br>理想情况下，我们希望树的形状是完美平衡的，这样的话，查找效率就是 O(lgN)；然而，对于不可预料的动态插入操作，保持树形状完美平衡的开销太大。我们稍稍放松对完美平衡的要求，便可以对所有操作提供 O(logN) 的保证</p>
-<h2 id="2-3搜索树（2-3-search-trees）"><a href="#2-3搜索树（2-3-search-trees）" class="headerlink" title="2-3搜索树（2-3 search trees）"></a>2-3搜索树（2-3 search trees）</h2><p>我们现在允许树的一个节点中有两个值（Key），连接着三个子节点（Link），将这样的节点称为<strong>3-节点</strong>，原来那样的节点称为<strong>2-节点</strong>。</p>
-<p><strong>————————————————————————</strong></p>
-<p><strong>一个2-3搜索树要么是空的，要么是：</strong></p>
-<ul>
-<li><p><strong>一个 2-节点，左链接连接着一棵2-3搜索树（所有的值小于当前节点的值），右链接连接着一棵2-3搜索树（所有的值大于当前结点的值）</strong></p>
-</li>
-<li><p><strong>一个 3-节点，左链接连接着一棵2-3搜索树（所有的值小于当前节点中较小的那个值），中链接连接着一棵2-3搜索树（所有值在当前结点两个值之间），右链接连接着一棵2-3搜索树（所有的值大于当前结点较大的那个值）</strong></p>
-</li>
-</ul>
-<p><strong>————————————————————————</strong></p>
-<p><strong>如果一个2-3搜索树的所有空链接到根节点的距离都相等，那么我们就说这棵2-3搜索树是平衡的。</strong></p>
-<p><strong>————————————————————————</strong></p>
-<h3 id="搜索（Search）"><a href="#搜索（Search）" class="headerlink" title="搜索（Search）"></a>搜索（Search）</h3><p>从根节点开始向下比较，如果与节点中任一值相等，则搜索命中；如果不相等，我们按照左中右连接进行分流；如果遇到空节点，则说明查找失败。</p>
-<h3 id="插入到一个-2-节点-中（Insert-into-a-2-node）"><a href="#插入到一个-2-节点-中（Insert-into-a-2-node）" class="headerlink" title="插入到一个 2-节点 中（Insert into a 2-node）"></a>插入到一个 2-节点 中（Insert into a 2-node）</h3><p>用一个 3-节点 替换掉原来的 2-节点</p>
-<p><img src="http://i.imgur.com/u7IFAjB.png" alt=""></p>
-<h3 id="插入到只含一个3-节点的2-3树中（Insert-into-a-tree-consisting-of-a-single-3-node）"><a href="#插入到只含一个3-节点的2-3树中（Insert-into-a-tree-consisting-of-a-single-3-node）" class="headerlink" title="插入到只含一个3-节点的2-3树中（Insert into a tree consisting of a single 3-node）"></a>插入到只含一个3-节点的2-3树中（Insert into a tree consisting of a single 3-node）</h3><p>把3-节点变成一个暂时的4-节点，然后把这个4-节点分成三个2-节点</p>
-<p><img src="http://i.imgur.com/6l03Bah.png" alt=""></p>
-<h3 id="插入到一个父节点是2-节点的3-节点中（Insert-into-a-3-node-whose-parent-is-a-2-node）"><a href="#插入到一个父节点是2-节点的3-节点中（Insert-into-a-3-node-whose-parent-is-a-2-node）" class="headerlink" title="插入到一个父节点是2-节点的3-节点中（Insert into a 3-node whose parent is a 2-node）"></a>插入到一个父节点是2-节点的3-节点中（Insert into a 3-node whose parent is a 2-node）</h3><p>把3-节点变成一个暂时的4-节点，然后把这个4-节点分成三个2-节点，将父节点变为一个3-节点</p>
-<p><img src="http://i.imgur.com/cf3h0j7.png" alt=""></p>
-<h3 id="插入到一个父节点是3-节点的3-节点中（Insert-into-a-3-node-whose-parent-is-a-3-node）"><a href="#插入到一个父节点是3-节点的3-节点中（Insert-into-a-3-node-whose-parent-is-a-3-node）" class="headerlink" title="插入到一个父节点是3-节点的3-节点中（Insert into a 3-node whose parent is a 3-node）"></a>插入到一个父节点是3-节点的3-节点中（Insert into a 3-node whose parent is a 3-node）</h3><p>向上把每个3-节点变成一个暂时的4-节点，然后把这个4-节点分成三个2-节点，将父节点变为一个暂时的4-节点。由此向上，直到遇到一个2-节点，或到根节点时让整个树增加1层。</p>
-<h3 id="怎样分开一个4-节点"><a href="#怎样分开一个4-节点" class="headerlink" title="怎样分开一个4-节点"></a>怎样分开一个4-节点</h3><p><img src="http://i.imgur.com/dBO9OCp.png" alt=""></p>
-<p><strong>————————————————————————</strong></p>
-<p><strong>对于一个含有N个元素的2-3树，搜索和插入操作保证最多访问 lgN 个节点</strong></p>
-<p><strong>————————————————————————</strong></p>
-<h2 id="红黑树（Red-Black-BSTs）"><a href="#红黑树（Red-Black-BSTs）" class="headerlink" title="红黑树（Red-Black BSTs）"></a>红黑树（Red-Black BSTs）</h2><h3 id="编码-3-节点"><a href="#编码-3-节点" class="headerlink" title="编码 3-节点"></a>编码 3-节点</h3><p>最自然的方法是利用二分查找树(BST)，然后添加一些信息来标记 3-节点</p>
-<p>我们把链接分为两种：</p>
-<ul>
-<li>红链接(Red Link)：连接着两个2-节点来表示一个3-节点</li>
-<li>黑链接(Black Link)：和BST的链接一样，连接着2-3树</li>
-</ul>
-<p>特别地，我们用向左倾斜的红链接连接着的两个2-节点来表示一个3-节点</p>
-<p><img src="http://i.imgur.com/lI9G3d8.png" alt=""></p>
-<p><strong>————————————————————————</strong></p>
-<p><strong>红黑树是满足下列调节的具有红黑链接的二叉树：</strong></p>
-<ul>
-<li><strong>红链接向左倾斜</strong></li>
-<li><strong>没有一个节点连接着两条红链接</strong></li>
-<li><strong>红黑树是平衡的：每个空链接到根节点的路径上有相同数量的黑链接</strong></li>
-</ul>
-<p><strong>————————————————————————</strong></p>
-<p>红黑树即是2-3树，也是BST，所以它结合了BST的高效搜索方法和2-3树的平衡插入特点</p>
-<h3 id="颜色表示"><a href="#颜色表示" class="headerlink" title="颜色表示"></a>颜色表示</h3><p>在节点的定义里加入一个 bool 变量来表示<strong>当前结点与父节点</strong>的链接是不是红链接</p>
-<h3 id="旋转（Rotation）"><a href="#旋转（Rotation）" class="headerlink" title="旋转（Rotation）"></a>旋转（Rotation）</h3><p>在红黑书的实现中，我们暂时允许以下情况：</p>
-<ul>
-<li>向右倾斜的红链接</li>
-<li>一个节点连接着两个红链接</li>
-</ul>
-<p>我们用旋转来修正第一种情况</p>
-<p><img src="http://i.imgur.com/Aau8oAB.png" alt=""><img src="http://i.imgur.com/vVRhpaj.png" alt=""></p>
-<pre><code>Node rotateLeft(Node h)
-{
-    Node x = h.right;
-    h.right = x.left;
-    x.left = h;
-    x.color = h.color;
-    h.color = RED;
-    x.N = h.N;
-    h.N = 1 + size(h.left) + size(h.right);
-    return x;
-}
-
-Node rotateRight(Node h)
-{
-    Node x = h.left;
-    h.left = x.right;
-    x.right = h;
-    x.color = h.color;
-    h.color = RED;
-    x.N = h.N;
-    h.N = 1 + size(h.left) + size(h.right);
-    return x;
-}
-</code></pre><h3 id="插入到一个-2-节点-中（Insert-into-a-2-node）-1"><a href="#插入到一个-2-节点-中（Insert-into-a-2-node）-1" class="headerlink" title="插入到一个 2-节点 中（Insert into a 2-node）"></a>插入到一个 2-节点 中（Insert into a 2-node）</h3><p>如果新插入的节点比原来的节点小，则将它正常插入，然后把新节点的颜色设为红色；如果比原来的大，则正常插入，把新节点的颜色设置为红色，然后进行一次左旋转。</p>
-<h3 id="插入到只含一个3-节点的2-3树中（Insert-into-a-tree-consisting-of-a-single-3-node）-1"><a href="#插入到只含一个3-节点的2-3树中（Insert-into-a-tree-consisting-of-a-single-3-node）-1" class="headerlink" title="插入到只含一个3-节点的2-3树中（Insert into a tree consisting of a single 3-node）"></a>插入到只含一个3-节点的2-3树中（Insert into a tree consisting of a single 3-node）</h3><p><img src="http://i.imgur.com/47nI0LV.png" alt=""></p>
-<pre><code>void flipColors(Node h)
-{
-    h.color = RED;
-    h.left.color = BLACK;
-    h.right.color = BLACK;
-}
-</code></pre><h3 id="保持根节点是黑色的"><a href="#保持根节点是黑色的" class="headerlink" title="保持根节点是黑色的"></a>保持根节点是黑色的</h3><p>上面的代码有可能会使根节点的颜色变为红色，所以每次插入操作后，我们要让根节点的颜色变回黑色。注意到，每当根节点颜色变红时，树的高度就增加了1。</p>
-<h3 id="插入到一个位于底部的-3-节点中（Insert-into-a-3-node-at-the-bottom）"><a href="#插入到一个位于底部的-3-节点中（Insert-into-a-3-node-at-the-bottom）" class="headerlink" title="插入到一个位于底部的 3-节点中（Insert into a 3-node at the bottom）"></a>插入到一个位于底部的 3-节点中（Insert into a 3-node at the bottom）</h3><p><img src="http://i.imgur.com/zuvYORt.png" alt=""></p>
-<p>相当于将一个新的红链接逐层向上传递，直到符合顺序（没有右倾斜的红链接，没有两个红链接连着同一个节点等），或到达根节点。</p>
-<p><img src="http://i.imgur.com/GPGn08Y.png" alt=""></p>
-<h3 id="插入操作的实现"><a href="#插入操作的实现" class="headerlink" title="插入操作的实现"></a>插入操作的实现</h3><pre><code>public void put(Key key, Value val)
-{
-    root = put(root, key, val);
-    root.color = BLACK;
-}
-
-private Node put(Node h, Key key, Value val)
-{
-    if (h == null)    return new Node(key, val, 1, RED);
-
-    int cmp = key.compareTo(h.key);
-    if        (cmp &lt; 0) h.left  = put(h.left,  key, val);
-    else if (cmp &gt; 0) h.right = put(h.right, key, val);
-    else h.val = val;
-
-    if (isRed(h.right) &amp;&amp; !isRed(h.left))    h = rotateLeft(h);
-    if (isRed(h.left) &amp;&amp; isRed(h.left.left) h = rotateRight(h);
-    if (isRed(h.left) &amp;&amp; isRed(h.right))    flipColors(h);
-
-    h.N = size(h.left) + size(h.right) + 1;
-    return h;
-}
-</code></pre><h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3>
+            
           
         
       
@@ -737,116 +740,6 @@ private Node put(Node h, Key key, Value val)
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2000/05/16/XGBoosting/" itemprop="url">
-                  🔨XGBoosting（eXtreme Gradient Boosting）
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2000-05-16T19:54:01+08:00" content="2000-05-16">
-              2000-05-16
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Under-Construction/" itemprop="url" rel="index">
-                    <span itemprop="name">Under Construction</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>Boosting是<a href="http://keson96.github.io/2016/10/17/2016-10-17-集成学习算法/">集成学习</a>中一种重要的方法，通过集成弱分类器，可以获得比单一学习器性能都好的一个模型。XGBoosting是在<a href="http://keson96.github.io/2016/11/04/2016-11-04-Gradient-Boosting/">Gradient Boosting</a>基础上，进行了一些改动设计，使得算法效率显著提高，并可以并行化。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2000/05/16/XGBoosting/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -892,7 +785,7 @@ private Node put(Node h, Key key, Value val)
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">37</span>
+              <span class="site-state-item-count">39</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -909,7 +802,7 @@ private Node put(Node h, Key key, Value val)
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">57</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -947,8 +840,8 @@ private Node put(Node h, Key key, Value val)
       <div class="footer-inner">
         <div class="copyright" >
   
-  &copy; 
-  <span itemprop="copyrightYear">2016</span>
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
