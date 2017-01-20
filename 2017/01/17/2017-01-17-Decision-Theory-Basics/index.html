@@ -1,0 +1,603 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="wangkaixin, maymoon" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="这一部分内容主要是PRML一书中1.5节的笔记。详细的决策论内容可以参考Berger，Bather。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="决策论基础(Decision Theory Basics)">
+<meta property="og:url" content="http://yoursite.com/2017/01/17/2017-01-17-Decision-Theory-Basics/index.html">
+<meta property="og:site_name" content="MayMoon">
+<meta property="og:description" content="这一部分内容主要是PRML一书中1.5节的笔记。详细的决策论内容可以参考Berger，Bather。">
+<meta property="og:image" content="http://i.imgur.com/EwKoDZV.png">
+<meta property="og:image" content="http://i.imgur.com/sGPU6pD.png">
+<meta property="og:image" content="http://i.imgur.com/Cdg5jk5.png">
+<meta property="og:image" content="http://i.imgur.com/68JWiA5.png">
+<meta property="og:updated_time" content="2017-01-17T12:55:09.745Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="决策论基础(Decision Theory Basics)">
+<meta name="twitter:description" content="这一部分内容主要是PRML一书中1.5节的笔记。详细的决策论内容可以参考Berger，Bather。">
+<meta name="twitter:image" content="http://i.imgur.com/EwKoDZV.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 决策论基础(Decision Theory Basics) | MayMoon </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">MayMoon</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">随便写写</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                决策论基础(Decision Theory Basics)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-01-17T19:54:01+08:00" content="2017-01-17">
+              2017-01-17
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/PRML-notes/" itemprop="url" rel="index">
+                    <span itemprop="name">PRML notes</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这一部分内容主要是<em>PRML</em>一书中1.5节的笔记。详细的决策论内容可以参考<a href="http://www.springer.com/us/book/9780387960982" target="_blank" rel="external">Berger</a>，<a href="http://as.wiley.com/WileyCDA/WileyTitle/productCd-0471976482.html" target="_blank" rel="external">Bather</a>。<br><a id="more"></a></p>
+<p>我们要对一个问题进行预测，一般分为两个阶段：<strong>推断</strong>和<strong>决策</strong>。在推断阶段，我们想得到一个输入变量 $\mathbf{x}$ 和目标变量 $t$ 的联合分布 $p(\mathbf{x},t)$；在决策阶段，我们根据这个联合分布来对一个新输入变量对应的目标变量值作出最优的预测。通常情况下，推断阶段十分复杂，而决策阶段较为简单。<br>考虑一个医疗诊断的例子：我们想根据一个病人拍摄的X光片来判断他是否患有癌症。输入变量 $\mathbf{x}$ 是一个向量，表示X光片中若干像素点的灰度；目标变量 $t$ 用来表示是否患癌症，不患癌症类记为 $\mathcal{C}_1$($t=0$)，患癌症类记为 $\mathcal{C}_2$($t=1$)。在推断阶段，我们可以通过训练集得到联合概率分布 $p(\mathbf{x},\mathcal{C}_k)$，亦即 $p(\mathbf{x},t)$。<br>在决策阶段，我们感兴趣的是给定一个X光片（输入），它分别属于每一类的概率，即 $p(\mathcal{C}_k|\mathbf{x})$。应用贝叶斯理论，可以得到 $$p(\mathcal{C}_k|\mathbf{x})=\cfrac{p(\mathbf{x}|\mathcal{C}_k)p(\mathcal{C}_k)}{p(\mathbf{x})}\tag{1}$$ 其中，$p(\mathcal{C}_k)$ 可以看作是 $\mathcal{C}_k$ 类的先验概率，在观察了X光片后，对应的后验概率为 $p(\mathcal{C}_k|\mathbf{x})$</p>
+<h2 id="1-最小化误分类率"><a href="#1-最小化误分类率" class="headerlink" title="1. 最小化误分类率"></a>1. 最小化误分类率</h2><p>不妨假设我们的目标是尽可能减少误分类的个数。我们需要一种规则来让我们对每一个新样本进行分类，这种规则将输入空间分成了区域 $\mathcal{R}_k$，称为<strong>决策区域</strong>(decision regions)，每一个区域 $\mathcal{R_k}$ 对应一个分类 $\mathcal{C}_k$。区域之间的边界称为<strong>区域边界</strong>。</p>
+<blockquote>
+<p>每个区域不一定是连续的，它可能由多个不相交的区域组成。</p>
+</blockquote>
+<p>则误分类的概率如下 $$\begin{array}{r,l}p(\text{误分类})&amp;=&amp;p(\mathbf{x}\in\mathcal{R}_1,\mathcal{C}_2)+p(\mathbf{x}\in\mathcal{R}_2,\mathcal{C}_1) \\ &amp;=&amp;\displaystyle\int_{\mathcal{R}_1}p(\mathbf{x},\mathcal{C}_2)\mathrm{d}\mathbf{x}+\int_{\mathcal{R}_2}p(\mathbf{x},\mathcal{C}_1)\mathrm{d}\mathbf{x}\end{array}\tag{2}$$ 可以看出，要最小化 $p(\text{误分类})$ 就要将 $\mathbf{x}$ 分类到积分值小的那一类。即若 $p(\mathbf{x},\mathcal{C}_2)\lt p(\mathbf{x},\mathcal{C}_1)$，则分到 $\mathcal{C}_1$ 类中。由 $p(\mathbf{x},\mathcal{C}_k)=p(\mathcal{C}_k|\mathbf{x})p(\mathbf{x})$可知，上面的结果也等价于选择后验概率 $p(\mathcal{C}_k|\mathbf{x})$ 最大的分类。<br>下面的图可以更好地说明：<br><img src="http://i.imgur.com/EwKoDZV.png" width="450"></p>
+<blockquote>
+<p>上图描绘了联合概率分布 $p(x,\mathcal{C}_k)$ 和决策边界 $x=\hat{x}$。即当 $x\ge\hat{x}$ 时划为 $\mathcal{C}_2$，否则划为 $\mathcal{C}_1$。误分类的区域用红、蓝、绿三色表示。当 $\hat{x}$ 变化时，蓝、绿区域的面积（积分值）是不变的，只有红色区域面积在变化。当 $\hat{x}=x_0$ 时，红色区域消失，此时误分类区域最小（积分值最小）。对应的分类原则为：将 $x$ 分到 $p(x,\mathcal{C}_k)$ 最大的一类，亦即后验概率 $p(\mathcal{C}_k|x)$ 最大的一类。</p>
+</blockquote>
+<h2 id="2-最小化期望损失"><a href="#2-最小化期望损失" class="headerlink" title="2. 最小化期望损失"></a>2. 最小化期望损失</h2><p>对于有些问题（比如癌症诊断），两种误分类的影响是有巨大差别的。将阴性判断为阳性，只会让患者接受一些不必要的治疗；而将阳性判断为阴性，则会造成误诊，危及患者的生命。<br>引入<strong>损失函数</strong>，最优化的目标不再是误分类率，而是损失函数。用<strong>损失矩阵</strong>来表示误分类后果的严重性，矩阵元素 $L_{kj}$ 表示将本来属于第 $k$ 类的元素分到第 $j$ 类后的影响。例如，癌症诊断的损失矩阵如下</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">cancer</th>
+<th style="text-align:center">normal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><strong>cancer</strong></td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1000</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>normal</strong></td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+</tr>
+</tbody>
+</table>
+<p>损失函数依赖于真实分类，但真实分类是未知的。对于一个输入，它的真实分类的不确定性由联合概率分布来描述，所以我们退而最小化期望损失函数，即 $$\mathbb{E}[L]=\sum_k\sum_j\int_{\mathcal{R}_j}L_{kj}p(\mathbf{x},\mathcal{C}_k)\mathrm{d}\mathbf{x}\tag{3}$$ 同样地，由 $p(\mathbf{x},\mathcal{C}_k)=p(\mathcal{C}_k|\mathbf{x})p(\mathbf{x})$，可以得到：要最小化(3)式，需要将 $\mathbf{x}$ 分到 $$\sum_k L_{kj}p(\mathcal{C}_k|\mathbf{x})\tag{4}$$ 最小的那一类 $j$。同最小化误分类率相比，最小化期望损失相当于加了一个权重。</p>
+<h3 id="拒绝选项（Reject-Option）"><a href="#拒绝选项（Reject-Option）" class="headerlink" title="拒绝选项（Reject Option）"></a>拒绝选项（Reject Option）</h3><p>当后验概率比1小很多时，或联合分布的值相差不大时，分类误差就会增大。因为在这些区域，我们对类别不是十分地确定。<br><img src="http://i.imgur.com/sGPU6pD.png" width="450"><br>如上图所示，在中间的区域，$p(\mathcal{C}_k|x)$ 的值比1小很多（$p(\mathcal{C}_1,x)$ 和 $p(\mathcal{C}_1,x)$ 的值差不多大）。在这个区域，便不能很确定 $x$ 属于哪一类。这时，我们可以拒绝作出判断，称为<strong>拒绝选项</strong>。以癌症诊断为例，对于这个区间的输入，可以让专家利用经验知识进行人工判断。<br>$\theta$ 控制了拒绝的程度：当 $\theta=1$ 时，所有输入都被拒绝；当 $\theta&lt;1/K$ 时，没有输入被拒绝。</p>
+<h2 id="3-推断决策方法总览"><a href="#3-推断决策方法总览" class="headerlink" title="3. 推断决策方法总览"></a>3. 推断决策方法总览</h2><p>之前，我们将问题分为推断阶段和决策阶段。除了这种方法，也有将推断阶段和决策阶段结合起来，一次性得到一个<strong>判别函数</strong>的方法。</p>
+<p>下面是三种不同的方法，按复杂程度递减顺序排列：</p>
+<p><strong>a.</strong> 解决推断问题，求得联合分布 $p(\mathbf{x},\mathcal{C}_k)$（或求得 $p(\mathbf{x}|\mathcal{C}_k)$ 和 $p(\mathcal{C}_k)$），然后利用贝叶斯公式求得后验概率，进而得到预测结果。像这样显式或隐式地对输入或输出的分布进行建模的方法，称为<strong>生成模型</strong>。<br><strong>b.</strong> 解决推断问题，确定后验概率 $p(\mathcal{C}_k|\mathbf{x})$，然后根据后验概率进行分类。像这样直接对后验概率进行建模的方法，称为<strong>判别模型</strong>。<br><strong>c.</strong> 求得一个函数 $f(\mathbf{x})$，称为 <strong>判别函数</strong>，将输入（比如X光片）直接映射到输出（是否患癌症）。</p>
+<p><img src="http://i.imgur.com/Cdg5jk5.png" width="550"><br>方法a是最复杂的方法，计算量最大，它需要求出上图中左图的概率 $p(x|\mathcal{C}_k)$。不过它的一个优点是可以由联合分布计算出边际分布 $p(x)$，来判断出那些出现概率很小的输入，从而知道对于这些输入，模型的准确性是不高的，称为<strong>异常检测</strong>。<br>方法b则只需要求出右图中的后验概率 $p(\mathcal{C}_k|x)$，故而计算量较少。<br>方法c只需要求出右图中分界线位置处的 $x$ 值，就可以用于决策，故而复杂度最小。</p>
+<h3 id="后验概率的重要性"><a href="#后验概率的重要性" class="headerlink" title="后验概率的重要性"></a>后验概率的重要性</h3><p>如果使用方法c，我们就无法求得后验概率 $p(\mathcal{C}_k|\mathbf{x})$。事实上，计算出后验概率是十分有用的。</p>
+<ol>
+<li><strong>减少重复计算</strong><br>假设损失矩阵会随着时间变化（比如一些经融领域的应用），我们只用计算一次后验概率，后面仅需要简单地修改损失矩阵即可。而如果使用方法c，每当损失矩阵变化时，都要花费同样大的计算量进行模型训练。</li>
+<li><strong>拒绝选项</strong><br>计算后验概率可以让我们实现上面介绍的拒绝选项，通过设置一个 $\theta$ 值，而用方法c（不计算后验概率）就不能实现这一点。</li>
+<li><strong>补偿先验概率</strong><br>考虑癌症诊断的例子，患癌症和不患癌症的先验概率是有巨大差别的。我们很可能遇到一个训练集，包含999个不患癌症的样本和1个患癌症的样本。一个判断任何样本都正常的模型也可以达到99.9%的精度。而使用原来的训练集，我们无法避免训练出这样（精度高但没有意义）的模型。<br>一种解决办法是我们从训练集中挑出等量的正负样本来组成新的训练集，然后补偿我们对训练集做的修改。方法如下 $$p(\mathcal{C}_k|\mathbf{x})=p’(\mathcal{C}_k|\mathbf{x})\times\cfrac{p(\mathcal{C}_k)}{p’(\mathcal{C}_k)}\tag{5}$$ 其中，$p(\mathcal{C}_k|\mathbf{x})$ 表示的是我们需要的后验概率，$p’(\mathcal{C}_k|\mathbf{x})$ 表示的是用新训练集训练出的模型所得到的后验概率，$p(\mathcal{C}_k)$表示的是原数据集中 $\mathcal{C}_k$ 出现的概率，而 $p’(\mathcal{C}_k)$表示的是新数据集中 $\mathcal{C}_k$ 出现的概率。<br>如果直接求判别函数，不计算后验概率，就不能实现这一点。</li>
+<li><strong>模型组合</strong><br>对于一些复杂的问题，我们可以将整个问题分为若干个子问题，每个子问题用不同的模型求解，每个模型给出不同的后验概率，则可以将这些后验概率结合起来。<br>以癌症诊断为例，除了拍X光片，病人还需要进行血液检测。记X光片对应的输入数据为 $\mathbf{x}_I$，血液检测对应的输入数据为 $\mathbf{x}_B$，假设 $\mathbf{x}_I$ 与 $\mathbf{x}_B$ 条件独立，即 $$p(\mathbf{x}_I,\mathbf{x}_B|\mathcal{C}_k)=p(\mathbf{x}_I|\mathcal{C}_k)p(\mathbf{x}_B|\mathcal{C}_k)\tag{6}$$ 后验概率则由下式确定 $$\begin{array}{r,l}p(\mathcal{C}_k|\mathbf{x}_I,\mathbf{x}_B)&amp;\propto&amp;p(\mathbf{x}_I,\mathbf{x}_B|\mathcal{C}_k)p(\mathcal{C}_k) \\ &amp;\propto&amp;p(\mathbf{x}_I|\mathcal{C}_k)p(\mathbf{x}_B|\mathcal{C}_k)p(\mathcal{C}_k) \\ &amp;\propto&amp;\cfrac{p(\mathcal{C}_k|\mathbf{x}_I)p(\mathcal{C}_k|\mathbf{x}_B)}{p(\mathcal{C}_k)}\end{array}\tag{7}$$这样，就将两个模型组合到了一起。如果不计算后验概率，就不能实现这一点。<br>(6)式中的条件独立也是<strong>朴素贝叶斯模型</strong>的主要思想。</li>
+</ol>
+<h2 id="4-回归问题的损失函数"><a href="#4-回归问题的损失函数" class="headerlink" title="4. 回归问题的损失函数"></a>4. 回归问题的损失函数</h2><p>在回归问题中，期望损失由下式确定 $$\mathbb{E}[L]=\iint L(t,y(\mathbf{x}))p(\mathbf{x},t)\mathrm{d}\mathbf{x}\mathrm{d}t\tag{8}$$其中 $L(t,y(\mathbf{x}))$ 是损失函数，通常的选择是平方损失 $L(t,y(\mathbf{x}))=\{y(\mathbf{x})-t\}^2$。我们的目标是选择一个 $y(\mathbf{x})$ 使得 $\mathbb{E}[L]$ 最小，求导可得 $$\cfrac{\delta\mathbb{E}[L]}{\delta y(\mathbf{x})}=2\int\{y(\mathbf{x})-t\}p(\mathbf{x},t)\mathrm{d}t=0\tag{9}$$用上式求解 $y(\mathbf{x})$，可以得到$$y(\mathbf{x})=\int tp(t|\mathbf{x})\mathrm{d}t=\mathbb{E}_t[t|\mathbf{x}]\tag{10}$$可见，当 $y(\mathbf{x})$ 取值为在 $\mathbf{x}$ 为条件下 $t$ 的均值时，期望损失最小。下图可以更直观地说明这一点<br><img src="http://i.imgur.com/68JWiA5.png" width="450"><br>这样的函数 $y(\mathbf{x})$ 称为<strong>回归函数</strong>。对于多变量的情况，类似地有 $\mathbf{y}(\mathbf{x})=\mathbb{E}_t[\mathbf{t}|\mathbf{x}]$。<br>有时候，平方损失不是一个很好的选择。考虑平方损失的推广————Minkowski损失，对应的期望损失如下$$\mathbb{E}[L_q]=\iint |y(\mathbf{x}-t)|^qp(\mathbf{x},t)\mathrm{d}\mathbf{x}\mathrm{d}t\tag{11}$$当 $q=2$ 时，$\mathbb{E}[L_q]$ 的最小值由<strong>条件均值</strong>确定；当 $q=1$ 时，由<strong>条件中位数</strong>确定；当 $q\to 0$ 时，由<strong>条件众数</strong>确定。</p>
+<h3 id="三种方法"><a href="#三种方法" class="headerlink" title="三种方法"></a>三种方法</h3><p>对于回归问题，也有类似与分类问题的三种方法，按复杂度递减排列：<br><strong>a.</strong> 解决推断问题，确定联合概率密度 $p(\mathbf{x},t)$，然后得到条件概率密度 $p(t|\mathbf{x})$，最后得到(10)式中的条件均值。<br><strong>b.</strong> 解决推断问题，直接确定条件概率密度 $p(t|\mathbf{x})$，最后得到(10)式中的条件均值。<br><strong>c.</strong> 直接找出一个回归函数 $y(\mathbf{x})$。<br>这三种方法的优缺点同分类问题类似。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li><em>Pattern Recognition and Machine Learning (PRML)<em></em></em></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/22/2016-12-22-Information-Theory-Basics/" rel="next" title="信息论基础(Information Theory Basics)">
+                <i class="fa fa-chevron-left"></i> 信息论基础(Information Theory Basics)
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/pic.PNG"
+               alt="Wang Kx" />
+          <p class="site-author-name" itemprop="name">Wang Kx</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">39</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-最小化误分类率"><span class="nav-number">1.</span> <span class="nav-text">1. 最小化误分类率</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-最小化期望损失"><span class="nav-number">2.</span> <span class="nav-text">2. 最小化期望损失</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#拒绝选项（Reject-Option）"><span class="nav-number">2.1.</span> <span class="nav-text">拒绝选项（Reject Option）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-推断决策方法总览"><span class="nav-number">3.</span> <span class="nav-text">3. 推断决策方法总览</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#后验概率的重要性"><span class="nav-number">3.1.</span> <span class="nav-text">后验概率的重要性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-回归问题的损失函数"><span class="nav-number">4.</span> <span class="nav-text">4. 回归问题的损失函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#三种方法"><span class="nav-number">4.1.</span> <span class="nav-text">三种方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wang Kx</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=0.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
