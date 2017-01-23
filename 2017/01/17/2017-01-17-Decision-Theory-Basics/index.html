@@ -67,7 +67,7 @@
 <meta property="og:image" content="http://i.imgur.com/sGPU6pD.png">
 <meta property="og:image" content="http://i.imgur.com/Cdg5jk5.png">
 <meta property="og:image" content="http://i.imgur.com/68JWiA5.png">
-<meta property="og:updated_time" content="2017-01-17T12:55:09.745Z">
+<meta property="og:updated_time" content="2017-01-23T09:33:37.895Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="决策论基础(Decision Theory Basics)">
 <meta name="twitter:description" content="这一部分内容主要是PRML一书中1.5节的笔记。详细的决策论内容可以参考Berger，Bather。">
@@ -310,7 +310,7 @@
 </tbody>
 </table>
 <p>损失函数依赖于真实分类，但真实分类是未知的。对于一个输入，它的真实分类的不确定性由联合概率分布来描述，所以我们退而最小化期望损失函数，即 $$\mathbb{E}[L]=\sum_k\sum_j\int_{\mathcal{R}_j}L_{kj}p(\mathbf{x},\mathcal{C}_k)\mathrm{d}\mathbf{x}\tag{3}$$ 同样地，由 $p(\mathbf{x},\mathcal{C}_k)=p(\mathcal{C}_k|\mathbf{x})p(\mathbf{x})$，可以得到：要最小化(3)式，需要将 $\mathbf{x}$ 分到 $$\sum_k L_{kj}p(\mathcal{C}_k|\mathbf{x})\tag{4}$$ 最小的那一类 $j$。同最小化误分类率相比，最小化期望损失相当于加了一个权重。</p>
-<h3 id="拒绝选项（Reject-Option）"><a href="#拒绝选项（Reject-Option）" class="headerlink" title="拒绝选项（Reject Option）"></a>拒绝选项（Reject Option）</h3><p>当后验概率比1小很多时，或联合分布的值相差不大时，分类误差就会增大。因为在这些区域，我们对类别不是十分地确定。<br><img src="http://i.imgur.com/sGPU6pD.png" width="450"><br>如上图所示，在中间的区域，$p(\mathcal{C}_k|x)$ 的值比1小很多（$p(\mathcal{C}_1,x)$ 和 $p(\mathcal{C}_1,x)$ 的值差不多大）。在这个区域，便不能很确定 $x$ 属于哪一类。这时，我们可以拒绝作出判断，称为<strong>拒绝选项</strong>。以癌症诊断为例，对于这个区间的输入，可以让专家利用经验知识进行人工判断。<br>$\theta$ 控制了拒绝的程度：当 $\theta=1$ 时，所有输入都被拒绝；当 $\theta&lt;1/K$ 时，没有输入被拒绝。</p>
+<h3 id="拒绝选项（Reject-Option）"><a href="#拒绝选项（Reject-Option）" class="headerlink" title="拒绝选项（Reject Option）"></a>拒绝选项（Reject Option）</h3><p>当后验概率比1小很多时，或联合分布的值相差不大时，分类误差就会增大。因为在这些区域，我们对类别不是十分地确定。<br><img src="http://i.imgur.com/sGPU6pD.png" width="450"><br>如上图所示，在中间的区域，$p(\mathcal{C}_k|x)$ 的值比1小很多（$p(\mathcal{C}_1,x)$ 和 $p(\mathcal{C}_2,x)$ 的值差不多大）。在这个区域，便不能很确定 $x$ 属于哪一类。这时，我们可以拒绝作出判断，称为<strong>拒绝选项</strong>。以癌症诊断为例，对于这个区间的输入，可以让专家利用经验知识进行人工判断。<br>$\theta$ 控制了拒绝的程度：当 $\theta=1$ 时，所有输入都被拒绝；当 $\theta&lt;1/K$ 时，没有输入被拒绝。</p>
 <h2 id="3-推断决策方法总览"><a href="#3-推断决策方法总览" class="headerlink" title="3. 推断决策方法总览"></a>3. 推断决策方法总览</h2><p>之前，我们将问题分为推断阶段和决策阶段。除了这种方法，也有将推断阶段和决策阶段结合起来，一次性得到一个<strong>判别函数</strong>的方法。</p>
 <p>下面是三种不同的方法，按复杂程度递减顺序排列：</p>
 <p><strong>a.</strong> 解决推断问题，求得联合分布 $p(\mathbf{x},\mathcal{C}_k)$（或求得 $p(\mathbf{x}|\mathcal{C}_k)$ 和 $p(\mathcal{C}_k)$），然后利用贝叶斯公式求得后验概率，进而得到预测结果。像这样显式或隐式地对输入或输出的分布进行建模的方法，称为<strong>生成模型</strong>。<br><strong>b.</strong> 解决推断问题，确定后验概率 $p(\mathcal{C}_k|\mathbf{x})$，然后根据后验概率进行分类。像这样直接对后验概率进行建模的方法，称为<strong>判别模型</strong>。<br><strong>c.</strong> 求得一个函数 $f(\mathbf{x})$，称为 <strong>判别函数</strong>，将输入（比如X光片）直接映射到输出（是否患癌症）。</p>
@@ -418,7 +418,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">39</span>
+              <span class="site-state-item-count">40</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

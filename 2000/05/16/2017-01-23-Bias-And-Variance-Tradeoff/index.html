@@ -1,0 +1,566 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="wangkaixin, maymoon" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="在机器学习中，误差是由偏差、方差和固有噪声三部分组成。偏差方差分解是从频率学派的角度对模型的复杂性进行一定的分析。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="偏差方差分解(Bias-Variance Tradeoff)">
+<meta property="og:url" content="http://yoursite.com/2000/05/16/2017-01-23-Bias-And-Variance-Tradeoff/index.html">
+<meta property="og:site_name" content="MayMoon">
+<meta property="og:description" content="在机器学习中，误差是由偏差、方差和固有噪声三部分组成。偏差方差分解是从频率学派的角度对模型的复杂性进行一定的分析。">
+<meta property="og:image" content="http://i.imgur.com/GsTs6aS.png">
+<meta property="og:image" content="http://i.imgur.com/ut79PAc.png">
+<meta property="og:image" content="http://i.imgur.com/DDfEtZn.png">
+<meta property="og:updated_time" content="2017-01-23T11:57:42.323Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="偏差方差分解(Bias-Variance Tradeoff)">
+<meta name="twitter:description" content="在机器学习中，误差是由偏差、方差和固有噪声三部分组成。偏差方差分解是从频率学派的角度对模型的复杂性进行一定的分析。">
+<meta name="twitter:image" content="http://i.imgur.com/GsTs6aS.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 偏差方差分解(Bias-Variance Tradeoff) | MayMoon </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">MayMoon</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">随便写写</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                偏差方差分解(Bias-Variance Tradeoff)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2000-05-16T19:54:01+08:00" content="2000-05-16">
+              2000-05-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/PRML-notes/" itemprop="url" rel="index">
+                    <span itemprop="name">PRML notes</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在机器学习中，误差是由偏差、方差和固有噪声三部分组成。偏差方差分解是从频率学派的角度对模型的复杂性进行一定的分析。<br><a id="more"></a></p>
+<h2 id="1-偏差方差分解"><a href="#1-偏差方差分解" class="headerlink" title="1. 偏差方差分解"></a>1. 偏差方差分解</h2><p>由<a href="http://keson96.github.io/2017/01/17/2017-01-17-Decision-Theory-Basics/" target="_blank" rel="external">前文</a>中(8)式可知，若选择平方损失函数，则期望损失如下 $$\mathbb{E}[L]=\iint \{y(\mathbf{x})-t\}^2p(\mathbf{x},t)\mathrm{d}\mathbf{x}\mathrm{d}t\tag{1}$$展开其中的平方项$$\begin{array}{l,l}\{y(\mathbf{x})-t\}^2&amp;=&amp;\{y(\mathbf{x})-\mathbb{E}[t|\mathbf{x}]+\mathbb{E}[t|\mathbf{x}]-t\}^2 \\ &amp;=&amp;\{y(\mathbf{x})-\mathbb{E}[t|\mathbf{x}]\}^2+2\{y(\mathbf{x})-\mathbb{E}[t|\mathbf{x}]\}\{\mathbb{E}[t|\mathbf{x}]-t\}+\{\mathbb{E}[t|\mathbf{x}]-t\}^2\end{array}$$将展开的平方项代回到(1)，再关于 $t$ 积分，则中间项变为：$$\begin{array}{r,l}&amp;\displaystyle\iint 2\{y(\mathbf{x})-\mathbb{E}[t|\mathbf{x}]\}\{\mathbb{E}[t|\mathbf{x}]-t\}p(\mathbf{x},t)\mathrm{d}\mathbf{x}\mathrm{d}t \\ =&amp;\displaystyle 2\int\{y(\mathbf{x})-\mathbb{E}[t|\mathbf{x}]\}\int\{\mathbb{E}[t|\mathbf{x}]-t\}p(\mathbf{x},t)\mathrm{d}t\mathrm{d}\mathbf{x} \\ =&amp;\displaystyle 2\int\{y(\mathbf{x})-\mathbb{E}[t|\mathbf{x}]\}\left\{\int\mathbb{E}[t|\mathbf{x}]p(\mathbf{x},t)\mathrm{d}t-\int tp(\mathbf{x},t)\mathrm{d}t\right\}\mathrm{d}\mathbf{x} \\ =&amp;\displaystyle 2\int\{y(\mathbf{x})-\mathbb{E}[t|\mathbf{x}]\}\{\mathbb{E}[t|\mathbf{x}]p(\mathbf{x})-p(\mathbf{x})\int tp(t|\mathbf{x})\mathrm{d}t\}\mathrm{d}\mathbf{x} \\ =&amp;\displaystyle 2\int\{y(\mathbf{x})-\mathbb{E}[t|\mathbf{x}]\}\{\mathbb{E}[t|\mathbf{x}]p(\mathbf{x})-p(\mathbf{x})\mathbb{E}[t|\mathbf{x}]\}\mathrm{d}\mathbf{x} \\ =&amp;0\end{array}$$用 $h(\mathbf{x})$ 表示 $\mathbb{E}[t|\mathbf{x}]$，则(1)式可化为$$\mathbb{E}[L]=\int\{y(\mathbf{x})-h(\mathbf{x})\}^2p(\mathbf{x})\mathrm{d}\mathbf{x}+\int\{h(\mathbf{x})-t\}^2p(\mathbf{x},t)\mathrm{d}\mathbf{x}\mathrm{d}t\tag{2}$$<br>注意到，上式中的第二项是独立于 $y(\mathbf{x})$ 的。也就是说，不论我们找到什么样的 $y(\mathbf{x})$，这一项的误差都不会变化，称为<strong>固有噪声（intrinsic noise）</strong>。我们的目标就变成了寻找一个最好的 $y(\mathbf{x})$，使得第一项值最小，即 $y(\mathbf{x})$ 最接近于 $h(\mathbf{x})$。由于现实中我们只有有限的数据集 $\mathcal{D}$，不能达到任意的精确性，所以将 $y(\mathbf{x})$ 写成 $y(\mathbf{x};\mathcal{D})$。<br>如果用一个含参数的函数 $y(\mathbf{x},\mathbf{w})$ 来拟合未知的 $h(\mathbf{x})$，那么从贝叶斯的角度来看，模型的不确定性由参数 $\mathbf{w}$ 的后验分布来诠释。而频率学派的做法是，利用数据集对参数 $\mathbf{w}$ 进行点估计，即求出一个最优的 $\mathbf{w}$，然后通过下面的思维实验来解释不确定性。假设有大量的相同大小（大小为 $N$）的数据集，每个都是独立地从分布 $p(\mathbf{x},t)$ 中取出。对于任意给定的数据集 $\mathcal{D}$，都可以运行我们的学习算法，得到一个预测函数 $y(\mathbf{x};\mathcal{D})$。不同的数据集会计算出不同的预测函数，进而产生不同的平方损失。我们用所有数据集的平均来衡量模型的性能。<br>从图1中，可以看出，用多个模型的平均来衡量模型的性能。</p>
+<p><img src="http://i.imgur.com/GsTs6aS.png" width="550"></p>
+<blockquote>
+<p>在图1中，共有 $L=100$ 个数据集，每个数据集含有 $N=25$ 个数据点，每个模型含有 $M=25$ 个参数。左侧显示的是每个数据集在不同规范化参数 $\lambda$ 下的拟合情况（为了清晰，只画出了100个模型中的20个），右侧红色线是对这100个模型拟合结果的平均，绿线则是生成数据的正弦曲线。</p>
+</blockquote>
+<p>考虑(2)式中第一项中的 $\{y(\mathbf{x})-h(\mathbf{x})\}^2$，对于某个特定的数据集 $\mathcal{D}$，有$$\begin{array}{r,l,l} &amp;\{y(\mathbf{x};\mathcal{D})-h(\mathbf{x})\}^2 \\ =&amp; \{y(\mathbf{x};\mathcal{D})-\mathbb{E}_{\mathcal{D}}[y(\mathbf{x};\mathcal{D})]+\mathbb{E}_{\mathcal{D}}[y(\mathbf{x};\mathcal{D})]-h(\mathbf{x})\}^2 \\ =&amp;\{y(\mathbf{x};\mathcal{D})-\mathbb{E}_{\mathcal{D}}[y(\mathbf{x};\mathcal{D})]\}^2+\{\mathbb{E}_{\mathcal{D}}[y(\mathbf{x};\mathcal{D})]-h(\mathbf{x})\}^2 \\ &amp;\qquad\quad+2\{y(\mathbf{x};\mathcal{D})-\mathbb{E}_{\mathcal{D}}[y(\mathbf{x};\mathcal{D})]\}\{\mathbb{E}_{\mathcal{D}}[y(\mathbf{x};\mathcal{D})]-h(\mathbf{x})\}\end{array}$$对其关于 $\mathcal{D}$ 取期望，最后一项就会消失 $$\mathbb{E}_{\mathcal{D}}[\{y(\mathbf{x};\mathcal{D})-h(\mathbf{x})\}^2]=\{\mathbb{E}_{\mathcal{D}}[y(\mathbf{x};\mathcal{D})]-h(\mathbf{x})\}^2+\mathbb{E}_{\mathcal{D}}[\{y(\mathbf{x};\mathcal{D})-\mathbb{E}_{\mathcal{D}}[y(\mathbf{x};\mathcal{D})]\}^2]\tag{3}$$<br>我们可以看到，$y(\mathbf{x};\mathcal{D})$ 和 $h(\mathbf{x})$ 之间差值平方的期望由两部分组成。第一部分称为<strong>偏差</strong>（在式子中其实是偏差的平方），描述了所有数据集上的平均预测值与真实回归函数之间的差距大小。第二部分称为<strong>方差</strong>，描述了不同数据集上的预测值的离散程度，因此描述了方程 $y(\mathbf{x};\mathcal{D})$ 对数据集 $\mathcal{D}$ 的选取的敏感性。方差与偏差的特点可以用图2形象地描述<br><img src="http://i.imgur.com/ut79PAc.png" width="500"><br>将上面的结果代回到(2)式中，可以得到$$\text{expected loss $=$ (bias)$^2$ + variance + noise}\tag{4}$$其中$$\begin{array}{r,l,l}\text{(bias)}^2&amp;=&amp;\int\{\mathbb{E}_{\mathcal{D}}[y(\mathbf{x};\mathcal{D})]-h(\mathbf{x})\}^2p(\mathbf{x})\mathrm{d}\mathbf{x} \\ \text{variance}&amp;=&amp;\int\mathbb{E}_{\mathcal{D}}[\{y(\mathbf{x};\mathcal{D})-\mathbb{E}_{\mathcal{D}}[y(\mathbf{x};\mathcal{D})]\}^2]p(\mathbf{x})\mathrm{d}\mathbf{x} \\ \text{noise}&amp;=&amp;\int\{h(\mathbf{x})-t\}^2p(\mathbf{x},t)\mathrm{d}\mathbf{x}\mathrm{d}t\end{array}\tag{5}$$</p>
+<h2 id="2-偏差方差的一些特点"><a href="#2-偏差方差的一些特点" class="headerlink" title="2. 偏差方差的一些特点"></a>2. 偏差方差的一些特点</h2><p><strong>与规范化系数 $\lambda$ 关系</strong><br>对图1中的例子，我们可以从下图中看出偏差方差与规范化参数 $\lambda$ 的关系</p>
+<p><img src="http://i.imgur.com/DDfEtZn.png" width="400"><br><strong>实际意义</strong><br>偏差方差分解虽然从频率学派的角度对模型复杂性有一定解释，但不具有太大实际意义。因为，方差偏差分解是基于对多个等大数据集进行集成（求平均），但现实中我们只有一个数据集。而如果有多个数据集，我们就可以将它们合并成一个更大的数据集，这样当然会降低过拟合的程度。<br>然而，从贝叶斯角度出发，不仅能作出很好的解释，同时也可以提出不错的解决办法。</p>
+<h2 id="3-处理偏差方差"><a href="#3-处理偏差方差" class="headerlink" title="3. 处理偏差方差"></a>3. 处理偏差方差</h2><p>当处理偏差与方差时，下面这几点值得注意<br><strong>克服直觉的错误</strong><br>许多人的直觉是要尽可能地减小偏差，哪怕会增大方差。这是一种错误的逻辑，因为高方差低偏差的模型只有求多个的平均时才能表现得比较好。在现实中只有一个数据集得情况下，高方差低偏差模型的表现是很不理想的。<br>比如图2中右上角的图，尽管多次的平均值是集中在红圈里的，但现实中我们只能得到一个点的结果，这样效果就很可能比较差。<br><strong>Bagging和重采样</strong><br>Bagging和一些重采样的方法可以用来降低方差。利用这些方法可以生成许多个新数据集，然后对预测结果进行集成，就好像我们对图2中方差大的那些点求平均（或其它投票原则）。Bagging方法中最强大的就是<strong>随机森林</strong>算法。有关Bagging和随机森林的内容可以参见<a href="http://keson96.github.io/2016/10/17/2016-10-17-Ensemble-Learning/" target="_blank" rel="external">这篇文章</a>。<br><strong>算法的渐进性质</strong><br>统计学论文中经常会提到关于预测算法的两个术语：<strong>渐进一致</strong>和<strong>渐进效率</strong>。在实际中，它们指的是：当训练集大小趋近无穷时，模型的偏差会减小到0（渐进一致），模型的方差将会不差于任何可能使用的模型（渐进效率）。<br>这两个性质是十分好的性质，具有这样性质的算法在大数据集（百万以上）上的偏差会很小。而在小数据集上，具有这样性质的算法甚至可能会比不具有这样性质的算法效果差很多。所以，在实际应用中，需要根据具体情况判断，不能只关注理论性质。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
+<li><em>Pattern Recognition and Machine Learning (PRML)<em></em></em></li>
+<li><a href="http://scott.fortmann-roe.com/docs/BiasVariance.html" target="_blank" rel="external">Understanding the Bias-Variance Tradeoff</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2000/05/16/过拟合专题/" rel="prev" title="🔨过拟合专题">
+                🔨过拟合专题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/pic.PNG"
+               alt="Wang Kx" />
+          <p class="site-author-name" itemprop="name">Wang Kx</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">40</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-偏差方差分解"><span class="nav-number">1.</span> <span class="nav-text">1. 偏差方差分解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-偏差方差的一些特点"><span class="nav-number">2.</span> <span class="nav-text">2. 偏差方差的一些特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-处理偏差方差"><span class="nav-number">3.</span> <span class="nav-text">3. 处理偏差方差</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wang Kx</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=0.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
