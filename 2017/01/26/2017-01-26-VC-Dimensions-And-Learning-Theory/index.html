@@ -57,15 +57,26 @@
 
 
 
-<meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="MayMoon">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="1. VC维VC维是一类（参数可变化）二分类器的属性，描述了这类二分类器的学习能力。VC维的概念主要基于shatter(打散)的概念。
+1.1 Shatter————————————————————————一个二分类器可以shatter一组数据点 $x_1,x_2,\cdots,x_r$ 当且仅当对于每个可能的训练集 $(x_1,y_1),(x_2,y_2),\cdots,(x_r,y_r)$，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VC维与学习理论（VC Dimensions And Learning Theory）">
+<meta property="og:url" content="http://yoursite.com/2017/01/26/2017-01-26-VC-Dimensions-And-Learning-Theory/index.html">
 <meta property="og:site_name" content="MayMoon">
-<meta property="og:description">
+<meta property="og:description" content="1. VC维VC维是一类（参数可变化）二分类器的属性，描述了这类二分类器的学习能力。VC维的概念主要基于shatter(打散)的概念。
+1.1 Shatter————————————————————————一个二分类器可以shatter一组数据点 $x_1,x_2,\cdots,x_r$ 当且仅当对于每个可能的训练集 $(x_1,y_1),(x_2,y_2),\cdots,(x_r,y_r)$，">
+<meta property="og:image" content="http://i.imgur.com/9zksWqK.png">
+<meta property="og:image" content="http://i.imgur.com/UaGwv2t.png">
+<meta property="og:image" content="http://i.imgur.com/9zksWqK.png">
+<meta property="og:image" content="http://i.imgur.com/ZJfb1iM.png">
+<meta property="og:image" content="http://i.imgur.com/niDXVt1.png">
+<meta property="og:image" content="http://i.imgur.com/X8PCVwq.png">
+<meta property="og:updated_time" content="2017-01-26T13:09:38.418Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MayMoon">
-<meta name="twitter:description">
+<meta name="twitter:title" content="VC维与学习理论（VC Dimensions And Learning Theory）">
+<meta name="twitter:description" content="1. VC维VC维是一类（参数可变化）二分类器的属性，描述了这类二分类器的学习能力。VC维的概念主要基于shatter(打散)的概念。
+1.1 Shatter————————————————————————一个二分类器可以shatter一组数据点 $x_1,x_2,\cdots,x_r$ 当且仅当对于每个可能的训练集 $(x_1,y_1),(x_2,y_2),\cdots,(x_r,y_r)$，">
+<meta name="twitter:image" content="http://i.imgur.com/9zksWqK.png">
 
 
 
@@ -83,7 +94,7 @@
   };
 </script>
 
-  <title> MayMoon </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> VC维与学习理论（VC Dimensions And Learning Theory） | MayMoon </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -104,9 +115,7 @@
     
   
 
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left 
-   page-home 
- ">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -193,9 +202,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
   
@@ -215,10 +224,7 @@
             
             
               
-                
-                <a class="post-title-link" href="/2017/01/26/2017-01-26-VC-Dimensions-And-Learning-Theory/" itemprop="url">
-                  VC维与学习理论（VC Dimensions And Learning Theory）
-                </a>
+                VC维与学习理论（VC Dimensions And Learning Theory）
               
             
           </h1>
@@ -276,9 +282,7 @@
       
 
       
-        
-          
-            <a id="more"></a>
+        <a id="more"></a>
 <h1 id="1-VC维"><a href="#1-VC维" class="headerlink" title="1. VC维"></a>1. VC维</h1><p>VC维是一类（参数可变化）二分类器的属性，描述了这类二分类器的学习能力。VC维的概念主要基于<strong>shatter(打散)</strong>的概念。</p>
 <h2 id="1-1-Shatter"><a href="#1-1-Shatter" class="headerlink" title="1.1 Shatter"></a>1.1 Shatter</h2><p><strong>————————————————————————</strong><br><strong>一个二分类器可以shatter一组数据点 $x_1,x_2,\cdots,x_r$ 当且仅当对于每个可能的训练集 $(x_1,y_1),(x_2,y_2),\cdots,(x_r,y_r)$，总存在一个参数向量 $\theta$  使训练误差为0，即正确分类每个样本。</strong><br><strong>————————————————————————</strong><br>上面的定义可能比较难懂，下面用几个例子来说明shatter的含义。<br><strong>例一</strong>：$f(\mathbf{x},\mathbf{w})=\text{sign}(\mathbf{w}^\mathrm{T}\mathbf{x})$，其中 $\mathbf{w}$ 是参数。函数 $f$ 能否shatter下面的数据<br><img src="http://i.imgur.com/9zksWqK.png" width="200"><br>图中有两个数据点，则可能的训练样本共有以下四种（深色圆代表正例，浅色圆代表负例）<br><img src="http://i.imgur.com/UaGwv2t.png"><br>当 $\mathbf{w}$ 分别等于 $(0,1)$，$(0,-1)$，$(1,-1)$，$(-1,1)$ 时就可以正确分类每个样本，如图中的红线所示。故 $f$ 可以shatter所给的数据。<br><strong>例二</strong>：$f(\mathbf{x},b)=\text{sign}(b-\mathbf{x}^\mathrm{T}\mathbf{x})$，其中 $b$ 是参数。函数 $f$ 能否shatter下面的数据<br><img src="http://i.imgur.com/9zksWqK.png" width="200"><br>四种情况如下，无论 $b$ 取什么值，都无法正确分类第四个训练集，所以 $f$ 不能shatter所给的数据。<br><img src="http://i.imgur.com/ZJfb1iM.png"></p>
 <h2 id="1-2-VC维的定义及常见函数的VC维"><a href="#1-2-VC维的定义及常见函数的VC维" class="headerlink" title="1.2 VC维的定义及常见函数的VC维"></a>1.2 VC维的定义及常见函数的VC维</h2><p><strong>————————————————————————</strong><br><strong>给定一个分类器 $f$，它的VC维 $h$ 是 $f$ 可以shatter的数据点的最多个数。</strong><br><strong>————————————————————————</strong></p>
@@ -324,12 +328,12 @@
 <li><a href="https://en.wikipedia.org/wiki/Probably_approximately_correct_learning" target="_blank" rel="external">Wikipedia:Probably approximately correct learning</a></li>
 </ol>
 
-          
-        
       
     </div>
 
     <div>
+      
+        
       
     </div>
 
@@ -337,463 +341,32 @@
       
 
       
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/01/23/2017-01-23-Bias-And-Variance-Tradeoff/" rel="next" title="偏差方差分解(Bias-Variance Tradeoff)">
+                <i class="fa fa-chevron-left"></i> 偏差方差分解(Bias-Variance Tradeoff)
+              </a>
             
-              
-                
-                <a class="post-title-link" href="/2017/01/23/2017-01-23-Bias-And-Variance-Tradeoff/" itemprop="url">
-                  偏差方差分解(Bias-Variance Tradeoff)
-                </a>
-              
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
             
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-01-23T19:54:01+08:00" content="2017-01-23">
-              2017-01-23
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/PRML-notes/" itemprop="url" rel="index">
-                    <span itemprop="name">PRML notes</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
+          </div>
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          <p>在机器学习中，误差是由偏差、方差和固有噪声三部分组成。偏差方差分解是从频率学派的角度对模型的复杂性进行一定的分析。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2017/01/23/2017-01-23-Bias-And-Variance-Tradeoff/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-      
 
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/17/2017-01-17-Decision-Theory-Basics/" itemprop="url">
-                  决策论基础(Decision Theory Basics)
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-01-17T19:54:01+08:00" content="2017-01-17">
-              2017-01-17
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/PRML-notes/" itemprop="url" rel="index">
-                    <span itemprop="name">PRML notes</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>这一部分内容主要是<em>PRML</em>一书中1.5节的笔记。详细的决策论内容可以参考<a href="http://www.springer.com/us/book/9780387960982">Berger</a>，<a href="http://as.wiley.com/WileyCDA/WileyTitle/productCd-0471976482.html">Bather</a>。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2017/01/17/2017-01-17-Decision-Theory-Basics/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
+    <div class="post-spread">
       
     </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/12/22/2016-12-22-Information-Theory-Basics/" itemprop="url">
-                  信息论基础(Information Theory Basics)
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-12-22T19:54:01+08:00" content="2016-12-22">
-              2016-12-22
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/PRML-notes/" itemprop="url" rel="index">
-                    <span itemprop="name">PRML notes</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>这一部分内容主要是<em>PRML</em>一书中1.6节的笔记。<br>信息论方面的一些知识在机器学习和模式识别上很有用，下面介绍一些基础，详细的信息论内容可以参考<a href="https://www.google.com/#q=principles+of+digital+communication+and+coding">Viterbi and Omura</a>，<a href="http://as.wiley.com/WileyCDA/WileyTitle/productCd-0471241954.html">Cover and Thomas</a>，<a href="http://www.inference.phy.cam.ac.uk/itila/">Mackay</a>。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/12/22/2016-12-22-Information-Theory-Basics/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/12/20/2016-12-20-Constrained-Optimization-Problem/" itemprop="url">
-                  约束优化问题（Constrained Optimization Problem）
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-12-20T19:54:01+08:00" content="2016-12-20">
-              2016-12-20
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/优化算法/" itemprop="url" rel="index">
-                    <span itemprop="name">优化算法</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>对于无约束优化问题一样，我们有判断局部最优解的充分条件和必要条件。通过引进拉格朗日乘子，对于约束优化问题，我们也可以推导出类似的充分条件和必要条件。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/12/20/2016-12-20-Constrained-Optimization-Problem/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-  </section>
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
-
+  </div>
 
 
           </div>
@@ -801,6 +374,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -820,8 +397,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/pic.PNG"
@@ -873,6 +459,17 @@
 
       </section>
 
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-VC维"><span class="nav-number">1.</span> <span class="nav-text">1. VC维</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-Shatter"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 Shatter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-VC维的定义及常见函数的VC维"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 VC维的定义及常见函数的VC维</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#圆的VC维"><span class="nav-number">1.2.1.</span> <span class="nav-text">圆的VC维</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#直线的VC维"><span class="nav-number">1.2.2.</span> <span class="nav-text">直线的VC维</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#无限VC维"><span class="nav-number">1.2.3.</span> <span class="nav-text">无限VC维</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-学习理论（Learning-Theory）"><span class="nav-number">2.</span> <span class="nav-text">2. 学习理论（Learning Theory）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-经验风险最小化"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 经验风险最小化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-mathcal-H-有限的情形"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 $\mathcal{H}$ 有限的情形</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#采样复杂度（Sample-Complexity）"><span class="nav-number">2.2.1.</span> <span class="nav-text">采样复杂度（Sample Complexity）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#和最优-h-的比较"><span class="nav-number">2.2.2.</span> <span class="nav-text">和最优 $h$ 的比较</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-mathcal-H-无限的情形"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 $\mathcal{H}$ 无限的情形</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#硬件实现的“无限”"><span class="nav-number">2.3.1.</span> <span class="nav-text">硬件实现的“无限”</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VC维"><span class="nav-number">2.3.2.</span> <span class="nav-text">VC维</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料："><span class="nav-number">3.</span> <span class="nav-text">参考资料：</span></a></li></ol></div>
+            
+          </div>
+        </section>
       
 
     </div>
@@ -957,6 +554,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=0.5.0"></script>
+
+
 
   
 
