@@ -216,8 +216,8 @@
             
               
                 
-                <a class="post-title-link" href="/2000/05/16/XGBoosting/" itemprop="url">
-                  🔨XGBoosting（eXtreme Gradient Boosting）
+                <a class="post-title-link" href="/2000/05/16/第2章-和式/" itemprop="url">
+                  🔨第二章 和式
                 </a>
               
             
@@ -277,9 +277,11 @@
 
       
         
-          <p>Boosting是<a href="http://keson96.github.io/2016/10/17/2016-10-17-集成学习算法/">集成学习</a>中一种重要的方法，通过集成弱分类器，可以获得比单一学习器性能都好的一个模型。XGBoosting是在<a href="http://keson96.github.io/2016/11/04/2016-11-04-Gradient-Boosting/">Gradient Boosting</a>基础上，进行了一些改动设计，使得算法效率显著提高，并可以并行化。<br>
+          <h2 id="2-1-记号-NOTATION"><a href="#2-1-记号-NOTATION" class="headerlink" title="2.1 记号 NOTATION"></a>2.1 记号 NOTATION</h2><h3 id="和式与项"><a href="#和式与项" class="headerlink" title="和式与项"></a>和式与项</h3><p>一般形式的和式 $a_1 + a_2 + \cdots + a_n$</p>
+<p>和式的每个元素 $a_k$ 称为<strong>项</strong>(term)</p>
+<p>除了用···来表示和式，我们也可以用（很多时候的确在用）求和符号表示和式</p>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2000/05/16/XGBoosting/#more" rel="contents">
+            <a class="btn" href="/2000/05/16/第2章-和式/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -479,7 +481,24 @@
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
 
 
 

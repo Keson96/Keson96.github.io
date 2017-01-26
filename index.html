@@ -277,54 +277,12 @@
 
       
         
-          
-            <a id="more"></a>
-<h1 id="1-VC维"><a href="#1-VC维" class="headerlink" title="1. VC维"></a>1. VC维</h1><p>VC维是一类（参数可变化）二分类器的属性，描述了这类二分类器的学习能力。VC维的概念主要基于<strong>shatter(打散)</strong>的概念。</p>
-<h2 id="1-1-Shatter"><a href="#1-1-Shatter" class="headerlink" title="1.1 Shatter"></a>1.1 Shatter</h2><p><strong>————————————————————————</strong><br><strong>一个二分类器可以shatter一组数据点 $x_1,x_2,\cdots,x_r$ 当且仅当对于每个可能的训练集 $(x_1,y_1),(x_2,y_2),\cdots,(x_r,y_r)$，总存在一个参数向量 $\theta$  使训练误差为0，即正确分类每个样本。</strong><br><strong>————————————————————————</strong><br>上面的定义可能比较难懂，下面用几个例子来说明shatter的含义。<br><strong>例一</strong>：$f(\mathbf{x},\mathbf{w})=\text{sign}(\mathbf{w}^\mathrm{T}\mathbf{x})$，其中 $\mathbf{w}$ 是参数。函数 $f$ 能否shatter下面的数据<br><img src="http://i.imgur.com/9zksWqK.png" width="200"><br>图中有两个数据点，则可能的训练样本共有以下四种（深色圆代表正例，浅色圆代表负例）<br><img src="http://i.imgur.com/UaGwv2t.png"><br>当 $\mathbf{w}$ 分别等于 $(0,1)$，$(0,-1)$，$(1,-1)$，$(-1,1)$ 时就可以正确分类每个样本，如图中的红线所示。故 $f$ 可以shatter所给的数据。<br><strong>例二</strong>：$f(\mathbf{x},b)=\text{sign}(b-\mathbf{x}^\mathrm{T}\mathbf{x})$，其中 $b$ 是参数。函数 $f$ 能否shatter下面的数据<br><img src="http://i.imgur.com/9zksWqK.png" width="200"><br>四种情况如下，无论 $b$ 取什么值，都无法正确分类第四个训练集，所以 $f$ 不能shatter所给的数据。<br><img src="http://i.imgur.com/ZJfb1iM.png"></p>
-<h2 id="1-2-VC维的定义及常见函数的VC维"><a href="#1-2-VC维的定义及常见函数的VC维" class="headerlink" title="1.2 VC维的定义及常见函数的VC维"></a>1.2 VC维的定义及常见函数的VC维</h2><p><strong>————————————————————————</strong><br><strong>给定一个分类器 $f$，它的VC维 $h$ 是 $f$ 可以shatter的数据点的最多个数。</strong><br><strong>————————————————————————</strong></p>
-<blockquote>
-<p>注意：这里的定义只要求 $f$ 可以shatter $n$ 个点，而不是要求 $f$ 可以shatter任意 $n$ 个点。<br>等价于，$f$ 不能shatter任意 $h+1$ 个点组成的数据集。</p>
-</blockquote>
-<h3 id="圆的VC维"><a href="#圆的VC维" class="headerlink" title="圆的VC维"></a>圆的VC维</h3><p>由上面的内容可知，圆 $f(\mathbf{x},b)=\text{sign}(b-\mathbf{x}^\mathrm{T}\mathbf{x})$ 的VC维为1。<br>对于更复杂一点的圆 $f(\mathbf{x},q,b)=\text{sign}(b-q\mathbf{x}^\mathrm{T}\mathbf{x})$，它的VC维为2。</p>
-<h3 id="直线的VC维"><a href="#直线的VC维" class="headerlink" title="直线的VC维"></a>直线的VC维</h3><p>对于直线 $f(\mathbf{x},\mathbf{w},b)=\text{sign}(\mathbf{w}^\mathrm{T}\mathbf{x}+b)$，它可以shatter下面的数据集<br><img src="http://i.imgur.com/niDXVt1.png" width="200"><br>事实上，$f$ 可以shatter任意不共线的三个点。所以 $f$ 的VC维至少为3。<br>对于四个点，分两种情况：有三个点共线，任意三点不共线。对于前一种情况，由于 $f$ 不能shatter共线的三个点，所以也不能shatter这一种情况；对于后一种情况，如下图，总可以画出 $\mathrm{C}_4^2=6$ 条连线，必会产生一个新的交点。给交点所在的一条直线上的两个点赋正值，另一条赋负值。可以看出，不论 $\mathbf{w}$ 和 $b$ 取何值，直线 $f$ 都不能正确分类这个训练集。故 $f$ 不能shatter这种情况。综上，$f$ 不能shatter任意4个点，所以VC维为3。<br><img src="http://i.imgur.com/X8PCVwq.png" width="400"><br><strong>$n$ 维空间的情形</strong><br>若 $\mathbf{x}\in\mathbb{R}^n$，有下面这个定理：<br><strong>————————————————————————</strong><br><strong>考虑 $n$ 维空间中的 $m$ 个点，选其中一个点作为原点。则 $m$ 个点能被有向超平面 $f$ shatter当且仅当剩余 $m-1$ 个点的位置向量线性独立。</strong><br><strong>————————————————————————</strong></p>
-<blockquote>
-<p>定理的证明可以参见<a href="http://101.96.8.165/www.cs.iastate.edu/~honavar/burges-svm.pdf" target="_blank" rel="external">这篇文章</a>的附录部分。</p>
-</blockquote>
-<p>则 $\mathbb{R}^n$ 中的有向超平面 $f(\mathbf{w},b)$ 的VC维为 $n+1$。因为我们总可以选择 $n+1$ 个点，让其中一个作为原点，使得剩下的 $n$ 个点线性独立；但却不能选择 $n+2$ 个点（因为没有 $n+1$ 个向量在 $\mathbb{R}^n$ 中是线性独立的）。</p>
-<h3 id="无限VC维"><a href="#无限VC维" class="headerlink" title="无限VC维"></a>无限VC维</h3><p>若任意数量的点都可以被 $f$ shatter，则其VC维 $h=\infty$。<br>含参数多的分类器的VC维比较高，但参数少的分类器的VC维不一定低。下面是一个只含一个参数，但却有无穷VC维的例子：$$f(x,\alpha)=\text{sign}(\sin(\alpha x)),\quad\qquad x,\alpha\in\mathbb{R}$$选取一个任意大小的正整数 $l$，定义 $x_i=10^{-i},\quad i=1,\cdots,l$ 这 $l$ 个点以及对应的类别 $y_1,y_2,\cdots,y_l,\quad y_i\in\{-1,1\}$。选择 $\alpha$ 使得 $\alpha=\pi(1+\sum_{i=1}^l\frac{(1-y_i)10^i}{2})$，就可以正确分类所有点。因为 $l$ 是任意选取的，所以VC维为无穷。</p>
-<h1 id="2-学习理论（Learning-Theory）"><a href="#2-学习理论（Learning-Theory）" class="headerlink" title="2. 学习理论（Learning Theory）"></a>2. 学习理论（Learning Theory）</h1><h2 id="2-1-经验风险最小化"><a href="#2-1-经验风险最小化" class="headerlink" title="2.1 经验风险最小化"></a>2.1 经验风险最小化</h2><p>为简化说明，我们依然只关注二分类问题，即 $y\in\{0,1\}$。下面这些都可以推广到多分类或回归问题。<br>假设有一个大小为 $m$ 的训练集 $S=\{(x^{(i)},y^{(i)});i=1,\cdots,m\}$，每条数据都是独立同分布地从分布 $\mathcal{D}$ 中取出的。对于一个假设函数 $h$，定义<strong>训练误差</strong>（training error或empirical risk或empirical error）如下：$$\hat{\varepsilon}(h)=\cfrac{1}{m}\sum_{i=1}^m \mathrm{I}\{h(x^{(i)})\neq y^{(i)}\}\tag{1}$$<br>实际上就是训练集中 $h$ 误分类的样本所占的比例。定义<strong>泛化误差</strong>如下：$$\varepsilon(h)=P_{(x,y)\sim\mathcal{D}}(h(x)\neq y)\tag{2}$$即从分布 $D$ 中取出一个新的样本 $(x,y)$，$h$ 会误分类它的概率。</p>
-<blockquote>
-<p>注意我们在这里假设训练集和测试集是从同一个分布中取出的，这其实是<strong>PAC假设</strong>中的一条。<br><strong>PAC(Probably Approximately  Correct)</strong>是一个学习框架，包含许多条假设。其中，训练集和测试集取自同一分布，训练集样本是独立同分布取出的，是最重要的两条假设。</p>
-</blockquote>
-<p>考虑线性分类问题，令 $h_{\theta}(x)=\mathrm{I}\{\theta^T x\ge 0\}$。要选取最优的参数 $\theta$，方法是最小化训练误差，即选择$$\hat{\theta}=\text{arg}\min_{\theta}\hat{\varepsilon}(h_{\theta})\tag{3}$$称这为<strong>经验风险最小化（ERM）</strong>，得到的假设函数记为 $\hat{h}=h_{\hat{\theta}}$。定义<strong>假设函数类</strong> $\mathcal{H}=\{h_{\theta}|h_{\theta}(x)=\mathrm{I}\{\theta^T x\ge 0\},\theta\in\mathbb{R}^{n+1}$ 来表示一类假设函数。</p>
-<blockquote>
-<p>如果是神经网络，则 $\mathcal{H}$ 可以表示相同网络结构的所有神经网络集合。</p>
-</blockquote>
-<p>则经验风险最小化可以看作是 $\mathcal{H}$ 上的最小化问题，即$$\hat{h}=\text{arg}\min_{h\in\mathcal{H}}\hat{\varepsilon}(h)\tag{4}$$</p>
-<h2 id="2-2-mathcal-H-有限的情形"><a href="#2-2-mathcal-H-有限的情形" class="headerlink" title="2.2 $\mathcal{H}$ 有限的情形"></a>2.2 $\mathcal{H}$ 有限的情形</h2><p>先研究有限的情形，即 $\mathcal{H}=\{h_1,h_2,\cdots,h_k\}$ 包含 $k$ 个假设函数。因此，经验风险最小化即从这 $k$ 个中选一个来最小化训练误差。<br>给定一个 $h_i\in\mathcal{H}$，定义伯努利随机变量 $Z$ 如下：取样 $(x,y)\sim\mathcal{D}$，令 $Z=\mathrm{I}\{h_i(x)\neq y\}$。则对一个随机抽取的测试集，误分类的概率 $\varepsilon(h)$ 即为 $\mathbb{E}[Z]$。另一方面，训练误差可以写成$$\hat{\varepsilon}(h_i)=\cfrac{1}{m}\sum_{j=1}^m Z_j$$即 $m$ 个 $Z_j$ 的均值。应用Hoeffding不等式，可以得到$$P(|\varepsilon(h_i)-\hat{\varepsilon}(h_i)|\gt \gamma)\le 2\exp(-2\gamma^2 m)\tag{5}$$</p>
-<blockquote>
-<p><strong>Hoeffding不等式</strong><br>令 $Z_1,\cdots,Z_m$ 为 $m$ 个从伯努利分布 $\text{Bernoullo}(\phi)$ 中取出的独立同分布的随机变量，令 $\hat{\phi}$ 为这些随机变量的均值，即 $\frac{1}{m}\sum_{i=1}^m Z_i$。给定任意的 $\gamma\gt 0$，则有$$P(|\phi-\hat{\phi}|\gt\gamma)\le 2\exp(-2\gamma^2m)$$这个不等式说明了只要样本数 $m$ 足够大，样本的估计值就离真实值差距很小。</p>
-</blockquote>
-<p>在这里意味着，对某个特定的 $h_i$，当 $m$ 很大的时候，训练误差和泛化误差很接近。不过，我们需要对所有 $h\in\mathcal{H}$ 同时保证这一点。利用Union Bound定理，可以得到$$\begin{array}{r,l}P(\exists h\in\mathcal{H}.|\varepsilon(h_i)-\hat{\varepsilon}(h_i)|\gt\gamma)&amp;\le&amp;\sum\limits_{i=1}^k 2\exp(-2\gamma^2 m) \\ &amp;=&amp;2k\exp(-2\gamma^2 m)\end{array}$$则$$P(\forall h\in\mathcal{H}.|\varepsilon(h_i)-\hat{\varepsilon}(h_i)|\le\gamma)\gt 1-2k\exp(-2\gamma^2 m)\tag{6}$$<br>故对于所有 $h\in\mathcal{H}$，可以以 $1-2k\exp(-2\gamma^2 m)$ 的概率保证 $\varepsilon(h)$ 与 $\hat{\varepsilon}(h)$ 相差不超过 $\gamma$。这称为<strong>一致收敛</strong>（uniform convergence）。</p>
-<h3 id="采样复杂度（Sample-Complexity）"><a href="#采样复杂度（Sample-Complexity）" class="headerlink" title="采样复杂度（Sample Complexity）"></a>采样复杂度（Sample Complexity）</h3><p>在不等式(6)中，有三个值得关注的量：$m$，$\gamma$ 和误差的概率 $\delta$。我们可以用任意两个量来给出另外一个量的界限。</p>
-<ol>
-<li>比如，给定 $\gamma$ 和 $\delta\gt 0$，$m$ 需要多大才能保证训练集误差与泛化误差相差不超过 $\gamma$ 的概率不小于 $1-\delta$。解得$$m\ge \cfrac{1}{2\gamma^2}\log\cfrac{2k}{\delta}\tag{7}$$一个学习算法为达到一定性能所需要的训练集样本数称为这个算法的<strong>采样复杂度</strong>。注意到，(7)式中的下界只是 $k$（即$|\mathcal{H}|$）的对数级。</li>
-<li>同样地，我们也可以固定 $m$ 和 $\delta$ 来求 $\gamma$。可得到在概率 $1-\delta$ 下，对所有 $h\in\mathcal{H}$，有$$|\varepsilon(h_i)-\hat{\varepsilon}(h_i)|\le\sqrt{\cfrac{1}{2m}\log\cfrac{2k}{\delta}}$$</li>
-</ol>
-<h3 id="和最优-h-的比较"><a href="#和最优-h-的比较" class="headerlink" title="和最优 $h$ 的比较"></a>和最优 $h$ 的比较</h3><p>定义 $h^{\star}=\text{arg}\min_{h\in\mathcal{H}}\varepsilon(h)$ 为 $\mathcal{H}$ 中最优的一个假设函数。自然地，我们想比较 $\hat{h}$ 与 $h^{\star}$ 的表现。有：$$\begin{array}{r,l}\varepsilon(\hat{h})&amp;\le&amp;\hat{\varepsilon}(\hat{h})+\gamma \\ &amp;\le&amp;\hat{\varepsilon}(h^{\star})+\gamma \\ &amp;\le&amp;\varepsilon(h^{\star})+2\gamma \end{array}$$第一行：由一致收敛 $|\varepsilon(\hat{h})-\hat{\varepsilon}(\hat{h})|\le\gamma$ 可得<br>第二行：因为 $\hat{h}$ 是最小化 $\hat{\varepsilon}(h)$ 求得的，所以对所有 $h$ 有 $\hat{\varepsilon}(\hat{h})\le\hat{\varepsilon}(h)$<br>第三行：仍由一致收敛 $|\varepsilon(\hat{h})-\hat{\varepsilon}(\hat{h})|\le\gamma$ 可得</p>
-<p>总结一下，可得到如下的定理<br><strong>————————————————————————</strong><br><strong>令 $|\mathcal{H}|=k$，给定任意的 $m$ 和 $\delta$。则至少以 $1-\delta$ 的概率有$$\varepsilon(\hat{h})\le\left(\min_{h\in\mathcal{H}}\varepsilon(h)\right)+2\gamma\tag{8}$$其中可以令 $\gamma=\sqrt{\cfrac{1}{2m}\log\cfrac{2k}{\delta}}$</strong><br><strong>————————————————————————</strong><br>同样地，给定 $\gamma$ 和 $\delta$，可以求解出关于 $m$ 的不等式，得到一个采样复杂度下限:<br><strong>————————————————————————</strong><br><strong>令 $|\mathcal{H}|=k$，给定任意的 $\gamma$ 和 $\delta$。若要至少以 $1-\delta$ 的概率使 $\varepsilon(\hat{h})\le\min_{h\in\mathcal{H}}\varepsilon(h)+2\gamma$ 成立，则 $m$ 满足$$\begin{array}{r,l}m&amp;\le&amp;\cfrac{1}{2\gamma^2}\log\cfrac{2k}{\delta} \\ &amp;=&amp;O\left(\cfrac{1}{\gamma^2}\log\cfrac{k}{\delta}\right)\end{array}\tag{9}$$————————————————————————</strong></p>
-<h2 id="2-3-mathcal-H-无限的情形"><a href="#2-3-mathcal-H-无限的情形" class="headerlink" title="2.3 $\mathcal{H}$ 无限的情形"></a>2.3 $\mathcal{H}$ 无限的情形</h2><p>上面我们研究了有限 $\mathcal{H}$ 的情形，但很多 $\mathcal{H}$ 都是无限的，比如，最简单的，参数为实数的线性分类器。</p>
-<h3 id="硬件实现的“无限”"><a href="#硬件实现的“无限”" class="headerlink" title="硬件实现的“无限”"></a>硬件实现的“无限”</h3><p>假设 $\mathcal{H}$ 是由 $d$ 个实数作参数的，因为我们要用计算机表示实数（由IEEE双精度浮点数规范可知，一个实数是由64个二进制位确定的），所以 $\mathcal{H}$ 实际上是有限的，包含至多 $k=2^{64d}$ 种不同的可能。代入到(9)式中，可以得到 $m\ge O(\frac{1}{\gamma^2}\log\frac{2^{64d}}{\delta})=O(\frac{d}{\gamma^2}\log\frac{1}{\delta})=O_{\gamma,\delta}(d)$。说明了<strong>训练集大小与模型参数的熟练最多是线性关系</strong>。</p>
-<h3 id="VC维"><a href="#VC维" class="headerlink" title="VC维"></a>VC维</h3><p>上面的结论其实有一些瑕疵，因为它依赖于模型的参数化。然而，同一个 $\mathcal{H}$ 可能由两种不同的方式参数化。比如，$h_{\theta}(x)=\mathrm{I}\{\theta_0+\theta_1 x_1+\cdots+\theta_n x_n\ge 0\}$ 有 $n+1$ 个参数，而 $h_{u,v}(x)=\mathrm{I}\{(u_0^2-v_0^2)+(u_1^2-v_1^2)x_1+\cdots+(u_n^2-v_n^2)x_n\ge 0\}$ 有 $2n+2$ 个参数，但它们定义了同一个 $\mathcal{H}$。<br>但每一个 $\mathcal{H}$ 只有一个VC维，Vapnik证明了下面这条重要的定理<br><strong>————————————————————————</strong><br><strong>给定 $\mathcal{H}$，令 $d=VC(\mathcal{H})$，则至少以概率 $1-\delta$，对于所有 $h\in\mathcal{H}$，有$$|\varepsilon(h)-\hat{\varepsilon(h)}|\le O\left(\sqrt{\cfrac{d}{m}\log\cfrac{m}{d}+\cfrac{1}{m}\log\cfrac{1}{\delta}}\right)$$</strong><br><strong>因此，至少以概率 $1-\delta$，有$$\varepsilon(\hat{h})\le\varepsilon(h^{\star})+ O\left(\sqrt{\cfrac{d}{m}\log\cfrac{m}{d}+\cfrac{1}{m}\log\cfrac{1}{\delta}}\right)$$————————————————————————</strong><br>也就是说，如果一个假设函数类 $\mathcal{H}$ 有有限的VC维，那么当 $m$ 变大的时候，就会一致收敛。同样地，我们也可以得到下面的结论：<br><strong>————————————————————————</strong><br><strong>对于所有 $h\in\mathcal{H}$，若 $|\varepsilon(h)-\hat{\varepsilon}(h)|\le\gamma$ 以至少 $1-\delta$ 的概率成立，则 $m$ 满足 $m=O_{\gamma,\delta}(d)$</strong><br><strong>————————————————————————</strong></p>
-<h1 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h1><ol>
-<li><a href="https://en.wikipedia.org/wiki/VC_dimension" target="_blank" rel="external">Wikipedia:VC dimension</a></li>
-<li><a href="https://www.autonlab.org/_media/tutorials/vcdim08.pdf" target="_blank" rel="external">VC-dimension for characterizing classifiers</a></li>
-<li><a href="https://www.cs.cmu.edu/~epxing/Class/10701/slides/lecture16-VC.pdf" target="_blank" rel="external">VC Dimension and Model Complexity</a></li>
-<li><a href="http://101.96.8.165/www.cs.iastate.edu/~honavar/burges-svm.pdf" target="_blank" rel="external">A Tutorial on Support Vector Machines for Pattern Recognition</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Probably_approximately_correct_learning" target="_blank" rel="external">Wikipedia:Probably approximately correct learning</a></li>
-</ol>
-
-          
+          <p>$\quad$<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2017/01/26/2017-01-26-VC-Dimensions-And-Learning-Theory/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>

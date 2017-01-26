@@ -57,25 +57,22 @@
 
 
 
-<meta name="description" content="1. VC维VC维是一类（参数可变化）二分类器的属性，描述了这类二分类器的学习能力。VC维的概念主要基于shatter(打散)的概念。
-1.1 Shatter————————————————————————一个二分类器可以shatter一组数据点 $x_1,x_2,\cdots,x_r$ 当且仅当对于每个可能的训练集 $(x_1,y_1),(x_2,y_2),\cdots,(x_r,y_r)$，">
+<meta name="description" content="$\quad$">
 <meta property="og:type" content="article">
 <meta property="og:title" content="VC维与学习理论（VC Dimensions And Learning Theory）">
 <meta property="og:url" content="http://yoursite.com/2017/01/26/2017-01-26-VC-Dimensions-And-Learning-Theory/index.html">
 <meta property="og:site_name" content="MayMoon">
-<meta property="og:description" content="1. VC维VC维是一类（参数可变化）二分类器的属性，描述了这类二分类器的学习能力。VC维的概念主要基于shatter(打散)的概念。
-1.1 Shatter————————————————————————一个二分类器可以shatter一组数据点 $x_1,x_2,\cdots,x_r$ 当且仅当对于每个可能的训练集 $(x_1,y_1),(x_2,y_2),\cdots,(x_r,y_r)$，">
+<meta property="og:description" content="$\quad$">
 <meta property="og:image" content="http://i.imgur.com/9zksWqK.png">
 <meta property="og:image" content="http://i.imgur.com/UaGwv2t.png">
 <meta property="og:image" content="http://i.imgur.com/9zksWqK.png">
 <meta property="og:image" content="http://i.imgur.com/ZJfb1iM.png">
 <meta property="og:image" content="http://i.imgur.com/niDXVt1.png">
 <meta property="og:image" content="http://i.imgur.com/X8PCVwq.png">
-<meta property="og:updated_time" content="2017-01-26T13:09:38.418Z">
+<meta property="og:updated_time" content="2017-01-26T13:16:01.184Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="VC维与学习理论（VC Dimensions And Learning Theory）">
-<meta name="twitter:description" content="1. VC维VC维是一类（参数可变化）二分类器的属性，描述了这类二分类器的学习能力。VC维的概念主要基于shatter(打散)的概念。
-1.1 Shatter————————————————————————一个二分类器可以shatter一组数据点 $x_1,x_2,\cdots,x_r$ 当且仅当对于每个可能的训练集 $(x_1,y_1),(x_2,y_2),\cdots,(x_r,y_r)$，">
+<meta name="twitter:description" content="$\quad$">
 <meta name="twitter:image" content="http://i.imgur.com/9zksWqK.png">
 
 
@@ -282,7 +279,7 @@
       
 
       
-        <a id="more"></a>
+        <p>$\quad$<br><a id="more"></a></p>
 <h1 id="1-VC维"><a href="#1-VC维" class="headerlink" title="1. VC维"></a>1. VC维</h1><p>VC维是一类（参数可变化）二分类器的属性，描述了这类二分类器的学习能力。VC维的概念主要基于<strong>shatter(打散)</strong>的概念。</p>
 <h2 id="1-1-Shatter"><a href="#1-1-Shatter" class="headerlink" title="1.1 Shatter"></a>1.1 Shatter</h2><p><strong>————————————————————————</strong><br><strong>一个二分类器可以shatter一组数据点 $x_1,x_2,\cdots,x_r$ 当且仅当对于每个可能的训练集 $(x_1,y_1),(x_2,y_2),\cdots,(x_r,y_r)$，总存在一个参数向量 $\theta$  使训练误差为0，即正确分类每个样本。</strong><br><strong>————————————————————————</strong><br>上面的定义可能比较难懂，下面用几个例子来说明shatter的含义。<br><strong>例一</strong>：$f(\mathbf{x},\mathbf{w})=\text{sign}(\mathbf{w}^\mathrm{T}\mathbf{x})$，其中 $\mathbf{w}$ 是参数。函数 $f$ 能否shatter下面的数据<br><img src="http://i.imgur.com/9zksWqK.png" width="200"><br>图中有两个数据点，则可能的训练样本共有以下四种（深色圆代表正例，浅色圆代表负例）<br><img src="http://i.imgur.com/UaGwv2t.png"><br>当 $\mathbf{w}$ 分别等于 $(0,1)$，$(0,-1)$，$(1,-1)$，$(-1,1)$ 时就可以正确分类每个样本，如图中的红线所示。故 $f$ 可以shatter所给的数据。<br><strong>例二</strong>：$f(\mathbf{x},b)=\text{sign}(b-\mathbf{x}^\mathrm{T}\mathbf{x})$，其中 $b$ 是参数。函数 $f$ 能否shatter下面的数据<br><img src="http://i.imgur.com/9zksWqK.png" width="200"><br>四种情况如下，无论 $b$ 取什么值，都无法正确分类第四个训练集，所以 $f$ 不能shatter所给的数据。<br><img src="http://i.imgur.com/ZJfb1iM.png"></p>
 <h2 id="1-2-VC维的定义及常见函数的VC维"><a href="#1-2-VC维的定义及常见函数的VC维" class="headerlink" title="1.2 VC维的定义及常见函数的VC维"></a>1.2 VC维的定义及常见函数的VC维</h2><p><strong>————————————————————————</strong><br><strong>给定一个分类器 $f$，它的VC维 $h$ 是 $f$ 可以shatter的数据点的最多个数。</strong><br><strong>————————————————————————</strong></p>
