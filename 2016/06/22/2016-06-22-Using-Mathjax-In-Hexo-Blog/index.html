@@ -63,7 +63,7 @@
 <meta property="og:url" content="http://yoursite.com/2016/06/22/2016-06-22-Using-Mathjax-In-Hexo-Blog/index.html">
 <meta property="og:site_name" content="MayMoon">
 <meta property="og:description" content="之前一直用的是MathTex来插入公式，不过，这个方式相当于插入了一张在线图片，显示效果不是很好。终于闲下来，有机会琢磨一下怎么用MathJax了。">
-<meta property="og:updated_time" content="2017-02-20T02:43:59.477Z">
+<meta property="og:updated_time" content="2017-02-21T14:47:47.691Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在Hexo博客中使用MathJax">
 <meta name="twitter:description" content="之前一直用的是MathTex来插入公式，不过，这个方式相当于插入了一张在线图片，显示效果不是很好。终于闲下来，有机会琢磨一下怎么用MathJax了。">
@@ -297,7 +297,8 @@ hexo math install
 <p><a href="http://mlworks.cn/posts/introduction-to-mathjax-and-latex-expression/" target="_blank" rel="external">Mathjax与LaTex公式简介 by Ryan Zhao</a></p>
 <h2 id="迄今为止遇到的问题"><a href="#迄今为止遇到的问题" class="headerlink" title="迄今为止遇到的问题"></a>迄今为止遇到的问题</h2><ol>
 <li>加粗希腊字母<br>使用<code>\boldsymbol{\beta}</code>即可</li>
-<li>在表格中显示 | 字符（pipe character）<br>使用<code>&amp;#124</code>（后面加一个英语分号）来代替，这种方法对于公式中的|也有用<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2></li>
+<li>在表格中显示 | 字符（pipe character）<br>使用<code>&amp;#124</code>（后面加一个英语分号）来代替，这种方法对于公式中的|也有用。公式中的|也可以用<code>\mid</code>来表示。</li>
+<li>输入条件独立符号 $\perp\!\!\!\perp$<br>Latex没有原生的命令，可以使用<code>\perp\!\!\!\perp</code>，条件不独立用<code>\not\!\perp\!\!\!\perp</code><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2></li>
 </ol>
 <p><a href="http://blog.csdn.net/emptyset110/article/details/50123231" target="_blank" rel="external">1. 搭建一个支持LaTEX的hexo博客 by 薛定谔的死猫</a></p>
 
@@ -401,7 +402,7 @@ hexo math install
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">42</span>
+              <span class="site-state-item-count">44</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -545,7 +546,24 @@ hexo math install
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
 
 
 

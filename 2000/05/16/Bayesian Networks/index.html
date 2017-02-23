@@ -57,18 +57,24 @@
 
 
 
-<meta name="description" content="Boosting是集成学习中一种重要的方法，通过集成弱分类器，可以获得比单一学习器性能都好的一个模型。XGBoosting是在Gradient Boosting基础上，进行了一些改动设计，使得算法效率显著提高，并可以并行化。">
+<meta name="description" content="[[[要先看线性高斯模型那一节]]]本文主要是PRML一书8.1节的笔记。贝叶斯网络是概率图模型中重要的一种模型，用有向无环图（DAG）来描述概率分布。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="🔨XGBoosting（eXtreme Gradient Boosting）">
-<meta property="og:url" content="http://yoursite.com/2000/05/16/XGBoosting/index.html">
+<meta property="og:title" content="🔨贝叶斯网络(Bayesian Networks)">
+<meta property="og:url" content="http://yoursite.com/2000/05/16/Bayesian Networks/index.html">
 <meta property="og:site_name" content="MayMoon">
-<meta property="og:description" content="Boosting是集成学习中一种重要的方法，通过集成弱分类器，可以获得比单一学习器性能都好的一个模型。XGBoosting是在Gradient Boosting基础上，进行了一些改动设计，使得算法效率显著提高，并可以并行化。">
-<meta property="og:image" content="http://i.imgur.com/z29nrei.png">
-<meta property="og:updated_time" content="2016-11-06T04:57:50.463Z">
+<meta property="og:description" content="[[[要先看线性高斯模型那一节]]]本文主要是PRML一书8.1节的笔记。贝叶斯网络是概率图模型中重要的一种模型，用有向无环图（DAG）来描述概率分布。">
+<meta property="og:image" content="http://i.imgur.com/8qPZFXb.png">
+<meta property="og:image" content="http://i.imgur.com/RBOsrKq.png">
+<meta property="og:image" content="http://i.imgur.com/UBIxHIr.png">
+<meta property="og:image" content="http://i.imgur.com/W84MX4o.png">
+<meta property="og:image" content="http://i.imgur.com/bxAzBEX.png">
+<meta property="og:image" content="http://i.imgur.com/yB0XpaN.png">
+<meta property="og:image" content="http://i.imgur.com/zRairWc.png">
+<meta property="og:updated_time" content="2017-02-22T07:21:09.452Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="🔨XGBoosting（eXtreme Gradient Boosting）">
-<meta name="twitter:description" content="Boosting是集成学习中一种重要的方法，通过集成弱分类器，可以获得比单一学习器性能都好的一个模型。XGBoosting是在Gradient Boosting基础上，进行了一些改动设计，使得算法效率显著提高，并可以并行化。">
-<meta name="twitter:image" content="http://i.imgur.com/z29nrei.png">
+<meta name="twitter:title" content="🔨贝叶斯网络(Bayesian Networks)">
+<meta name="twitter:description" content="[[[要先看线性高斯模型那一节]]]本文主要是PRML一书8.1节的笔记。贝叶斯网络是概率图模型中重要的一种模型，用有向无环图（DAG）来描述概率分布。">
+<meta name="twitter:image" content="http://i.imgur.com/8qPZFXb.png">
 
 
 
@@ -86,7 +92,7 @@
   };
 </script>
 
-  <title> 🔨XGBoosting（eXtreme Gradient Boosting） | MayMoon </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> 🔨贝叶斯网络(Bayesian Networks) | MayMoon </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -216,7 +222,7 @@
             
             
               
-                🔨XGBoosting（eXtreme Gradient Boosting）
+                🔨贝叶斯网络(Bayesian Networks)
               
             
           </h1>
@@ -274,28 +280,41 @@
       
 
       
-        <p>Boosting是<a href="http://keson96.github.io/2016/10/17/2016-10-17-集成学习算法/" target="_blank" rel="external">集成学习</a>中一种重要的方法，通过集成弱分类器，可以获得比单一学习器性能都好的一个模型。XGBoosting是在<a href="http://keson96.github.io/2016/11/04/2016-11-04-Gradient-Boosting/" target="_blank" rel="external">Gradient Boosting</a>基础上，进行了一些改动设计，使得算法效率显著提高，并可以并行化。<br><a id="more"></a><br>XGBoosting的亮点主要在以下方面：</p>
-<ol>
-<li>提出了一个新的针对稀疏数据的稀疏感知型算法</li>
-<li>提出了一个带权分位数计算的高效算法，用于树的近似学习过程中</li>
-<li>和传统的GBDT相比，它添加了正则项，显式地防止过拟合</li>
-<li>从随机森林算法中借鉴了特征子采样(column/feature subsampling)技术</li>
-<li>通过数据分块来支持并行</li>
+        <p>[[[要先看线性高斯模型那一节]]]<br>本文主要是PRML一书8.1节的笔记。<br>贝叶斯网络是概率图模型中重要的一种模型，用有向无环图（DAG）来描述概率分布。<br><a id="more"></a></p>
+<h1 id="1-Motivation"><a href="#1-Motivation" class="headerlink" title="1. Motivation"></a>1. Motivation</h1><p>考虑一个任意的联合概率分布 $p(a,b,c)$，应用条件概率的乘法原则，可以得到$$p(a,b,c)=p(c|a,b)p(b|a)p(a)\tag{1}$$我们没有对这个分布做进一步的限定，所以上式的分解对任何 $p(a,b,c)$ 都是成立的。<br>用节点表示随机变量，用有向边表示变量间的条件依赖关系，可以得到下面的图<br><img src="http://i.imgur.com/8qPZFXb.png" width="200"><br>称a为c的父节点，b为a的子节点。注意到(1)式左侧是对称的，但右侧却不对称，因为我们在分解的同时隐式地选择了一个顺序，不同的顺序则对应不同的图。<br>推广一下，对于 $K$ 个随机变量的联合分布 $p(x_1,\cdots,x_K)$，可以分解为$$p(x_1,\cdots,x_K)=p(x_K|x_1,\cdots,x_{K-1})\cdots p(x_2|x_1)p(x_1)\tag{2}$$同样地，我们可以画出一个含 $K$ 个节点的图。这个图是<strong>全连通</strong>的，因为任意一对节点间都有一条边，它描述了一个十分一般的分布。<br>在实际中，有些节点间没有边，正是这些缺少的边提供了关于分布的有趣信息，如下图<br><img src="http://i.imgur.com/RBOsrKq.png" width="200"><br>它对应的分解形式为$$p(x_1)p(x_2)p(x_3)p(x_4|x_1,x_2,x_3)p(x_5|x_1,x_3)p(x_6|x_4)p(x_7|x_4,x_5)\tag{3}$$<br>离散变量一般用<strong>条件概率表</strong>（连续变量用<strong>条件概率密度函数</strong>）来描述属性的联合概率。比如上图中的 $p(x_6|x_4)$，可用下表来描述（假设所有变量均为0，1变量）</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">概率</th>
+<th style="text-align:center">$x_6=0$</th>
+<th style="text-align:center">$x_6=1$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">$x_4=1$</td>
+<td style="text-align:center">0.4</td>
+<td style="text-align:center">0.6</td>
+</tr>
+<tr>
+<td style="text-align:center">$x_4=0$</td>
+<td style="text-align:center">0.7</td>
+<td style="text-align:center">0.3</td>
+</tr>
+</tbody>
+</table>
+<p>一般地来说，一个贝叶斯网络有结构 $G$ 和参数 $\Theta$ 两部分构成：$G$ 是一个有向无环图，直观描述了变量间的依赖关系；参数 $\Theta$ 定量描述了这种依赖关系，它可以是条件概率表或条件概率密度函数。<br>对于一个含 $K$ 个节点的图，对应的联合概率分布为$$p(\mathbf{x})=\prod_{k=1}^K p(x_k|\mathrm{pa}_k)\tag{4}$$其中 $\mathrm{pa}_k$ 表示 $x_k$ 的所有父节点。</p>
+<h1 id="2-一个例子：多项式回归"><a href="#2-一个例子：多项式回归" class="headerlink" title="2. 一个例子：多项式回归"></a>2. 一个例子：多项式回归</h1><p>在<a href="http://keson96.github.io/2016/09/26/2016-09-26-Bayes-And-Curve-Fitting/" target="_blank" rel="external">这篇文章</a>中，我们介绍了贝叶斯多项式拟合。下面以这个为例，介绍对应的图模型。<br>这个模型中的随机变量为多项式系数 $\mathbf{w}$ 和观测数据 $\mathbf{t}=(t_1,\cdots,t_N)^{\mathrm{T}}$。此外有输入数据 $\mathbf{x}=(x_1,\cdots,x_N)^{\mathrm{T}}$，控制 $w$ 先验分布的超参数 $\alpha$ 和 $\beta$，不过这些都是参数而不是随机变量。只考虑随机变量，联合概率分布则为$$p(\mathbf{t},\mathbf{w})=p(\mathbf{w})\prod_{n=1}^N p(t_n|\mathbf{w})\tag{5}$$对应的图模型如下<br><img src="http://i.imgur.com/UBIxHIr.png" width="300"><br>图模型的扩展图形或画法见参考资料1。</p>
+<hr>
+<p>简单的概率分布可以用来构建复杂的概率分布，图模型可以很好地说明这一点。下面介绍离散变量和高斯变量两种情况，在这两种情况下，模型可以构造出任意复杂的无向图。</p>
+<h1 id="3-离散变量"><a href="#3-离散变量" class="headerlink" title="3. 离散变量"></a>3. 离散变量</h1><p>一个 $K$ 值变量 $\mathbf{x}$（用one-hot表示）的概率分布 $p(\mathbf{x}|\boldsymbol{\mu})=\prod_{k=1}^K \mu_k^{x_k}$ 为 $$p(\mathbf{x}|\boldsymbol{\mu})=\prod_{k=1}^K\mu_k^{x_k}\tag{6}$$由于有约束 $\sum_k\mu_k=1$，所有只需要 $K-1$ 个 $\mu_k$ 的值就可以定义这个分布。<br>现在假设有两个 $K$ 值离散变量 $x_1$，$x_2$，用 $\mu_{kl}$ 表示 $x_{1k}=1$ 且 $x_{2l}=1$ 时的概率，其中 $x_{1k}$ 表示 $\mathbf{x}_1$ 的第 $k$ 个分量，$x_{2l}$ 同理。那么联合概率分布则为$$p(\mathbf{x}_1,\mathbf{x}_2|\boldsymbol{\mu})=\prod_{k=1}^K\prod_{l=1}^K\mu_{kl}^{x_{1k}x_{2l}}\tag{7}$$同理，因为有约束 $\sum_k\sum_l\mu_{kl}=1$，所以需要 $K^2-1$ 个参数来确定分布。很容易可以看出，关于 $M$ 个 $K$ 值变量的任意联合分布需要 $K^M-1$ 个参数来确定，这个值随 $M$ 指数增长。<br>若变量 $\mathbf{x}_1$，$\mathbf{x}_2$ 独立，则参数只有 $2(K-1)$ 个；对于 $M$ 个独立的变量，则参数总数为 $M(K-1)$，随 $M$ 线性增长。<br><img src="http://i.imgur.com/W84MX4o.png" width="200"><br>在上图中，(a)图表示一般情形（有 $K^2-1$ 个参数），图为全连通图；(b)图表示两变量独立的情形（有 $K-1$ 个参数），图中没有一条边。<br><img src="http://i.imgur.com/bxAzBEX.png" width="600"><br>上图体现了模型复杂度与模型表示能力间的权衡，现实中的模型多处于GAP中。比如下图所示的模型，它只有 $K-1+(M-1)K(K-1)$，是 $K$ 的平方级，随 $M$ 线性增长。<br><img src="http://i.imgur.com/yB0XpaN.png" width="300"></p>
+<h2 id="减小参数数量的方法"><a href="#减小参数数量的方法" class="headerlink" title="减小参数数量的方法"></a>减小参数数量的方法</h2><ol>
+<li><strong>共享参数</strong><br>通过共享参数可以来减少参数数量。以上图为例，我们可以让 $p(\mathbf{x}_i|\mathbf{x}_{i-1})$ 由同一组 $K(K-1)$ 个变量来确定，而不是用 $(M-1)$ 组。所以总的参数就可以减为 $K^2-1$。</li>
+<li><strong>参数化模型</strong><br>另一种控制参数数量的方法就是使用参数化的模型来描述条件分布而不是使用完整的条件概率表。以下图为例，每个变量都是0-1变量，每个父变量 $x_i$ 由一个参数 $\mu_i$ 控制其分布（$p(x_i=1)=\mu_i$）。对于条件分布 $p(y|x_1,\cdots,x_M)$，需要 $2^M$ 个参数来确定出完整的条件概率表。<br><img src="http://i.imgur.com/zRairWc.png" width="200"><br>我们可以用父变量线性组合的逻辑回归方程来表示条件分布，如下$$p(y=1|x_1,\cdots,x_M)=\sigma\left(w_0+\sum_{i=1}^Mw_ix_i\right)=\sigma(\mathbf{w}^{\mathrm{T}}\mathbf{x})\tag{8}$$其中 $\sigma(a)=(1+\exp(-a))^{-1}$，$\mathbf{x}=(x_0,x_1,\cdots,x_M)^{\mathrm{T}}$，$x_0$ 固定为0。与之前一般化的模型相比，这个模型受到限制更多，表示能力也相对弱一些，但参数数量大大减少，只剩下 $M+1$ 个参数。</li>
 </ol>
-<h2 id="算法概略"><a href="#算法概略" class="headerlink" title="算法概略"></a>算法概略</h2><h3 id="正则化的目标函数"><a href="#正则化的目标函数" class="headerlink" title="正则化的目标函数"></a>正则化的目标函数</h3><p>对于给定的含有 $n$ 个样本，$m$ 个特征的数据集 $\mathcal{D}=\{(\mathbf{x}_i,y_i)\}$，XGBoost和GBDT一样，也是由一棵棵树逐渐构建起整个模型：<br>$$\hat{y}_i=\phi(\mathbf{x}_i)=\sum_{k=1}^K f_k(\mathbf{x}_i),\quad f_k\in\mathcal{F}\tag{1}$$<br>其中 $\mathcal{F}=\{f(\mathbf{x}=w_{q(\mathbf{x})})\}(q:\mathbb{R}^m\to T,w\in\mathbb{R}^T)$ 表示所有回归树(CART)的空间。<br>$q$ 表示一个将样本映射到树的叶结点索引的函数，每一个不同的树结构对应一个不同的函数 $q$。<br>每一个 $f_k$ 对应一个树结构 $q$ 和叶节点得分 $w$。<br>以下图为例，这是总模型中的一个基学习器（回归树）$f_k$。设三个叶节点从左到右编号为1，2，3，则 $q(\mathbf{x}_1)=3$，$q(\mathbf{x}_4)=1$。对于回归树，每个叶结点有一个取值连续的得分，如图中红色字体所示，我们用 $w_i$ 来表示（下面也称权重）。</p>
-<p><img src="http://i.imgur.com/z29nrei.png" alt=""></p>
-<p>与传统GBDT不同，XGBoost优化的目标函数是带有正则项的，即最小化<br>$$\mathcal{L}(\phi)=\sum_i l(\hat{y}_i,y_i)+\sum_k\Omega(f_k)\tag{2}$$<br>其中，第一项是误差项，$\hat{y}_i$是预测出来的目标值，$y_i$是给定的目标值，$l$ 是一个可微的凸的损失函数。而第二项代表了对模型复杂度的度量，用来防止过拟合，其中<br>$$\Omega(f)=\gamma T+\frac{1}{2}\lambda||w||^2\tag{3}$$<br>当正则化参数设为0时，这个目标函数即和传统的GBDT没有区别。</p>
-<h3 id="梯度提升树"><a href="#梯度提升树" class="headerlink" title="梯度提升树"></a>梯度提升树</h3><p>和GBDT一样，XGBoost也是通过递加(Additive)的形式进行训练的，即<br>$$\begin{array}{c,l}<br>\hat{y}_i^{(0)}&amp;=&amp;0 \\<br>\hat{y}_i^{(1)}&amp;=&amp;f_1(x_i)=\hat{y}_i^{(0)}+f_1(x_i) \\<br>\hat{y}_i^{(2)}&amp;=&amp;f_1(x_i)+f_2(x_i)=\hat{y}_i^{(1)}+f_2(x_i) \\<br>&amp;\cdots&amp; \\<br>\hat{y}_i^{(t)}&amp;=&amp;\sum_{k=1}^t f_t(x_i)=\hat{y}_i^{(t-1)}+f_t(x_i) \\<br>\end{array}$$<br>则第 $t$ 次迭代中我们要最小化的目标是<br>$$\mathcal{L}^{(t)}=\sum_{i=1}^n l(y_i,\hat{y}_i^{(t-1)}+f_t(\mathbf{x}_i))+\Omega(f_t)$$这意味着我们每次<strong>贪心</strong>地添加一个最能改善模型性能地树 $f_t$。为了在一般情况下<strong>快速地优化</strong>这个目标函数，我们用二阶泰勒展开来<strong>近似</strong></p>
-<blockquote>
-<p>回顾泰勒展开<br>$f(x+\Delta x)\simeq f(x)+f’(x)\Delta x+\frac{1}{2}f’’(x)\Delta x^2$<br>取 $x=\hat{y}_i^{(t-1)}, \Delta x=f_t(\mathbf{x}_i)$</p>
-</blockquote>
-<p>$$\mathcal{L}^{(t)}\simeq\sum_{i=1}^n [l(y_i,\hat{y}_i^{(t-1)})+g_i f_t(\mathbf{x}_i)+\frac{1}{2}h_i f_t^2(\mathbf{x}_i)]+\Omega(f_t)\tag{4}$$其中 $g_i=\partial_{\hat{y}^{(t-1)}}l(y_i,\hat{y}_i^{(t-1)})$，$h_i=\partial^2_{\hat{y}^{(t-1)}}l(y_i,\hat{y}_i^{(t-1)})$ 分别是损失函数的一阶和二阶导数。由于常数项不影响最优点的位置，去掉常数项，得到<br>$$\tilde{\mathcal{L}}^{(t)}=\sum_{i=1}^n [g_i f_t(\mathbf{x}_i)+\frac{1}{2}h_i f_t^2(\mathbf{x}_i)]+\Omega(f_t)\tag{5}$$<br>定义 $I_j=\{i|q(\mathbf{x}_i)=j\}$ 表示叶节点 $j$ 所包含的样本的集合，并代入(3)式，则有<br>$$\begin{array}{r,l}<br>\tilde{\mathcal{L}}^{(t)}&amp;=&amp;\sum\limits_{i=1}^n [g_i f_t(\mathbf{x}_i)+\cfrac{1}{2}h_i f_t^2(\mathbf{x}_i)]+\gamma T+\cfrac{1}{2}\lambda\sum\limits_{j=1}^T w_j^2 \\<br>&amp;=&amp; \sum\limits_{j=1}^T[(\sum\limits_{i\in I_j}g_i)w_j+\cfrac{1}{2}(\sum\limits_{i\in I_j}h_i+\lambda)w_j^2]+\gamma T<br>\end{array}\tag{5}$$<br>上式的变化相当于重新排列了以下求和次序，从按样本序号求和变成了按每个叶节点求和。给定一个固定的树结构 $q(\mathbf{x})$，由上式我们可以得到，对叶节点 $j$，最优的权重 $w^{*}_j$ 为<br>$$w^{*}_j=-\cfrac{\sum_{i\in I_j}g_i}{\sum_{i\in I_j}h_i+\lambda}\tag{6}$$<br>则对应最优的目标函数值为<br>$$\tilde{\mathcal{L}}^{(t)}(q)=-\cfrac{1}{2}\sum\limits_{j=1}^T\cfrac{(\sum_{i\in I_j}g_i)^2}{\sum_{i\in I_j}h_i+\lambda}+\gamma T\tag{7}$$</p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
-<li><a href="https://arxiv.org/pdf/1603.02754v1.pdf" target="_blank" rel="external">XGBoost: A Scalable Tree Boosting System</a></li>
-<li><a href="http://homes.cs.washington.edu/~tqchen/pdf/BoostedTree.pdf" target="_blank" rel="external">Introduction to Boosted Trees</a></li>
-<li><a href="https://xgboost.readthedocs.io/en/latest/model.html#final-words-on-xgboost" target="_blank" rel="external">Introduction to Boosted Trees</a></li>
-<li><a href="https://www.zhihu.com/question/41354392" target="_blank" rel="external">wepon的回答</a></li>
-<li><a href="http://www.cs.colostate.edu/~mcrob/toolbox/c++/sparseMatrix/sparse_matrix_compression.html" target="_blank" rel="external">Sparse Matrix Compression Formats</a></li>
+<h1 id="4-高斯变量"><a href="#4-高斯变量" class="headerlink" title="4. 高斯变量"></a>4. 高斯变量</h1><h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ol>
+<li><em>Pattern Recognition and Machine Learning (PRML)<em></em></em></li>
+<li>《机器学习》by 周志华</li>
 </ol>
 
       
@@ -314,16 +333,16 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2000/05/16/过拟合专题/" rel="next" title="🔨过拟合专题">
-                <i class="fa fa-chevron-left"></i> 🔨过拟合专题
+              <a href="/2000/05/16/Balanced Search Trees/" rel="next" title="🔨Balanced Search Trees">
+                <i class="fa fa-chevron-left"></i> 🔨Balanced Search Trees
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2000/05/16/Network Flow Algorithms/" rel="prev" title="🔨Network Flow Algorithms">
-                🔨Network Flow Algorithms <i class="fa fa-chevron-right"></i>
+              <a href="/2000/05/16/Softmax-Regression/" rel="prev" title="🔨Softmax 回归(Softmax Regression)">
+                🔨Softmax 回归(Softmax Regression) <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -440,7 +459,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#算法概略"><span class="nav-number">1.</span> <span class="nav-text">算法概略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#正则化的目标函数"><span class="nav-number">1.1.</span> <span class="nav-text">正则化的目标函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#梯度提升树"><span class="nav-number">1.2.</span> <span class="nav-text">梯度提升树</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">2.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Motivation"><span class="nav-number">1.</span> <span class="nav-text">1. Motivation</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-一个例子：多项式回归"><span class="nav-number">2.</span> <span class="nav-text">2. 一个例子：多项式回归</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-离散变量"><span class="nav-number">3.</span> <span class="nav-text">3. 离散变量</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#减小参数数量的方法"><span class="nav-number">3.1.</span> <span class="nav-text">减小参数数量的方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-高斯变量"><span class="nav-number">4.</span> <span class="nav-text">4. 高斯变量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
         </section>
