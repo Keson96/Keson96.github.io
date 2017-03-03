@@ -216,6 +216,116 @@
             
               
                 
+                <a class="post-title-link" href="/2017/01/17/2017-01-17-Decision-Theory-Basics/" itemprop="url">
+                  决策论基础(Decision Theory Basics)
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-01-17T19:54:01+08:00" content="2017-01-17">
+              2017-01-17
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/PRML-notes/" itemprop="url" rel="index">
+                    <span itemprop="name">PRML notes</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>这一部分内容主要是<em>PRML</em>一书中1.5节的笔记。详细的决策论内容可以参考<a href="http://www.springer.com/us/book/9780387960982">Berger</a>，<a href="http://as.wiley.com/WileyCDA/WileyTitle/productCd-0471976482.html">Bather</a>。<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2017/01/17/2017-01-17-Decision-Theory-Basics/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/12/22/2016-12-22-Information-Theory-Basics/" itemprop="url">
                   信息论基础(Information Theory Basics)
                 </a>
@@ -635,121 +745,11 @@
 
 
     
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/11/04/2016-11-04-Gradient-Boosting/" itemprop="url">
-                  梯度提升(Gradient Boosting)
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-11-04T19:54:01+08:00" content="2016-11-04">
-              2016-11-04
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/机器学习/" itemprop="url" rel="index">
-                    <span itemprop="name">机器学习</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="什么是梯度提升-Gradient-Boosting"><a href="#什么是梯度提升-Gradient-Boosting" class="headerlink" title="什么是梯度提升(Gradient Boosting)"></a>什么是梯度提升(Gradient Boosting)</h2><p>可以认为 <strong>Gradient Boosting = Gradient Descent + Boosting</strong><br>在AdaBoost中，我们通过每一步添加一个弱分类器来最终得到一个由若干弱分类器线性组合成的强分类器。每一步训练弱分类器时都更关注之前<strong>误分类的样本</strong>。将<strong>误分类样本</strong>看成总模型的缺陷，则算法每一步都是通过添加一个弱分类器来试图减小总模型的缺陷。<br>和 AdaBoost 一样，Gradient Boosting 也是一个步进算法，每一步添加一个弱分类器。不同的是，在 Gradient Boosting中，用来刻画缺陷的是<strong>梯度</strong>，通过梯度下降，来逐渐提高总模型的预测能力。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/11/04/2016-11-04-Gradient-Boosting/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -790,7 +790,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">44</span>
+              <span class="site-state-item-count">47</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

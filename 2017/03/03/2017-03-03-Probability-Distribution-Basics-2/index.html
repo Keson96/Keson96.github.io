@@ -1,0 +1,565 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="wangkaixin, maymoon" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="本文主要是PRML一书2.3.1与2.3.2节的笔记。多元高斯分布一个重要的性质就是：如果两组变量的联合分布是高斯分布，那么一组变量在观察另外一组变量后的条件分布也是高斯分布。同时，任何一组变量的边际分布也是高斯分布。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="概率论基础2-多元高斯分布的边际分布和条件分布">
+<meta property="og:url" content="http://yoursite.com/2017/03/03/2017-03-03-Probability-Distribution-Basics-2/index.html">
+<meta property="og:site_name" content="MayMoon">
+<meta property="og:description" content="本文主要是PRML一书2.3.1与2.3.2节的笔记。多元高斯分布一个重要的性质就是：如果两组变量的联合分布是高斯分布，那么一组变量在观察另外一组变量后的条件分布也是高斯分布。同时，任何一组变量的边际分布也是高斯分布。">
+<meta property="og:updated_time" content="2017-03-03T02:58:53.681Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="概率论基础2-多元高斯分布的边际分布和条件分布">
+<meta name="twitter:description" content="本文主要是PRML一书2.3.1与2.3.2节的笔记。多元高斯分布一个重要的性质就是：如果两组变量的联合分布是高斯分布，那么一组变量在观察另外一组变量后的条件分布也是高斯分布。同时，任何一组变量的边际分布也是高斯分布。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 概率论基础2-多元高斯分布的边际分布和条件分布 | MayMoon </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">MayMoon</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">随便写写</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                概率论基础2-多元高斯分布的边际分布和条件分布
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-03-03T19:54:01+08:00" content="2017-03-03">
+              2017-03-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/PRML-notes/" itemprop="url" rel="index">
+                    <span itemprop="name">PRML notes</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文主要是PRML一书2.3.1与2.3.2节的笔记。<br>多元高斯分布一个重要的性质就是：如果两组变量的联合分布是高斯分布，那么一组变量在观察另外一组变量后的条件分布也是高斯分布。同时，任何一组变量的边际分布也是高斯分布。<br><a id="more"></a></p>
+<h1 id="1-条件分布"><a href="#1-条件分布" class="headerlink" title="1. 条件分布"></a>1. 条件分布</h1><p>先来考虑条件分布，假设 $\mathbf{x}$ 是一个服从分布 $\mathcal{N}(\mathbf{x}|\boldsymbol{\mu},\boldsymbol{\Sigma})$ 的 $D$ 维变量，我们将 $\mathbf{x}$ 分为两个子集 $\mathbf{x}_a$ 和 $\mathbf{x}_b$。不失一般性地，令 $\mathbf{x}_a$ 取 $\mathbf{x}$ 的前 $M$ 个分量，$\mathbf{x}_b$ 取后 $D-M$ 个分量，即$$\mathbf{x}=\begin{pmatrix}\mathbf{x}_a \\ \mathbf{x}_b\end{pmatrix}\tag{1}$$同时将期望和协方差也相应地分割开（partition） $$\boldsymbol{\mu}=\begin{pmatrix} \boldsymbol{\mu}_a \\ \boldsymbol{\mu}_b\end{pmatrix}\tag{2}$$ $$\boldsymbol{\Sigma}=\begin{pmatrix}\boldsymbol{\Sigma}_{aa}&amp;\boldsymbol{\Sigma}_{ab} \\ \boldsymbol{\Sigma}_{ba}&amp;\boldsymbol{\Sigma}_{bb}\end{pmatrix}\tag{3}$$由于协方差矩阵 $\boldsymbol{\Sigma}$ 是对称矩阵，所以 $\boldsymbol{\Sigma}_{aa}$ 和 $\boldsymbol{\Sigma}_{bb}$ 也是对称矩阵，另外有 $\boldsymbol{\Sigma}_{ab}=\boldsymbol{\Sigma}_{ba}^{\mathrm{T}}$</p>
+<blockquote>
+<p>多元高斯分布的形式如下$$\mathcal{N}(\mathbf{x}|\boldsymbol{\mu},\boldsymbol{\Sigma})=\cfrac{1}{(2\pi)^{D/2}}\cfrac{1}{|\boldsymbol{\Sigma}|^{1/2}}\exp\left\{-\cfrac{1}{2}(\mathbf{x}-\boldsymbol{\mu})^{\mathrm{T}}\boldsymbol{\Sigma}^{-1}(\mathbf{x}-\boldsymbol{\mu})\right\}\tag{4}$$令协方差矩阵为对称矩阵不会失去一般性，因为任何不对称的成分都会在指数运算后消失。</p>
+</blockquote>
+<p>在很多时候，使用协方差矩阵的逆矩阵可以使式子表达得更清晰简单$$\boldsymbol{\Lambda}\equiv\boldsymbol{\Sigma}^{-1}\tag{5}$$这个矩阵称为<strong>精度矩阵（precision matrix）</strong>。同样地，将精度矩阵也分割开$$\boldsymbol{\Lambda}=\begin{pmatrix}\boldsymbol{\Lambda}_{aa} &amp;\boldsymbol{\Lambda}_{ab} \\ \boldsymbol{\Lambda}_{ba} &amp; \boldsymbol{\Lambda}_{bb}\end{pmatrix}\tag{6}$$因为一个对称矩阵得逆也是对称矩阵，所以 $\boldsymbol{\Lambda}_{aa}$ 和 $\boldsymbol{\Lambda}_{bb}$ 也是对称的，同时也有 $\boldsymbol{\Lambda}_{ab}^\mathrm{T}=\boldsymbol{\Lambda}_{ba}$。<strong>需要注意的是:$\boldsymbol{\Lambda}_{aa}$ 并不简单地是 $\boldsymbol{\Sigma}_{aa}$ 的逆，其它部分也如此。</strong></p>
+<p>下面我们来考虑条件分布 $p(\mathbf{x}_a|\mathbf{x}_b)$，先不考虑归一化系数，只考虑指数部分。将(4)式指数部分展开可以得到$$\begin{array}{l}-\cfrac{1}{2}(\mathbf{x}-\boldsymbol{\mu})^{\mathrm{T}}\boldsymbol{\Sigma}^{-1}(\mathbf{x}-\boldsymbol{\mu})= \\ \qquad -\cfrac{1}{2}(\mathbf{x}_a-\boldsymbol{\mu}_a)^{\mathrm{T}}\boldsymbol{\Lambda}_{aa}(\mathbf{x}_a-\boldsymbol{\mu}_a)-\cfrac{1}{2}(\mathbf{x}_a-\boldsymbol{\mu}_a)^{\mathrm{T}}\boldsymbol{\Lambda}_{ab}(\mathbf{x}_b-\boldsymbol{\mu}_b) \\ \qquad -\cfrac{1}{2}(\mathbf{x}_b-\boldsymbol{\mu}_b)^{\mathrm{T}}\boldsymbol{\Lambda}_{ba}(\mathbf{x}_a-\boldsymbol{\mu}_a)-\cfrac{1}{2}(\mathbf{x}_b-\boldsymbol{\mu}_b)^{\mathrm{T}}\boldsymbol{\Lambda}_{bb}(\mathbf{x}_b-\boldsymbol{\mu}_b)\end{array}\tag{7}$$由于 $\mathbf{x}_b$ 固定，我们可以将上式视为关于 $\mathbf{x}_a$ 的函数，可以看出，这是一个二次函数。因此，条件分布 $p(\mathbf{x}_a|\mathbf{x}_b)$ 依然是高斯分布，我们的目标变成了找出它的期望和协方差。<br>注意到一个一般化多元高斯分布的指数项可以写成$$-\cfrac{1}{2}(\mathbf{x}-\boldsymbol{\mu})^{\mathrm{T}}\boldsymbol{\Sigma}^{-1}(\mathbf{x}-\boldsymbol{\mu})=-\cfrac{1}{2}\mathbf{x}^{\mathrm{T}}\boldsymbol{\Sigma}^{-1}\mathbf{x}+\mathbf{x}^{\mathrm{T}}\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}+\text{const}\tag{8}$$包含了关于 $\mathbf{x}$ 的一个二次项，一个一次项和一个常数项。我们只需要将(7)式中关于 $\mathrm{x}_a$ 的项整理出来，然后根据对应项系数相等计算出协方差和期望。(7)式中关于 $\mathrm{x}_a$ 的二次项为$$-\cfrac{1}{2}\mathbf{x}_a^{\mathrm{T}}\boldsymbol{\Lambda}_{aa}\mathbf{x}_a\tag{9}$$则根据对应项系数相等有$$\boldsymbol{\Sigma}_{a|b}=\boldsymbol{\Lambda}_{aa}^{-1}\tag{10}$$接着考虑(7)式中关于 $\mathbf{x}_a$ 的一次项$$\mathbf{x}_a^{\mathrm{T}}\{\boldsymbol{\Lambda}_{aa}\boldsymbol{\mu}_a-\boldsymbol{\Lambda}_{ab}(\mathbf{x}_b-\boldsymbol{\mu}_b)\}\tag{11}$$系数对应与(8)式中的一次项系数 $\boldsymbol{\Sigma}^{-1}\boldsymbol{\mu}$ 相等，则有$$\begin{array}{r,l}\boldsymbol{\mu}_{a|b}&amp;=&amp;\boldsymbol{\Sigma}_{a|b}\{\boldsymbol{\Lambda}_{aa}\boldsymbol{\mu}_a-\boldsymbol{\Lambda}_{ab}(\mathbf{x}_b-\boldsymbol{\mu}_b)\} \\ &amp;=&amp;\boldsymbol{\mu}_a-\boldsymbol{\Lambda}_{aa}^{-1}\boldsymbol{\Lambda}_{ab}(\mathbf{x}_b-\boldsymbol{\mu}_b)\end{array}\tag{12}$$<br>至此，我们得到了条件分布的期望和协方差。上述推导过程称为<strong>completing the square</strong>，即通过二次形式的高斯分布指数项推导出对应分布的期望和方差，在后面推导边际分布时也会用到。</p>
+<p>我们也可以用分块协方差矩阵来表示条件分布的期望和协方差，利用分块矩阵逆的性质</p>
+<blockquote>
+<p><strong>分块矩阵逆的性质</strong><br>$$\begin{pmatrix}\mathbf{A}&amp;\mathbf{B} \\ \mathbf{C}&amp;\mathbf{D}\end{pmatrix}=\begin{pmatrix}\mathbf{M}&amp;-\mathbf{MBD}^{-1}\\ -\mathbf{D}^{-1}\mathbf{CM}&amp;\mathbf{D}^{-1}+\mathbf{D}^{-1}\mathbf{CMBD}^{-1}\end{pmatrix}\tag{13}$$其中 $\mathbf{M}=(\mathbf{A}-\mathbf{BD}^{-1}\mathbf{C})^{-1}$</p>
+</blockquote>
+<p>由$$\begin{pmatrix}\boldsymbol{\Sigma}_{aa}&amp;\boldsymbol{\Sigma}_{ab} \\ \boldsymbol{\Sigma}_{ba}&amp;\boldsymbol{\Sigma}_{bb}\end{pmatrix}^{-1}=\begin{pmatrix}\boldsymbol{\Lambda}_{aa} &amp;\boldsymbol{\Lambda}_{ab} \\ \boldsymbol{\Lambda}_{ba} &amp; \boldsymbol{\Lambda}_{bb}\end{pmatrix}\tag{14}$$ 可以得到$$\boldsymbol{\Lambda}_{aa}=(\boldsymbol{\Sigma}_{aa}-\boldsymbol{\Sigma}_{ab}\boldsymbol{\Sigma}_{bb}^{-1}\boldsymbol{\Sigma}_{ba})^{-1}\tag{15}$$ $$\boldsymbol{\Lambda}_{ab}=-(\boldsymbol{\Sigma}_{aa}-\boldsymbol{\Sigma}_{ab}\boldsymbol{\Sigma}_{bb}^{-1}\boldsymbol{\Sigma}_{ba})^{-1}\boldsymbol{\Sigma}_{ab}\boldsymbol{\Sigma}_{bb}^{-1}\tag{16}$$将上述结果代入期望和协方差的表达式中，则有$$\boldsymbol{\mu}_{a|b}=\boldsymbol{\mu}_a+\boldsymbol{\Sigma}_{ab}\boldsymbol{\Sigma}_{bb}^{-1}(\mathbf{x}_b-\boldsymbol{\mu}_b)\tag{17}$$ $$\boldsymbol{\Sigma}_{a|b}=\boldsymbol{\Sigma}_{aa}-\boldsymbol{\Sigma}_{ab}\boldsymbol{\Sigma}_{bb}^{-1}\boldsymbol{\Sigma}_{ba}\tag{18}$$可以看出，使用分块精度矩阵表示可以使结果更简洁清晰。</p>
+<h1 id="2-边际分布"><a href="#2-边际分布" class="headerlink" title="2. 边际分布"></a>2. 边际分布</h1><p>下面我们来看边际分布 $$p(\mathbf{x}_a)=\int p(\mathbf{x}_a,\mathbf{x}_b)\mathrm{d}\mathbf{x}_b\tag{19}$$积分内部的联合分布项 $p(\mathbf{x}_a,\mathbf{x}_b)$ 的指数部分可以按(7)式那样展开，取其中含有 $\mathbf{x}_b$ 的项，整理后可以得到$$-\cfrac{1}{2}\mathbf{x}_b^{\mathrm{T}}\boldsymbol{\Lambda}_{bb}\mathbf{x}_b+\mathbf{x}_b^{\mathrm{T}}\mathbf{m}=-\cfrac{1}{2}(\mathbf{x}_b-\boldsymbol{\Lambda}_{bb}^{-1}\mathbf{m})^{\mathrm{T}}\boldsymbol{\Lambda}_{bb}(\mathbf{x}_b-\boldsymbol{\Lambda}_{bb}^{-1}\mathbf{m})+\cfrac{1}{2}\mathbf{m}^{\mathrm{T}}\boldsymbol{\Lambda}_{bb}^{-1}\mathbf{m}\tag{20}$$其中$$\mathbf{m}=\boldsymbol{\Lambda}_{bb}\boldsymbol{\mu}_b-\boldsymbol{\Lambda}_{ba}(\mathbf{x}_a-\boldsymbol{\mu}_a)\tag{21}$$可以看出，(20)式右端第一项是 $\mathbf{x}_b$ 的二次项，而第二项并不依赖于 $\mathbf{x}_b$，所以关于 $\mathbf{x}_b$ 积分时，积分号里面就只剩下$$\int\exp\left\{-\cfrac{1}{2}(\mathbf{x}_b-\boldsymbol{\Lambda}_{bb}^{-1}\mathbf{m})^{\mathrm{T}}\boldsymbol{\Lambda}_{bb}(\mathbf{x}_b-\boldsymbol{\Lambda}_{bb}^{-1}\mathbf{m})\right\}\mathrm{d}\mathbf{x}_b\tag{22}$$注意到这其实是对一个未归一化的高斯分布进行积分，所以积分结果是归一化系数的倒数。而由(4)式可知，归一化系数只依赖于协方差矩阵的行列式，与变量、期望都是独立的。所以，(20)式积分后关于 $\mathbf{x}_a$ 的就只有最后一项，再加上(7)式中与 $\mathbf{x}_b$ 无关的项，总共的指数项为$$\begin{array}{c,l}&amp;\cfrac{1}{2}[\boldsymbol{\Lambda}_{bb}\boldsymbol{\mu}_b-\boldsymbol{\Lambda}_{ba}(\mathbf{x}_a-\boldsymbol{\mu}_a)]^{\mathrm{T}}\boldsymbol{\Lambda}_{bb}^{-1}[\boldsymbol{\Lambda}_{bb}\boldsymbol{\mu}_b-\boldsymbol{\Lambda}_{ba}(\mathbf{x}_a-\boldsymbol{\mu}_a)] \\ &amp;\qquad\qquad -\cfrac{1}{2}\mathbf{x}_a^{\mathrm{T}}\boldsymbol{\Lambda}_{aa}\mathbf{x}_a+\mathbf{x}_a^{\mathrm{T}}(\boldsymbol{\Lambda}_{aa}\boldsymbol{\mu}_a+\boldsymbol{\Lambda}_{ab}\boldsymbol{\mu}_b)+\text{const} \\ &amp;=-\cfrac{1}{2}\mathbf{x}_a^{\mathrm{T}}(\boldsymbol{\Lambda}_{aa}-\boldsymbol{\Lambda}_{ab}\boldsymbol{\Lambda}_{bb}^{-1}\boldsymbol{\Lambda}_{ba})\mathbf{x}_a +\mathbf{x}_a^{\mathrm{T}}(\boldsymbol{\Lambda}_{aa}-\boldsymbol{\Lambda}_{ab}\boldsymbol{\Lambda}_{bb}^{-1}\boldsymbol{\Lambda}_{ba})^{-1}\boldsymbol{\mu}_a+\text{const}\end{array}\tag{23}$$同样地，通过比较对应项系数，可以得到$$\boldsymbol{\Sigma}_a=(\boldsymbol{\Lambda}_{aa}-\boldsymbol{\Lambda}_{ab}\boldsymbol{\Lambda}_{bb}^{-1}\boldsymbol{\Lambda}_{ba})^{-1}\tag{24}$$ $$\boldsymbol{\Sigma}_a(\boldsymbol{\Lambda}_{aa}-\boldsymbol{\Lambda}_{ab}\boldsymbol{\Lambda}_{bb}^{-1}\boldsymbol{\Lambda}_{ba})^{-1}\boldsymbol{\mu}_a=\boldsymbol{\mu}_a\tag{25}$$利用分块矩阵逆的性质，将结果用分块协方差矩阵表示即为$$\text{cov}[\mathbf{x}_a]=\boldsymbol{\Sigma}_{aa}\tag{26}$$可以看出，对于边际分布，用分块协方差矩阵表示更为简单。</p>
+<h1 id="3-总结：分块高斯分布"><a href="#3-总结：分块高斯分布" class="headerlink" title="3. 总结：分块高斯分布"></a>3. 总结：分块高斯分布</h1><p>给定一个联合高斯分布 $\mathcal{N}(\mathbf{X}|\boldsymbol{\mu},\boldsymbol{\Sigma})$，令 $\boldsymbol{\Lambda}\equiv\boldsymbol{\Sigma}^{-1}$，并且有 $$\mathbf{x}=\begin{pmatrix}\mathbf{x}_a \\ \mathbf{x}_b\end{pmatrix},\boldsymbol{\mu}=\begin{pmatrix} \boldsymbol{\mu}_a \\ \boldsymbol{\mu}_b\end{pmatrix},\boldsymbol{\Sigma}=\begin{pmatrix}\boldsymbol{\Sigma}_{aa}&amp;\boldsymbol{\Sigma}_{ab} \\ \boldsymbol{\Sigma}_{ba}&amp;\boldsymbol{\Sigma}_{bb}\end{pmatrix},\boldsymbol{\Lambda}=\begin{pmatrix}\boldsymbol{\Lambda}_{aa} &amp;\boldsymbol{\Lambda}_{ab} \\ \boldsymbol{\Lambda}_{ba} &amp; \boldsymbol{\Lambda}_{bb}\end{pmatrix}$$则条件分布为$$p(\mathbf{x}_a|\mathbf{x}_b)=\mathcal{N}(\mathbf{x}|\boldsymbol{\mu}_{a|b},\boldsymbol{\Lambda}_{aa}^{-1})$$ $$\boldsymbol{\mu}_{a|b}=\boldsymbol{\mu}_a-\boldsymbol{\Lambda}_{aa}^{-1}\boldsymbol{\Lambda}_{ab}(\mathbf{x}_b-\boldsymbol{\mu}_b)$$边际分布为$$p(\mathbf{x}_a)=\mathcal{N}(\mathbf{x}_a|\boldsymbol{\mu}_a,\boldsymbol{\Sigma}_{aa})$$</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ol>
+<li><em>Pattern Recognition and Machine Learning (PRML)<em></em></em></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/23/2017-02-23-Conditional-Independence/" rel="next" title="条件独立(Conditional Independence)">
+                <i class="fa fa-chevron-left"></i> 条件独立(Conditional Independence)
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/pic.PNG"
+               alt="Wang Kx" />
+          <p class="site-author-name" itemprop="name">Wang Kx</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">47</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-条件分布"><span class="nav-number">1.</span> <span class="nav-text">1. 条件分布</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-边际分布"><span class="nav-number">2.</span> <span class="nav-text">2. 边际分布</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-总结：分块高斯分布"><span class="nav-number">3.</span> <span class="nav-text">3. 总结：分块高斯分布</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wang Kx</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=0.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
