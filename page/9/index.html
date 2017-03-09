@@ -216,8 +216,8 @@
             
               
                 
-                <a class="post-title-link" href="/2000/05/16/Markov Random Field/" itemprop="url">
-                  🔨马尔科夫随机场(Markov Random Field)
+                <a class="post-title-link" href="/2000/05/16/Balanced Search Trees/" itemprop="url">
+                  🔨Balanced Search Trees
                 </a>
               
             
@@ -278,117 +278,114 @@
       
         
           
-            <p>有向图的图模型称为<strong>贝叶斯网络</strong>，而无向图的图模型称为<strong>马尔科夫随机场</strong>（也称为<strong>马尔科夫网</strong>）。有向图适合表示随机变量之间的<strong>因果</strong>关系，而无向图适合表示随机变量之间的<strong>软约束（soft constraints）</strong>。</p>
-<h1 id="1-成对马尔科夫随机场（Pairwise-Markov-Random-Field）"><a href="#1-成对马尔科夫随机场（Pairwise-Markov-Random-Field）" class="headerlink" title="1. 成对马尔科夫随机场（Pairwise Markov Random Field）"></a>1. 成对马尔科夫随机场（Pairwise Markov Random Field）</h1><p>先看一种最简单的MRF：成对MRF。下图代表了一个四人学习小组，其中有边相连表示两个人一起学习，而没有边则表示他们没有一起学习（可能是关系不合等）。<br><img src="http://i.imgur.com/MbJcwZL.png" width="300"><br>图中的边意味着两个人一起学习时就可能互相影响，由于这种影响是双向的，所以用无向图来建模。</p>
+            <p>在许多应用中，二叉搜索树可以工作得很好，然而在最差情况下（插入一个有序序列），它的性能得不到保证。下面介绍一种平衡搜索树，可以在任何情况下保证 <strong>O(logN)</strong> 的时间复杂度。<br><br>理想情况下，我们希望树的形状是完美平衡的，这样的话，查找效率就是 O(lgN)；然而，对于不可预料的动态插入操作，保持树形状完美平衡的开销太大。我们稍稍放松对完美平衡的要求，便可以对所有操作提供 O(logN) 的保证</p>
+<h2 id="2-3搜索树（2-3-search-trees）"><a href="#2-3搜索树（2-3-search-trees）" class="headerlink" title="2-3搜索树（2-3 search trees）"></a>2-3搜索树（2-3 search trees）</h2><p>我们现在允许树的一个节点中有两个值（Key），连接着三个子节点（Link），将这样的节点称为<strong>3-节点</strong>，原来那样的节点称为<strong>2-节点</strong>。</p>
+<p><strong>————————————————————————</strong></p>
+<p><strong>一个2-3搜索树要么是空的，要么是：</strong></p>
+<ul>
+<li><p><strong>一个 2-节点，左链接连接着一棵2-3搜索树（所有的值小于当前节点的值），右链接连接着一棵2-3搜索树（所有的值大于当前结点的值）</strong></p>
+</li>
+<li><p><strong>一个 3-节点，左链接连接着一棵2-3搜索树（所有的值小于当前节点中较小的那个值），中链接连接着一棵2-3搜索树（所有值在当前结点两个值之间），右链接连接着一棵2-3搜索树（所有的值大于当前结点较大的那个值）</strong></p>
+</li>
+</ul>
+<p><strong>————————————————————————</strong></p>
+<p><strong>如果一个2-3搜索树的所有空链接到根节点的距离都相等，那么我们就说这棵2-3搜索树是平衡的。</strong></p>
+<p><strong>————————————————————————</strong></p>
+<h3 id="搜索（Search）"><a href="#搜索（Search）" class="headerlink" title="搜索（Search）"></a>搜索（Search）</h3><p>从根节点开始向下比较，如果与节点中任一值相等，则搜索命中；如果不相等，我们按照左中右连接进行分流；如果遇到空节点，则说明查找失败。</p>
+<h3 id="插入到一个-2-节点-中（Insert-into-a-2-node）"><a href="#插入到一个-2-节点-中（Insert-into-a-2-node）" class="headerlink" title="插入到一个 2-节点 中（Insert into a 2-node）"></a>插入到一个 2-节点 中（Insert into a 2-node）</h3><p>用一个 3-节点 替换掉原来的 2-节点</p>
+<p><img src="http://i.imgur.com/u7IFAjB.png" alt=""></p>
+<h3 id="插入到只含一个3-节点的2-3树中（Insert-into-a-tree-consisting-of-a-single-3-node）"><a href="#插入到只含一个3-节点的2-3树中（Insert-into-a-tree-consisting-of-a-single-3-node）" class="headerlink" title="插入到只含一个3-节点的2-3树中（Insert into a tree consisting of a single 3-node）"></a>插入到只含一个3-节点的2-3树中（Insert into a tree consisting of a single 3-node）</h3><p>把3-节点变成一个暂时的4-节点，然后把这个4-节点分成三个2-节点</p>
+<p><img src="http://i.imgur.com/6l03Bah.png" alt=""></p>
+<h3 id="插入到一个父节点是2-节点的3-节点中（Insert-into-a-3-node-whose-parent-is-a-2-node）"><a href="#插入到一个父节点是2-节点的3-节点中（Insert-into-a-3-node-whose-parent-is-a-2-node）" class="headerlink" title="插入到一个父节点是2-节点的3-节点中（Insert into a 3-node whose parent is a 2-node）"></a>插入到一个父节点是2-节点的3-节点中（Insert into a 3-node whose parent is a 2-node）</h3><p>把3-节点变成一个暂时的4-节点，然后把这个4-节点分成三个2-节点，将父节点变为一个3-节点</p>
+<p><img src="http://i.imgur.com/cf3h0j7.png" alt=""></p>
+<h3 id="插入到一个父节点是3-节点的3-节点中（Insert-into-a-3-node-whose-parent-is-a-3-node）"><a href="#插入到一个父节点是3-节点的3-节点中（Insert-into-a-3-node-whose-parent-is-a-3-node）" class="headerlink" title="插入到一个父节点是3-节点的3-节点中（Insert into a 3-node whose parent is a 3-node）"></a>插入到一个父节点是3-节点的3-节点中（Insert into a 3-node whose parent is a 3-node）</h3><p>向上把每个3-节点变成一个暂时的4-节点，然后把这个4-节点分成三个2-节点，将父节点变为一个暂时的4-节点。由此向上，直到遇到一个2-节点，或到根节点时让整个树增加1层。</p>
+<h3 id="怎样分开一个4-节点"><a href="#怎样分开一个4-节点" class="headerlink" title="怎样分开一个4-节点"></a>怎样分开一个4-节点</h3><p><img src="http://i.imgur.com/dBO9OCp.png" alt=""></p>
+<p><strong>————————————————————————</strong></p>
+<p><strong>对于一个含有N个元素的2-3树，搜索和插入操作保证最多访问 lgN 个节点</strong></p>
+<p><strong>————————————————————————</strong></p>
+<h2 id="红黑树（Red-Black-BSTs）"><a href="#红黑树（Red-Black-BSTs）" class="headerlink" title="红黑树（Red-Black BSTs）"></a>红黑树（Red-Black BSTs）</h2><h3 id="编码-3-节点"><a href="#编码-3-节点" class="headerlink" title="编码 3-节点"></a>编码 3-节点</h3><p>最自然的方法是利用二分查找树(BST)，然后添加一些信息来标记 3-节点</p>
+<p>我们把链接分为两种：</p>
+<ul>
+<li>红链接(Red Link)：连接着两个2-节点来表示一个3-节点</li>
+<li>黑链接(Black Link)：和BST的链接一样，连接着2-3树</li>
+</ul>
+<p>特别地，我们用向左倾斜的红链接连接着的两个2-节点来表示一个3-节点</p>
+<p><img src="http://i.imgur.com/lI9G3d8.png" alt=""></p>
+<p><strong>————————————————————————</strong></p>
+<p><strong>红黑树是满足下列调节的具有红黑链接的二叉树：</strong></p>
+<ul>
+<li><strong>红链接向左倾斜</strong></li>
+<li><strong>没有一个节点连接着两条红链接</strong></li>
+<li><strong>红黑树是平衡的：每个空链接到根节点的路径上有相同数量的黑链接</strong></li>
+</ul>
+<p><strong>————————————————————————</strong></p>
+<p>红黑树即是2-3树，也是BST，所以它结合了BST的高效搜索方法和2-3树的平衡插入特点</p>
+<h3 id="颜色表示"><a href="#颜色表示" class="headerlink" title="颜色表示"></a>颜色表示</h3><p>在节点的定义里加入一个 bool 变量来表示<strong>当前结点与父节点</strong>的链接是不是红链接</p>
+<h3 id="旋转（Rotation）"><a href="#旋转（Rotation）" class="headerlink" title="旋转（Rotation）"></a>旋转（Rotation）</h3><p>在红黑书的实现中，我们暂时允许以下情况：</p>
+<ul>
+<li>向右倾斜的红链接</li>
+<li>一个节点连接着两个红链接</li>
+</ul>
+<p>我们用旋转来修正第一种情况</p>
+<p><img src="http://i.imgur.com/Aau8oAB.png" alt=""><img src="http://i.imgur.com/vVRhpaj.png" alt=""></p>
+<pre><code>Node rotateLeft(Node h)
+{
+    Node x = h.right;
+    h.right = x.left;
+    x.left = h;
+    x.color = h.color;
+    h.color = RED;
+    x.N = h.N;
+    h.N = 1 + size(h.left) + size(h.right);
+    return x;
+}
 
-          
-        
-      
-    </div>
+Node rotateRight(Node h)
+{
+    Node x = h.left;
+    h.left = x.right;
+    x.right = h;
+    x.color = h.color;
+    h.color = RED;
+    x.N = h.N;
+    h.N = 1 + size(h.left) + size(h.right);
+    return x;
+}
+</code></pre><h3 id="插入到一个-2-节点-中（Insert-into-a-2-node）-1"><a href="#插入到一个-2-节点-中（Insert-into-a-2-node）-1" class="headerlink" title="插入到一个 2-节点 中（Insert into a 2-node）"></a>插入到一个 2-节点 中（Insert into a 2-node）</h3><p>如果新插入的节点比原来的节点小，则将它正常插入，然后把新节点的颜色设为红色；如果比原来的大，则正常插入，把新节点的颜色设置为红色，然后进行一次左旋转。</p>
+<h3 id="插入到只含一个3-节点的2-3树中（Insert-into-a-tree-consisting-of-a-single-3-node）-1"><a href="#插入到只含一个3-节点的2-3树中（Insert-into-a-tree-consisting-of-a-single-3-node）-1" class="headerlink" title="插入到只含一个3-节点的2-3树中（Insert into a tree consisting of a single 3-node）"></a>插入到只含一个3-节点的2-3树中（Insert into a tree consisting of a single 3-node）</h3><p><img src="http://i.imgur.com/47nI0LV.png" alt=""></p>
+<pre><code>void flipColors(Node h)
+{
+    h.color = RED;
+    h.left.color = BLACK;
+    h.right.color = BLACK;
+}
+</code></pre><h3 id="保持根节点是黑色的"><a href="#保持根节点是黑色的" class="headerlink" title="保持根节点是黑色的"></a>保持根节点是黑色的</h3><p>上面的代码有可能会使根节点的颜色变为红色，所以每次插入操作后，我们要让根节点的颜色变回黑色。注意到，每当根节点颜色变红时，树的高度就增加了1。</p>
+<h3 id="插入到一个位于底部的-3-节点中（Insert-into-a-3-node-at-the-bottom）"><a href="#插入到一个位于底部的-3-节点中（Insert-into-a-3-node-at-the-bottom）" class="headerlink" title="插入到一个位于底部的 3-节点中（Insert into a 3-node at the bottom）"></a>插入到一个位于底部的 3-节点中（Insert into a 3-node at the bottom）</h3><p><img src="http://i.imgur.com/zuvYORt.png" alt=""></p>
+<p>相当于将一个新的红链接逐层向上传递，直到符合顺序（没有右倾斜的红链接，没有两个红链接连着同一个节点等），或到达根节点。</p>
+<p><img src="http://i.imgur.com/GPGn08Y.png" alt=""></p>
+<h3 id="插入操作的实现"><a href="#插入操作的实现" class="headerlink" title="插入操作的实现"></a>插入操作的实现</h3><pre><code>public void put(Key key, Value val)
+{
+    root = put(root, key, val);
+    root.color = BLACK;
+}
 
-    <div>
-      
-    </div>
+private Node put(Node h, Key key, Value val)
+{
+    if (h == null)    return new Node(key, val, 1, RED);
 
-    <footer class="post-footer">
-      
+    int cmp = key.compareTo(h.key);
+    if        (cmp &lt; 0) h.left  = put(h.left,  key, val);
+    else if (cmp &gt; 0) h.right = put(h.right, key, val);
+    else h.val = val;
 
-      
+    if (isRed(h.right) &amp;&amp; !isRed(h.left))    h = rotateLeft(h);
+    if (isRed(h.left) &amp;&amp; isRed(h.left.left) h = rotateRight(h);
+    if (isRed(h.left) &amp;&amp; isRed(h.right))    flipColors(h);
 
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2000/05/16/Kernel Methods/" itemprop="url">
-                  🔨核方法(Kernel Methods)
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2000-05-16T19:54:01+08:00" content="2000-05-16">
-              2000-05-16
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Under-Construction/" itemprop="url" rel="index">
-                    <span itemprop="name">Under Construction</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="1-线性不可分"><a href="#1-线性不可分" class="headerlink" title="1. 线性不可分"></a>1. 线性不可分</h1><p>在机器学习中，以最简单的二分类问题为例，我们经常会遇到一些线性不可分的数据，比如下图<br><img src="http://i.imgur.com/hkpqkGk.png" width="400"><br>但如果将特征映射到另外一个（高维）空间中，数据就可能变成线性可分的了<br><img src="http://i.imgur.com/ORuBNqP.png" width="400"><br>假设我们现在有两个特征，即 $\mathbf{x}=(x_1,x_2)$，且用线性分类器 $y=\mathbf{w}^{\mathrm{T}}\mathbf{x}$ 无法将数据集 $\mathcal{D}=\{\mathbf{x}^{(1)},\cdots,\mathbf{x}^{(m)}\}$ 分开。但如果将输入数据映射到三维空间中：比方说 $\phi(\mathbf{x})=(x_1^2,\sqrt{2}x_1x_2,x_2^2)$，我们生成了一个新的数据集 $\mathcal{D}’=\{\phi(\mathbf{x}^{(1)}),\cdots,\phi(\mathbf{x}^{(m)})\}$，而它是可分的，分类器变成了 $y=\mathbf{w}^{\mathrm{T}}\phi(\mathbf{x})$（两个 $\mathbf{w}$ 含义不同），将其展开即为 $y=w_1x_1^2+w_2\sqrt{2}x_1x_2+w_3x_2^2$。可以看出，进行<strong>特征映射</strong>后，新的高维（三维）线性分类器在低维度（二维）上是非线性的，所以可以将原空间的非线性界线转换成高维的线性界线。</p>
-
+    h.N = size(h.left) + size(h.right) + 1;
+    return h;
+}
+</code></pre><h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3>
           
         
       
@@ -543,8 +540,8 @@
             
               
                 
-                <a class="post-title-link" href="/2000/05/16/收缩技术/" itemprop="url">
-                  🔨收缩技术(Shrinkage Methods)
+                <a class="post-title-link" href="/2000/05/16/Softmax-Regression/" itemprop="url">
+                  🔨Softmax 回归(Softmax Regression)
                 </a>
               
             
@@ -650,8 +647,8 @@
             
               
                 
-                <a class="post-title-link" href="/2000/05/16/过拟合专题/" itemprop="url">
-                  🔨过拟合专题
+                <a class="post-title-link" href="/2000/05/16/Kernel Methods/" itemprop="url">
+                  🔨核方法(Kernel Methods)
                 </a>
               
             
@@ -712,46 +709,121 @@
       
         
           
-            <h2 id="什么是过拟合"><a href="#什么是过拟合" class="headerlink" title="什么是过拟合"></a>什么是过拟合</h2><p>过拟合指的是在机器学习过程中过度拟合训练集数据， 使得数据中的噪声对习得的模型产生很大影响。模型在训练集上的误差很小，但泛化能力差。</p>
-<h2 id="过拟合的特征"><a href="#过拟合的特征" class="headerlink" title="过拟合的特征"></a>过拟合的特征</h2><table>
-<thead>
-<tr>
-<th style="text-align:center"></th>
-<th style="text-align:center">偏差(Bias)</th>
-<th style="text-align:center">方差(Variance)</th>
-<th style="text-align:center">模型复杂度(Complexity)</th>
-<th style="text-align:center">模型灵活性(Flexibility)</th>
-<th style="text-align:center">模型泛化能力(Generalization)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">欠拟合(Underfitting)</td>
-<td style="text-align:center">高</td>
-<td style="text-align:center">低</td>
-<td style="text-align:center">低</td>
-<td style="text-align:center">低</td>
-<td style="text-align:center">高</td>
-</tr>
-<tr>
-<td style="text-align:center">过拟合(Overfitting)</td>
-<td style="text-align:center">低</td>
-<td style="text-align:center">高</td>
-<td style="text-align:center">高</td>
-<td style="text-align:center">高</td>
-<td style="text-align:center">低</td>
-</tr>
-</tbody>
-</table>
-<h2 id="如何判断过拟合"><a href="#如何判断过拟合" class="headerlink" title="如何判断过拟合"></a>如何判断过拟合</h2><h2 id="防止过拟合"><a href="#防止过拟合" class="headerlink" title="防止过拟合"></a>防止过拟合</h2><ol>
-<li><p>降低模型复杂度：降维</p>
-<h2 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h2></li>
-<li><p><a href="http://blog.csdn.net/er8cjiang/article/details/50981426" target="_blank" rel="external">一篇文章,带你明白什么是过拟合,欠拟合以及交叉验证  
-</a></p>
-</li>
-</ol>
+            <h1 id="1-线性不可分"><a href="#1-线性不可分" class="headerlink" title="1. 线性不可分"></a>1. 线性不可分</h1><p>在机器学习中，以最简单的二分类问题为例，我们经常会遇到一些线性不可分的数据，比如下图<br><img src="http://i.imgur.com/hkpqkGk.png" width="400"><br>但如果将特征映射到另外一个（高维）空间中，数据就可能变成线性可分的了<br><img src="http://i.imgur.com/ORuBNqP.png" width="400"><br>假设我们现在有两个特征，即 $\mathbf{x}=(x_1,x_2)$，且用线性分类器 $y=\mathbf{w}^{\mathrm{T}}\mathbf{x}$ 无法将数据集 $\mathcal{D}=\{\mathbf{x}^{(1)},\cdots,\mathbf{x}^{(m)}\}$ 分开。但如果将输入数据映射到三维空间中：比方说 $\phi(\mathbf{x})=(x_1^2,\sqrt{2}x_1x_2,x_2^2)$，我们生成了一个新的数据集 $\mathcal{D}’=\{\phi(\mathbf{x}^{(1)}),\cdots,\phi(\mathbf{x}^{(m)})\}$，而它是可分的，分类器变成了 $y=\mathbf{w}^{\mathrm{T}}\phi(\mathbf{x})$（两个 $\mathbf{w}$ 含义不同），将其展开即为 $y=w_1x_1^2+w_2\sqrt{2}x_1x_2+w_3x_2^2$。可以看出，进行<strong>特征映射</strong>后，新的高维（三维）线性分类器在低维度（二维）上是非线性的，所以可以将原空间的非线性界线转换成高维的线性界线。</p>
 
           
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2000/05/16/第2章-和式/" itemprop="url">
+                  🔨第二章 和式
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2000-05-16T19:54:01+08:00" content="2000-05-16">
+              2000-05-16
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Under-Construction/" itemprop="url" rel="index">
+                    <span itemprop="name">Under Construction</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="2-1-记号-NOTATION"><a href="#2-1-记号-NOTATION" class="headerlink" title="2.1 记号 NOTATION"></a>2.1 记号 NOTATION</h2><h3 id="和式与项"><a href="#和式与项" class="headerlink" title="和式与项"></a>和式与项</h3><p>一般形式的和式 $a_1 + a_2 + \cdots + a_n$</p>
+<p>和式的每个元素 $a_k$ 称为<strong>项</strong>(term)</p>
+<p>除了用···来表示和式，我们也可以用（很多时候的确在用）求和符号表示和式</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2000/05/16/第2章-和式/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -819,7 +891,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">47</span>
+              <span class="site-state-item-count">48</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
