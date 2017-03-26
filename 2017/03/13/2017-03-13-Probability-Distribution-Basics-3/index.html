@@ -1,0 +1,573 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="wangkaixin, maymoon" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="本文主要是PRML一书2.3.3，2.3.4和2.3.6节的笔记。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="概率论基础3-高斯分布及其共轭先验">
+<meta property="og:url" content="http://yoursite.com/2017/03/13/2017-03-13-Probability-Distribution-Basics-3/index.html">
+<meta property="og:site_name" content="MayMoon">
+<meta property="og:description" content="本文主要是PRML一书2.3.3，2.3.4和2.3.6节的笔记。">
+<meta property="og:updated_time" content="2017-03-13T03:49:42.215Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="概率论基础3-高斯分布及其共轭先验">
+<meta name="twitter:description" content="本文主要是PRML一书2.3.3，2.3.4和2.3.6节的笔记。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 概率论基础3-高斯分布及其共轭先验 | MayMoon </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">MayMoon</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">随便写写</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                概率论基础3-高斯分布及其共轭先验
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-03-13T19:54:01+08:00" content="2017-03-13">
+              2017-03-13
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/PRML-notes/" itemprop="url" rel="index">
+                    <span itemprop="name">PRML notes</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文主要是PRML一书2.3.3，2.3.4和2.3.6节的笔记。<br><a id="more"></a></p>
+<h1 id="1-高斯变量的贝叶斯定理"><a href="#1-高斯变量的贝叶斯定理" class="headerlink" title="1. 高斯变量的贝叶斯定理"></a>1. 高斯变量的贝叶斯定理</h1><p>从<a href="http://keson96.github.io/2017/03/03/2017-03-03-Probability-Distribution-Basics-2/" target="_blank" rel="external">前文</a>中，我们可以看出如果将高斯变量 $\mathbf{x}$ 分割成 $\mathbf{x}=(\mathbf{x}_a,\mathbf{x}_b)$，那么条件分布 $p(\mathbf{x}_a|\mathbf{x}_b)$ 的均值将是 $\mathbf{x}_b$ 的线性函数，方差与 $\mathbf{x}_b$ 独立。<br>假设给定一个边际高斯分布 $p(\mathbf{x})$ 和一个条件高斯分布 $p(\mathbf{y}|\mathbf{x})$，其中 $p(\mathbf{y}|\mathbf{x})$ 的均值是 $\mathbf{x}$ 的线性函数，方差与 $\mathbf{x}$ 无关。那么我们就可以通过下面步骤来计算出 $p(\mathbf{y})$ 和 $p(\mathbf{x}|\mathbf{y})$。</p>
+<ul>
+<li>先求出 $\mathbf{x}$ 和 $\mathbf{y}$ 的联合分布 $p(\mathbf{z})$ 服从的表达式，其中 $\mathbf{z}=(\mathbf{x},\mathbf{y})$。计算联合分布概率的对数，发现 $\mathbf{z}$ 也服从高斯分布。</li>
+<li>同样地，应用<a href="http://keson96.github.io/2017/03/03/2017-03-03-Probability-Distribution-Basics-2/" target="_blank" rel="external">前文</a>中complete the square的方法，求出 $p(\mathbf{z})$ 的均值和方差。</li>
+<li>应用<a href="http://keson96.github.io/2017/03/03/2017-03-03-Probability-Distribution-Basics-2/" target="_blank" rel="external">前文</a>的结论，得出 $p(\mathbf{y})$ 和 $p(\mathbf{x}|\mathbf{y})$。</li>
+</ul>
+<blockquote>
+<p><strong>结论如下</strong><br>给定如下形式的边际高斯分布 $p(\mathbf{x})$ 和条件高斯分布 $p(\mathbf{y}|\mathbf{x})$ $$p(\mathbf{x})=\mathcal{N}(\mathbf{x}|\boldsymbol{\mu},\boldsymbol{\Lambda}^{-1})\tag{1}$$ $$p(\mathbf{y}|\mathbf{x})=\mathcal{N}(\mathbf{y}|\mathbf{Ax}+\mathbf{b},\mathbf{L}^{-1})\tag{2}$$则边际分布 $p(\mathbf{y})$ 和条件分布 $p(\mathbf{x}|\mathbf{y})$ 由下面的式子给出$$p(\mathbf{y})=\mathcal{N}(\mathbf{y}|\mathbf{A}\boldsymbol{\mu}+\mathbf{b},\mathbf{L}^{-1}+\mathbf{A}\boldsymbol{\Lambda}^{-1}\mathbf{A}^{\mathrm{T}})\tag{3}$$ $$p(\mathbf{x}|\mathbf{y})=\mathcal{N}(\mathbf{x}|\boldsymbol{\Sigma}\{\mathbf{A}^{\mathrm{T}}\mathbf{L}(\mathbf{y}-\mathbf{b})+\boldsymbol{\Lambda}\boldsymbol{\mu}\},\boldsymbol{\Sigma})\tag{4}$$其中$$\boldsymbol{\Sigma}=(\boldsymbol{\Lambda}+\mathbf{A}^{\mathrm{T}}\mathbf{L}\mathbf{A})^{-1}\tag{5}$$</p>
+</blockquote>
+<h1 id="2-高斯分布的最大似然估计"><a href="#2-高斯分布的最大似然估计" class="headerlink" title="2. 高斯分布的最大似然估计"></a>2. 高斯分布的最大似然估计</h1><p>高等数学中学过，高斯分布参数的最大似然估计为 $$\boldsymbol{\mu}_{\text{ML}}=\cfrac{1}{N}\sum_{n=1}^N \mathbf{x}_n\tag{6}$$ $$\boldsymbol{\Sigma}_{\text{ML}}=\cfrac{1}{N}\sum_{n=1}^N(\mathbf{x}_n-\boldsymbol{\mu}_{\text{ML}})(\mathbf{x}_n-\boldsymbol{\mu}_{\text{ML}})^{\mathrm{T}}\tag{7}$$其中，均值的估计是无偏的，而方差的估计是有偏差的，无偏差的方差估计如下$$\tilde{\boldsymbol{\Sigma}}=\cfrac{1}{N-1}\sum_{n=1}^N(\mathbf{x}_n-\boldsymbol{\mu}_{\text{ML}})(\mathbf{x}_n-\boldsymbol{\mu}_{\text{ML}})^{\mathrm{T}}\tag{8}$$</p>
+<h1 id="3-高斯分布的共轭先验"><a href="#3-高斯分布的共轭先验" class="headerlink" title="3. 高斯分布的共轭先验"></a>3. 高斯分布的共轭先验</h1><h2 id="3-1-单变量的情形"><a href="#3-1-单变量的情形" class="headerlink" title="3.1 单变量的情形"></a>3.1 单变量的情形</h2><p>先考虑单一变量的情形，即给定一个数据集 $\mathbf{X}=\{x_1,…,x_N\}$，对高斯分布的参数进行推断</p>
+<h3 id="已知方差-sigma-2-推断均值-mu"><a href="#已知方差-sigma-2-推断均值-mu" class="headerlink" title="已知方差 $\sigma^2$ 推断均值 $\mu$"></a>已知方差 $\sigma^2$ 推断均值 $\mu$</h3><p>这种情况下，似然函数如下，将其看作是一个关于 $\mu$ 的函数$$p(\mathbf{X}|\mu)=\prod_{n=1}^N p(x_n|\mu)=\cfrac{1}{(2\pi\sigma^2)^{N/2}}\exp\left\{-\cfrac{1}{2\sigma^2}\sum_{n=1}^N(x_n-\mu)^2\right\}\tag{9}$$可以看出，似然函数关于 $\mu$ 是个指数项为 $\mu$ 的二次项的函数。所以，如果我们选择 $\mu$ 服从的先验分布为高斯分布，那么后验分布也就是高斯分布。选取先验分布$$p(\mu)=\mathcal{N}(\mu|\mu_0,\sigma_0^2)\tag{10}$$那么由 $p(\mu|\mathbf{X})\propto p(\mathbf{X}|\mu)p(\mu)$，利用complete the square的方法，可以得到后验概率为$$p(\mu|\mathbf{X})=\mathcal{N}(\mu|\mu_N,\sigma_N^2)\tag{11}$$其中$$\mu_N=\cfrac{\sigma^2}{N\sigma_0^2+\sigma^2}\mu_0+\cfrac{N\sigma_0^2}{N\sigma_0^2+\sigma^2}\mu_{\text{ML}}$$ $$\cfrac{1}{\sigma_N^2}=\cfrac{1}{\sigma_0^2}+\cfrac{N}{\sigma^2}$$观察上式，可以看出，后验分布的均值 $\mu_N$ 是先验均值 $\mu_0$ 和最大似然估计均值 $\mu_{\text{ML}}$ 之间的权衡。当 $N=0$ 时退化成先验均值，当 $N\to\infty$ 时退化成最大似然估计均值。<br>另外，后验精度（方差的倒数）是先验精度和 $N$ 个样本精度之和（注意，$\sigma$ 是已知的）。当 $N=0$ 时退化成先验方差，当 $N\to\infty$ 时后验方差趋近于0，即在最大似然估计点处有一个无穷高的高峰，其它地方的概率趋近为0。<br>另一方面，贝叶斯推断可以很自然地应用到顺序学习中，如下式所示$$p(\boldsymbol{\mu}|\mathcal{D})\propto\left[p(\boldsymbol{\mu})\prod_{n=1}^{N-1}p(\mathbf{x}_n|\boldsymbol{\mu})\right]p(\mathbf{x}_N|\boldsymbol{\mu})\tag{12}$$其中，方括号中为前 $N-1$ 个样本的后验分布，可以将它视为第 $N$ 个样本的先验分布。</p>
+<h3 id="已知均值-mu-推断方差-sigma-2"><a href="#已知均值-mu-推断方差-sigma-2" class="headerlink" title="已知均值 $\mu$ 推断方差 $\sigma^2$"></a>已知均值 $\mu$ 推断方差 $\sigma^2$</h3><p>下面用精度 $\lambda\equiv 1/\sigma^2$ 代替方差，可以使式子更简洁。关于 $\lambda$ 的似然函数如下所示$$p(\mathbf{X}|\lambda)=\prod_{n=1}^N\mathcal{N}(x_n|\mu,\lambda^{-1})\propto\lambda^{N/2}\exp\left\{-\cfrac{\lambda}{2}\sum_{n=1}^N(x_n-\mu)^2\right\}\tag{13}$$我们要找到一个分布与上式的函数形式相似，<strong>Gamma分布</strong>就是这样一个分布，包含 $\lambda$ 的幂，指数项上是 $\lambda$ 的一次函数$$\text{Gam}(\lambda|a,b)=\cfrac{1}{\Gamma(a)}b^a\lambda^{a-1}\exp(-b\lambda)\tag{14}$$Gamma分布的期望和方差如下$$\mathbb{E}[\lambda]=\cfrac{a}{b}\quad\qquad\text{var}[\lambda]=\cfrac{a}{b^2}$$考虑先验分布 $\text{Gam}(\lambda|a_0,b_0)$，乘以似然函数，可以得到后验分布如下$$p(\lambda|\mathbf{X})\propto\lambda^{a_0-1}\lambda^{N/2}\exp\left\{-b_0\lambda-\cfrac{\lambda}{2}\sum_{n=1}^N(x_n-\mu)^2\right\}\tag{15}$$可以将它看作是另外一个Gamma分布，参数为$$a_N=a_0+\cfrac{N}{2}$$ $$b_N=b_0+\cfrac{1}{2}\sum_{n=1}^N(x_n-\mu)^2=b_0+\cfrac{N}{2}\sigma_{\text{ML}}^2$$<br>类似地，我们可以将 $2a_0$ 视作有效先验样本数。</p>
+<h3 id="mu-和-sigma-均未知"><a href="#mu-和-sigma-均未知" class="headerlink" title="$\mu$ 和 $\sigma$ 均未知"></a>$\mu$ 和 $\sigma$ 均未知</h3><p>这种情况下，似然函数为$$\begin{array}{r,c,l}p(\mathbf{X}|\mu,\lambda)&amp;=&amp;\displaystyle\prod_{n=1}^N\left(\cfrac{\lambda}{2\pi}\right)^{1/2}\exp\left\{-\cfrac{\lambda}{2}(x_n-\mu)^2\right\}\\ &amp;\propto&amp;\displaystyle\left[\lambda^{1/2}\exp\left(-\cfrac{\lambda\mu^2}{2}\right)\right]^N\exp\left\{\lambda\mu\sum_{n=1}^N x_n-\cfrac{\lambda}{2}\sum_{n=1}^N x_n^2\right\}\end{array}\tag{16}$$我们想确定一个先验分布 $p(\mu,\lambda)$ 具有与上式类似的形式，即$$\begin{array}{r,c,l}p(\mu,\lambda)&amp;\propto&amp;\left[\lambda^{1/2}\exp\left(-\cfrac{\lambda\mu^2}{2}\right)\right]^{\beta}\exp\{c\lambda\mu-d\lambda\}\\ &amp;=&amp;\exp\left\{-\cfrac{\beta\lambda}{2}(\mu-c/\beta)^2\right\}\lambda^{\beta/2}\exp\left\{-\left(d-\cfrac{c^2}{2\beta}\right)\lambda\right\}\end{array}\tag{17}$$其中 $c$，$d$ 和 $\beta$ 均是参数。我们可以将上式看作是 $p(\mu|\lambda)$ 和 $p(\lambda)$ 的乘积，其中 $p(\mu|\lambda)$ 服从高斯分布，而 $p(\lambda)$ 服从Gamma分布。归一化后的先验分布如下$$p(\mu,\lambda)=\mathcal{N}(\mu|\mu_0,(\beta\lambda)^{-1})\text{Gam}(\lambda|a,b)\tag{18}$$其中 $\mu_0=c/\beta$，$a=1+\beta/2$， $b=d-c^2/2\beta$。注意到上式并不是两个独立分布的乘积，高斯分布的方差依赖于Gamma分布的参数 $\lambda$。这个分布称为<strong>高斯-Gamma分布</strong>。</p>
+<h2 id="3-2-多变量的情形"><a href="#3-2-多变量的情形" class="headerlink" title="3.2 多变量的情形"></a>3.2 多变量的情形</h2><h3 id="已知方差-sigma-2-推断均值-mu-1"><a href="#已知方差-sigma-2-推断均值-mu-1" class="headerlink" title="已知方差 $\sigma^2$ 推断均值 $\mu$"></a>已知方差 $\sigma^2$ 推断均值 $\mu$</h3><p>这种情况下，先验分布仍是多元高斯分布，可以很容易地推导，故不赘述。</p>
+<h3 id="已知均值-mu-推断方差-sigma-2-1"><a href="#已知均值-mu-推断方差-sigma-2-1" class="headerlink" title="已知均值 $\mu$ 推断方差 $\sigma^2$"></a>已知均值 $\mu$ 推断方差 $\sigma^2$</h3><p>这种情况下，共轭先验分布为<strong>Wishart分布</strong>$$\mathcal{W}(\boldsymbol{\Lambda}|\mathbf{W},\nu)=B|\boldsymbol{\Lambda}|^{(\nu-D-1)/2}\exp\left(-\cfrac{1}{2}\text{tr}(\mathbf{W}^{-1}\boldsymbol{\Lambda})\right)\tag{19}$$其中 $\nu$ 表示分布的<strong>自由度</strong>数目，归一化因子 $B$ 为$$B(\mathbf{W},\nu)=|\mathbf{W}|^{-\nu/2}\left(2^{\nu D/2}\pi^{D(D-1)/4}\prod_{i=1}^D\Gamma\left(\cfrac{\nu+1-i}{2}\right)\right)^{-1}\tag{20}$$</p>
+<h3 id="mu-和-sigma-均未知-1"><a href="#mu-和-sigma-均未知-1" class="headerlink" title="$\mu$ 和 $\sigma$ 均未知"></a>$\mu$ 和 $\sigma$ 均未知</h3><p>类似地可以推导出，共轭先验为$$p(\boldsymbol{\mu},\boldsymbol{\Lambda}|\boldsymbol{\mu}_0,\beta,\mathbf{W},\nu)=\mathcal{N}(\boldsymbol{\mu}|\boldsymbol{\mu}_0,(\beta\boldsymbol{\Lambda})^{-1})\mathcal{W}(\boldsymbol{\Lambda}|\mathbf{W},\nu)\tag{21}$$这个分布称为<strong>高斯-Wishart分布</strong></p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ol>
+<li><em>Pattern Recognition and Machine Learning (PRML)<em></em></em></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/09/2017-03-09-Support-Vector-Machine/" rel="next" title="支持向量机(Support Vector Machine)">
+                <i class="fa fa-chevron-left"></i> 支持向量机(Support Vector Machine)
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/26/2017-03-26-Kernel-Density-And-Nearest-Neighbor/" rel="prev" title="核密度估计与近邻算法(Kernel Density Estimator & Nearest Neighbor)">
+                核密度估计与近邻算法(Kernel Density Estimator & Nearest Neighbor) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/pic.PNG"
+               alt="Wang Kx" />
+          <p class="site-author-name" itemprop="name">Wang Kx</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">50</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-高斯变量的贝叶斯定理"><span class="nav-number">1.</span> <span class="nav-text">1. 高斯变量的贝叶斯定理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-高斯分布的最大似然估计"><span class="nav-number">2.</span> <span class="nav-text">2. 高斯分布的最大似然估计</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-高斯分布的共轭先验"><span class="nav-number">3.</span> <span class="nav-text">3. 高斯分布的共轭先验</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-单变量的情形"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 单变量的情形</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#已知方差-sigma-2-推断均值-mu"><span class="nav-number">3.1.1.</span> <span class="nav-text">已知方差 $\sigma^2$ 推断均值 $\mu$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#已知均值-mu-推断方差-sigma-2"><span class="nav-number">3.1.2.</span> <span class="nav-text">已知均值 $\mu$ 推断方差 $\sigma^2$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mu-和-sigma-均未知"><span class="nav-number">3.1.3.</span> <span class="nav-text">$\mu$ 和 $\sigma$ 均未知</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-多变量的情形"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 多变量的情形</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#已知方差-sigma-2-推断均值-mu-1"><span class="nav-number">3.2.1.</span> <span class="nav-text">已知方差 $\sigma^2$ 推断均值 $\mu$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#已知均值-mu-推断方差-sigma-2-1"><span class="nav-number">3.2.2.</span> <span class="nav-text">已知均值 $\mu$ 推断方差 $\sigma^2$</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mu-和-sigma-均未知-1"><span class="nav-number">3.2.3.</span> <span class="nav-text">$\mu$ 和 $\sigma$ 均未知</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wang Kx</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=0.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>

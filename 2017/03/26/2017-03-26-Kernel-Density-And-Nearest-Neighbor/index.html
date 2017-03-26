@@ -57,16 +57,19 @@
 
 
 
-<meta name="description" content="在线性回归中，我们有 $y|x;\theta\sim\mathcal{N}(\mu,\sigma^2)$；在逻辑回归中，我们有 $y|x;\theta\sim\text{Bernoulli}(\phi)$。其中，$\mu$ 和 $\phi$ 可以很好地定义为关于 $x$ 和 $\theta$ 的函数。下面，我们将说明线性回归、逻辑回归都是一般线性模型(General Linear Model)的特">
+<meta name="description" content="本文主要是PRML一书2.5节的笔记。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="一般线性模型(General Linear Model)">
-<meta property="og:url" content="http://yoursite.com/2016/10/14/2016-10-14-General-Linear-Model/index.html">
+<meta property="og:title" content="核密度估计与近邻算法(Kernel Density Estimator & Nearest Neighbor)">
+<meta property="og:url" content="http://yoursite.com/2017/03/26/2017-03-26-Kernel-Density-And-Nearest-Neighbor/index.html">
 <meta property="og:site_name" content="MayMoon">
-<meta property="og:description" content="在线性回归中，我们有 $y|x;\theta\sim\mathcal{N}(\mu,\sigma^2)$；在逻辑回归中，我们有 $y|x;\theta\sim\text{Bernoulli}(\phi)$。其中，$\mu$ 和 $\phi$ 可以很好地定义为关于 $x$ 和 $\theta$ 的函数。下面，我们将说明线性回归、逻辑回归都是一般线性模型(General Linear Model)的特">
-<meta property="og:updated_time" content="2016-12-23T14:35:41.146Z">
+<meta property="og:description" content="本文主要是PRML一书2.5节的笔记。">
+<meta property="og:image" content="http://i.imgur.com/UBjqXzm.png">
+<meta property="og:image" content="http://i.imgur.com/8rIKmUH.png">
+<meta property="og:updated_time" content="2017-03-26T02:51:44.207Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="一般线性模型(General Linear Model)">
-<meta name="twitter:description" content="在线性回归中，我们有 $y|x;\theta\sim\mathcal{N}(\mu,\sigma^2)$；在逻辑回归中，我们有 $y|x;\theta\sim\text{Bernoulli}(\phi)$。其中，$\mu$ 和 $\phi$ 可以很好地定义为关于 $x$ 和 $\theta$ 的函数。下面，我们将说明线性回归、逻辑回归都是一般线性模型(General Linear Model)的特">
+<meta name="twitter:title" content="核密度估计与近邻算法(Kernel Density Estimator & Nearest Neighbor)">
+<meta name="twitter:description" content="本文主要是PRML一书2.5节的笔记。">
+<meta name="twitter:image" content="http://i.imgur.com/UBjqXzm.png">
 
 
 
@@ -84,7 +87,7 @@
   };
 </script>
 
-  <title> 一般线性模型(General Linear Model) | MayMoon </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title> 核密度估计与近邻算法(Kernel Density Estimator & Nearest Neighbor) | MayMoon </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -214,7 +217,7 @@
             
             
               
-                一般线性模型(General Linear Model)
+                核密度估计与近邻算法(Kernel Density Estimator & Nearest Neighbor)
               
             
           </h1>
@@ -226,8 +229,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-10-14T19:54:01+08:00" content="2016-10-14">
-              2016-10-14
+            <time itemprop="dateCreated" datetime="2017-03-26T19:54:01+08:00" content="2017-03-26">
+              2017-03-26
             </time>
           </span>
 
@@ -240,8 +243,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/CS229-notes/" itemprop="url" rel="index">
-                    <span itemprop="name">CS229 notes</span>
+                  <a href="/categories/PRML-notes/" itemprop="url" rel="index">
+                    <span itemprop="name">PRML notes</span>
                   </a>
                 </span>
 
@@ -272,30 +275,19 @@
       
 
       
-        <p>在线性回归中，我们有 $y|x;\theta\sim\mathcal{N}(\mu,\sigma^2)$；在逻辑回归中，我们有 $y|x;\theta\sim\text{Bernoulli}(\phi)$。其中，$\mu$ 和 $\phi$ 可以很好地定义为关于 $x$ 和 $\theta$ 的函数。下面，我们将说明线性回归、逻辑回归都是一般线性模型(General Linear Model)的特例。</p>
-<a id="more"></a>
-<h2 id="指数族分布-Exponential-Family-Distributions"><a href="#指数族分布-Exponential-Family-Distributions" class="headerlink" title="指数族分布(Exponential Family Distributions)"></a>指数族分布(Exponential Family Distributions)</h2><p>在介绍GLM之前，我们先定义指数族分布。如果一类分布(参数不同)可以写成如下的形式，我们就说这类分布属于指数族分布<br>$$p(y;\eta)=b(y)\exp(\eta^TT(y)-a(\eta))\tag{1}$$<br>其中，$\eta$ 称为<strong>自然参数(natural parameter, also canonical parameter)</strong>；$T(y)$ 称为<strong>充分统计量(sufficient statistic)</strong>，在大多数情形下，$T(y)=y$；$a(\eta)$ 称为<strong>对数配分函数(log partition function)</strong>。式中$e^{-a(\eta)}$ 扮演着很重要的角色，它确保分布 $p(y;\eta)$ 关于 $y$ 的和或积分值为1。<br>一组固定的$T,a,b$就可以确定一类分布（比如伯努利分布），由 $\eta$ 确定分布的参数。当我们变化 $\eta$ 时，我们就能得到这类分布的不同实例。</p>
-<p>上面的定义可能比较难懂，下面将推导伯努利分布、正态分布、泊松分布属于指数族分布。</p>
-<h3 id="伯努利分布"><a href="#伯努利分布" class="headerlink" title="伯努利分布"></a>伯努利分布</h3><p>对于 $\text{Bernoulli}(\phi)$，我们有 $p(y=1;\phi)=\phi;\quad p(y=0;\phi)=1-\phi$<br>可以将伯努利分布写成：<br>$$\begin{array}{l}<br>p(y;\phi)&amp;=&amp;\phi^y(1-\phi)^{1-y} \\<br>&amp;=&amp; \exp(y\log\phi+(1-y)\log(1-\phi)) \\<br>&amp;=&amp; \exp\left(\left(\log\left(\cfrac{\phi}{1-\phi}\right)\right)y+\log(1-\phi)\right)<br>\end{array}$$<br>仔细对比可以发现，上式符合(1)式的结构。其中<br>$$\begin{array}{r,l}<br>\eta&amp;=&amp;\log\left(\cfrac{\phi}{1-\phi}\right) \\<br>T(y)&amp;=&amp; y \\<br>a(\eta)&amp;=&amp; -\log(1-\phi) \\<br>b(y) &amp;=&amp; 1<br>\end{array}$$<br>至此，我们说明了伯努利分布属于指数族分布。此外，用上面的第一个式子反解 $\phi$，可以得到 $\phi=1/(1+e^{-\eta})$，这正是Sigmoid函数！</p>
-<h3 id="正态分布"><a href="#正态分布" class="headerlink" title="正态分布"></a>正态分布</h3><p>在线性回归中，$\sigma^2$的值对拟合 $\theta$ 没有任何影响，所以为了简化下面的推导，我们设$\theta^2=1$。于是就有<br>$$\begin{array}{l}<br>p(y;\mu)&amp;=&amp;\cfrac{1}{\sqrt{2\pi}}\exp\left(-\cfrac{1}{2}(y-\mu)^2\right) \\<br>&amp;=&amp; \cfrac{1}{\sqrt{2\pi}}\exp\left(-\cfrac{1}{2}y^2\right)\cdot\exp\left(\mu y-\cfrac{1}{2}\mu^2\right)<br>\end{array}$$<br>其中<br>$$\begin{array}{r,l}<br>\eta&amp;=&amp;\mu \\<br>T(y)&amp;=&amp;y \\<br>a(\eta)&amp;=&amp;\mu^2/2 \\<br>&amp;=&amp;\eta^2/2 \\<br>b(y)&amp;=&amp;(1/\sqrt{2\pi})\exp(-y^2/2)<br>\end{array}$$</p>
-<blockquote>
-<p>如果要考虑$\sigma^2$参数，则可以将正态分布归到更一般的指数族分布：$p(y;\eta,\tau)=b(a,\tau)\exp((\eta^TT(y)-a(\eta))/c(\tau))$。其中$\tau$被称为<strong>散度参数(dispersion parameter)</strong>。对于正态分布，$c(\tau)=\sigma^2$。</p>
-</blockquote>
-<h3 id="泊松分布"><a href="#泊松分布" class="headerlink" title="泊松分布"></a>泊松分布</h3><p>对于泊松分布，有<br>$$\begin{array}{r,l}<br>p(y;\eta)&amp;=&amp;\cfrac{\lambda^y}{y !}e^{-\lambda} \\<br>&amp;=&amp;\cfrac{1}{y !}\exp(y\log\lambda-\lambda)<br>\end{array}$$<br>其中<br>$$\begin{array}{r,l}<br>\eta&amp;=&amp;\log\lambda \\<br>T(y)&amp;=&amp;y \\<br>a(\eta)&amp;=&amp;\lambda \\<br>b(y)&amp;=&amp;\cfrac{1}{y!}<br>\end{array}$$</p>
-<h2 id="构建一般线性模型-Constructing-GLMs"><a href="#构建一般线性模型-Constructing-GLMs" class="headerlink" title="构建一般线性模型(Constructing GLMs)"></a>构建一般线性模型(Constructing GLMs)</h2><p>考虑一个分类或回归问题，我们要对给定的某个 $x$ 值预测出一个 $y$ 值。要为这个问题推导出一个GML，我们需要做出以下关于模型和 $y$ 的条件分布的假设：</p>
+        <p>本文主要是PRML一书2.5节的笔记。<br><a id="more"></a><br>核密度估计与近邻算法是两种简单的<strong>非参数</strong>密度估计算法。与参数方法相比，非参数方法对真实分布做更少的假设。比如数据是多峰的，那么我们用单峰的正态分布去拟合效果一定不好，但非参数方法却可以取得不错的效果。<br>非参数方法并不是指模型不含参数，而是说参数并不控制分布的类型，常常控制着模型的复杂程度。</p>
+<p>假设样本是从在 $D$ 维欧氏空间的未知分布 $p(\mathbf{x})$ 中取出来的，我们想要估计 $p(\mathbf{x})$ 的值。考虑包含 $\mathbf{x}$ 的一个小区域 $\mathcal{R}$，它对应的概率（probability mass）为$$P=\int_{\mathcal{R}}p(\mathbf{x})\mathrm{d}\mathbf{x}\tag{1}$$假设现在有一个从 $p(\mathbf{x})$ 中取出的含 $N$ 个样本的数据集，由于每个样本落在区域 $\mathcal{R}$ 内的概率为 $P$，落在区域 $\mathcal{R}$ 里的样本总数 $K$ 服从二项分布$$\text{Bin}(K|N,P)=\cfrac{N!}{K!(N-K)!}P^K(1-P)^{1-K}\tag{2}$$我们知道该分布的均值为 $\mathbb{E}[K/N]=P$，方差为 $\text{var}[K/N]=P(1-P)/N$。对于很大的 $N$，方差趋近于0，则分布在均值处有一个高峰，故而近似有$$K\simeq NP\tag{3}$$另一方面，如果区域 $\mathcal{R}$ 足够小，那么概率 $p(\mathbf{x})$ 在这个区域里就大致不变，则有$$P=p(\mathbf{x})V\tag{4}$$其中 $V$ 是区域 $R$ 的体积。结合(3)，(4)式，可以得到下面的密度估计公式$$p(\mathbf{x})=\cfrac{K}{NV}\tag{5}$$然而，上式的正确性却依赖于两个<strong>相抵触的假设</strong>。一方面假设 $\mathcal{R}$ 足够小使得概率密度在区域内近似不变，另一方面又需要 $\mathcal{R}$ 充足大使得 $K$ 足以能够让分布在均值处形成高峰。</p>
+<p>不过，我们可以从两方面来利用(5)式的结果：</p>
 <ol>
-<li>$y|x;\theta\sim\text{ExponentialFamily}(\eta)$</li>
-<li>给定一个 $x$，我们的目标是预测出 $T(y)$ 的期望值。在大多数模型中，有 $T(y)=y$，所以，这意味着我们希望$h(x)$满足$h(x)=\mathrm{E}[y|x]$</li>
-<li>自然参数 $\eta$ 和输入 $x$ 之间线性相关：$\eta=\theta^Tx$</li>
+<li>固定 $K$ 的值，利用数据确定 $V$ 的值，这引出了<strong>K近邻算法</strong>。</li>
+<li>固定 $V$ 的值，利用数据确定 $K$ 的值，这引出了<strong>核密度估计方法</strong>。</li>
 </ol>
-<p>第三条假设看上去似乎没有上面两条“合理”，我们不妨将其看作一种“设计技巧”。这样，可以让我们推导出一类非常优雅的学习算法，即GLM，还可以带来很多优良的性质。下面我们将说明线性回归和逻辑回归是如何作为GLM推导出来的。</p>
-<h3 id="最小二乘线性回归"><a href="#最小二乘线性回归" class="headerlink" title="最小二乘线性回归"></a>最小二乘线性回归</h3><p>我们认为 $y$ 在给定的 $x$ 服从的条件分布为正态分布$\mathcal{N}(\mu,\sigma^2)$，我们在上面已经证明了正态分布属于指数族分布，则就有<br>$$\begin{array}{r,l}<br>h_{\theta}(x)&amp;=&amp;E[y|x;\theta] \\<br>&amp;=&amp;\mu \\<br>&amp;=&amp;\eta \\<br>&amp;=&amp;\theta^Tx<br>\end{array}$$</p>
-<h3 id="逻辑回归"><a href="#逻辑回归" class="headerlink" title="逻辑回归"></a>逻辑回归</h3><p>对于分类问题，$y\in \{0,1\}$，自然地想到用伯努利分布来作为条件分布，则有<br>$$\begin{array}{r,l}<br>h_{\theta}(x)&amp;=&amp;E[y|x;\theta] \\<br>&amp;=&amp;1\times\phi+0\times(1-\phi) \\<br>&amp;=&amp;\phi \\<br>&amp;=&amp;1/(1+e^{-\eta}) \\<br>&amp;=&amp;1/(1+e^{-\theta^Tx})<br>\end{array}$$</p>
-<hr>
-<p>再介绍一些术语，将分布均值写成关于自然参数的函数 $g(\eta)=\mathrm{E}[T(y);\eta]$称为<strong>canonical response function</strong>；它的逆函数 $g^{-1}$ 称为<strong>canonical link function</strong>。</p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ol>
-<li><a href="http://open.163.com/movie/2008/1/B/O/M6SGF6VB4_M6SGHJ9BO.html" target="_blank" rel="external">斯坦福大学机器学习公开课</a></li>
-<li><a href="http://cs229.stanford.edu/notes/cs229-notes1.pdf" target="_blank" rel="external">CS229 Lecture notes</a></li>
+<h1 id="1-核密度估计法（Kernel-density-estimators）"><a href="#1-核密度估计法（Kernel-density-estimators）" class="headerlink" title="1. 核密度估计法（Kernel density estimators）"></a>1. 核密度估计法（Kernel density estimators）</h1><p>取 $\mathcal{R}$ 为以 $\mathbf{x}$ 为中心的超立方。为了统计落在这个区域中样本的个数 $K$，定义下面这个方程$$k(\mathbf{u})=\begin{cases}1,\quad &amp;|u_i|\le 1/2,\qquad i=1,…,D \\ 0,\quad &amp;\text{otherwise}\end{cases}\tag{6}$$其中，函数 $k(\mathbf{u})$ 是<strong>核函数</strong>，在这个问题中，也称为<strong>Parzen窗口</strong>。选取 $\mathbf{u}=(\mathbf{x}-\mathbf{x}_n)/h$，则 $\mathbf{x}_n$ 在边长为 $h$ 的超立方中时函数值为1，否则为0。那么$$K=\sum_{n=1}^Nk(\cfrac{\mathbf{x}-\mathbf{x}_n}{h})\tag{7}$$代入到(5)式中，可以得到$$p(\mathbf{x})=\cfrac{1}{N}\sum_{n=1}^N\cfrac{1}{h^D}k\left(\cfrac{\mathbf{x}-\mathbf{x}_n}{h}\right)\tag{8}$$其中 $V$ 用 $h^D$ 替代。由于 $k(\mathbf{u})$ 的对称性，我们可以将上式重新阐述为以 $N$ 个样本 $\mathbf{x}$ 为中心的 $N$ 个立方的和，而不是一个以 $\mathbf{x}$ 为中心的立方。<br>然而，(8)式的模型仍然有<strong>不连续</strong>的问题，出现在立方边界上。可以选取一个较平滑的核函数来解决，通常的选择是高斯核函数，对应的概率密度模型为$$p(\mathbf{x})=\cfrac{1}{N}\sum_{n=1}^{N}\cfrac{1}{(2\pi h^2)^{1/2}}\exp\left\{-\cfrac{||\mathbf{x}-\mathbf{x}_n||^2}{2h^2}\right\}\tag{9}$$其中 $h$ 是标准差。一个例子如下图所示<br><img src="http://i.imgur.com/UBjqXzm.png" width="300"><br>可见，$h$ 不能过大，也不能过小。过小会产生太多噪声，过大则不能捕捉到分布的特征。</p>
+<p>当然，我们也可以用其它核函数 $k(\mathbf{u})$，只要满足以下两点$$k(\mathbf{u})\ge 0$$ $$\int k(\mathbf{u})\mathrm{d}\mathbf{u}=1$$核方法的优点是“训练”阶段不需要计算，只需要存储训练集；同时，这也反映出这种方法的缺点，即计算概率密度值时的开销随数据集大小线性增长。</p>
+<h1 id="2-近邻算法（Nearest-neighbour-methods）"><a href="#2-近邻算法（Nearest-neighbour-methods）" class="headerlink" title="2. 近邻算法（Nearest-neighbour methods）"></a>2. 近邻算法（Nearest-neighbour methods）</h1><p>核密度估计方法存在的一个问题是 $h$ 对所有核都是固定的。在数据比较集中的区域，较大的 $h$ 值可能造成过度平滑；而在数据比较稀疏的区域，减小 $h$ 值可能会带来更多噪声。最优的选择是 $h$ 随数据空间的位置不同而变化，近邻算法就能实现这一点。<br>先选取以 $\mathbf{x}$ 为中心的一个很小的球面，然后逐渐增大半径直到球面包含了恰好 $K$ 个数据点为止，此时球面所围城的体积即为所求的 $V$。这种方法称为 $K$ 近邻法。</p>
+<h2 id="K-近邻用于分类"><a href="#K-近邻用于分类" class="headerlink" title="K-近邻用于分类"></a>K-近邻用于分类</h2><p>K-近邻方法也可以拓展到分类问题，对每一类别用K-近邻法进行密度估计，然后应用贝叶斯理论得到后验概率。<br>假设总共有 $N$ 个样本，其中每一类的样本有 $N_k$ 个。如果想分类新的样本 $\mathbf{x}$，就以 $\mathbf{x}$ 为中心画一个刚好能包含 $K$ 个数据点的球面，球面围成的体积为 $V$，含有每一类 $C_k$ 的数据点为 $K$ 个。则用K-近邻法求出每一类的概率密度为$$p(\mathbf{x}|\mathcal{C}_k)=\cfrac{K_k}{N_kV}\tag{10}$$类似地，非条件概率密度为$$p(\mathbf{x})=\cfrac{K}{NV}\tag{11}$$类的先验概率为$$p(\mathcal{C}_k)=\cfrac{N_k}{N}\tag{12}$$利用(10)，(11)，(12)式，结合贝叶斯定理，我们可以得到后验概率为$$p(\mathcal{C}_k|\mathbf{x})=\cfrac{p(\mathbf{x}|\mathcal{C}_k)p(\mathcal{C}_k)}{p(\mathbf{x})}=\cfrac{K_k}{K}\tag{13}$$要分类一个新的点，我们从数据集中找出距它最近的 $K$ 个点，然后将它分到 $K$ 个点中数量最多的那一类（平衡随机打破）。当 $K=1$ 时，称为<strong>最近邻方法</strong>，即将新数据点分类到离它最近的数据点所在的那一类。一个分类的例子如下图<br><img src="http://i.imgur.com/8rIKmUH.png" width="600"><br>可见，$K$ 也控制着平滑程度。小的 $K$ 值会产生许多小区域，大的 $K$ 值则会产生较少的大区域。<br>K近邻方法和核方法都需要把整个数据集存储下来，如果数据集太大，计算开销就会随之增大。可以使用一些额外的一次计算方法来抵消一定的计算量，比如使用KD树来存储近邻信息，就不需要在每次计算时穷举搜索整个数据集。尽管这样，非参数方法依然比较局限。</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ol>
+<li><em>Pattern Recognition and Machine Learning (PRML)<em></em></em></li>
 </ol>
 
       
@@ -314,17 +306,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/10/13/2016-10-13-Locally-Weighted-Linear-Regression/" rel="next" title="局部加权线性回归(Locally Weighted Linear Regression)">
-                <i class="fa fa-chevron-left"></i> 局部加权线性回归(Locally Weighted Linear Regression)
+              <a href="/2017/03/13/2017-03-13-Probability-Distribution-Basics-3/" rel="next" title="概率论基础3-高斯分布及其共轭先验">
+                <i class="fa fa-chevron-left"></i> 概率论基础3-高斯分布及其共轭先验
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/10/17/2016-10-17-Ensemble-Learning/" rel="prev" title="集成学习算法(Ensemble Learning)">
-                集成学习算法(Ensemble Learning) <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -440,7 +428,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#指数族分布-Exponential-Family-Distributions"><span class="nav-number">1.</span> <span class="nav-text">指数族分布(Exponential Family Distributions)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#伯努利分布"><span class="nav-number">1.1.</span> <span class="nav-text">伯努利分布</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正态分布"><span class="nav-number">1.2.</span> <span class="nav-text">正态分布</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#泊松分布"><span class="nav-number">1.3.</span> <span class="nav-text">泊松分布</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建一般线性模型-Constructing-GLMs"><span class="nav-number">2.</span> <span class="nav-text">构建一般线性模型(Constructing GLMs)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#最小二乘线性回归"><span class="nav-number">2.1.</span> <span class="nav-text">最小二乘线性回归</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#逻辑回归"><span class="nav-number">2.2.</span> <span class="nav-text">逻辑回归</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-核密度估计法（Kernel-density-estimators）"><span class="nav-number">1.</span> <span class="nav-text">1. 核密度估计法（Kernel density estimators）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-近邻算法（Nearest-neighbour-methods）"><span class="nav-number">2.</span> <span class="nav-text">2. 近邻算法（Nearest-neighbour methods）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#K-近邻用于分类"><span class="nav-number">2.1.</span> <span class="nav-text">K-近邻用于分类</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">3.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
             
           </div>
         </section>
