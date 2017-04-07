@@ -1,0 +1,602 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="wangkaixin, maymoon" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="本文是PRML一书3.4-3.5节的笔记。在线性回归模型中，模型复杂度是由基函数数量控制的。如果模型过于复杂就会造成过拟合，所以我们在对数似然函数上加上一个正则项，这样，模型的复杂度就可以由正则化系数来控制（尽管基函数的数量和形式对模型的行为仍有很大影响）。为了确定最合适的正则化系数，我们需要用交叉验证集来进行测试，选择最优的正则化系数。然而，如果我们从贝叶斯角度去看模型选择，就可以直接利用整个数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="贝叶斯模型比较(Bayesian Model Comparison)">
+<meta property="og:url" content="http://yoursite.com/2017/04/07/2017-04-07-Bayesian-Model-Comparison/index.html">
+<meta property="og:site_name" content="MayMoon">
+<meta property="og:description" content="本文是PRML一书3.4-3.5节的笔记。在线性回归模型中，模型复杂度是由基函数数量控制的。如果模型过于复杂就会造成过拟合，所以我们在对数似然函数上加上一个正则项，这样，模型的复杂度就可以由正则化系数来控制（尽管基函数的数量和形式对模型的行为仍有很大影响）。为了确定最合适的正则化系数，我们需要用交叉验证集来进行测试，选择最优的正则化系数。然而，如果我们从贝叶斯角度去看模型选择，就可以直接利用整个数">
+<meta property="og:image" content="http://i.imgur.com/fR9Fw5D.png">
+<meta property="og:image" content="http://i.imgur.com/DkXwAHB.png">
+<meta property="og:image" content="http://i.imgur.com/gVdVMOB.png">
+<meta property="og:image" content="http://i.imgur.com/tXwqq17.png">
+<meta property="og:image" content="http://i.imgur.com/jD8q4Ml.png">
+<meta property="og:image" content="http://i.imgur.com/qHgWkjb.png">
+<meta property="og:updated_time" content="2017-04-07T04:37:58.062Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="贝叶斯模型比较(Bayesian Model Comparison)">
+<meta name="twitter:description" content="本文是PRML一书3.4-3.5节的笔记。在线性回归模型中，模型复杂度是由基函数数量控制的。如果模型过于复杂就会造成过拟合，所以我们在对数似然函数上加上一个正则项，这样，模型的复杂度就可以由正则化系数来控制（尽管基函数的数量和形式对模型的行为仍有很大影响）。为了确定最合适的正则化系数，我们需要用交叉验证集来进行测试，选择最优的正则化系数。然而，如果我们从贝叶斯角度去看模型选择，就可以直接利用整个数">
+<meta name="twitter:image" content="http://i.imgur.com/fR9Fw5D.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"hide"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 贝叶斯模型比较(Bayesian Model Comparison) | MayMoon </title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta custom-logo">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">MayMoon</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">随便写写</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                贝叶斯模型比较(Bayesian Model Comparison)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-04-07T19:54:01+08:00" content="2017-04-07">
+              2017-04-07
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/PRML-notes/" itemprop="url" rel="index">
+                    <span itemprop="name">PRML notes</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文是PRML一书3.4-3.5节的笔记。<br>在线性回归模型中，模型复杂度是由基函数数量控制的。如果模型过于复杂就会造成过拟合，所以我们在对数似然函数上加上一个正则项，这样，模型的复杂度就可以由正则化系数来控制（尽管基函数的数量和形式对模型的行为仍有很大影响）。为了确定最合适的正则化系数，我们需要用交叉验证集来进行测试，选择最优的正则化系数。<br>然而，如果我们从贝叶斯角度去看模型选择，就可以直接利用整个数据集来确定正则化系数，既减少了在交叉验证集上的计算，也节省了数据。<br><a id="more"></a></p>
+<h1 id="1-总览"><a href="#1-总览" class="headerlink" title="1. 总览"></a>1. 总览</h1><p>从贝叶斯视角看模型选择是用概率来表示模型选择的不确定性。假设要比较 $L$ 个模型 $\{\mathcal{M}_i\}$，其中 $i=1,…L$。一个模型指的是在观测数据集 $\mathcal{D}$ 上的一个概率分布。我们假设<strong>数据是从这些模型中的某一个产生的</strong>，但不确定是哪一个。我们对模型的不确定性由先验分布 $p(\mathcal{M}_i)$ 给出，表示我们对模型的偏好。给定一个数据集 $\mathcal{D}$，我们希望确定后验分布$$p(\mathcal{M}_i|\mathcal{D})\propto p(\mathcal{M}_i)p(\mathcal{D}|\mathcal{M}_i)\tag{1}$$其中，$p(\mathcal{D}|\mathcal{M}_i)$ 这一项称为<strong>model evidence</strong>，表示了观测数据对不同模型的偏好。它有时也被称作<strong>marginal likelihood</strong>，因为它可以看作是整个模型空间上的似然函数，模型参数均被边际化。</p>
+<blockquote>
+<p>例如：$\alpha$ 控制着参数 $w$ 的先验分布，下式相当于对 $w$ 进行了边际化，$p(t|\alpha)$ 就被称为marginal likelihood<br>$$p(t|\alpha)=\int_{\theta}p(t|w)p(w|\alpha)\mathrm{d}w$$</p>
+</blockquote>
+<p>model evidence之间的比值 $p(\mathcal{D}|\mathcal{M}_i)/p(\mathcal{D}|\mathcal{M}_j)$ 称为<strong>贝叶斯因子（Bayes factor）</strong></p>
+<h2 id="预测分布"><a href="#预测分布" class="headerlink" title="预测分布"></a>预测分布</h2><p>一旦我们求出后验分布 $p(\mathcal{M}_i|\mathcal{D})$，就可以得到预测分布$$p(t|\mathbf{x},\mathcal{D})=\sum_{i=1}^L p(t|\mathbf{x},\mathcal{M}_i,\mathcal{D})p(\mathcal{M}_i|\mathcal{D})\tag{2}$$这是一个<strong>混合分布</strong>的例子，预测分布由单个模型的加权平均得到，其中 $p(\mathcal{M}_i|\mathcal{D})$ 代表每个模型的权重。例如，如果有两个后验分布等大的模型，一个在 $t=a$ 处预测出一个很窄的分布，另外一个在 $t=b$ 处预测出一个很窄的分布，那么总的模型就是一个双峰的预测分布，而不是在 $t=(a+b)/2$ 处的单峰分布。<br>另一种简单的做法是直接选取后验概率最大的模型进行预测，称为<strong>模型选择</strong>。</p>
+<h2 id="模型比较"><a href="#模型比较" class="headerlink" title="模型比较"></a>模型比较</h2><p>对于一个由参数 $\mathbf{w}$ 控制的模型，用概率运算法则，model evidence由下式给出$$p(\mathcal{D}|\mathcal{M}_i)=\int p(\mathcal{D}|\mathbf{w},\mathcal{M}_i)p(\mathbf{w}|\mathcal{M}_i)\mathrm{d}\mathbf{w}\tag{3}$$<br>对上式的积分进行近似，我们可以更好地理解model evidence。假设一个模型只含有一个参数 $w$，则参数 $w$ 地后验分布与 $p(\mathcal{D}|w)p(w)$ 成正比（为保持简洁，下面均省略了对 $\mathcal{M}_i$ 的依赖）。如果我们假设后验分布在最可能的值 $w_{\text{MAP}}$ 处达到高峰，宽度为 $\Delta w_{\text{posterior}}$，那么我们就可以用乘积来估计积分，即$$\int p(\mathcal{D}|w)\mathrm{d}w\simeq p(\mathcal{D}|w_{\text{MAP}})\Delta w_{\text{posterior}}\tag{4}$$如果进一步假设先验分布是平坦的，宽度为 $\Delta w_{\text{prior}}$，则有 $p(w)=1/\Delta w_{\text{prior}}$，于是$$p(\mathcal{D})=\int p(\mathcal{D}|w)p(w)\mathrm{d}w \simeq \cfrac{1}{\Delta w_{\text{prior}}}\int p(\mathcal{D}|w)\mathrm{d}w \simeq p(\mathcal{D}|w_{\text{MAP}})\cfrac{\Delta w_{\text{posterior}}}{\Delta w_{\text{prior}}}\tag{5}$$如下图所示<br><img src="http://i.imgur.com/fR9Fw5D.png" width="300"><br>取对数后得到$$\ln p(\mathcal{D})\simeq \ln p(\mathcal{D}|w_{\text{MAP}})+\ln \left(\cfrac{\Delta w_{\text{posterior}}}{\Delta w_{\text{prior}}}\right)\tag{6}$$上式中第一项代表最优参数下模型对数据的拟合程度，第二项惩罚了模型的复杂度。因为当 $\Delta w_{\text{posterior}} &lt; \Delta w_{\text{prior}}$ 时，第二项为负，且当 $\Delta w_{\text{posterior}}/ \Delta w_{\text{prior}}$ 变小时，第二项指数倍变小。因此，如果参数调整得十分贴合数据，这个惩罚就很严重（一个很大的负数）。<br>对含 $M$ 个参数的模型，有类似的结论。假设所有参数有相同的 $\Delta w_{\text{posterior}}/ \Delta w_{\text{prior}}$ 比值，则 $$\ln p(\mathcal{D})\simeq \ln p(\mathcal{D}|\mathbf{w}_{\text{MAP}})+M\ln \left(\cfrac{\Delta w_{\text{posterior}}}{\Delta w_{\text{prior}}}\right)\tag{7}$$我们可以看出，model evidence可以作为一个很好的选择模型的标准，选择model evidence最大的模型，就可以保证模型复杂度不至于太低而欠拟合，也不至于太高而过拟合。下面这张图可以让我们更好地理解这一点。<br><img src="http://i.imgur.com/DkXwAHB.png" width="350"><br>横坐标表示可能的数据集空间，坐标上的每个点对应一个数据集；纵坐标表示model evidence。考虑 $\mathcal{M}_1$，$\mathcal{M}_2$，$\mathcal{M}_3$ 这三个模型，模型复杂度依次增加，越复杂的模型可以拟合越多种可能的数据。对于某个特定的数据集 $\mathcal{D}_0$，低复杂度的模型不能很好拟合它，高复杂度的模型由于可以拟合很多个数据集，所以在 $\mathcal{D}_0$ 处的概率并不高。model evidence $p(\mathcal{D}|\mathcal{M}_i)$ 最高的是中等复杂度的模型 $\mathcal{M}_2$。</p>
+<p>贝叶斯模型比较框架中暗含了一个假设，即真实分布在所考虑的若干模型中。在这个假设下，可以推导出贝叶斯模型比较会平均地倾向于正确的模型。考虑两个模型 $\mathcal{M}_1$，$\mathcal{M}_2$，其中真实的分布对应 $\mathcal{M}_1$。对一个给定的有限数据集，不正确模型的贝叶斯因子有可能更大，但如果我们对所有数据集按下式进行平均$$\int p(\mathcal{D}|\mathcal{M}_1)\ln \cfrac{p(\mathcal{D}|\mathcal{M}_1)}{p(\mathcal{D}|\mathcal{M}_2)}\mathrm{d}\mathcal{D}\tag{8}$$</p>
+<blockquote>
+<p>这里实际上是贝叶斯因子的对数<br>$\mathbb{E}[\text{ln BF}(\mathcal{D})]=\displaystyle\int p(\mathcal{D}|\mathcal{M}_1)\text{ln BF}(\mathcal{D})\mathrm{d}\mathcal{D}$</p>
+</blockquote>
+<p>(8)式中的值是KL散度的一个例子，它满足性质：除非两个分布相等时为0否则恒为正。因此平均情况下，就会青睐真实的模型（即结果大于1）。</p>
+<h1 id="2-估计model-evidence"><a href="#2-估计model-evidence" class="headerlink" title="2. 估计model evidence"></a>2. 估计model evidence</h1><p>对于线性回归的例子，如果引入超参数 $\alpha$ 和 $\beta$，预测模型则由下式得到 $$p(t|\boldsymbol{t})=\iiint p(t|\mathbf{w},\beta)p(\mathbf{w}|\boldsymbol{t},\alpha,\beta)p(\alpha,\beta|\boldsymbol{t})\,\mathrm{d}\mathbf{w}\,\mathrm{d}\alpha\,\mathrm{d}\beta\tag{9}$$</p>
+<blockquote>
+<p>以下均省略了对输入 $\mathbf{x}$ 的依赖。<br>这里用 $\boldsymbol{t}$ 表示多个样本的目标值 $t$，而 $\mathbf{t}$ 表示的是一个样本的多元目标值</p>
+</blockquote>
+<p>由贝叶斯定理可得$$p(\alpha,\beta|\boldsymbol{t})\propto p(\boldsymbol{t}|\alpha,\beta)p(\alpha,\beta)\tag{10}$$将(9)，(10)式与(1)，(2)式对比，可以发现，模型 $\mathcal{M}$ 是由 $\alpha$ 和 $\beta$ 控制的。下面介绍如何只利用训练集来确定 $\alpha$ 和 $\beta$ 的值</p>
+<blockquote>
+<p><a href="http://keson96.github.io/2016/09/26/2016-09-26-Bayes-And-Curve-Fitting/" target="_blank" rel="external">前文</a>提到 $\alpha/\beta$ 等价于正则化系数 $\lambda$。因此，确定出 $\alpha$ 和 $\beta$ 的值，就相当于确定了 $\lambda$ 的值，即避免了过拟合。</p>
+</blockquote>
+<h2 id="evidence函数求值"><a href="#evidence函数求值" class="headerlink" title="evidence函数求值"></a>evidence函数求值</h2><p>由(3)式可知，model evidence $p(\boldsymbol{t}|\alpha,\beta)$ 可由下式得到$$\begin{array}{r,c,l}p(\boldsymbol{t}|\alpha,\beta)&amp;=&amp;\displaystyle\int p(\boldsymbol{t}|\mathbf{w},\alpha,\beta)p(\mathbf{w}|\alpha,\beta)\,\mathrm{d}\mathbf{w} \\ &amp;=&amp;\displaystyle\int p(\boldsymbol{t}|\mathbf{w},\beta)p(\mathbf{w}|\alpha)\,\mathrm{d}\mathbf{w}\end{array}\tag{11}$$ 可以利用<a href="http://keson96.github.io/2017/03/13/2017-03-13-Probability-Distribution-Basics-3/" target="_blank" rel="external">前文</a>中关于边际高斯分布和条件高斯分布的结论求出上式的积分值。$$p(\boldsymbol{t}|\mathbf{w},\beta)=\mathcal{N}(\boldsymbol{t}|\boldsymbol{\Phi}\mathbf{w},\beta^{-1}\mathbf{I}_N)$$ $$p(\mathbf{w})=\mathcal{N}(\mathbf{0},\alpha^{-1}\mathbf{I}_M)$$</p>
+<blockquote>
+<p>其中$$\boldsymbol{\Phi}=\begin{pmatrix}\phi_0(\mathbf{x}_1)&amp;\phi_1(\mathbf{x}_1)&amp;\cdots &amp;\phi_{M-1}(\mathbf{x}_1) \\ \phi_0(\mathbf{x}_2)&amp;\phi_1(\mathbf{x}_2)&amp;\cdots &amp;\phi_{M-1}(\mathbf{x}_2) \\ \vdots &amp; \vdots &amp; \ddots &amp;\vdots \\ \phi_0(\mathbf{x}_N)&amp;\phi_1(\mathbf{x}_N)&amp;\cdots &amp;\phi_{M-1}(\mathbf{x}_N) \end{pmatrix}$$</p>
+</blockquote>
+<p>对应关系如下：<br>$$\begin{array}{l,l}\text{前文中(1)式}&amp;\mathbf{x} \to \mathbf{w}\qquad \boldsymbol{\mu}\to \mathbf{0}\qquad \boldsymbol{\Lambda}^{-1}\to\alpha^{-1}\mathbf{I}_M \\ \text{前文中(2)式} &amp; \mathbf{y}\to\boldsymbol{t}\qquad \mathbf{A}\to\boldsymbol{\Phi}\qquad\mathbf{b}\to\mathbf{0}\qquad\mathbf{L}^{-1}\to\beta^{-1}\mathbf{I}_N\end{array}\tag{12}$$则由<a href="http://keson96.github.io/2017/03/13/2017-03-13-Probability-Distribution-Basics-3/" target="_blank" rel="external">前文</a>中(3)式可得$$p(\boldsymbol{t}|\alpha,\beta)=\mathcal{N}(\boldsymbol{t}|\mathbf{0},\beta^{-1}\mathbf{I}_N+\alpha^{-1}\boldsymbol{\Phi}\boldsymbol{\Phi}^{\mathrm{T}})\tag{13}$$取对数并整理后可以得到$$\ln p(\boldsymbol{t}|\alpha,\beta)=\cfrac{M}{2}\ln\alpha+\cfrac{N}{2}\ln\beta-E(\mathbf{m}_N)-\cfrac{1}{2}\ln|A|-\cfrac{N}{2}\ln(2\pi)\tag{14}$$</p>
+<blockquote>
+<p>其中<br>$$\mathbf{A}=\alpha\mathbf{I}+\beta\boldsymbol{\Phi}^{\mathrm{T}}\boldsymbol{\Phi}\tag{15}$$ $$\mathbf{m}_N=\beta\mathbf{A}^{-1}\boldsymbol{\Phi}^{\mathrm{T}}\boldsymbol{t}\tag{16}$$ $$E(\mathbf{m}_N)=\cfrac{\beta}{2}||\boldsymbol{t}-\boldsymbol{\Phi}\mathbf{m}_N||^2+\cfrac{\alpha}{2}\mathbf{m}_N^{T}\mathbf{m}_N\tag{17}$$</p>
+</blockquote>
+<p>以多项式拟合的问题为例，要用多项式拟合一个由正弦函数产生的数据（人为添加了一些噪声），将多项式阶数与model evidence的联系作图如下<br><img src="http://i.imgur.com/gVdVMOB.png" width="350"><br>可以看出，3阶模型的model evidence最大，正好是我们想要的中等复杂度模型。</p>
+<h1 id="3-最大化evidence函数"><a href="#3-最大化evidence函数" class="headerlink" title="3. 最大化evidence函数"></a>3. 最大化evidence函数</h1><p>从上面可以看出，model evidence最大的模型的确是我们想得到的模型。因此，我们可以通过最大化evidence函数来确定模型的参数。</p>
+<h2 id="3-1-关于-alpha-最大化-p-boldsymbol-t-alpha-beta"><a href="#3-1-关于-alpha-最大化-p-boldsymbol-t-alpha-beta" class="headerlink" title="3.1 关于 $\alpha$ 最大化 $p(\boldsymbol{t}|\alpha,\beta)$"></a>3.1 关于 $\alpha$ 最大化 $p(\boldsymbol{t}|\alpha,\beta)$</h2><p>首先定义特征向量方程$$(\beta\boldsymbol{\Phi}^{\mathrm{T}}\boldsymbol{\Phi})\mathbf{u}_i=\lambda_i\mathbf{u}_i\tag{18}$$ 从上式和(15)式可以得出，$\mathbf{A}$ 的特征值为 $\alpha+\lambda_i$。考虑 $\ln|\mathbf{A}|$ 对 $\alpha$ 的导数，有$$\cfrac{\mathrm{d}}{\mathrm{d}\alpha}\ln|\mathbf{A}|=\cfrac{\mathrm{d}}{\mathrm{d}\alpha}\ln\prod_i(<br>\lambda_i+\alpha)=\cfrac{\mathrm{d}}{\mathrm{d}\alpha}\sum_i\ln(\lambda_i+\alpha)=\sum_i\cfrac{1}{\lambda_i+\alpha}\tag{19}$$ 要关于 $\alpha$ 最大化 $p(\boldsymbol{t}|\alpha,\beta)$，可以令(14)式关于 $\alpha$ 的导数为0，即$$0=\cfrac{M}{2\alpha}-\cfrac{1}{2}\mathbf{m}^{\mathrm{T}}_N\mathbf{m}_N-\cfrac{1}{2}\sum_i\cfrac{1}{\lambda_i+\alpha}\tag{20}$$给式子乘以 $2\alpha$，整理后可以得到$$\alpha\mathbf{m}_N^{\mathrm{T}}\mathbf{m}_N=M-\alpha\sum_i\cfrac{1}{\lambda_i+\alpha}=\gamma\tag{21}$$因为对 $i$ 的求和算子中有 $M$ 项，所以有$$\gamma=\sum_i(1-\cfrac{\alpha}{\lambda_i+\alpha})=\sum_i\cfrac{\lambda_i}{\lambda_i+\alpha}\tag{22}$$从(21)式中我们可以得到，最大化evidence函数的 $\alpha$ 值一定满足$$\alpha=\cfrac{\gamma}{\mathbf{m}_N^{\mathrm{T}}\mathbf{m}_N}\tag{23}$$上式的结果只是一个隐式解，一方面因为 $\gamma$ 依赖于 $\alpha$，另一方面也因为后验分布的均值 $\mathbf{m}_N$ 也依赖于 $\alpha$ 的选择。不过，我们可以使用<strong>迭代</strong>的方法来进行求解。首先，初始化选择一个 $\alpha$ 值，用它求出 $\mathbf{m}_N$，再求出 $\gamma$。然后根据这两个值由(23)式更新 $\alpha$ 的值，如此循环迭代，直至收敛。</p>
+<blockquote>
+<p>由于矩阵 $\boldsymbol{\Phi}^{\mathrm{T}}\boldsymbol{\Phi}$ 是固定的，所以我们只需要计算一次它的特征值</p>
+</blockquote>
+<p>值得注意的是，<strong>$\alpha$ 的值是仅靠训练集就确定出来的，而不需要额外的交叉验证集</strong>。</p>
+<h2 id="3-2-关于-beta-最大化-p-boldsymbol-t-alpha-beta"><a href="#3-2-关于-beta-最大化-p-boldsymbol-t-alpha-beta" class="headerlink" title="3.2 关于 $\beta$ 最大化 $p(\boldsymbol{t}|\alpha,\beta)$"></a>3.2 关于 $\beta$ 最大化 $p(\boldsymbol{t}|\alpha,\beta)$</h2><p>同样地，我们也可以关于 $\beta$ 最大化 $p(\boldsymbol{t}|\alpha,\beta)$。有$$\cfrac{\mathrm{d}}{\mathrm{d}\beta}\ln|\mathbf{A}|=\cfrac{\mathrm{d}}{\mathrm{d}\beta}\sum_i\ln(\lambda_i+\alpha)=\cfrac{1}{\beta}\sum_i\cfrac{\lambda}{\lambda_i+\alpha}=\cfrac{\gamma}{\beta}\tag{24}$$ 令导数为0得到$$0=\cfrac{N}{2\beta}-\cfrac{1}{2}\sum_{n=1}^N\{t_n-\mathbf{m}_N^{\mathrm{T}}\phi(\mathbf{x}_n)\}^2-\cfrac{\gamma}{2\beta}\tag{25}$$整理后得到$$\cfrac{1}{\beta}=\cfrac{1}{N-\gamma}\sum_{i=1}^N\{t_n-\mathbf{m}_N^{\mathrm{T}}\phi(\mathbf{x}_n)\}^2\tag{26}$$同样地，这也是一个隐式解，我们需要循环迭代求解。如果同时求解$\alpha$ 和 $\beta$ 也是一样，即每次求得 $\gamma$ 后更新 $\alpha$ 和 $\beta$ 的值。</p>
+<h1 id="4-有效参数数目"><a href="#4-有效参数数目" class="headerlink" title="4. 有效参数数目"></a>4. 有效参数数目</h1><h2 id="4-1-关于-alpha"><a href="#4-1-关于-alpha" class="headerlink" title="4.1 关于 $\alpha$"></a>4.1 关于 $\alpha$</h2><p>上面关于 $\alpha$ 的结果有一个很优雅的解释，考虑似然函数和先验分布的等高轮廓图，如下所示（已经将参数空间坐标轴旋转到与 $\mathbf{u}_i$ 平行的位置）<br><img src="http://i.imgur.com/tXwqq17.png" width="350"><br>由于 $\mathbf{u}_2$ 方向函数值变化速度更快，所以 $\lambda_2 &gt; \lambda_1$；对于先验分布，由于各向同性，所以轮廓图是一个圆。因为 $\beta\boldsymbol{\Phi}^{\mathrm{T}}\boldsymbol{\Phi}$ 是正定矩阵，所以特征值 $\lambda_i$ 都是正值。因此 $$0\lt\lambda_i/(\lambda_i+\alpha)\lt 1$$ $$0\lt\gamma\lt M$$ <1> 对于 $\lambda\gg\alpha$，则对应的参数 $w_i$ 与最大似然估计的结果非常接近，我们说这个参数是<strong>well determined</strong>，因为它被数据紧紧地限制住。此时 $\lambda_i/(\lambda_i+\alpha)$ 非常接近于1。</1></p>
+<p><2> 对于 $\lambda\ll\alpha$，则对应的参数 $w_i$ 非常接近于0，说明似然函数在这个方向上对参数不敏感，因此参数被设置成接近先验（0）的一个值。此时 $\lambda_i/(\lambda_i+\alpha)$ 非常接近于0。</2></p>
+<p>我们可以发现 <strong>$\gamma$ 度量了well determined参数的有效总数目</strong>。从上图中也能印证这一点，$\mathbf{w}_{\mathrm{MAP}}$ 在 $w_1$ 方向的分量接近于0，在 $w_2$ 方向上的分量接近于最大似然估计的结果。</p>
+<h2 id="4-2-关于-beta"><a href="#4-2-关于-beta" class="headerlink" title="4.2 关于 $\beta$"></a>4.2 关于 $\beta$</h2><p>同样地，我们可以对 $\beta$ 的结果进行更深一步的探究。对比(26)式和最大似然估计的解法，两者都是对模型预测值与实际观测值之间的平方差进行平均，唯一的区别在于分母的不同，一个是 $N$，一个是 $N-\gamma$。<br>回忆推导高斯分布方差的内容，最大似然估计的结果中分母是 $N$，而这个方差是有偏差的；无偏估计结果中的分母是 $N-1$。可以这样去理解：一个自由度已经用来拟合均值，所以要在分母减去 $1$ 来修正有偏差的方差。<br>回到我们的问题，预测分布的均值由 $\mathbf{w}^{\mathrm{T}}\phi(\mathbf{x})$ 给出，含有 $M$ 个参数。然而，并不是所有参数都与数据拟合的很好，由数据确定的有效参数数目只有 $\gamma$ 个。所以，类似地，我们要在分母中减去 $\gamma$ 来进行修正。</p>
+<h2 id="4-3-一个例子"><a href="#4-3-一个例子" class="headerlink" title="4.3 一个例子"></a>4.3 一个例子</h2><p>我们用含有9个高斯基函数的模型来拟合正弦合成数据，用evidence框架来确定超参数。参数总个数为 $M=10$，为展示简便，将 $\beta$ 设为真实值。下图展示了如何确定 $\alpha$<br><img src="http://i.imgur.com/jD8q4Ml.png" width="600"><br>左图中红线表示 $\gamma$ 值，蓝线表示 $2\alpha E_W(\mathbf{m}_N)$，两条线的交点即为最优的 $\alpha$ 值所在处。右图中红线表示模型evidence $p(\boldsymbol{t}|\alpha,\beta)$，蓝线表示测试集误差，可以看出，evidence最大处就对应左图的交点，而此处的测试集误差离最小误差也比较接近。</p>
+<p>另外，我们也可以从下图看出 $\alpha$ 是如何控制参数 $w_i$ 的大小（通过影响 $\gamma$）<br><img src="http://i.imgur.com/qHgWkjb.png" width="400"><br>如果考虑 $N\gg M$ 时的情况，则所有的参数都由数据确定，因为 $\boldsymbol{\Phi}^{\mathrm{T}}\boldsymbol{\Phi}$ 包含了对数据点的隐式求和，所以特征值 $\lambda_i$ 会随数据集大小增大而增大。因此，$\gamma=M$，所以对 $\alpha$ 和 $\beta$ 的更新公式变成$$\alpha=\cfrac{M}{2E_W(\mathbf{m}_N)}\tag{27}$$ $$\beta=\cfrac{N}{2E_D(\mathbf{\mathbf{m}_N})}\tag{28}$$其中 $E_D$ 为(17)式中第一项的平方项，$E_W$ 为(17)式中第二项的平方项。上述公式可以作为一种易计算的近似版本，因为它不需要计算Hessian矩阵的特征值。</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ol>
+<li><em>Pattern Recognition and Machine Learning (PRML)<em></em></em></li>
+<li><a href="https://en.wikipedia.org/w/index.php?title=Marginal_likelihood&amp;oldid=753887384" target="_blank" rel="external">Wikipedia：Marginal likelihood</a></li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/27/2017-03-27-ML-Supplementary-1/" rel="next" title="机器学习拾遗1：线性模型">
+                <i class="fa fa-chevron-left"></i> 机器学习拾遗1：线性模型
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/pic.PNG"
+               alt="Wang Kx" />
+          <p class="site-author-name" itemprop="name">Wang Kx</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">52</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-总览"><span class="nav-number">1.</span> <span class="nav-text">1. 总览</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#预测分布"><span class="nav-number">1.1.</span> <span class="nav-text">预测分布</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模型比较"><span class="nav-number">1.2.</span> <span class="nav-text">模型比较</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-估计model-evidence"><span class="nav-number">2.</span> <span class="nav-text">2. 估计model evidence</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#evidence函数求值"><span class="nav-number">2.1.</span> <span class="nav-text">evidence函数求值</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-最大化evidence函数"><span class="nav-number">3.</span> <span class="nav-text">3. 最大化evidence函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-关于-alpha-最大化-p-boldsymbol-t-alpha-beta"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 关于 $\alpha$ 最大化 $p(\boldsymbol{t}|\alpha,\beta)$</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-关于-beta-最大化-p-boldsymbol-t-alpha-beta"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 关于 $\beta$ 最大化 $p(\boldsymbol{t}|\alpha,\beta)$</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-有效参数数目"><span class="nav-number">4.</span> <span class="nav-text">4. 有效参数数目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-关于-alpha"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 关于 $\alpha$</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-关于-beta"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 关于 $\beta$</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-一个例子"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 一个例子</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wang Kx</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=0.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
